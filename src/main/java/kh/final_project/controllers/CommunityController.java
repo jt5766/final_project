@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/community/")
 public class CommunityController {
 
-	@RequestMapping("/toNotification")
+	@RequestMapping("toNotification")
 	public String toNotification() {
-		return "/community/notification";
+		System.out.println("toNotification");
+		return "community/notification";
 	}
 }
