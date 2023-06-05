@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항</title>
+<title>커뮤니티 공지사항</title>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -58,7 +58,7 @@
 				<tr>
 					<td colspan="4">
 						<a href="#">1 2 3 4 5 </a>
-						<input type="button" value="등록">
+						<input type="button" value="등록" onclick="location.href = '/community/toWriteForm?boardType=공지'">
 					</td>
 				</tr>
 			</table>
