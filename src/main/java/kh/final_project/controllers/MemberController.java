@@ -26,7 +26,8 @@ public class MemberController {
     public String login(String email){
         boolean result = mdao.login(email);
         if(result){
-            session.setAttribute("loginID",email);
+            session.setAttribute("loginID",email);         //code , nickname , member_type 받을예정
+
         }
         return "/member/loginForm";
     }
