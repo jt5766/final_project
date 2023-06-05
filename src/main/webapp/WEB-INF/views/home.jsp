@@ -13,6 +13,8 @@
 	<hr>
 	<button onclick="location.href='/community/toNotification'">커뮤니티-공지게시판으로</button>
 	<hr>
+	<button onclick="location.href='/gallery/'">채팅</button>
+	<hr>
 	<button onclick="location.href='#'">채팅</button>
 	<hr>
 	<button onclick="location.href='#'">관리자 페이지</button>
