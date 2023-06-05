@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-abc
+<a href="/member/loginForm">
+    <button>로그인</button>
+</a>
 </body>
 </html>
