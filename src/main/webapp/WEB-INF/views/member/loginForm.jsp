@@ -1,16 +1,16 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: byeongjunkang
-  Date: 2023/06/05
-  Time: 11:01 AM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
+<head>
+    <title>loginForm</title>
+</head>
+<body>
+<form action="/member/login">
+    <input type="text" name="email" placeholder="헤응 이메일">
+    <input type=text name="password" placeholder="헤응 비밀번호">
+    <button>로그인</button>
+
+    <a href="/member/register"><button type="button">회원가입</button></a>
+</form>
+</body>
 </html>
