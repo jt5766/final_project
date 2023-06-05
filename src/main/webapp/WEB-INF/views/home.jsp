@@ -9,11 +9,9 @@
 <body>
 	<button onclick="location.href='/member/loginForm'">로그인</button>
 	<hr>
-	<button onclick="location.href='#'">갤러리</button>
+	<button onclick="location.href='/gallery/'">갤러리</button>
 	<hr>
 	<button onclick="location.href='/community/toNotification'">커뮤니티-공지게시판으로</button>
-	<hr>
-	<button onclick="location.href='/gallery/'">채팅</button>
 	<hr>
 	<button onclick="location.href='#'">채팅</button>
 	<hr>
