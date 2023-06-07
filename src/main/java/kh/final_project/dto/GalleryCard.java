@@ -1,11 +1,12 @@
 package kh.final_project.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class GalleryCards {
+public class GalleryCard {
     private Long seq;
     private Integer categoryType;
-    private Integer genreType;
+    private List<Integer> genreType;
     private String ai;
     private String title;
     private String writer; //Y,N
@@ -15,19 +16,19 @@ public class GalleryCards {
     private String yn; // Y,N
     private LocalDateTime writeDate;
 
-    public GalleryCards() {}
+    public GalleryCard() {}
 
-    public GalleryCards(Long seq,
-                        Integer categoryType,
-                        Integer genreType,
-                        String ai,
-                        String title,
-                        String writer,
-                        String catchphrase,
-                        String synopsis,
-                        String thumbnail,
-                        String yn,
-                        LocalDateTime writeDate) {
+    public GalleryCard(Long seq,
+                       Integer categoryType,
+                       List<Integer> genreType,
+                       String ai,
+                       String title,
+                       String writer,
+                       String catchphrase,
+                       String synopsis,
+                       String thumbnail,
+                       String yn,
+                       LocalDateTime writeDate) {
         this.seq = seq;
         this.categoryType = categoryType;
         this.genreType = genreType;
@@ -57,11 +58,11 @@ public class GalleryCards {
         this.categoryType = categoryType;
     }
 
-    public Integer getGenreType() {
+    public List<Integer> getGenreType() {
         return genreType;
     }
 
-    public void setGenreType(Integer genreType) {
+    public void setGenreType(List<Integer> genreType) {
         this.genreType = genreType;
     }
 
@@ -127,5 +128,22 @@ public class GalleryCards {
 
     public void setWriteDate(LocalDateTime writeDate) {
         this.writeDate = writeDate;
+    }
+
+    @Override
+    public String toString() {
+        return "GalleryCard{" +
+                "seq=" + seq +
+                "\ncategoryType=" + categoryType +
+                "\ngenreType=" + genreType +
+                "\nai='" + ai + '\'' +
+                "\ntitle='" + title + '\'' +
+                "\nwriter='" + writer + '\'' +
+                "\ncatchphrase='" + catchphrase + '\'' +
+                "\nsynopsis='" + synopsis + '\'' +
+                "\nthumbnail='" + thumbnail + '\'' +
+                "\nyn='" + yn + '\'' +
+                "\nwriteDate=" + writeDate +
+                '}';
     }
 }

@@ -28,7 +28,7 @@
 			
 			stompClient.connect({},function(){
 				alert("접속 성공");
-				const subscription = stompClient.subscribe("/topic/"+이곳은코드값, function(message){
+				const subscription = stompClient.subscribe("/topic/"+${chatRoom}, function(message){
 					body = JSON.parse(message.body);
 					console.log(message);
 					console.log(body);
@@ -41,7 +41,7 @@
 			$("#button_send").on("click",function(){
 				const destination = "/app/message";
 				const header = {};
-				const body = JSON.stringify({id : ${loginID} , message : $("#div_text").html()});
+				const body = JSON.stringify({chatRooms : ${chatRoom} , writer : ${loginID} , txt : $("#div_text").html()});
 				stompClient.send(destination,header,body);
 			})
 		})

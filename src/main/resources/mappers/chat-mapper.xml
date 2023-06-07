@@ -6,4 +6,12 @@
 	<insert id="insert">
 		insert into chat_list values (chat_list_seq.nextval,${mentor},${mentee},default)
 	</insert>
+	
+	<update id="update">
+		update chat_list set yn = 'Y' where seq = ${seq}
+	</update>
+	
+	<delete id="delete">
+		delete from chat_list where seq = ${seq}
+	</delete>
 </mapper>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +23,42 @@
 	    <div class="row lnb">lnb</div>
     </div>
     <div class="container-xl">
+    	<c:choose>
+    		<c:when test="${chatlist.yn==n}">
+    			<c:forEach var="chatroom" items="${chatlist}">
+    				<div class="row chatbox">
+            			<div class="col-md-8 testbox">
+                			멘토:${chatroom.mentor} <br>
+                			멘티:${chatroom.mentee}
+                			<input type="hidden" value="${chatroom.seq}">
+            			</div>
+            			<div class="col-md-2 btnbox">
+                			<a href="/chat/accept?seq=${chatroom.seq}"><button class="btn">승인</button></a>
+            			</div>
+            			<div class="col-md-2 btnbox">
+                			<a href="/chat/refuse?seq=${chatroom.seq}"><button class="btn">거절</button></a>
+            			</div>
+					</div>
+				</c:forEach>
+    		</c:when>
+    		<c:otherwise>
+    			<c:forEach var="chatroom" items="${chatlist}">
+    				<div class="row chatbox">
+            			<div class="col-md-8 testbox">
+                			멘토:${chatroom.mentor} <br>
+                			멘티:${chatroom.mentee}
+                			<input type="hidden" value="${chatroom.seq}">
+            			</div>
+            			<div class="col-md-2 btnbox">
+                			<a href="/chat/entrance?seq=${chatroom.seq}"><button class="btn">입장</button></a>
+            			</div>
+            			<div class="col-md-2 btnbox">
+                			<a href="/chat/refuse?seq=${chatroom.seq}"><button class="btn">나가기</button></a>
+            			</div>
+					</div>
+				</c:forEach>	
+    		</c:otherwise>
+    	</c:choose>
 		<div class="row chatbox">
             <div class="col-md-8 testbox">
                 멘토:abc <br>

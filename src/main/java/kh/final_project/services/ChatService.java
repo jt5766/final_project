@@ -15,4 +15,13 @@ public class ChatService {
 	public int application(int mentor,int mentee) {
 		return dao.application(new ChatlistDTO(null,mentor,mentee,null));
 	}
+	
+	public int accept(Long seq) {
+		return dao.accept(seq);
+	}
+	
+	public int refuse(Long seq) {
+		return dao.refuse(seq);
+	}
+	
 }
