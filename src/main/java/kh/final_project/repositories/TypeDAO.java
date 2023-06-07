@@ -107,8 +107,8 @@ public class TypeDAO {
 	 * @param
 	 * @return List<CategoryType>
 	 */
-	public List<CategoryType> selectByGallery_Sort() {
-		return mybatis.selectList("Type.Select", "GALLERY_SORT");
+	public List<CategoryType> selectByGallery_Cards_Sort() {
+		return mybatis.selectList("Type.Select", "GALLERY_CARDS_SORT");
 	}
 
 	/**
@@ -117,8 +117,8 @@ public class TypeDAO {
 	 * @param
 	 * @return List<CategoryType>
 	 */
-	public List<CategoryType> selectByGallery_Search() {
-		return mybatis.selectList("Type.Select", "GALLERY_SEARCH");
+	public List<CategoryType> selectByGallery_Cards_Search() {
+		return mybatis.selectList("Type.Select", "GALLERY_CARDS_SEARCH");
 	}
 
 	/**
