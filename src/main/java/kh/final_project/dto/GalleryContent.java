@@ -3,7 +3,7 @@ package kh.final_project.dto;
 
 import java.time.LocalDateTime;
 
-public class GalleryContents {
+public class GalleryContent {
     private Long galleryCards;
     private Long seq;
     private String title;
@@ -15,18 +15,18 @@ public class GalleryContents {
     private Integer totalCount;
     private Integer dayCount;
 
-    public GalleryContents() {}
+    public GalleryContent() {}
 
-    public GalleryContents(Long galleryCards,
-                           Long seq,
-                           String title,
-                           String fileUrl,
-                           String videoUrl,
-                           String txt,
-                           String yn,
-                           LocalDateTime writeDate,
-                           Integer totalCount,
-                           Integer dayCount) {
+    public GalleryContent(Long galleryCards,
+                          Long seq,
+                          String title,
+                          String fileUrl,
+                          String videoUrl,
+                          String txt,
+                          String yn,
+                          LocalDateTime writeDate,
+                          Integer totalCount,
+                          Integer dayCount) {
         this.galleryCards = galleryCards;
         this.seq = seq;
         this.title = title;

@@ -53,7 +53,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="input_allow_show">
+                <input class="form-check-input" type="checkbox" role="switch" id="input_allow_show" value="Y">
                 <label class="form-check-label" for="input_allow_show">공개 여부</label>
             </div>
         </div>
