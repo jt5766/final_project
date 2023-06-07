@@ -1,13 +1,13 @@
 package kh.final_project.dto;
 
-public class ChatroomDTO {
+public class ChatlistDTO {
 	private Long seq;
 	private String mentor;
 	private String mentee;
 	private String yn;
 
-	public ChatroomDTO() {}
-	public ChatroomDTO(Long seq, String mentor, String mentee, String yn) {
+	public ChatlistDTO() {}
+	public ChatlistDTO(Long seq, String mentor, String mentee, String yn) {
 		this.seq = seq;
 		this.mentor = mentor;
 		this.mentee = mentee;
