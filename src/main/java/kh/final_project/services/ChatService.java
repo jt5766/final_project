@@ -1,0 +1,18 @@
+package kh.final_project.services;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kh.final_project.dto.ChatlistDTO;
+import kh.final_project.repositories.ChatDAO;
+
+@Service
+public class ChatService {
+
+	@Autowired
+	private ChatDAO dao;
+	
+	public int application(int mentor,int mentee) {
+		return dao.application(new ChatlistDTO(null,mentor,mentee,null));
+	}
+}

@@ -2,34 +2,33 @@ package kh.final_project.dto;
 
 public class ChatlistDTO {
 	private Long seq;
-	private String mentor;
-	private String mentee;
+	private int mentor;
+	private int mentee;
 	private String yn;
 
 	public ChatlistDTO() {}
-	public ChatlistDTO(Long seq, String mentor, String mentee, String yn) {
+	public ChatlistDTO(Long seq, int mentor, int mentee, String yn) {
 		this.seq = seq;
 		this.mentor = mentor;
 		this.mentee = mentee;
 		this.yn = yn;
 	}
-	
 	public Long getSeq() {
 		return seq;
 	}
 	public void setSeq(Long seq) {
 		this.seq = seq;
 	}
-	public String getMentor() {
+	public int getMentor() {
 		return mentor;
 	}
-	public void setMentor(String mentor) {
+	public void setMentor(int mentor) {
 		this.mentor = mentor;
 	}
-	public String getMentee() {
+	public int getMentee() {
 		return mentee;
 	}
-	public void setMentee(String mentee) {
+	public void setMentee(int mentee) {
 		this.mentee = mentee;
 	}
 	public String getYn() {

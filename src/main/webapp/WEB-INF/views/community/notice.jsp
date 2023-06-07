@@ -57,8 +57,8 @@
 				</tr>
 				<tr>
 					<td colspan="4">
-						<a href="#">1 2 3 4 5 </a>
-						<input type="button" value="등록" onclick="location.href = '/community/toWriteForm?boardType=공지'">
+						<a href="#">1 2 3 4 5</a>
+						<input type="button" value="등록" onclick="location.href = '/community/toWriteForm?code=1001'">
 					</td>
 				</tr>
 			</table>
