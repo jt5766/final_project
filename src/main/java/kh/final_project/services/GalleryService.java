@@ -1,5 +1,6 @@
 package kh.final_project.services;
 
+import kh.final_project.dto.GalleryCard;
 import kh.final_project.repositories.GalleryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,5 +13,9 @@ public class GalleryService {
     @Autowired
     public GalleryService(GalleryDAO galleryDAO) {
         this.galleryDAO = galleryDAO;
+    }
+
+    public int insertCard(GalleryCard card) {
+        return galleryDAO.insertCard(card);
     }
 }

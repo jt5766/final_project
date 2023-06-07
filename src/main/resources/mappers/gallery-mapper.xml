@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Gallery">
-<!--    proc_i_gallery-->
-
+    <select id="proc_i_gallery">
+        <!--TODO: 프로시저 채우기-->
+    </select>
 </mapper>

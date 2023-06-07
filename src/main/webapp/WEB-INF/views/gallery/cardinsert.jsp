@@ -16,7 +16,7 @@
     </div>
 </div>
 <div class="container-xl">
-    <form action="/gallery/card" method="post" id="card-form">
+    <form action="/gallery/card/insert" method="post" id="card-form">
         <div class="row">
             <div class="con-md-12">
                 <p>AI 생성 그림인가요?</p>

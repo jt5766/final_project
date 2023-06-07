@@ -2,6 +2,8 @@ package kh.final_project.controllers;
 
 import kh.final_project.dto.CategoryType;
 import kh.final_project.dto.GalleryCard;
+import kh.final_project.services.GalleryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +11,13 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/gallery")
 public class GalleryController {
+
+    private GalleryService galleryService;
+
+    @Autowired
+    public GalleryController(GalleryService galleryService) {
+        this.galleryService = galleryService;
+    }
 
     @GetMapping
     public String toGallery() {
@@ -20,9 +29,9 @@ public class GalleryController {
         return "/gallery/card";
     }
 
-    @PostMapping("/card")
+    @PostMapping("/card/insert")
     public String insertCard(GalleryCard card, Model model) {
-        System.out.println("card = " + card);
+        int result = galleryService.insertCard(card);
         return "redirect:/gallery";
     }
 
