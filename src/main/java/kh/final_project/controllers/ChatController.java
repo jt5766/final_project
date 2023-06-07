@@ -32,4 +32,10 @@ public class ChatController {
 		return "";
 	}
 	
+	@RequestMapping("entrance")
+	public String entrance(Long seq) {
+		// inner 만들어야함
+		return "chat/chatroom";
+	}
+	
 }
