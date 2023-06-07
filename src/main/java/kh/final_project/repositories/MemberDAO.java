@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public class MemberDAO {
 
     @Autowired
-    SqlSessionTemplate db;
+    private SqlSessionTemplate db;
 
     public boolean login(String email) {
 
