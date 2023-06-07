@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Admin">
-	<resultMap type="kh.final_project.dto.CategoryType" id="reMap">
-		<result property="code" column="CODE" javaType="java.lang.Integer" />
-		<result property="sort" column="SORT" javaType="java.lang.Integer" />
-		<result property="name" column="NAME" javaType="java.lang.String" />
-		<result property="yn" column="YN" javaType="java.lang.String" />
-	</resultMap>
 	<select id="Proc_GenreType" statementType="CALLABLE" resultType="kh.final_project.dto.CategoryType">
 		{
 		call PROC_S_GENRETYPE(
@@ -17,13 +11,19 @@
 		)
 		}
 	</select>
-	<select id="Proc_GenreType_" statementType="CALLABLE" resultType="kh.final_project.dto.CategoryType">
-		{
-		call PROC_S_GENRETYPE_(
-		#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=reMap}
-<!-- 		#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet, resultMap=kh.final_project.dto.CategoryType} -->
-<!-- 		#{result, mode=OUT, jdbcType=CURSOR, javaType=ResultSet} -->
-		)
-		}
+	<resultMap type="kh.final_project.dto.CategoryType" id="reMap">
+		<result property="code" column="CODE" javaType="java.lang.Integer" />
+		<result property="sort" column="SORT" javaType="java.lang.Integer" />
+		<result property="name" column="NAME" javaType="java.lang.String" />
+		<result property="yn" column="YN" javaType="java.lang.String" />
+	</resultMap>
+
+	<parameterMap type="hashmap" id="paramMap">
+		<parameter property="kh.final_project.dto.CategoryType" mode="OUT" javaType="java.sql.ResultSet" jdbcType="CURSOR" resultMap="reMap" />
+	</parameterMap>
+	<select id="Proc_GenreType_" statementType="CALLABLE">
+		{ CALL PROC_S_GENRETYPE_(
+		#{result , mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=reMap}
+		) }
 	</select>
 </mapper>
