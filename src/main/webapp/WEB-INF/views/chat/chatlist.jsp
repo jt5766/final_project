@@ -50,7 +50,7 @@
                 			<input type="hidden" value="${chatroom.seq}">
             			</div>
             			<div class="col-md-2 btnbox">
-                			<a href="/chat/inner?seq=${chatroom.seq}"><button class="btn">입장</button></a>
+                			<a href="/chat/entrance?seq=${chatroom.seq}"><button class="btn">입장</button></a>
             			</div>
             			<div class="col-md-2 btnbox">
                 			<a href="/chat/refuse?seq=${chatroom.seq}"><button class="btn">나가기</button></a>

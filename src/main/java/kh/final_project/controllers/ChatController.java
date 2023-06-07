@@ -15,7 +15,21 @@ public class ChatController {
 	private ChatService chatservice;
 	
 	@RequestMapping("application")
-	public String application(ChatlistDTO dto) {
+	public String application(int mentor,int mentee) {
+		chatservice.application(mentor, mentee);
 		return "";
 	}
+	
+	@RequestMapping("accept")
+	public String accept(Long seq) {
+		chatservice.accept(seq);
+		return "";
+	}
+	
+	@RequestMapping("refuse")
+	public String refuse(Long seq) {
+		chatservice.refuse(seq);
+		return "";
+	}
+	
 }

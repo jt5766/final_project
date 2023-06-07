@@ -15,4 +15,13 @@ public class ChatDAO {
 	public int application(ChatlistDTO dto) {
 		return db.insert("Chat.insert",dto);
 	}
+	
+	public int accept(Long seq) {
+		return db.update("Chat.update",seq);
+	}
+	
+	public int refuse(Long seq) {
+		return db.delete("Chat.delete",seq);
+	}
+	
 }
