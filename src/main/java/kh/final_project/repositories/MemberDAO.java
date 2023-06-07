@@ -1,8 +1,12 @@
 package kh.final_project.repositories;
 
+import kh.final_project.dto.MemberDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class MemberDAO {
@@ -10,10 +14,11 @@ public class MemberDAO {
     @Autowired
     private SqlSessionTemplate db;
 
-    public boolean login(String email) {
+    public void login(MemberDTO dto) {
 
-        return db.selectList("Member.login",email).size()  == 1 ?true:false;
+        db.selectOne("Member.PROC_CHK_MEMBER", dto);
 
     }
+
 
 }

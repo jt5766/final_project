@@ -6,7 +6,7 @@ import java.security.Timestamp;
 public class MemberDTO {
 
     private int code;
-    private String member_type;
+    private int member_type;
     private String email;
     private int email_type;
     private String password;
@@ -25,7 +25,13 @@ public class MemberDTO {
 
     }
 
-    public MemberDTO(int code, String member_type, String email, int email_type, String password, String nickname, int file_type, String file_url, String company, String name, String tel, Timestamp join_date, Timestamp stop_date, String yn) {
+
+
+    public int getCode() {
+        return code;
+    }
+
+    public MemberDTO(int code, int member_type, String email, int email_type, String password, String nickname, int file_type, String file_url, String company, String name, String tel, Timestamp join_date, Timestamp stop_date, String yn) {
         this.code = code;
         this.member_type = member_type;
         this.email = email;
@@ -42,19 +48,15 @@ public class MemberDTO {
         this.yn = yn;
     }
 
-    public int getCode() {
-        return code;
-    }
-
     public void setCode(int code) {
         this.code = code;
     }
 
-    public String getMember_type() {
+    public int getMember_type() {
         return member_type;
     }
 
-    public void setMember_type(String member_type) {
+    public void setMember_type(int member_type) {
         this.member_type = member_type;
     }
 
