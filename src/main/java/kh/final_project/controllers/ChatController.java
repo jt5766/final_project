@@ -2,9 +2,9 @@ package kh.final_project.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kh.final_project.dto.ChatlistDTO;
 import kh.final_project.services.ChatService;
 
 @Controller
@@ -33,8 +33,9 @@ public class ChatController {
 	}
 	
 	@RequestMapping("entrance")
-	public String entrance(Long seq) {
+	public String entrance(Long seq,Model model) {
 		// inner 만들어야함
+		model.addAttribute("chatRoom", seq);
 		return "chat/chatroom";
 	}
 	

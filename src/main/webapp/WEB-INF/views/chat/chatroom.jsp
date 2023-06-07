@@ -28,7 +28,7 @@
 			
 			stompClient.connect({},function(){
 				alert("접속 성공");
-				const subscription = stompClient.subscribe("/topic/"+이곳은코드값, function(message){
+				const subscription = stompClient.subscribe("/topic/"+${chatRoom}, function(message){
 					body = JSON.parse(message.body);
 					console.log(message);
 					console.log(body);
