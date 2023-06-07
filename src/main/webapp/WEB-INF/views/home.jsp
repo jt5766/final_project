@@ -16,7 +16,7 @@
 	<hr>
 	<button onclick="location.href='#'">채팅</button>
 	<hr>
-	<button onclick="location.href='/admin/test'">관리자 페이지</button>
+	<button onclick="location.href='/admin/'">관리자 페이지</button>
 	<hr>
 </body>
 </html>
