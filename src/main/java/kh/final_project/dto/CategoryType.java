@@ -54,4 +54,9 @@ public class CategoryType {
 		this.yn = yn;
 	}
 
+	@Override
+	public String toString() {
+		return "CategoryType [code=" + code + ", sort=" + sort + ", name=" + name + ", yn=" + yn + "]";
+	}
+
 }
