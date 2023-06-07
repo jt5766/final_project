@@ -15,8 +15,12 @@
 <style>
 * {
 	box-sizing: border-box;
-	border: 1px solid black;
+	border: 0px solid black;
 	text-align: center;
+}
+
+#inputTitle {
+	width: 100%;
 }
 </style>
 </head>
@@ -27,14 +31,27 @@
 		<form action="/community/insertBoard" method="post">
 			<div>
 				<select>
-					
+					<c:forEach var="i" items="${selectTag}">
+						<c:choose>
+							<c:when test="${i.code == boardCode}">
+								<option checked>${i.name}</option>
+							</c:when>
+							<c:otherwise>
+								<option disabled>${i.name}</option>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 				</select>
 			</div>
 			<div>
-				<textarea name="" id="textarea_contents" cols="30" rows="10"></textarea>
+				<input type="hidden" name="board_type" value="${boardCode}">
+				<input type="text" name="title" placeholder="제목을 입력해주세요" id="inputTitle">
 			</div>
 			<div>
-				<input type="button" value="등록/수정">
+				<textarea name="txt" id="textarea_contents" cols="30" rows="10"></textarea>
+			</div>
+			<div>
+				<input type="submit" value="등록/수정">
 				<input type="button" value="돌아가기" onclick="location.href = '/community/toNotification'">
 			</div>
 		</form>

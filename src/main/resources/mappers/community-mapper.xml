@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Community">
-	<insert id="insertFree">
-		<selectKey keyProperty="boardName" resultType="String" order="BEFORE">
-			select boardName from board_type where code = #{code};
+	<select id="getBoardType" resultType="kh.final_project.dto.CategoryType">
+		select * from board_type
+	</select>
+
+	<insert id="insertBoard">
+		<selectKey keyProperty="board_name" resultType="String" order="BEFORE">
+			select board_name from board_type where code = #{board_type}
 		</selectKey>
-		insert into ${boardName}_boards values() 
+		insert into ${board_name}_boards values
+		(${board_name}_boards_seq.nextval, #{board_type}, #{title}, #{writer}, #{txt}, default, default)
 	</insert>
 </mapper>
