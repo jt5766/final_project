@@ -41,7 +41,7 @@
 			$("#button_send").on("click",function(){
 				const destination = "/app/message";
 				const header = {};
-				const body = JSON.stringify({id : ${loginID} , message : $("#div_text").html()});
+				const body = JSON.stringify({chatRooms : ${chatRoom} , writer : ${loginID} , txt : $("#div_text").html()});
 				stompClient.send(destination,header,body);
 			})
 		})
