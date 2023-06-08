@@ -23,9 +23,9 @@
 	    <div class="row lnb">lnb</div>
     </div>
     <div class="container-xl">
-    	<c:choose>
-    		<c:when test="${chatlist.yn==n}">
-    			<c:forEach var="chatroom" items="${chatlist}">
+    	<c:forEach var="chatroom" items="${chatlist}">
+    		<c:choose>
+    			<c:when test="${chatroom.yn == 'N'}">
     				<div class="row chatbox">
             			<div class="col-md-8 testbox">
                 			멘토:${chatroom.mentor} <br>
@@ -39,10 +39,8 @@
                 			<a href="/chat/refuse?seq=${chatroom.seq}"><button class="btn">거절</button></a>
             			</div>
 					</div>
-				</c:forEach>
-    		</c:when>
-    		<c:otherwise>
-    			<c:forEach var="chatroom" items="${chatlist}">
+    			</c:when>
+    			<c:otherwise>
     				<div class="row chatbox">
             			<div class="col-md-8 testbox">
                 			멘토:${chatroom.mentor} <br>
@@ -56,9 +54,9 @@
                 			<a href="/chat/refuse?seq=${chatroom.seq}"><button class="btn">나가기</button></a>
             			</div>
 					</div>
-				</c:forEach>	
-    		</c:otherwise>
-    	</c:choose>
+    			</c:otherwise>
+    		</c:choose>
+		</c:forEach>
 		<div class="row chatbox">
             <div class="col-md-8 testbox">
                 멘토:abc <br>

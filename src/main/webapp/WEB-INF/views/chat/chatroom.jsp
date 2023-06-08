@@ -23,12 +23,13 @@
 <body>
 	<script>
 		$(function(){
-			const socket = new WebSocket("ws://43.201.51.104/chat");
+			const socket = new WebSocket("ws://192.168.50.203/chat");
 			const stompClient = Stomp.over(socket);
 			
 			stompClient.connect({},function(){
 				alert("접속 성공");
-				const subscription = stompClient.subscribe("/topic/"+${chatlog.chat_rooms}, function(message){
+				const link = "/topic/"+"${chatlog}";
+				const subscription = stompClient.subscribe(link , function(message){
 					body = JSON.parse(message.body);
 					console.log(message);
 					console.log(body);
@@ -41,7 +42,7 @@
 			$("#button_send").on("click",function(){
 				const destination = "/app/message";
 				const header = {};
-				const body = JSON.stringify({chatRooms : ${chatlog.chat_rooms} , writer : ${loginID} , txt : $("#div_text").html()});
+				const body = JSON.stringify({chatRooms : "${chatlog}" , writer : ${loginID} , txt : $("#div_text").html()});
 				stompClient.send(destination,header,body);
 			})
 		})
@@ -53,9 +54,7 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-md-12" id="div_contents">
-            	<c:forEach var="log" items="${chatlog}">
-            		${log.writer} : ${log.txt}
-            	</c:forEach>
+            	
             </div>
         </div>
         <div class="row">
