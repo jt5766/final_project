@@ -12,7 +12,7 @@
 
 
 이메일<br>
-<input type="text" placeholder="${email}+@+${email_type}" readonly> <br>
+<input type="text" placeholder="${email}@${emailType}" readonly> <br>
 비밀번호 <br>
 <input type="text" placeholder="내용을 입력해주세요"><br>
 비밀번호 확인<br>

@@ -32,14 +32,17 @@ public class MemberController {
 
     @RequestMapping("register")
     public String register(Model model , MemberDTO dto){
-       Integer emailType= dto.getEmail_type();
-       
+
+        MemberService.setEmailType(dto);
+        model.addAttribute("email",dto.getEmail());
+        model.addAttribute("emailType",dto.getSet_email_type());
+
 
 
         return "/member/registerForm";
     }
 
-    @RequestMapping("logifnForm")
+    @RequestMapping("loginForm")
     public String loginForm(){
         return "/member/loginForm";
     }
