@@ -1,31 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Admin">
-	<select id="Proc_GenreType" statementType="CALLABLE" resultType="kh.final_project.dto.CategoryType">
-		{
-		call PROC_S_GENRETYPE(
-		#{email, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
-		#{email_type, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
-		#{password, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
-		#{code, mode=out, jdbcType=NUMERIC, javaType=java.lang.Integer}
-		#{member_type, mode=out, jdbcType=NUMERIC, javaType=java.lang.Integer}
-		#{nickname, mode=out, jdbcType=VARCHAR, javaType=java.lang.String}
-		)
-		}
-	</select>
-	<resultMap type="kh.final_project.dto.CategoryType" id="reMap">
-		<result property="code" column="CODE" javaType="java.lang.Integer" />
-		<result property="sort" column="SORT" javaType="java.lang.Integer" />
-		<result property="name" column="NAME" javaType="java.lang.String" />
-		<result property="yn" column="YN" javaType="java.lang.String" />
-	</resultMap>
-
-	<parameterMap type="hashmap" id="paramMap">
-		<parameter property="kh.final_project.dto.CategoryType" mode="OUT" javaType="java.sql.ResultSet" jdbcType="CURSOR" resultMap="reMap" />
-	</parameterMap>
-	<select id="Proc_GenreType_" statementType="CALLABLE">
-		{ CALL PROC_S_GENRETYPE_(
-		#{result , mode=OUT, jdbcType=CURSOR, javaType=java.sql.ResultSet, resultMap=reMap}
-		) }
-	</select>
+	
 </mapper>
