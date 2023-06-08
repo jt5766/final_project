@@ -1,5 +1,7 @@
 package kh.final_project.repositories;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +24,10 @@ public class ChatDAO {
 	
 	public int refuse(Long seq) {
 		return db.delete("Chat.delete",seq);
+	}
+	
+	public List<ChatlistDTO> select(int loginID){
+		return db.selectList("Chat.select",loginID);
 	}
 	
 }

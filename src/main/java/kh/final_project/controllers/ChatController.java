@@ -20,8 +20,9 @@ public class ChatController {
 	private ChatlogService chatlogservice;
 	
 	@RequestMapping("testlink")
-	public String testlink() {
-		return "chat/chatroom";
+	public String testlink(Model model) {
+		model.addAttribute("chatlist", chatservice.select(10000001));
+		return "chat/chatlist";
 	}
 	
 	@RequestMapping("application")

@@ -1,5 +1,7 @@
 package kh.final_project.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,10 @@ public class ChatService {
 	
 	public int refuse(Long seq) {
 		return dao.refuse(seq);
+	}
+	
+	public List<ChatlistDTO> select(int loginID){
+		return dao.select(loginID);
 	}
 	
 }

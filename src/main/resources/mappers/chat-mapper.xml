@@ -14,4 +14,9 @@
 	<delete id="delete">
 		delete from chat_list where seq = ${seq}
 	</delete>
+	
+	<select id="select" resultType="kh.final_project.dto.ChatlistDTO">
+		select * from chat_list where mentor = #{loginID} or mentee = #{loginID}
+	</select>
+	
 </mapper>
