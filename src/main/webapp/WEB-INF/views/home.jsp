@@ -16,7 +16,7 @@
 	<hr>
 	<button onclick="location.href='/community/toNotice'">커뮤니티-공지게시판으로</button>
 	<hr>
-	<button onclick="location.href='#'">채팅</button>
+	<button onclick="location.href='/chat/testlink'">채팅</button>
 	<hr>
 	<button onclick="location.href='/admin/'">관리자 페이지</button>
 	<hr>

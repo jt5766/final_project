@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import kh.final_project.dto.ChatlogDTO;
 import kh.final_project.services.ChatService;
+import kh.final_project.services.ChatlogService;
 
 @Controller
 @RequestMapping("/chat/")
@@ -13,6 +15,15 @@ public class ChatController {
 	
 	@Autowired
 	private ChatService chatservice;
+	
+	@Autowired
+	private ChatlogService chatlogservice;
+	
+	@RequestMapping("testlink")
+	public String testlink(Model model) {
+		model.addAttribute("chatlist", chatservice.select(10000001));
+		return "chat/chatlist";
+	}
 	
 	@RequestMapping("application")
 	public String application(int mentor,int mentee) {
@@ -34,8 +45,8 @@ public class ChatController {
 	
 	@RequestMapping("entrance")
 	public String entrance(Long seq,Model model) {
-		// inner 만들어야함
-		model.addAttribute("chatRoom", seq);
+		ChatlogDTO logdto = chatlogservice.selectLog(seq);
+		model.addAttribute("chatlog", logdto);
 		return "chat/chatroom";
 	}
 	

@@ -38,6 +38,7 @@ public class MemberController {
         System.out.println(dto);
 
         if(dto.getNickname() != null){
+        	System.out.println(dto.getCode());
             session.setAttribute("code",dto.getCode());
             session.setAttribute("nickName",dto.getNickname());
             session.setAttribute("memberType",dto.getMember_type());
