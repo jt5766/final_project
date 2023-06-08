@@ -3,23 +3,23 @@ package kh.final_project.dto;
 import java.sql.Timestamp;
 
 public class ChatlogDTO {
-	private Long chatRooms;
+	private Long chat_rooms;
 	private int writer;
 	private String txt;
-	private Timestamp writeDate;
+	private Timestamp write_date;
 	
 	public ChatlogDTO() {}
-	public ChatlogDTO(Long chatRooms, int writer, String txt, Timestamp writeDate) {
-		this.chatRooms = chatRooms;
+	public ChatlogDTO(Long chat_rooms, int writer, String txt, Timestamp write_date) {
+		this.chat_rooms = chat_rooms;
 		this.writer = writer;
 		this.txt = txt;
-		this.writeDate = writeDate;
+		this.write_date = write_date;
 	}
-	public Long getChatRooms() {
-		return chatRooms;
+	public Long getChat_rooms() {
+		return chat_rooms;
 	}
-	public void setChatRooms(Long chatRooms) {
-		this.chatRooms = chatRooms;
+	public void setChat_rooms(Long chat_rooms) {
+		this.chat_rooms = chat_rooms;
 	}
 	public int getWriter() {
 		return writer;
@@ -33,12 +33,10 @@ public class ChatlogDTO {
 	public void setTxt(String txt) {
 		this.txt = txt;
 	}
-	public Timestamp getWriteDate() {
-		return writeDate;
+	public Timestamp getWrite_date() {
+		return write_date;
 	}
-	public void setWriteDate(Timestamp writeDate) {
-		this.writeDate = writeDate;
+	public void setWrite_date(Timestamp write_date) {
+		this.write_date = write_date;
 	}
-	
-	
 }

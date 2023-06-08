@@ -28,7 +28,7 @@
 			
 			stompClient.connect({},function(){
 				alert("접속 성공");
-				const subscription = stompClient.subscribe("/topic/"+${chatlog.chatRooms}, function(message){
+				const subscription = stompClient.subscribe("/topic/"+${chatlog.chat_rooms}, function(message){
 					body = JSON.parse(message.body);
 					console.log(message);
 					console.log(body);
@@ -41,7 +41,7 @@
 			$("#button_send").on("click",function(){
 				const destination = "/app/message";
 				const header = {};
-				const body = JSON.stringify({chatRooms : ${chatlog.chatRooms} , writer : ${loginID} , txt : $("#div_text").html()});
+				const body = JSON.stringify({chatRooms : ${chatlog.chat_rooms} , writer : ${loginID} , txt : $("#div_text").html()});
 				stompClient.send(destination,header,body);
 			})
 		})

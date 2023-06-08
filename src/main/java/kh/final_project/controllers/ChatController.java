@@ -21,7 +21,7 @@ public class ChatController {
 	
 	@RequestMapping("testlink")
 	public String testlink() {
-		return "chat/testbtn";
+		return "chat/chatroom";
 	}
 	
 	@RequestMapping("application")

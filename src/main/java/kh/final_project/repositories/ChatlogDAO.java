@@ -15,4 +15,9 @@ public class ChatlogDAO {
 	public ChatlogDTO selectLog(Long seq) {
 		return db.selectOne("Chatlog.select",seq);
 	}
+	
+	public int insertLog(ChatlogDTO dto) {
+		return db.insert("Chatlog.insert",dto);
+	}
+	
 }

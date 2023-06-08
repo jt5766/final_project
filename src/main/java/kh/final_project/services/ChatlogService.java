@@ -15,4 +15,12 @@ public class ChatlogService {
 	public ChatlogDTO selectLog(Long seq) {
 		return dao.selectLog(seq);
 	}
+	
+	public int insertLog(ChatlogDTO dto,Integer loginID) {
+		if(dto.getWriter() != loginID) {
+			return -1;
+		}
+		return dao.insertLog(dto);
+	}
+	
 }
