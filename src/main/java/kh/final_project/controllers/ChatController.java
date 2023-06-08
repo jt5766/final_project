@@ -19,6 +19,11 @@ public class ChatController {
 	@Autowired
 	private ChatlogService chatlogservice;
 	
+	@RequestMapping("testlink")
+	public String testlink() {
+		return "chat/testbtn";
+	}
+	
 	@RequestMapping("application")
 	public String application(int mentor,int mentee) {
 		chatservice.application(mentor, mentee);
