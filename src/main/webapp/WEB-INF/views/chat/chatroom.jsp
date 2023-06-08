@@ -28,12 +28,11 @@
 			
 			stompClient.connect({},function(){
 				alert("접속 성공");
-				const link = "/topic/"+"${chatlog}";
-				const subscription = stompClient.subscribe(link , function(message){
+				const subscription = stompClient.subscribe("/topic/${chatseq}", function(message){
 					body = JSON.parse(message.body);
 					console.log(message);
 					console.log(body);
-					$("#div_contents").append("<div>"+body.id+" : "+body.message+"</div>");
+					$("#div_contents").append("<div>"+body.writer+" : "+body.txt+"</div>");
 				});
 			},function(){
 				alert("접속 실패");
@@ -42,7 +41,7 @@
 			$("#button_send").on("click",function(){
 				const destination = "/app/message";
 				const header = {};
-				const body = JSON.stringify({chatRooms : "${chatlog}" , writer : ${loginID} , txt : $("#div_text").html()});
+				const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html()});
 				stompClient.send(destination,header,body);
 			})
 		})
@@ -54,7 +53,9 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-md-12" id="div_contents">
-            	
+            	<c:forEach var="log" items="${chatlog}">
+            		${log.writer} : ${log.txt}<br>
+            	</c:forEach>
             </div>
         </div>
         <div class="row">

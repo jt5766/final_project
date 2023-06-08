@@ -24,7 +24,7 @@ public class ChatController {
 	
 	@RequestMapping("testlink")
 	public String testlink(Model model) {
-		List<ChatlistDTO> list = chatservice.select(10000002);
+		List<ChatlistDTO> list = chatservice.select(10000001);
 		model.addAttribute("chatlist", list);
 		return "chat/chatlist";
 	}
@@ -50,8 +50,9 @@ public class ChatController {
 	//이부분 seq 들어가는거 수정 해야함
 	@RequestMapping("entrance")
 	public String entrance(Long seq,Model model) {
-		ChatlogDTO logdto = chatlogservice.selectLog(seq);
-		model.addAttribute("chatlog", seq);
+		List<ChatlogDTO> logdto = chatlogservice.selectLog(seq);
+		model.addAttribute("chatseq",seq);
+		model.addAttribute("chatlog", logdto);
 		return "chat/chatroom";
 	}
 	
