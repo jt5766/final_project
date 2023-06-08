@@ -22,7 +22,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="kh.final_project.controllers" />
-	
+	<context:component-scan base-package="kh.spring.config" />
 	
 	
 </beans:beans>
