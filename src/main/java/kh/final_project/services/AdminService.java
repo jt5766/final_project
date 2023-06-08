@@ -19,10 +19,10 @@ public class AdminService {
 	public void selectGenreType() {
 		CategoryType cy = new CategoryType();
 		cy.setCode(1002);
-		List<CategoryType> list = adminDAO.selectGenreType(cy);
-		for (CategoryType item : list) {
-			System.out.println(item);
-		}
+//		List<CategoryType> list = adminDAO.selectGenreType(cy);
+//		for (CategoryType item : list) {
+//			System.out.println(item);
+//		}
 	}
 
 	public List<CategoryType> selectCategory(String tableName) {

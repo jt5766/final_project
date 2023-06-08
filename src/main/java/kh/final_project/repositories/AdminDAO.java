@@ -14,8 +14,9 @@ import kh.final_project.dto.CategoryType;
 public class AdminDAO {
 	@Autowired
 	SqlSessionTemplate mybatis;
+	
 
-	public List<CategoryType> selectGenreType(CategoryType cy) {
+//	public List<CategoryType> selectGenreType(CategoryType cy) {
 //		mybatis.selectOne("Admin.Proc_GenreType", cy);
 //		System.out.println(cy);
 //
@@ -23,5 +24,5 @@ public class AdminDAO {
 //
 //		mybatis.selectOne("Admin.Proc_GenreType_", result);
 //		return result.get("result");
-	}
+//	}
 }
