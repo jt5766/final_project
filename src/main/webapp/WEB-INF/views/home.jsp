@@ -10,6 +10,8 @@
 <body>
 	<button onclick="location.href='/member/loginForm'">로그인</button>
 	<hr>
+	<button onclick="location.href='/member/mypage'">마이페이지</button>
+	<hr>
 	<button onclick="location.href='/gallery/'">갤러리</button>
 	<hr>
 	<button onclick="location.href='/community/toNotice'">커뮤니티-공지게시판으로</button>

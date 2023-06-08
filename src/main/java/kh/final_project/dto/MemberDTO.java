@@ -5,13 +5,13 @@ import java.security.Timestamp;
 
 public class MemberDTO {
 
-    private int code;
-    private int member_type;
+    private Integer code;
+    private Integer member_type;
     private String email;
-    private int email_type;
+    private Integer email_type;
     private String password;
     private String nickname;
-    private int file_type;
+    private Integer file_type;
     private String file_url;
     private String company;
     private String name;
@@ -27,11 +27,11 @@ public class MemberDTO {
 
 
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public MemberDTO(int code, int member_type, String email, int email_type, String password, String nickname, int file_type, String file_url, String company, String name, String tel, Timestamp join_date, Timestamp stop_date, String yn) {
+    public MemberDTO(Integer code, Integer member_type, String email, Integer email_type, String password, String nickname, Integer file_type, String file_url, String company, String name, String tel, Timestamp join_date, Timestamp stop_date, String yn) {
         this.code = code;
         this.member_type = member_type;
         this.email = email;
@@ -48,15 +48,15 @@ public class MemberDTO {
         this.yn = yn;
     }
 
-    public void setCode(int code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
-    public int getMember_type() {
+    public Integer getMember_type() {
         return member_type;
     }
 
-    public void setMember_type(int member_type) {
+    public void setMember_type(Integer member_type) {
         this.member_type = member_type;
     }
 
@@ -68,11 +68,11 @@ public class MemberDTO {
         this.email = email;
     }
 
-    public int getEmail_type() {
+    public Integer getEmail_type() {
         return email_type;
     }
 
-    public void setEmail_type(int email_type) {
+    public void setEmail_type(Integer email_type) {
         this.email_type = email_type;
     }
 
@@ -92,11 +92,11 @@ public class MemberDTO {
         this.nickname = nickname;
     }
 
-    public int getFile_type() {
+    public Integer getFile_type() {
         return file_type;
     }
 
-    public void setFile_type(int file_type) {
+    public void setFile_type(Integer file_type) {
         this.file_type = file_type;
     }
 
@@ -154,5 +154,25 @@ public class MemberDTO {
 
     public void setYn(String yn) {
         this.yn = yn;
+    }
+
+    @Override
+    public String toString() {
+        return "MemberDTO{" +
+                "\ncode=" + code +
+                "\nmember_type=" + member_type +
+                "\nemail='" + email + '\'' +
+                "\nemail_type=" + email_type +
+                "\npassword='" + password + '\'' +
+                "\nnickname='" + nickname + '\'' +
+                "\nfile_type=" + file_type +
+                "\nfile_url='" + file_url + '\'' +
+                "\ncompany='" + company + '\'' +
+                "\nname='" + name + '\'' +
+                "\ntel='" + tel + '\'' +
+                "\njoin_date=" + join_date +
+                "\nstop_date=" + stop_date +
+                "\nyn='" + yn + '\'' +
+                '}';
     }
 }

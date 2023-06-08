@@ -5,6 +5,7 @@ import kh.final_project.dto.MemberDTO;
 import kh.final_project.repositories.MemberDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -19,20 +20,22 @@ public class MemberController {
     private HttpSession session;
 
 
-    @RequestMapping("/signup")
+    @RequestMapping("signup")
     public String signup(){
         return"member/signupForm";
     }
 
-    @RequestMapping("/loginForm")
+    @RequestMapping("loginForm")
     public String loginForm(){
         return "/member/loginForm";
     }
 
-    @RequestMapping("/login")
+    @PostMapping("login")
     public String login(MemberDTO dto){
+        dto.setEmail_type(1002);
         mdao.login(dto);
 
+        System.out.println(dto);
 
         if(dto.getNickname() != null){
             session.setAttribute("code",dto.getCode());
@@ -40,5 +43,10 @@ public class MemberController {
             session.setAttribute("memberType",dto.getMember_type());
         }
         return "/member/loginForm";
+    }
+
+    @RequestMapping("mypage")
+    public String mypage(){
+        return "/member/myPageForm";
     }
 }
