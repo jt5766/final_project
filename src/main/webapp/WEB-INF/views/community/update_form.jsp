@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>커뮤니티 글 작성</title>
+<title>커뮤니티 글 수정</title>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -15,7 +15,7 @@
 <style>
 * {
 	box-sizing: border-box;
-	border: 0px solid black;
+	border: 1px solid black;
 	text-align: center;
 }
 
@@ -28,12 +28,12 @@
 <body>
 	<div>
 		<div>GNB</div>
-		<form action="/community/insertBoard" method="post">
+		<form action="/community/updateBoard" method="post">
 			<div>
 				<select>
 					<c:forEach var="i" items="${selectTag}">
 						<c:choose>
-							<c:when test="${i.code == boardCode}">
+							<c:when test="${i.code == info.board_type}">
 								<option checked>${i.name}</option>
 							</c:when>
 							<c:otherwise>
@@ -44,15 +44,16 @@
 				</select>
 			</div>
 			<div>
-				<input type="hidden" name="board_type" value="${boardCode}">
-				<input type="text" name="title" placeholder="제목을 입력해주세요" id="inputTitle">
+				<input type="hidden" name="board_type" value="${info.board_type}">
+				<input type="hidden" name="seq" value="${info.seq}">
+				<input type="text" name="title" placeholder="제목을 입력해주세요" id="inputTitle" value="${info.title}">
 			</div>
 			<div>
-				<textarea name="txt" id="textarea_contents" cols="30" rows="10"></textarea>
+				<textarea name="txt" id="textarea_contents" cols="30" rows="10">${info.txt}</textarea>
 			</div>
 			<div>
-				<input type="submit" value="등록/수정">
-				<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${boardCode}'">
+				<input type="submit" value="수정하기">
+				<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${info.board_type}'">
 			</div>
 		</form>
 		<div>FOOTER</div>

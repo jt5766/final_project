@@ -54,6 +54,7 @@
 					<th>글 번호</th>
 					<th>제목</th>
 					<th>작성자</th>
+					<th>작성일</th>
 					<th>조회수</th>
 				</tr>
 				<c:forEach var="i" items="${boardList}">
@@ -61,12 +62,17 @@
 						<td>${i.seq}</td>
 						<td>${i.title}</td>
 						<td>${i.writer}</td>
+						<td>${i.formed_date}</td>
 						<td>${i.total_count}</td>
 					</tr>
 				</c:forEach>
 				<tr>
-					<td colspan="4">
+					<td>
+					</td>
+					<td colspan="3">
 						<a href="#">1 2 3 4 5</a>
+					</td>
+					<td>
 						<input type="button" value="등록" onclick="location.href = '/community/toWriteForm?code=${categoryType.code}'">
 					</td>
 				</tr>

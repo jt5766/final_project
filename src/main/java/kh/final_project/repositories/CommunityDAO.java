@@ -29,4 +29,12 @@ public class CommunityDAO {
 	public BoardsDTO selectBoardView(BoardsDTO boardsDTO) {
 		return sst.selectOne("Community.selectBoardView", boardsDTO);
 	}
+
+	public int updateBoard(BoardsDTO boardsDTO) {
+		return sst.update("Community.updateBoard", boardsDTO);
+	}
+
+	public int deleteBoard(BoardsDTO boardsDTO) {
+		return sst.delete("Community.deleteBoard", boardsDTO);
+	}
 }
