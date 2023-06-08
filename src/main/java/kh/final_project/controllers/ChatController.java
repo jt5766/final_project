@@ -2,6 +2,8 @@ package kh.final_project.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +24,12 @@ public class ChatController {
 	@Autowired
 	private ChatlogService chatlogservice;
 	
+	@Autowired
+	private HttpSession session;
+	
 	@RequestMapping("testlink")
 	public String testlink(Model model) {
-		List<ChatlistDTO> list = chatservice.select(10000001);
+		List<ChatlistDTO> list = chatservice.select((int)session.getAttribute("code"));
 		model.addAttribute("chatlist", list);
 		return "chat/chatlist";
 	}
