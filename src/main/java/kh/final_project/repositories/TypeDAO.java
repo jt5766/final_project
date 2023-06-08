@@ -26,7 +26,7 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByMemberType() {
-		return mybatis.selectList("Type.Select", "MEMBER_TYPE");
+		return mybatis.selectList("Type.SelectType1", "MEMBER_TYPE");
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByFileType() {
-		return mybatis.selectList("Type.Select", "FILE_TYPE");
+		return mybatis.selectList("Type.SelectType1", "FILE_TYPE");
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByCategoryType() {
-		return mybatis.selectList("Type.Select", "CATEGORY_TYPE");
+		return mybatis.selectList("Type.SelectType1", "CATEGORY_TYPE");
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByBoardType() {
-		return mybatis.selectList("Type.Select", "BOARD_TYPE");
+		return mybatis.selectList("Type.SelectType1", "BOARD_TYPE");
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByComplaintType() {
-		return mybatis.selectList("Type.Select", "COMPLAINT_TYPE");
+		return mybatis.selectList("Type.SelectType1", "COMPLAINT_TYPE");
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByReplyType() {
-		return mybatis.selectList("Type.Select", "REPLY_TYPE");
+		return mybatis.selectList("Type.SelectType1", "REPLY_TYPE");
 	}
 
 	// --------------------------------------------------
@@ -87,7 +87,7 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByEmailType() {
-		return mybatis.selectList("Type.Select", "EMAIL_TYPE");
+		return mybatis.selectList("Type.SelectType2", "EMAIL_TYPE");
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByGenreType() {
-		return mybatis.selectList("Type.Select", "GENRE_TYPE");
+		return mybatis.selectList("Type.SelectType2", "GENRE_TYPE");
 	}
 
 	// --------------------------------------------------
@@ -108,7 +108,7 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByGallery_Cards_Sort() {
-		return mybatis.selectList("Type.Select", "GALLERY_CARDS_SORT");
+		return mybatis.selectList("Type.SelectType2", "GALLERY_CARDS_SORT");
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByGallery_Cards_Search() {
-		return mybatis.selectList("Type.Select", "GALLERY_CARDS_SEARCH");
+		return mybatis.selectList("Type.SelectType2", "GALLERY_CARDS_SEARCH");
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByGallery_Contents_Sort() {
-		return mybatis.selectList("Type.Select", "GALLERY_CONTENTS_SORT");
+		return mybatis.selectList("Type.SelectType2", "GALLERY_CONTENTS_SORT");
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByCommunity_Sort() {
-		return mybatis.selectList("Type.Select", "COMMUNITY_SORT");
+		return mybatis.selectList("Type.SelectType2", "COMMUNITY_SORT");
 	}
 
 	/**
@@ -148,6 +148,6 @@ public class TypeDAO {
 	 * @return List<CategoryType>
 	 */
 	public List<CategoryType> selectByCommunity_Search() {
-		return mybatis.selectList("Type.Select", "COMMUNITY_SEARCH");
+		return mybatis.selectList("Type.SelectType2", "COMMUNITY_SEARCH");
 	}
 }

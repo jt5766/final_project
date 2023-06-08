@@ -4,4 +4,7 @@
 	<select id="Select" resultType="kh.final_project.dto.CategoryType">
 		SELECT * FROM ${value}
 	</select>
+	<select id="SelectType2" resultType="kh.final_project.dto.CategoryType">
+		SELECT * FROM ${value} ORDER BY SORT ASC;
+	</select>
 </mapper>
