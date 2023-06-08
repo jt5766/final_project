@@ -4,47 +4,48 @@ package kh.final_project.dto;
 import java.time.LocalDateTime;
 
 public class GalleryContent {
-    private Long galleryCards;
+    private Long gallery_cards;
     private Long seq;
     private String title;
-    private String fileUrl;
-    private String videoUrl;
+    private String file_url;
+    private String video_url;
     private String txt;
     private String yn; //Y,N
-    private LocalDateTime writeDate;
-    private Integer totalCount;
-    private Integer dayCount;
+    private LocalDateTime write_date;
+    private Integer total_count;
+    private Integer day_count;
+    private Integer category_type;
 
     public GalleryContent() {}
 
-    public GalleryContent(Long galleryCards,
+    public GalleryContent(Long gallery_cards,
                           Long seq,
                           String title,
-                          String fileUrl,
-                          String videoUrl,
+                          String file_url,
+                          String video_url,
                           String txt,
                           String yn,
                           LocalDateTime writeDate,
-                          Integer totalCount,
-                          Integer dayCount) {
-        this.galleryCards = galleryCards;
+                          Integer total_count,
+                          Integer day_count) {
+        this.gallery_cards = gallery_cards;
         this.seq = seq;
         this.title = title;
-        this.fileUrl = fileUrl;
-        this.videoUrl = videoUrl;
+        this.file_url = file_url;
+        this.video_url = video_url;
         this.txt = txt;
         this.yn = yn;
-        this.writeDate = writeDate;
-        this.totalCount = totalCount;
-        this.dayCount = dayCount;
+        this.write_date = writeDate;
+        this.total_count = total_count;
+        this.day_count = day_count;
     }
 
-    public Long getGalleryCards() {
-        return galleryCards;
+    public Long getGallery_cards() {
+        return gallery_cards;
     }
 
-    public void setGalleryCards(Long galleryCards) {
-        this.galleryCards = galleryCards;
+    public void setGallery_cards(Long gallery_cards) {
+        this.gallery_cards = gallery_cards;
     }
 
     public Long getSeq() {
@@ -63,20 +64,20 @@ public class GalleryContent {
         this.title = title;
     }
 
-    public String getFileUrl() {
-        return fileUrl;
+    public String getFile_url() {
+        return file_url;
     }
 
-    public void setFileUrl(String fileUrl) {
-        this.fileUrl = fileUrl;
+    public void setFile_url(String file_url) {
+        this.file_url = file_url;
     }
 
-    public String getVideoUrl() {
-        return videoUrl;
+    public String getVideo_url() {
+        return video_url;
     }
 
-    public void setVideoUrl(String videoUrl) {
-        this.videoUrl = videoUrl;
+    public void setVideo_url(String video_url) {
+        this.video_url = video_url;
     }
 
     public String getTxt() {
@@ -95,27 +96,52 @@ public class GalleryContent {
         this.yn = yn;
     }
 
-    public LocalDateTime getWriteDate() {
-        return writeDate;
+    public LocalDateTime getWrite_date() {
+        return write_date;
     }
 
-    public void setWriteDate(LocalDateTime writeDate) {
-        this.writeDate = writeDate;
+    public void setWrite_date(LocalDateTime write_date) {
+        this.write_date = write_date;
     }
 
-    public Integer getTotalCount() {
-        return totalCount;
+    public Integer getTotal_count() {
+        return total_count;
     }
 
-    public void setTotalCount(Integer totalCount) {
-        this.totalCount = totalCount;
+    public void setTotal_count(Integer total_count) {
+        this.total_count = total_count;
     }
 
-    public Integer getDayCount() {
-        return dayCount;
+    public Integer getDay_count() {
+        return day_count;
     }
 
-    public void setDayCount(Integer dayCount) {
-        this.dayCount = dayCount;
+    public void setDay_count(Integer day_count) {
+        this.day_count = day_count;
+    }
+
+    public Integer getCategory_type() {
+        return category_type;
+    }
+
+    public void setCategory_type(Integer category_type) {
+        this.category_type = category_type;
+    }
+
+    @Override
+    public String toString() {
+        return "GalleryContent{" +
+                "\ngallery_cards=" + gallery_cards +
+                "\nseq=" + seq +
+                "\ntitle='" + title + '\'' +
+                "\nfile_url='" + file_url + '\'' +
+                "\nvideo_url='" + video_url + '\'' +
+                "\ntxt='" + txt + '\'' +
+                "\nyn='" + yn + '\'' +
+                "\nwrite_date=" + write_date +
+                "\ntotal_count=" + total_count +
+                "\nday_count=" + day_count +
+                "\ncategory_type=" + category_type +
+                '}';
     }
 }

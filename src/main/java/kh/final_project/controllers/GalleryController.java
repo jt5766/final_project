@@ -2,7 +2,7 @@ package kh.final_project.controllers;
 
 import kh.final_project.dto.GalleryCard;
 import kh.final_project.dto.GalleryContent;
-import kh.final_project.dto.GalleryView;
+import kh.final_project.dto.GalleryCardView;
 import kh.final_project.services.GalleryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,25 +24,35 @@ public class GalleryController {
 
     @GetMapping
     public String toGallery(Model model) {
-        List<GalleryView> cards = galleryService.selectAllCards();
+        List<GalleryCardView> cards = galleryService.selectAllCards();
         model.addAttribute("cards", cards);
         return "/gallery/gallery";
     }
 
     @GetMapping("/card/{cardSeq}")
     public String toCard(@PathVariable Integer cardSeq, Model model) {
-        GalleryView card = galleryService.selectOneCard(cardSeq);
+        GalleryCardView card = galleryService.selectOneCard(cardSeq);
+        List<GalleryContent> contents = galleryService.selectAllContents(cardSeq);
         model.addAttribute("card", card);
+        model.addAttribute("contents", contents);
         return "/gallery/card";
     }
 
-    @GetMapping("/card/{cardSeq}/contents")
-    public String toCardContent(@PathVariable Integer cardSeq) {
+    @GetMapping("/card/{cardSeq}/contents/{contentSeq}")
+    public String toContent(@PathVariable Integer cardSeq, @PathVariable Integer contentSeq, Model model) {
+        GalleryContent content = galleryService.selectOneContent(cardSeq, contentSeq);
+        model.addAttribute("content", content);
         return "/gallery/cardcontents";
     }
 
+    @GetMapping("/card/{cardSeq}/insert/{categoryType}")
+    public String toContentInsert(@ModelAttribute("categoryType") @PathVariable Integer categoryType, @ModelAttribute("cardSeq") @PathVariable Integer cardSeq) {
+        return "/gallery/cardcontentinsert";
+    }
+
     @PostMapping("/card/{cardSeq}/contents")
-    public String insertCardContent(GalleryContent content, @PathVariable Integer cardSeq) {
+    public String insertContent(GalleryContent content, @PathVariable Integer cardSeq) {
+        System.out.println("content = " + content);
         return "redirect:/gallery/card/{cardSeq}";
     }
 

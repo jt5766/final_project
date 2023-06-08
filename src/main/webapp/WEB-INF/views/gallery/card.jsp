@@ -6,6 +6,12 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <style>
+        .thumbnail{
+            width: 100px;
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid">
@@ -19,7 +25,7 @@
     <div class="row card-info">
         <div class="col-md-12">
             <div class="thumbnail_url">
-                <img src="${card.thumbnail_url}" alt="${card.thumbnail_url}">
+                <img class="thumbnail" src="${card.thumbnail_url}" alt="${card.thumbnail_url}">
             </div>
             <div class="card-body">
                 <div class="info">
@@ -61,21 +67,28 @@
                     <button>삭제</button>
                 </div>
                 <div class="return-button">
-                    <a href="/gallery">
-                        <button>돌아가기</button>
-                    </a>
+                    <button type="button" onclick="location.href='/gallery'">돌아가기</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <button>등록</button>
+            <button type="button" onclick="location.href='/gallery/card/${card.seq}/contents/${card.category_type}'">등록</button>
+            <!--TODO: 링크 제대로 안넘어감. 오류 수정해야함-->
         </div>
         <div class="col-md-12">
-            <a href="#">최신</a> / <a href="#">1화</a>
+            <a href="#">최신</a><div class="vr"></div><a href="#">1화</a>
         </div>
     </div>
+    <c:forEach items="${contents}" var="content">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="/gallery/card/${card.seq}/contents/${content.seq}">${content.title}</a>
+            </div>
+        </div>
+    </c:forEach>
+    <br>
     <div class="row">
         <div class="col-md-12">
             <a href="#">ㅁㅁㅁㅁㅁㅁ1화</a>

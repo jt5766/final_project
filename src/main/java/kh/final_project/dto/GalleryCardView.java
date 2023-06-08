@@ -1,6 +1,6 @@
 package kh.final_project.dto;
 
-public class GalleryView {
+public class GalleryCardView {
     private Long seq;
     private String thumbnail_url;
     private Integer category_type;

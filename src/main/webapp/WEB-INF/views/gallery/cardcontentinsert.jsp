@@ -16,55 +16,68 @@
     </div>
 </div>
 <div class="container-xl">
-    <div class="row">
-        <div class="col-md-12">
-            <label for="input_title">
-                <input type="text" name="title" id="input_title">
-            </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <label for="input_file">
-                [이미지/오디오] 파일 선택 - 만화 / 그림 / 사진 / 음악
-                <input type="file" name="file" id="input_file">
-            </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <label for="input_video">
-                비디오 파일 URL [유튜브 / 네이버 블로그] - 영상
-                <input type="url" name="video" id="input_video">
-            </label>
-            <div class="preview">
-
+    <form action="/gallery/card/${cardSeq}/content">
+        <div class="row">
+            <div class="col-md-12">
+                <label for="input_title">제목
+                    <input type="text" name="title" id="input_title">
+                </label>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <label for="input_gallery_content">
-                <textarea name="gallery_content" id="input_gallery_content" cols="30" rows="10">
+        <c:choose>
+            <c:when test="${content.category_type == 1005}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="input_video_url">
+                            비디오 파일 URL [유튜브 / 네이버 블로그] - 영상
+                            <input type="url" name="video_url" id="input_video_url">
+                        </label>
+                        <div class="preview">
+
+                        </div>
+                    </div>
+                </div>
+            </c:when>
+            <c:when test="${content.category_type == 1001}"></c:when>
+            <c:otherwise>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="input_file_url">
+                            [이미지/오디오] 파일 선택 - 만화 / 그림 / 사진 / 음악
+                            <input type="file" name="file_url" id="input_file_url">
+                        </label>
+                    </div>
+                </div>
+                <!--TODO: file url로 업로드 되는지 확인-->
+            </c:otherwise>
+        </c:choose>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="input_txt">
+                <textarea name="txt" id="input_txt" cols="30" rows="10">
 
                 </textarea>
-            </label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="input_allow_show" value="Y">
-                <label class="form-check-label" for="input_allow_show">공개 여부</label>
+                </label>
             </div>
         </div>
-        <div class="col-md-6">
-            <button>등록 / 수정</button>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-check form-switch">
+                    <input type="hidden" name="yn" id="hidden_allow" value="N">
+                    <input class="form-check-input" type="checkbox" role="switch" id="input_allow_show" value="Y">
+                    <label class="form-check-label" for="input_allow_show">공개 여부</label>
+                </div>
+            </div>
         </div>
-        <div class="col-md-6">
-            <button>돌아가기</button>
+        <div class="row">
+            <div class="col-md-6">
+                <button type="submit">등록</button>
+            </div>
+            <div class="col-md-6">
+                <button type="button">돌아가기</button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 <div class="container-fluid">
     <div class="row footer">
@@ -73,5 +86,16 @@
         </div>
     </div>
 </div>
+<script>
+    const allowVal = $('#input_allow_show');
+    $(allowVal).on('change', function () {
+        const hiddenAllow = $('#hidden_allow');
+        if (allowVal.prop('checked')) {
+            hiddenAllow.val('Y');
+        } else {
+            hiddenAllow.val('N');
+        }
+    });
+</script>
 </body>
 </html>

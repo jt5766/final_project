@@ -1,7 +1,8 @@
 package kh.final_project.services;
 
 import kh.final_project.dto.GalleryCard;
-import kh.final_project.dto.GalleryView;
+import kh.final_project.dto.GalleryContent;
+import kh.final_project.dto.GalleryCardView;
 import kh.final_project.repositories.GalleryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,19 @@ public class GalleryService {
         galleryDAO.insertCard(card);
     }
 
-    public List<GalleryView> selectAllCards() {
+    public List<GalleryCardView> selectAllCards() {
         return galleryDAO.selectAllCards();
     }
 
-    public GalleryView selectOneCard(Integer cardSeq) {
+    public GalleryCardView selectOneCard(Integer cardSeq) {
         return galleryDAO.selectOneCard(cardSeq);
+    }
+
+    public GalleryContent selectOneContent(Integer cardSeq, Integer contentSeq) {
+        return galleryDAO.selectOneContent(cardSeq, contentSeq);
+    }
+
+    public List<GalleryContent> selectAllContents(Integer cardSeq) {
+        return galleryDAO.selectAllContents(cardSeq);
     }
 }
