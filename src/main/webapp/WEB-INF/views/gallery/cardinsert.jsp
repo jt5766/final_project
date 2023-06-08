@@ -28,7 +28,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <input type="hidden" name="categoryType" value="${categoryType}">
+                <input type="hidden" name="category_type" value="${categoryType}">
                 <input type="hidden" name="writer" value="${loginID}">
                 <label for="input_title">제목</label>
                 <input type="text" name="title" id="input_title" placeholder="대,소문자 / 숫자 / 한글 : 최대 30자">
@@ -65,18 +65,16 @@
                 <input type="text" name="catchphrase" id="input_catchphrase">
             </div>
         </div>
-        <c:if test="${categoryType <= 1002}">
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="input_synopsis">줄거리</label>
-                    <input type="text" name="synopsis" id="input_synopsis">
-                </div>
-            </div>
-        </c:if>
         <div class="row">
             <div class="col-md-12">
-                <label for="input_thumbnail">썸네일</label>
-                <input type="url" name="thumbnail" id="input_thumbnail" placeholder="http://...">
+                <label for="input_synopsis">줄거리</label>
+                <input type="text" name="synopsis" id="input_synopsis">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="input_thumbnail_url">썸네일</label>
+                <input type="url" name="thumbnail_url" id="input_thumbnail_url" placeholder="http://...">
             </div>
         </div>
         <div class="row">

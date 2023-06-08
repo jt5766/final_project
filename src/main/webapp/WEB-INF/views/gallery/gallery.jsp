@@ -11,6 +11,10 @@
             box-sizing: border-box;
             border: 1px solid black;
         }
+        .thumbnail{
+            width: 100px;
+            height: 100px;
+        }
     </style>
 </head>
 <body>
@@ -39,48 +43,48 @@
                 <option value="name">닉네임</option>
             </select>
             <input type="text" name="search-keyword">
-            <span>new</span>
-            <span>old</span>
-            <span>pop</span>
+            <a href="#"><span>new</span></a>
+            <div class="vr"></div>
+            <a href="#"><span>old</span></a>
+            <div class="vr"></div>
+            <a href="#"><span>pop</span></a>
         </div>
     </div>
     <div class="row gallery-content">
-        <div class="col-md-6">
-            <div class="gallery-card">
-                <div class="thumbnail">
-
-                </div>
-                <div class="card-body">
-                    <div class="category">
-
+        <c:forEach items="${cards}" var="card">
+            <div class="col-md-6">
+                <div class="gallery-card" onclick="location.href='/card/${card.seq}'">
+                    <div class="thumbnail_url">
+                        <img class="thumbnail" src="${card.thumbnail_url}" alt="${card.thumbnail_url}">
                     </div>
-                    <div class="title">
-
-                    </div>
-                    <div class="content">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="gallery-card">
-                <div class="thumbnail">
-
-                </div>
-                <div class="card-body">
-                    <div class="category">
-
-                    </div>
-                    <div class="title">
-
-                    </div>
-                    <div class="content">
-
+                    <div class="card-body">
+                        <div class="info">
+                            <div class="category">
+                                ${card.category_name}
+                            </div>
+                            <c:if test="${card.genre_type1 != null}">
+                                <div class="genre-name">${card.genre_name1}</div>
+                            </c:if>
+                            <c:if test="${card.genre_type2 != null}">
+                                <div class="genre-name">${card.genre_name2}</div>
+                            </c:if>
+                        </div>
+                        <div class="title">
+                            ${card.title}
+                        </div>
+                        <div class="writer">
+                            ${card.member_name}
+                        </div>
+                        <div class="catchphrase">
+                            ${card.catchphrase}
+                        </div>
+                        <div class="synopsis">
+                            ${card.synopsis}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </c:forEach>
     </div>
     <select name="categoryType" id="category">
         <option value="1001">소설</option>

@@ -7,12 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 </head>
 <style>
     *{box-sizing: border-box;}
     div{
-        /* border: 1px solid black; */
+         /*border: 1px solid black;*/
     }
     #container{
         margin: auto;
@@ -43,9 +45,9 @@
         height: 60%;
     }
     #btn_box div{
-        float: left;
+
         height: 100%;
-        width: 50%;
+        width: 100%;
     }
 
     .center_box{
@@ -75,7 +77,7 @@
         width: 5%;
         line-height: 200%;
         font-size: 20px;
-        flex: 1;
+        flex: 0.5;
     }
     #drop{
         width: 47.5%;
@@ -105,17 +107,15 @@
         height: 100%;
     }
 
-    #btn1{
+    .lab{
+        font-size:30pt ;
+        flex: 1;
+    }
+    .btn-check{
 
-        height: 100%;
-        width: 100%;
-        font-size: 80px;
     }
-    #btn2{
-        height: 100%;
-        width: 100%;
-        font-size: 80px;
-    }
+
+
 
     #body_right{
         width: 30%;
@@ -139,8 +139,18 @@
         <div id="body_left">left</div>
         <div id="body_center">
             <div id="btn_box">
-                <div><button id="btn1">일반인</button></div>
-                <div><button id="btn2">전문가</button></div>
+                <input type="hidden" name="code" value="1000">
+
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check " name="code" value="1000" id="btn1" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary lab p-0" for="btn1">일반</label>
+
+                    <input type="radio" class="btn-check " name="code" value="2000" id="btn2" autocomplete="off">
+                    <label class="btn btn-outline-primary lab p-0" for="btn2">전문가</label>
+                </div>
+
+<%--                <div><button id="btn1" >일반인</button></div>--%>
+<%--                <div><button id="btn2" >전문가</button></div>--%>
             </div>
             <div class="center_box"></div>
             <div id="email_font">이메일</div>
@@ -169,5 +179,10 @@
 
 </div>
 </body>
+<script>
+    $()
+
+
+</script>
 </html>
 

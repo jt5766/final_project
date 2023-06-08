@@ -95,7 +95,7 @@
 
 </style>
 <body>
-<form action="/member/login">
+<form action="/member/login" method="post">
     <div id="container">
         <div id="header">GNB</div>
         <div id="body">
@@ -132,6 +132,9 @@
 </body>
 
 <script>
+
+
+
     $("#signup_btn").click(function(){
         location.href="/member/signup";
     })

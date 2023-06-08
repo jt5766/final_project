@@ -14,13 +14,13 @@ public class ChatlogController {
 
 	@Autowired
 	private SimpMessagingTemplate writer;
-	
+
 	@Autowired
 	private ChatlogService chatlogservice;
-	
+
 	// @SendTo 는 전송하고자 하는 구독 채녈명이 정적일 때 사용하기 좋음
 	// SimpmessagingTemplate 은 전송하고자 하는 구독 채널명이 동적일 때 사용 가능
-	
+
 	@MessageMapping("/message")
 	public void message(ChatlogDTO dto, SimpMessageHeaderAccessor smha) {
 		Integer loginID = (Integer)smha.getSessionAttributes().get("loginID");

@@ -5,41 +5,43 @@ import java.util.List;
 
 public class GalleryCard {
     private Long seq;
-    private Integer categoryType;
+    private Integer category_type;
     private List<Integer> genreType;
+    private Integer genre_type1;
+    private Integer genre_type2;
     private String ai;
     private String title;
-    private String writer; //Y,N
+    private Integer writer;
     private String catchphrase;
     private String synopsis;
-    private String thumbnail;
+    private String thumbnail_url;
     private String yn; // Y,N
-    private LocalDateTime writeDate;
+    private LocalDateTime write_date;
 
     public GalleryCard() {}
 
     public GalleryCard(Long seq,
-                       Integer categoryType,
+                       Integer category_type,
                        List<Integer> genreType,
                        String ai,
                        String title,
-                       String writer,
+                       Integer writer,
                        String catchphrase,
                        String synopsis,
-                       String thumbnail,
+                       String thumbnail_url,
                        String yn,
-                       LocalDateTime writeDate) {
+                       LocalDateTime write_date) {
         this.seq = seq;
-        this.categoryType = categoryType;
+        this.category_type = category_type;
         this.genreType = genreType;
         this.ai = ai;
         this.title = title;
         this.writer = writer;
         this.catchphrase = catchphrase;
         this.synopsis = synopsis;
-        this.thumbnail = thumbnail;
+        this.thumbnail_url = thumbnail_url;
         this.yn = yn;
-        this.writeDate = writeDate;
+        this.write_date = write_date;
     }
 
     public Long getSeq() {
@@ -50,12 +52,12 @@ public class GalleryCard {
         this.seq = seq;
     }
 
-    public Integer getCategoryType() {
-        return categoryType;
+    public Integer getCategory_type() {
+        return category_type;
     }
 
-    public void setCategoryType(Integer categoryType) {
-        this.categoryType = categoryType;
+    public void setCategory_type(Integer category_type) {
+        this.category_type = category_type;
     }
 
     public List<Integer> getGenreType() {
@@ -63,6 +65,10 @@ public class GalleryCard {
     }
 
     public void setGenreType(List<Integer> genreType) {
+        this.genre_type1 = genreType.get(0);
+        if (genreType.size() > 1) {
+            this.genre_type2 = genreType.get(1);
+        }
         this.genreType = genreType;
     }
 
@@ -82,11 +88,11 @@ public class GalleryCard {
         this.title = title;
     }
 
-    public String getWriter() {
+    public Integer getWriter() {
         return writer;
     }
 
-    public void setWriter(String writer) {
+    public void setWriter(Integer writer) {
         this.writer = writer;
     }
 
@@ -106,12 +112,12 @@ public class GalleryCard {
         this.synopsis = synopsis;
     }
 
-    public String getThumbnail() {
-        return thumbnail;
+    public String getThumbnail_url() {
+        return thumbnail_url;
     }
 
-    public void setThumbnail(String thumbnail) {
-        this.thumbnail = thumbnail;
+    public void setThumbnail_url(String thumbnail_url) {
+        this.thumbnail_url = thumbnail_url;
     }
 
     public String getYn() {
@@ -122,28 +128,30 @@ public class GalleryCard {
         this.yn = yn;
     }
 
-    public LocalDateTime getWriteDate() {
-        return writeDate;
+    public LocalDateTime getWrite_date() {
+        return write_date;
     }
 
-    public void setWriteDate(LocalDateTime writeDate) {
-        this.writeDate = writeDate;
+    public void setWrite_date(LocalDateTime write_date) {
+        this.write_date = write_date;
     }
 
     @Override
     public String toString() {
         return "GalleryCard{" +
                 "seq=" + seq +
-                "\ncategoryType=" + categoryType +
+                "\ncategory_type=" + category_type +
                 "\ngenreType=" + genreType +
+                "\ngenre_type1=" + genre_type1 +
+                "\ngenre_type2=" + genre_type2 +
                 "\nai='" + ai + '\'' +
                 "\ntitle='" + title + '\'' +
                 "\nwriter='" + writer + '\'' +
                 "\ncatchphrase='" + catchphrase + '\'' +
                 "\nsynopsis='" + synopsis + '\'' +
-                "\nthumbnail='" + thumbnail + '\'' +
+                "\nthumbnail_url='" + thumbnail_url + '\'' +
                 "\nyn='" + yn + '\'' +
-                "\nwriteDate=" + writeDate +
+                "\nwrite_date=" + write_date +
                 '}';
     }
 }
