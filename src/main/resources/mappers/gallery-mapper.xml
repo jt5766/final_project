@@ -2,7 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Gallery">
     <insert id="insert">
-        insert into gallery_cards values(GALLERY_CARDS_SEQ.NEXTVAL, ${category_type}, ${genre_type1}, #{ai}, #{title}, ${writer}, #{catchphrase}, #{synopsis}, #{thumbnail_url}, #{yn}, default, ${genre_type2})
+        insert into gallery_cards values(GALLERY_CARDS_SEQ.NEXTVAL, ${category_type},
+        <choose>
+            <when test="genre_type1 != null">
+                ${genre_type1},
+            </when>
+            <otherwise>
+                null,
+            </otherwise>
+        </choose>
+         #{ai}, #{title}, ${writer}, #{catchphrase}, #{synopsis}, #{thumbnail_url}, #{yn}, default,
+        <choose>
+            <when test="genre_type2 != null">
+                ${genre_type2})
+            </when>
+            <otherwise>
+                null)
+            </otherwise>
+        </choose>
     </insert>
     <select id="selectAll" resultType="kh.final_project.dto.GalleryView">
         select * from view_gallery_cards

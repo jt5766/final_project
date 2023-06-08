@@ -30,6 +30,7 @@ public class GalleryController {
 
     @GetMapping("/card/{cardSeq}")
     public String toCard(@PathVariable String cardSeq, Model model) {
+        
         return "/gallery/card";
     }
 

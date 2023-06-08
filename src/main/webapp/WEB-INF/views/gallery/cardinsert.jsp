@@ -65,14 +65,12 @@
                 <input type="text" name="catchphrase" id="input_catchphrase">
             </div>
         </div>
-        <c:if test="${categoryType <= 1002}">
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="input_synopsis">줄거리</label>
-                    <input type="text" name="synopsis" id="input_synopsis">
-                </div>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="input_synopsis">줄거리</label>
+                <input type="text" name="synopsis" id="input_synopsis">
             </div>
-        </c:if>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <label for="input_thumbnail_url">썸네일</label>

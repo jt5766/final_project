@@ -11,6 +11,10 @@
             box-sizing: border-box;
             border: 1px solid black;
         }
+        .thumbnail{
+            width: 100px;
+            height: 100px;
+        }
     </style>
 </head>
 <body>
@@ -50,8 +54,8 @@
         <c:forEach items="${cards}" var="card">
             <div class="col-md-6">
                 <div class="gallery-card" onclick="location.href='/card/${card.seq}'">
-                    <div class="thumbnail">
-                        <img src="${card.thumbnail_url}" alt="${card.thumbnail_url}">
+                    <div class="thumbnail_url">
+                        <img class="thumbnail" src="${card.thumbnail_url}" alt="${card.thumbnail_url}">
                     </div>
                     <div class="card-body">
                         <div class="info">
