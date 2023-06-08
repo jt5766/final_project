@@ -19,10 +19,14 @@ public class GalleryDAO {
     }
 
     public void insertCard(GalleryCard card) {
-        db.insert("Gallery.insert", card);
+        db.insert("Gallery.insertCard", card);
     }
 
-    public List<GalleryView> selectAll() {
-        return db.selectList("Gallery.selectAll");
+    public List<GalleryView> selectAllCards() {
+        return db.selectList("Gallery.selectAllCards");
+    }
+
+    public GalleryView selectOneCard(Integer cardSeq) {
+        return db.selectOne("Gallery.selectOneCard", cardSeq);
     }
 }

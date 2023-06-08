@@ -22,7 +22,11 @@ public class GalleryService {
         galleryDAO.insertCard(card);
     }
 
-    public List<GalleryView> selectAll() {
-        return galleryDAO.selectAll();
+    public List<GalleryView> selectAllCards() {
+        return galleryDAO.selectAllCards();
+    }
+
+    public GalleryView selectOneCard(Integer cardSeq) {
+        return galleryDAO.selectOneCard(cardSeq);
     }
 }

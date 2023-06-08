@@ -1,6 +1,7 @@
 package kh.final_project.controllers;
 
 import kh.final_project.dto.GalleryCard;
+import kh.final_project.dto.GalleryContent;
 import kh.final_project.dto.GalleryView;
 import kh.final_project.services.GalleryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +24,31 @@ public class GalleryController {
 
     @GetMapping
     public String toGallery(Model model) {
-        List<GalleryView> cards = galleryService.selectAll();
+        List<GalleryView> cards = galleryService.selectAllCards();
         model.addAttribute("cards", cards);
         return "/gallery/gallery";
     }
 
     @GetMapping("/card/{cardSeq}")
-    public String toCard(@PathVariable String cardSeq, Model model) {
-        
+    public String toCard(@PathVariable Integer cardSeq, Model model) {
+        GalleryView card = galleryService.selectOneCard(cardSeq);
+        model.addAttribute("card", card);
         return "/gallery/card";
+    }
+
+    @GetMapping("/card/{cardSeq}/contents")
+    public String toCardContent(@PathVariable Integer cardSeq) {
+        return "/gallery/cardcontents";
+    }
+
+    @PostMapping("/card/{cardSeq}/contents")
+    public String insertCardContent(GalleryContent content, @PathVariable Integer cardSeq) {
+        return "redirect:/gallery/card/{cardSeq}";
+    }
+
+    @GetMapping("/card/insert/{categoryType}")
+    public String toCardInsert(@ModelAttribute("categoryType") @PathVariable String categoryType) {
+        return "/gallery/cardinsert";
     }
 
     @PostMapping("/card/insert")
@@ -40,10 +57,5 @@ public class GalleryController {
         System.out.println("card = " + card);
         galleryService.insertCard(card);
         return "redirect:/gallery";
-    }
-
-    @GetMapping("/card/insert/{categoryType}")
-    public String toCardInsert(@ModelAttribute("categoryType") @PathVariable String categoryType) {
-        return "/gallery/cardinsert";
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Gallery">
-    <insert id="insert">
+    <insert id="insertCard">
         insert into gallery_cards values(GALLERY_CARDS_SEQ.NEXTVAL, ${category_type},
         <choose>
             <when test="genre_type1 != null">
@@ -21,7 +21,10 @@
             </otherwise>
         </choose>
     </insert>
-    <select id="selectAll" resultType="kh.final_project.dto.GalleryView">
+    <select id="selectAllCards" resultType="kh.final_project.dto.GalleryView">
         select * from view_gallery_cards
+    </select>
+    <select id="selectOneCard" resultType="kh.final_project.dto.GalleryView">
+        select * from view_gallery_cards where seq = #{cardSeq}
     </select>
 </mapper>
