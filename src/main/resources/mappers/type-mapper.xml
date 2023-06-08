@@ -5,6 +5,6 @@
 		SELECT * FROM ${value} ORDER BY CODE ASC
 	</select>
 	<select id="SelectType2" resultType="kh.final_project.dto.CategoryType">
-		SELECT * FROM ${value} ORDER BY SORT ASC;
+		SELECT * FROM ${value} ORDER BY SORT ASC
 	</select>
 </mapper>
