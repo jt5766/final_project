@@ -9,7 +9,15 @@
 		<selectKey keyProperty="board_name" resultType="String" order="BEFORE">
 			select board_name from board_type where code = #{board_type}
 		</selectKey>
-		insert into ${board_name}_boards values
-		(${board_name}_boards_seq.nextval, #{board_type}, #{title}, #{writer}, #{txt}, default, default)
+		insert into ${board_name}_BOARDS values
+		(${board_name}_BOARDS_SEQ.NEXTVAL, #{board_type}, #{title}, #{writer}, #{txt}, default, default)
 	</insert>
+
+	<select id="selectBoard" resultType="kh.final_project.dto.BoardsDTO">
+		select * from ${name}_BOARDS
+	</select>
+
+	<select id="selectBoardView" resultType="kh.final_project.dto.BoardsDTO">
+		select * from ${board_name}_BOARDS where seq = #{seq}
+	</select>
 </mapper>

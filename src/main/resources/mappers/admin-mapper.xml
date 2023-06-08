@@ -4,10 +4,12 @@
 	<select id="Proc_GenreType" statementType="CALLABLE" resultType="kh.final_project.dto.CategoryType">
 		{
 		call PROC_S_GENRETYPE(
-		#{code, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer},
-		#{sort, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer},
-		#{name, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String},
-		#{yn, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+		#{email, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+		#{email_type, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+		#{password, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String}
+		#{code, mode=out, jdbcType=NUMERIC, javaType=java.lang.Integer}
+		#{member_type, mode=out, jdbcType=NUMERIC, javaType=java.lang.Integer}
+		#{nickname, mode=out, jdbcType=VARCHAR, javaType=java.lang.String}
 		)
 		}
 	</select>

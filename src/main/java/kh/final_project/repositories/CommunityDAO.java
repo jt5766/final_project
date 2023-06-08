@@ -6,19 +6,27 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kh.final_project.dto.CategoryType;
 import kh.final_project.dto.BoardsDTO;
+import kh.final_project.dto.CategoryType;
 
 @Repository
 public class CommunityDAO {
 	@Autowired
-	private SqlSessionTemplate db;
+	private SqlSessionTemplate sst;
 
 	public List<CategoryType> getSelectTag() {
-		return db.selectList("Community.getBoardType");
+		return sst.selectList("Community.getBoardType");
 	}
 
-	public int insertBoard(BoardsDTO communityDTO) {
-		return db.insert("Community.insertBoard", communityDTO);
+	public int insertBoard(BoardsDTO boardsDTO) {
+		return sst.insert("Community.insertBoard", boardsDTO);
+	}
+
+	public List<BoardsDTO> selectBoard(CategoryType categoryType) {
+		return sst.selectList("Community.selectBoard", categoryType);
+	}
+
+	public BoardsDTO selectBoardView(BoardsDTO boardsDTO) {
+		return sst.selectOne("Community.selectBoardView", boardsDTO);
 	}
 }

@@ -76,7 +76,7 @@
 						<input type="button" value="적용">
 					</div>
 					<div class="col-md-3">
-						<input type="button" value="취소">
+						<input type="button" value="취소" onclick="location.href='#'">
 					</div>
 				</div>
 			</div>

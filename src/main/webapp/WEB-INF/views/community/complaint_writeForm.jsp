@@ -41,7 +41,16 @@
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>
-				</select>
+				</select> 
+				<label>문의
+					<input type="radio" name="complaints" value="muni">
+				</label>
+				<label>건의
+					<input type="radio" name="complaints" value="guni">
+				</label>
+				<label>신고
+					<input type="radio" name="complaints" value="singo">
+				</label>
 			</div>
 			<div>
 				<input type="hidden" name="board_type" value="${boardCode}">
