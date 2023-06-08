@@ -9,6 +9,7 @@ public class MemberDTO {
     private Integer member_type;
     private String email;
     private Integer email_type;
+    private String set_email_type;
     private String password;
     private String nickname;
     private Integer file_type;
@@ -21,21 +22,12 @@ public class MemberDTO {
     private String yn;
 
 
-    public MemberDTO() {
-
-    }
-
-
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public MemberDTO(Integer code, Integer member_type, String email, Integer email_type, String password, String nickname, Integer file_type, String file_url, String company, String name, String tel, Timestamp join_date, Timestamp stop_date, String yn) {
+    public MemberDTO(Integer code, Integer member_type, String email, Integer email_type, String set_email_type, String password, String nickname, Integer file_type, String file_url, String company, String name, String tel, Timestamp join_date, Timestamp stop_date, String yn) {
         this.code = code;
         this.member_type = member_type;
         this.email = email;
         this.email_type = email_type;
+        this.set_email_type = set_email_type;
         this.password = password;
         this.nickname = nickname;
         this.file_type = file_type;
@@ -46,6 +38,10 @@ public class MemberDTO {
         this.join_date = join_date;
         this.stop_date = stop_date;
         this.yn = yn;
+    }
+
+    public Integer getCode() {
+        return code;
     }
 
     public void setCode(Integer code) {
@@ -74,6 +70,14 @@ public class MemberDTO {
 
     public void setEmail_type(Integer email_type) {
         this.email_type = email_type;
+    }
+
+    public String getSet_email_type() {
+        return set_email_type;
+    }
+
+    public void setSet_email_type(String set_email_type) {
+        this.set_email_type = set_email_type;
     }
 
     public String getPassword() {

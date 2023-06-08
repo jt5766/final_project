@@ -3,8 +3,10 @@ package kh.final_project.controllers;
 
 import kh.final_project.dto.MemberDTO;
 import kh.final_project.repositories.MemberDAO;
+import kh.final_project.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -14,18 +16,30 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/member/")
 public class MemberController {
 
-    @Autowired
-    private MemberDAO mdao;
+
     @Autowired
     private HttpSession session;
 
+    @Autowired
+    private MemberService MemberService;
 
+    @Autowired
+    private MemberDAO mdao;
     @RequestMapping("signup")
     public String signup(){
         return"member/signupForm";
     }
 
-    @RequestMapping("loginForm")
+    @RequestMapping("register")
+    public String register(Model model , MemberDTO dto){
+       Integer emailType= dto.getEmail_type();
+       
+
+
+        return "/member/registerForm";
+    }
+
+    @RequestMapping("logifnForm")
     public String loginForm(){
         return "/member/loginForm";
     }
@@ -35,10 +49,10 @@ public class MemberController {
         dto.setEmail_type(1002);
         mdao.login(dto);
 
-        System.out.println(dto);
+        System.out.println(dto.getCode());
 
         if(dto.getNickname() != null){
-        	System.out.println(dto.getCode());
+
             session.setAttribute("code",dto.getCode());
             session.setAttribute("nickName",dto.getNickname());
             session.setAttribute("memberType",dto.getMember_type());

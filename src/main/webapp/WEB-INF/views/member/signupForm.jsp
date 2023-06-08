@@ -1,5 +1,6 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,19 +134,21 @@
 
 </style>
 <body>
+
+<form action="/member/register">
 <div id="container">
     <div id="header"> GNB </div>
     <div id="body">
         <div id="body_left">left</div>
         <div id="body_center">
             <div id="btn_box">
-                <input type="hidden" name="code" value="1000">
+
 
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                    <input type="radio" class="btn-check " name="code" value="1000" id="btn1" autocomplete="off" checked>
+                    <input type="radio" class="btn-check " name="member_type" value="1000" id="btn1" autocomplete="off" checked>
                     <label class="btn btn-outline-primary lab p-0" for="btn1">일반</label>
 
-                    <input type="radio" class="btn-check " name="code" value="2000" id="btn2" autocomplete="off">
+                    <input type="radio" class="btn-check " name="member_type" value="2000" id="btn2" autocomplete="off">
                     <label class="btn btn-outline-primary lab p-0" for="btn2">전문가</label>
                 </div>
 
@@ -155,21 +158,24 @@
             <div class="center_box"></div>
             <div id="email_font">이메일</div>
             <div class="center_box" id="flex_box">
-                <div id="email"><input type="text" name="eamil" placeholder="내용을 입력해주세요"></div>
+                <div id="email"><input type="text" name="email" placeholder="내용을 입력해주세요"></div>
                 <div id="icon">@</div>
                 <div id="drop">
-                    <select id="sel" name="emailType">
-                        <option value="1001">naver.com</option>
-                        <option value="1002">gmail.com</option>
-                        <option value="1003">gmail.com</option>
-                        <option value="1004">gmail.com</option>
+                    <select id="sel" name="email_type">
+                        <option value="1001">gmail.com</option>
+                        <option value="1002">naver.com</option>
+                        <option value="1003">daum.com</option>
+                        <option value="1004">nate.com</option>
                     </select>
 
                 </div>
             </div>
             <div class="center_box"></div>
             <div class="center_box">
-                <button id="email_certification">이메일 인증</button>
+
+                <button id="register_btn">회원가입</button>
+
+<%--      인증나중에          <button id="email_certification">이메일 인증</button>--%>
             </div>
         </div>
         <div id="body_right">right</div>
@@ -178,7 +184,9 @@
     <div id="footer">footer</div>
 
 </div>
+</form>
 </body>
+
 <script>
     $()
 
