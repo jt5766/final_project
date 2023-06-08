@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +28,7 @@
 			
 			stompClient.connect({},function(){
 				alert("접속 성공");
-				const subscription = stompClient.subscribe("/topic/"+${chatRoom}, function(message){
+				const subscription = stompClient.subscribe("/topic/"+${chatlog.chatRooms}, function(message){
 					body = JSON.parse(message.body);
 					console.log(message);
 					console.log(body);
@@ -41,7 +41,7 @@
 			$("#button_send").on("click",function(){
 				const destination = "/app/message";
 				const header = {};
-				const body = JSON.stringify({chatRooms : ${chatRoom} , writer : ${loginID} , txt : $("#div_text").html()});
+				const body = JSON.stringify({chatRooms : ${chatlog.chatRooms} , writer : ${loginID} , txt : $("#div_text").html()});
 				stompClient.send(destination,header,body);
 			})
 		})
@@ -52,7 +52,11 @@
     </div>
     <div class="container-xl">
         <div class="row">
-            <div class="col-md-12" id="div_contents"></div>
+            <div class="col-md-12" id="div_contents">
+            	<c:forEach var="log" items="${chatlog}">
+            		${log.writer} : ${log.txt}
+            	</c:forEach>
+            </div>
         </div>
         <div class="row">
                 <div class="col-md-10" contenteditable="true" id="div_text"></div>
