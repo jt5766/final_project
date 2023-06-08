@@ -1,6 +1,8 @@
 package kh.final_project.dto;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class BoardsDTO {
 	private Integer seq;
@@ -90,6 +92,13 @@ public class BoardsDTO {
 
 	public void setBoard_name(String board_name) {
 		this.board_name = board_name;
+	}
+
+	public String getFormed_date() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy\nMM-dd");
+		long wd = this.write_date.getTime();
+		Date date = new Date(wd);
+		return sdf.format(date);
 	}
 
 	@Override

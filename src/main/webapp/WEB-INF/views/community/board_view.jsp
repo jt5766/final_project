@@ -15,12 +15,16 @@
 <style>
 * {
 	box-sizing: border-box;
-	border: 0px solid black;
+	border: 1px solid black;
 	text-align: center;
 }
 
-#inputTitle {
-	width: 80%;
+#div_info {
+	display: flex;
+}
+
+#div_info>div {
+	flex: 1;
 }
 </style>
 </head>
@@ -28,20 +32,28 @@
 <body>
 	<div>
 		<div>GNB</div>
-		<form action="/community/insertBoard" method="post">
-			<div>
-				${info.board_name}
-			</div>
-			<div>
+		<form action="/community/toUpdate" method="post">
+			<div>${info.board_name}</div>
+			<div id="div_info">
 				<input type="hidden" name="seq" value="${info.seq}">
-				<input type="text" name="title" id="inputTitle" value="${info.title}" readonly>
-				<p>${info.writer}</p>
+				<input type="hidden" name="board_type" value="${info.board_type}">
+				<div>${info.seq}<input type="hidden" name="seq" value="${info.seq}">
+				</div>
+				<div>${info.title}<input type="hidden" name="title" value="${info.title}">
+				</div>
+				<div>${info.writer}<input type="hidden" name="writer" value="${info.writer}">
+				</div>
+				<div>${info.formed_date}<input type="hidden" name="write_date" value="${info.write_date}">
+				</div>
 			</div>
 			<div>
 				<textarea name="txt" id="textarea_contents" cols="30" rows="10" readonly>${info.txt}</textarea>
 			</div>
 			<div>
-				<input type="submit" value="등록/수정">
+				<%-- 				<c:if test=""> --%>
+				<input type="submit" value="수정하기">
+				<input type="button" value="삭제하기" onclick="location.href = '/community/deleteBoard?board_type=${info.board_type}&seq=${info.seq}'">
+				<%-- 								</c:if> --%>
 				<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${info.board_type}'">
 			</div>
 		</form>

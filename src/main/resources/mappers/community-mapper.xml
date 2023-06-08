@@ -20,4 +20,12 @@
 	<select id="selectBoardView" resultType="kh.final_project.dto.BoardsDTO">
 		select * from ${board_name}_BOARDS where seq = #{seq}
 	</select>
+	
+	<update id="updateBoard">
+		update ${board_name}_BOARDS set title = #{title}, txt = #{txt}, write_date = default where seq = #{seq}
+	</update>
+	
+	<delete id="deleteBoard">
+		delete from ${board_name}_BOARDS where seq = ${seq}
+	</delete>
 </mapper>

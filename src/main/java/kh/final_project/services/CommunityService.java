@@ -15,15 +15,6 @@ public class CommunityService {
 	@Autowired
 	private CommunityDAO communityDAO;
 
-	public List<CategoryType> getSelectTag() {
-		List<CategoryType> list = communityDAO.getSelectTag();
-		return list;
-	}
-
-	public int insertBoard(BoardsDTO boardsDTO) {
-		return communityDAO.insertBoard(boardsDTO);
-	}
-
 	private void setNameByCode(CategoryType categoryType) {
 		if (categoryType.getCode() == 1001) {
 			categoryType.setName("NOTICE");
@@ -38,7 +29,7 @@ public class CommunityService {
 		}
 	}
 
-	private void setBoardNameByCode(BoardsDTO boardsDTO) {
+	private void setBoardNameByBoardType(BoardsDTO boardsDTO) {
 		if (boardsDTO.getBoard_type() == 1001) {
 			boardsDTO.setBoard_name("NOTICE");
 		} else if (boardsDTO.getBoard_type() == 1002) {
@@ -52,14 +43,32 @@ public class CommunityService {
 		}
 	}
 
+	public List<CategoryType> getSelectTag() {
+		List<CategoryType> list = communityDAO.getSelectTag();
+		return list;
+	}
+
+	public int insertBoard(BoardsDTO boardsDTO) {
+		return communityDAO.insertBoard(boardsDTO);
+	}
+
 	public List<BoardsDTO> selectBoard(CategoryType categoryType) {
 		this.setNameByCode(categoryType);
-		System.out.println(categoryType.getName());
 		return communityDAO.selectBoard(categoryType);
 	}
 
 	public BoardsDTO selectBoardView(BoardsDTO boardsDTO) {
-		this.setBoardNameByCode(boardsDTO);
+		this.setBoardNameByBoardType(boardsDTO);
 		return communityDAO.selectBoardView(boardsDTO);
+	}
+
+	public int updateBoard(BoardsDTO boardsDTO) {
+		this.setBoardNameByBoardType(boardsDTO);
+		return communityDAO.updateBoard(boardsDTO);
+	}
+
+	public int deleteBoard(BoardsDTO boardsDTO) {
+		this.setBoardNameByBoardType(boardsDTO);
+		return communityDAO.deleteBoard(boardsDTO);
 	}
 }
