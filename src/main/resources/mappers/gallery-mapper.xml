@@ -28,7 +28,7 @@
                 #{file_url}, null,
             </when>
             <when test="video_url != null">
-                null, #{video_url}
+                null, #{video_url},
             </when>
             <otherwise>
                 null, null,

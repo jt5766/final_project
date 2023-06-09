@@ -16,7 +16,7 @@
     </div>
 </div>
 <div class="container-xl">
-    <form action="/gallery/card/${content.gallery_cards}/contents/${content.seq}/modify" method="post">
+    <form action="/gallery/${content.gallery_cards}/contents/${content.seq}/modify" method="post">
         <input type="hidden" name="gallery_cards" value="${content.gallery_cards}">
         <input type="hidden" name="seq" value="${content.seq}">
         <div class="row">
@@ -73,7 +73,7 @@
                 <button type="submit">수정하기</button>
             </div>
             <div class="col-md-6">
-                <button type="button" onclick="location.href='/gallery/card/${cardSeq}'">돌아가기</button>
+                <button type="button" onclick="location.href='/gallery/${cardSeq}'">돌아가기</button>
             </div>
         </div>
     </form>

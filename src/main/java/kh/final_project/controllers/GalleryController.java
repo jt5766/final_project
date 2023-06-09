@@ -29,7 +29,7 @@ public class GalleryController {
         return "/gallery/gallery";
     }
 
-    @GetMapping("/card/{cardSeq}")
+    @GetMapping("/{cardSeq}")
     public String toCard(@PathVariable Integer cardSeq, Model model) {
         GalleryCardView card = galleryService.selectOneCard(cardSeq);
         List<GalleryContent> contents = galleryService.selectAllContents(cardSeq);
@@ -38,71 +38,72 @@ public class GalleryController {
         return "/gallery/card/view";
     }
 
-    @GetMapping("/card/{cardSeq}/contents/{contentSeq}")
+    @GetMapping("/{cardSeq}/contents/{contentSeq}")
     public String toContent(@ModelAttribute("cardSeq") @PathVariable Integer cardSeq, @PathVariable Integer contentSeq, Model model) {
         GalleryContent content = galleryService.selectOneContent(cardSeq, contentSeq);
         model.addAttribute("content", content);
         return "/gallery/contents/view";
     }
 
-    @GetMapping("/card/insert/{categoryType}")
+    @GetMapping("/insert/{categoryType}")
     public String toCardInsert(@ModelAttribute("categoryType") @PathVariable String categoryType) {
         return "/gallery/card/insert";
     }
 
-    @GetMapping("/card/{cardSeq}/contents/insert/{categoryType}")
+    @GetMapping("/{cardSeq}/contents/insert/{categoryType}")
     public String toContentInsert(@ModelAttribute("categoryType") @PathVariable Integer categoryType, @ModelAttribute("cardSeq") @PathVariable Integer cardSeq) {
         return "gallery/contents/insert";
     }
 
-    @GetMapping("/card/{cardSeq}/modify")
+    @GetMapping("/{cardSeq}/modify")
     public String toCardModify(@PathVariable Integer cardSeq, Model model) {
         GalleryCardView card = galleryService.selectOneCard(cardSeq);
         model.addAttribute("card", card);
         return "/gallery/card/modify";
     }
 
-    @GetMapping("/card/{cardSeq}/contents/{contentSeq}/modify")
+    @GetMapping("/{cardSeq}/contents/{contentSeq}/modify")
     public String toContentModify(@PathVariable Integer cardSeq, @PathVariable Integer contentSeq, Model model) {
         GalleryContent content = galleryService.selectOneContent(cardSeq, contentSeq);
         model.addAttribute("content", content);
         return "/gallery/contents/modify";
     }
 
-    @PostMapping("/card/insert")
+    @PostMapping("/insert")
     public String insertCard(GalleryCard card) {
         card.setWriter(10000001);
         galleryService.insertCard(card);
         return "redirect:/gallery";
     }
 
-    @PostMapping("/card/{cardSeq}/contents")
+    @PostMapping("/{cardSeq}/contents")
     public String insertContent(GalleryContent content, @PathVariable Integer cardSeq) {
+        System.out.println("content = " + content);
         galleryService.insertContent(content);
-        return "redirect:/gallery/card/{cardSeq}";
+        return "redirect:/gallery/{cardSeq}";
     }
 
-    @PostMapping("/card/{cardSeq}/modify")
+    @PostMapping("/{cardSeq}/modify")
     public String modifyCard(GalleryCard card, @PathVariable Integer cardSeq) {
         galleryService.updateCard(card);
-        return "redirect:/gallery/card/{cardSeq}";
+        return "redirect:/gallery/{cardSeq}";
     }
 
-    @PostMapping("/card/{cardSeq}/contents/{contentSeq}/modify")
+    @PostMapping("/{cardSeq}/contents/{contentSeq}/modify")
     public String modifyContent(GalleryContent content, @PathVariable Integer cardSeq, @PathVariable Integer contentSeq) {
         galleryService.updateContent(content);
-        return "redirect:/gallery/card/{cardSeq}/contents/{contentSeq}";
+        return "redirect:/gallery/{cardSeq}/contents/{contentSeq}";
     }
 
-    @PostMapping("/card/{cardSeq}/delete")
+    @PostMapping("/{cardSeq}/delete")
     public String deleteCard(@PathVariable Integer cardSeq) {
         galleryService.deleteCard(cardSeq);
         return "redirect:/gallery";
     }
 
-    @PostMapping("/card/{cardSeq}/contents/{contentSeq}/delete")
+    @PostMapping("/{cardSeq}/contents/{contentSeq}/delete")
     public String deleteContents(@PathVariable Integer cardSeq, @PathVariable Integer contentSeq) {
         galleryService.deleteContent(cardSeq, contentSeq);
-        return "redirect:/gallery/card/{cardSeq}";
+        return "redirect:/gallery/{cardSeq}";
     }
 }

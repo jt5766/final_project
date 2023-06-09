@@ -16,7 +16,7 @@
     </div>
 </div>
 <div class="container-xl">
-    <form action="/gallery/card/${cardSeq}/contents" method="post">
+    <form action="/gallery/${cardSeq}/contents" method="post">
         <div class="row">
             <div class="col-md-12">
                 <input type="hidden" name="gallery_cards" value="${cardSeq}">
