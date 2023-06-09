@@ -57,6 +57,22 @@
 				<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${info.board_type}'">
 			</div>
 		</form>
+		<form action="/community/insertReply" method="post">
+			<div>
+				<div>
+					${sessionScope.loginID}
+					<input type="hidden" name="writer" value="${sessionScope.loginID}">
+					<input type="hidden" name="parent_board" value="${info.board_type}">
+					<input type="hidden" name="reply_type" value="1001">
+				</div>
+				<div>
+					<div style="display: flex;">
+						<textarea name="txt" style="flex: 6;"></textarea>
+						<input type="submit" value="댓글 달기" style="flex: 1;">
+					</div>
+				</div>
+			</div>
+		</form>
 		<div>FOOTER</div>
 	</div>
 

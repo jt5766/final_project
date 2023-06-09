@@ -91,4 +91,5 @@ public class CommunityController {
 		communityService.deleteBoard(boardsDTO);
 		return "redirect:/community/toBoard?code=" + boardsDTO.getBoard_type();
 	}
+
 }
