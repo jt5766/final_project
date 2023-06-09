@@ -1,7 +1,7 @@
 package kh.final_project.dto;
 
-import java.security.Timestamp;
 
+import java.sql.Timestamp;
 
 public class MemberDTO {
 

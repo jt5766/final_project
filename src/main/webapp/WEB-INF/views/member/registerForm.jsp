@@ -10,21 +10,22 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 </head>
 
-
+<form action="/member/createMember" method="post">
 이메일<br>
-<input type="text" placeholder="${email}@${emailType}" readonly> <br>
+    <input type="hidden" name="email_type" value="${emailType}">
+    <input type="hidden" name="email" value="${email}">
+    <input type="hidden" name="member_type" value="${memberType}">
+    <input type="text"  value="${email}@${setEmailType}" readonly> <br>
 비밀번호 <br>
-<input type="text" placeholder="내용을 입력해주세요"><br>
+<input type="text" name="password" placeholder="내용을 입력해주세요"><br>
 비밀번호 확인<br>
 <input type="text" placeholder="내용을 입력해주세요"><br>
 닉네임<br>
-<input type="text" placeholder="내용을 입력해주세요"><br>
+<input type="text" name="nickname" placeholder="내용을 입력해주세요"><br>
 
 <button>회원가입</button><br>
 <button>취소</button>
-
-
-
+</form>
 
 </body>
 </html>

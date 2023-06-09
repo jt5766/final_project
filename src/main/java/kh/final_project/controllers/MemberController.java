@@ -35,11 +35,23 @@ public class MemberController {
 
         MemberService.setEmailType(dto);
         model.addAttribute("email",dto.getEmail());
-        model.addAttribute("emailType",dto.getSet_email_type());
-
+        model.addAttribute("emailType",dto.getEmail_type());
+        model.addAttribute("setEmailType",dto.getSet_email_type());
+        model.addAttribute("memberType",dto.getMember_type());
+        if(dto.getMember_type()==2000){
+            return "/member/expertRegisterForm";
+        }
 
 
         return "/member/registerForm";
+    }
+
+    @PostMapping("createMember")
+    public String createMember(MemberDTO dto){
+        System.out.println(dto);
+
+        mdao.insert(dto);
+        return "/member/loginForm";
     }
 
     @RequestMapping("loginForm")
@@ -49,10 +61,12 @@ public class MemberController {
 
     @PostMapping("login")
     public String login(MemberDTO dto){
+
+
         dto.setEmail_type(1002);
         mdao.login(dto);
 
-        System.out.println(dto.getCode());
+        System.out.println(dto);
 
         if(dto.getNickname() != null){
 
@@ -60,11 +74,34 @@ public class MemberController {
             session.setAttribute("nickName",dto.getNickname());
             session.setAttribute("memberType",dto.getMember_type());
         }
-        return "/member/loginForm";
+        return "home";
+    }
+
+    @RequestMapping("logOut")
+    public String logOut(){
+        session.removeAttribute("code");
+        session.removeAttribute("nickname");
+        session.removeAttribute("memberType");
+
+        return "redirect:/member/loginForm";
     }
 
     @RequestMapping("mypage")
     public String mypage(){
         return "/member/myPageForm";
+    }
+
+    @RequestMapping("myinfo")
+    public String myinfo(){
+
+        return "/member/myInfoUpdateForm";
+    }
+
+    @RequestMapping("passwordCheck")
+
+    public String passwordCheck(String password){
+        String nickname = (String) session.getAttribute("nickname");
+        System.out.println(password+":"+nickname);
+        return "";
     }
 }

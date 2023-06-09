@@ -66,7 +66,7 @@
             <button>갤러리</button>
             <button>커뮤니티</button>
             <button>1:1채팅</button>
-            <button>회원 정보 수정</button>
+           <a href=/member/myinfo><button>회원 정보 수정</button></a>
         </div>
         <div id="navi_right"></div>
     </div>

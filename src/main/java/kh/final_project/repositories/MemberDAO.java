@@ -21,4 +21,7 @@ public class MemberDAO {
     }
 
 
+    public int insert(MemberDTO dto) {
+        return db.insert("Member.insert",dto);
+    }
 }

@@ -16,6 +16,20 @@
         }
     </select>
 
+    <insert id="insert">
+        <if test="member_type == 1000">
+            insert into members (code, member_type, email,email_type,password,nickname) values(member_code_seq.nextval,${member_type},#{email},${email_type},#{password},#{nickname})
+
+        </if>
+
+        <if test="member_type == 2000">
+
+            insert into members values(member_code_seq.nextval,${member_type},#{email},${email_type},#{password},#{nickname},${file_type},#{file_url},null,null,null,default,null,default)
+        </if>
+
+
+    </insert>
+
 
 
 
