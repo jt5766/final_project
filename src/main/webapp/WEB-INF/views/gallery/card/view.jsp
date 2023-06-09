@@ -59,8 +59,9 @@
             </div>
             <div class="side-menu">
                 <div class="chat-button">
-                    <!--TODO: 세션에서 멤버 타입 확인해서 전문가만 보이게 변경-->
-                    <button>채팅 초대하기</button>
+                    <c:if test="${sessionScope.memberType == '2000'}">
+                        <button type="button" id="invite">채팅 초대하기</button>
+                    </c:if>
                 </div>
                 <div class="buttons">
                     <!--TODO: 세션에서 멤버 ID 확인해서 작성자 본인만 보이게 변경-->
@@ -93,5 +94,20 @@
     </c:forEach>
     <br>
 </div>
+<script>
+    $('#invite').on('click', function() {
+       $.ajax({
+           url: "/chat/application",
+           dats: {
+               mentor:${sessionScope.code},
+               mentee:${card.writer}
+           },
+           method: "get"
+       }).done(function(resp) {
+           const result = JSON.parse(resp);
+           console.log(resp);
+       });
+    });
+</script>
 </body>
 </html>
