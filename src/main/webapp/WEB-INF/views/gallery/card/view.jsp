@@ -64,12 +64,13 @@
                     </c:if>
                 </div>
                 <div class="buttons">
-                    <!--TODO: 세션에서 멤버 ID 확인해서 작성자 본인만 보이게 변경-->
-                    <form action="/gallery/${card.seq}/delete" method="post">
-                        <input type="hidden" name="cardSeq" value="${card.seq}">
-                        <button type="submit">삭제</button>
-                    </form>
-                    <button onclick="location.href='/gallery/${card.seq}/modify'">수정</button>
+                    <c:if test="${sessionScope.code == card.writer}">
+                        <form action="/gallery/${card.seq}/delete" method="post">
+                            <input type="hidden" name="cardSeq" value="${card.seq}">
+                            <button type="submit">삭제</button>
+                        </form>
+                        <button onclick="location.href='/gallery/${card.seq}/modify'">수정</button>
+                    </c:if>
                 </div>
                 <div class="return-button">
                     <button type="button" onclick="location.href='/gallery'">돌아가기</button>
