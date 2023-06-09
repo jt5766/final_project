@@ -50,8 +50,6 @@ public class AdminController {
 
 	@RequestMapping("category")
 	public String main(Model model) {
-//		Map<String, CategoryType> result = adminService.selectCategory();
-//		model.addAttribute(result);
 		return "/admin/category";
 	}
 	
@@ -61,6 +59,13 @@ public class AdminController {
 		List<CategoryType> result = adminService.selectCategory(tableName);
 		return result;
 	}
+	@RequestMapping("update_category")
+	public String updateCategory(String tableName, String code, String sort, String name, String yn) {
+		adminService.updateCategoey(tableName, code, sort, name, yn);
+		
+		return "redirect: /admin/category";
+	}
+	
 	@RequestMapping("test")
 	public void Test() {
 		adminService.selectGenreType();

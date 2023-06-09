@@ -1,6 +1,8 @@
 package kh.final_project.repositories;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,5 +151,20 @@ public class TypeDAO {
 	 */
 	public List<CategoryType> selectByCommunity_Search() {
 		return mybatis.selectList("Type.SelectType2", "COMMUNITY_SEARCH");
+	}
+
+	/**
+	 * {tableName} 테이블 삽입 & 수정
+	 * 
+	 * @param String             tableName
+	 * @param List<CategoryType> list
+	 * @return List<CategoryType>
+	 */
+	public boolean updateCategory(String tableName, List<CategoryType> list) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("tableName", tableName);
+		param.put("list", list);
+		mybatis.selectOne("Type.PROC_TYPE_UI", param);
+		return false;
 	}
 }

@@ -1,5 +1,6 @@
 package kh.final_project.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,17 @@ public class AdminService {
 			result = typeDAO.selectByCommunity_Search();
 		}
 
+		return result;
+	}
+
+	public boolean updateCategoey(String tableName, String code, String sort, String name, String yn) {
+		List<CategoryType> list = new ArrayList<CategoryType>();
+		for (int i = 0; i < sort.split(",").length; i++) {
+			list.add(new CategoryType(Integer.parseInt(code.split(",")[i]), Integer.parseInt(sort.split(",")[i]),name.split(",")[i], yn.split(",")[i]));
+		}
+		
+		boolean result = typeDAO.updateCategory(tableName, list);
+		
 		return result;
 	}
 

@@ -7,4 +7,20 @@
 	<select id="SelectType2" resultType="kh.final_project.dto.CategoryType">
 		SELECT * FROM ${value} ORDER BY YN DESC, SORT ASC
 	</select>
+
+
+	<select id="PROC_TYPE_UI" statementType="CALLABLE" parameterType="java.util.Map">
+
+		DECLARE DATA TYPE_OBJ
+
+		<foreach collection="list" item="item" separator=",">
+			INSERT INTO DATA VALUES (#{item.code},#{item.sort},#{item.name},#{item.yn})
+		</foreach>
+
+		<!-- call PROC_TYPE_UI( -->
+		<!-- #{tableName, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String} -->
+		<!-- #{tableName, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String} -->
+		<!-- ) -->
+		<!-- } -->
+	</select>
 </mapper>
