@@ -37,13 +37,13 @@
         #{txt}, #{yn}, default, default, default)
     </insert>
     <select id="selectAllCards" resultType="kh.final_project.dto.GalleryCardView">
-        select * from view_gallery_cards
+        select * from view_gallery_cards order by seq desc
     </select>
     <select id="selectOneCard" resultType="kh.final_project.dto.GalleryCardView">
         select * from view_gallery_cards where seq = #{cardSeq}
     </select>
     <select id="selectAllContents" resultType="kh.final_project.dto.GalleryContent">
-        select * from gallery_contents where gallery_cards = #{cardSeq}
+        select * from gallery_contents where gallery_cards = #{cardSeq} order by seq desc
     </select>
     <select id="selectOneContent" resultType="kh.final_project.dto.GalleryContent">
         select gallery_contents.*, gallery_cards.category_type

@@ -55,9 +55,7 @@
         <div class="row">
             <div class="col-md-12">
                 <label for="input_txt">
-                <textarea name="txt" id="input_txt" cols="30" rows="10">
-
-                </textarea>
+                <textarea name="txt" id="input_txt" cols="30" rows="10"></textarea>
                 </label>
             </div>
         </div>
@@ -75,7 +73,7 @@
                 <button type="submit">등록</button>
             </div>
             <div class="col-md-6">
-                <button type="button">돌아가기</button>
+                <button type="button" onclick="location.href='/gallery/${cardSeq}'">돌아가기</button>
             </div>
         </div>
     </form>

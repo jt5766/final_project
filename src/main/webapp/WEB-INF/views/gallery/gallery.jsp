@@ -53,7 +53,7 @@
     <div class="row gallery-content">
         <c:forEach items="${cards}" var="card">
             <div class="col-md-6">
-                <div class="gallery-card" onclick="location.href='/gallery/${card.seq}'">
+                <div class="gallery-card">
                     <div class="thumbnail_url">
                         <img class="thumbnail" src="${card.thumbnail_url}" alt="${card.thumbnail_url}">
                     </div>
@@ -69,7 +69,7 @@
                                 <div class="genre-name">${card.genre_name2}</div>
                             </c:if>
                         </div>
-                        <div class="title">
+                        <div class="title" onclick="location.href='/gallery/${card.seq}'">
                             ${card.title}
                         </div>
                         <div class="writer">

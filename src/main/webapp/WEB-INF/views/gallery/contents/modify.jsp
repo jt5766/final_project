@@ -55,7 +55,7 @@
             <div class="col-md-12">
                 <div class="text">
                     <label for="input_txt">내용</label>
-                    <input type="text" name="txt" id="input_txt" value="${content.txt}">
+                    <textarea name="txt" id="input_txt" cols="30" rows="10">${content.txt}</textarea>
                 </div>
             </div>
         </div>
