@@ -33,7 +33,9 @@
                 			<input type="hidden" value="${chatroom.seq}">
             			</div>
             			<div class="col-md-2 btnbox">
-                			<a href="/chat/accept?seq=${chatroom.seq}"><button class="btn">승인</button></a>
+            				<c:if test="${chatroom.mentee==code}">
+            					<a href="/chat/accept?seq=${chatroom.seq}"><button class="btn">승인</button></a>
+            				</c:if>
             			</div>
             			<div class="col-md-2 btnbox">
                 			<a href="/chat/refuse?seq=${chatroom.seq}"><button class="btn">거절</button></a>

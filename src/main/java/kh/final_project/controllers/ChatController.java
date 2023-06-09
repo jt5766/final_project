@@ -42,6 +42,7 @@ public class ChatController {
 	
 	@RequestMapping("accept")
 	public String accept(Long seq) {
+		System.out.println(seq);
 		chatservice.accept(seq);
 		return "redirect:/chat/testlink";
 	}
