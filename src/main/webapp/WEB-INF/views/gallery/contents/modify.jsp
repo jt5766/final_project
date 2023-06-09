@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Card Content</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
@@ -16,24 +16,24 @@
     </div>
 </div>
 <div class="container-xl">
-    <form action="/gallery/card/${cardSeq}/content">
+    <form action="/gallery/card/${content.gallery_cards}/contents/${content.seq}/modify" method="post">
+        <input type="hidden" name="gallery_cards" value="${content.gallery_cards}">
+        <input type="hidden" name="seq" value="${content.seq}">
         <div class="row">
             <div class="col-md-12">
-                <label for="input_title">제목
-                    <input type="text" name="title" id="input_title">
-                </label>
+                <div class="title">
+                    <label for="input_title">제목</label>
+                    <input type="text" name="title" id="input_title" value="${content.title}">
+                </div>
             </div>
         </div>
         <c:choose>
             <c:when test="${content.category_type == 1005}">
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="input_video_url">
-                            비디오 파일 URL [유튜브 / 네이버 블로그] - 영상
-                            <input type="url" name="video_url" id="input_video_url">
-                        </label>
-                        <div class="preview">
-
+                        <div class="video">
+                            <label for="input_video_url">비디오 URL</label>
+                            <input type="url" name="video_url" id="input_video_url" value="${content.video_url}">
                         </div>
                     </div>
                 </div>
@@ -42,22 +42,21 @@
             <c:otherwise>
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="input_file_url">
-                            [이미지/오디오] 파일 선택 - 만화 / 그림 / 사진 / 음악
-                            <input type="file" name="file_url" id="input_file_url">
-                        </label>
+                        <div class="file">
+                            <label for="input_file_url">파일 URL</label>
+                            <input type="file" name="file_url" id="input_file_url" value="${content.file_url}">
+                            <img src="${content.file_url}" alt="${content.file_url}">
+                        </div>
                     </div>
                 </div>
-                <!--TODO: file url로 업로드 되는지 확인-->
             </c:otherwise>
         </c:choose>
         <div class="row">
             <div class="col-md-12">
-                <label for="input_txt">
-                <textarea name="txt" id="input_txt" cols="30" rows="10">
-
-                </textarea>
-                </label>
+                <div class="text">
+                    <label for="input_txt">내용</label>
+                    <input type="text" name="txt" id="input_txt" value="${content.txt}">
+                </div>
             </div>
         </div>
         <div class="row">
@@ -71,20 +70,13 @@
         </div>
         <div class="row">
             <div class="col-md-6">
-                <button type="submit">등록</button>
+                <button type="submit">수정하기</button>
             </div>
             <div class="col-md-6">
-                <button type="button">돌아가기</button>
+                <button type="button" onclick="location.href='/gallery/card/${cardSeq}'">돌아가기</button>
             </div>
         </div>
     </form>
-</div>
-<div class="container-fluid">
-    <div class="row footer">
-        <div class="col-md-12">
-
-        </div>
-    </div>
 </div>
 <script>
     const allowVal = $('#input_allow_show');

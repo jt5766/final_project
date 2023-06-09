@@ -53,7 +53,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <c:if test="${content.yn == 'N'}">
+            <c:if test="${content.yn=='N'}">
                 <div>
                     비밀글입니다.
                 </div>
@@ -62,7 +62,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <button>수정하기</button>
+            <button onclick="location.href='/gallery/card/${cardSeq}/contents/${content.seq}/modify'">수정하기</button>
         </div>
         <div class="col-md-6">
             <button onclick="location.href='/gallery/card/${cardSeq}'">돌아가기</button>

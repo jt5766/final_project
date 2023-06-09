@@ -62,9 +62,10 @@
                     <!--TODO: 세션에서 멤버 타입 확인해서 전문가만 보이게 변경-->
                     <button>채팅 초대하기</button>
                 </div>
-                <div class="delete-button">
+                <div class="buttons">
                     <!--TODO: 세션에서 멤버 ID 확인해서 작성자 본인만 보이게 변경-->
                     <button>삭제</button>
+                    <button onclick="location.href='/gallery/card/${card.seq}/modify'">수정</button>
                 </div>
                 <div class="return-button">
                     <button type="button" onclick="location.href='/gallery'">돌아가기</button>
@@ -74,7 +75,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <button type="button" onclick="location.href='/gallery/card/${card.seq}/contents/${card.category_type}'">등록</button>
+            <button type="button" onclick="location.href='/gallery/card/${card.seq}/insert/${card.category_type}'">등록</button>
             <!--TODO: 링크 제대로 안넘어감. 오류 수정해야함-->
         </div>
         <div class="col-md-12">
@@ -89,21 +90,6 @@
         </div>
     </c:forEach>
     <br>
-    <div class="row">
-        <div class="col-md-12">
-            <a href="#">ㅁㅁㅁㅁㅁㅁ1화</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <a href="#">ㅁㅁㅁㅁㅁㅁ2화</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <a href="#">ㅁㅁㅁㅁㅁㅁ3화</a>
-        </div>
-    </div>
 </div>
 </body>
 </html>
