@@ -51,4 +51,12 @@ public class GalleryService {
     public void updateContent(GalleryContent content) {
         galleryDAO.updateContent(content);
     }
+
+    public void deleteCard(Integer cardSeq) {
+        galleryDAO.deleteCard(cardSeq);
+    }
+
+    public void deleteContent(Integer cardSeq, Integer contentSeq) {
+        galleryDAO.deleteContent(cardSeq, contentSeq);
+    }
 }

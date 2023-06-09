@@ -59,4 +59,16 @@ public class GalleryDAO {
     public void updateContent(GalleryContent content) {
         db.update("Gallery.updateContent", content);
     }
+
+    public void deleteCard(Integer cardSeq) {
+        db.delete("Gallery.deleteCard", cardSeq);
+    }
+
+    public void deleteContent(Integer cardSeq, Integer contentSeq) {
+        Map<String, Integer> params = Map.ofEntries(
+                Map.entry("cardSeq", cardSeq),
+                Map.entry("contentSeq", contentSeq)
+        );
+        db.delete("Gallery.deleteContent", params);
+    }
 }

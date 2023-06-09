@@ -89,4 +89,10 @@
         </choose>
         txt = #{txt}, yn = #{yn} where seq = ${seq} and gallery_cards = ${gallery_cards}
     </update>
+    <delete id="deleteCard">
+        delete from gallery_cards where seq = #{cardSeq}
+    </delete>
+    <delete id="deleteContent">
+        delete from gallery_contents where seq = #{contentSeq} and gallery_cards = #{cardSeq}
+    </delete>
 </mapper>

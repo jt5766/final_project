@@ -64,7 +64,10 @@
                 </div>
                 <div class="buttons">
                     <!--TODO: 세션에서 멤버 ID 확인해서 작성자 본인만 보이게 변경-->
-                    <button>삭제</button>
+                    <form action="/gallery/card/${card.seq}/delete" method="post">
+                        <input type="hidden" name="cardSeq" value="${card.seq}">
+                        <button type="submit">삭제</button>
+                    </form>
                     <button onclick="location.href='/gallery/card/${card.seq}/modify'">수정</button>
                 </div>
                 <div class="return-button">
@@ -75,7 +78,7 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <button type="button" onclick="location.href='/gallery/card/${card.seq}/insert/${card.category_type}'">등록</button>
+            <button type="button" onclick="location.href='/gallery/card/${card.seq}/contents/insert/${card.category_type}'">등록</button>
             <!--TODO: 링크 제대로 안넘어감. 오류 수정해야함-->
         </div>
         <div class="col-md-12">

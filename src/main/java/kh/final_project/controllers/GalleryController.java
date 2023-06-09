@@ -39,10 +39,9 @@ public class GalleryController {
     }
 
     @GetMapping("/card/{cardSeq}/contents/{contentSeq}")
-    public String toContent(@PathVariable Integer cardSeq, @PathVariable Integer contentSeq, Model model) {
+    public String toContent(@ModelAttribute("cardSeq") @PathVariable Integer cardSeq, @PathVariable Integer contentSeq, Model model) {
         GalleryContent content = galleryService.selectOneContent(cardSeq, contentSeq);
         model.addAttribute("content", content);
-        System.out.println("content = " + content);
         return "/gallery/contents/view";
     }
 
@@ -93,5 +92,17 @@ public class GalleryController {
     public String modifyContent(GalleryContent content, @PathVariable Integer cardSeq, @PathVariable Integer contentSeq) {
         galleryService.updateContent(content);
         return "redirect:/gallery/card/{cardSeq}/contents/{contentSeq}";
+    }
+
+    @PostMapping("/card/{cardSeq}/delete")
+    public String deleteCard(@PathVariable Integer cardSeq) {
+        galleryService.deleteCard(cardSeq);
+        return "redirect:/gallery";
+    }
+
+    @PostMapping("/card/{cardSeq}/contents/{contentSeq}/delete")
+    public String deleteContents(@PathVariable Integer cardSeq, @PathVariable Integer contentSeq) {
+        galleryService.deleteContent(cardSeq, contentSeq);
+        return "redirect:/gallery/card/{cardSeq}";
     }
 }

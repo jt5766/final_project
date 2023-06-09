@@ -62,6 +62,11 @@
     </div>
     <div class="row">
         <div class="col-md-6">
+            <form action="/gallery/card/${cardSeq}/contents/${content.seq}/delete" method="post">
+                <input type="hidden" name="cardSeq" value="${cardSeq}">
+                <input type="hidden" name="contentSeq" value="${content.seq}">
+                <button type="submit">삭제하기</button>
+            </form>
             <button onclick="location.href='/gallery/card/${cardSeq}/contents/${content.seq}/modify'">수정하기</button>
         </div>
         <div class="col-md-6">
