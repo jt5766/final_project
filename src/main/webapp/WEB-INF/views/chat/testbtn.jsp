@@ -19,7 +19,7 @@
 			$.ajax({
 				url: "/chat/appication",
 				data:{
-					mentor:'${loginID}',
+					mentor:'${code}',
 					mentee:'${memberdto.code}'
 				}
 			}).done(function(){

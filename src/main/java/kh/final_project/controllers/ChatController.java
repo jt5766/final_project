@@ -37,7 +37,7 @@ public class ChatController {
 	@RequestMapping("application")
 	public String application(int mentor,int mentee) {
 		chatservice.application(mentor, mentee);
-		return "";
+		return "/";
 	}
 	
 	@RequestMapping("accept")
