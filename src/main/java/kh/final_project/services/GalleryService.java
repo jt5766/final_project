@@ -47,4 +47,8 @@ public class GalleryService {
     public void updateCard(GalleryCard card) {
         galleryDAO.updateCard(card);
     }
+
+    public void updateContent(GalleryContent content) {
+        galleryDAO.updateContent(content);
+    }
 }

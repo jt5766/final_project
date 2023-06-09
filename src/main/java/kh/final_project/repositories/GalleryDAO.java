@@ -55,4 +55,8 @@ public class GalleryDAO {
     public void updateCard(GalleryCard card) {
         db.update("Gallery.updateCard", card);
     }
+
+    public void updateContent(GalleryContent content) {
+        db.update("Gallery.updateContent", content);
+    }
 }

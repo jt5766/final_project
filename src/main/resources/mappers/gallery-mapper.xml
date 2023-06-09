@@ -75,4 +75,18 @@
         </choose>
         ai = #{ai}, title = #{title}, catchphrase = #{catchphrase}, synopsis = #{synopsis}, thumbnail_url = #{thumbnail_url}, yn = #{yn} where seq = ${seq}
     </update>
+    <update id="updateContent">
+        update gallery_contents set title = #{title},
+        <choose>
+            <when test="file_url != null">
+                file_url = #{file_url},
+            </when>
+            <when test="video_url != null">
+                video_url = #{video_url},
+            </when>
+            <otherwise>
+            </otherwise>
+        </choose>
+        txt = #{txt}, yn = #{yn} where seq = ${seq} and gallery_cards = ${gallery_cards}
+    </update>
 </mapper>

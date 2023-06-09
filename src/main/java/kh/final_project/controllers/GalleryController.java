@@ -91,4 +91,11 @@ public class GalleryController {
         galleryService.updateCard(card);
         return "redirect:/gallery/card/{cardSeq}";
     }
+
+    @PostMapping("/card/{cardSeq}/contents/{contentSeq}/modify")
+    public String modifyContent(GalleryContent content, @PathVariable Integer cardSeq, @PathVariable Integer contentSeq) {
+        System.out.println("content = " + content);
+        galleryService.updateContent(content);
+        return "redirect:/gallery/card/{cardSeq}/contents/{contentSeq}";
+    }
 }

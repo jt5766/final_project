@@ -16,7 +16,7 @@
     </div>
 </div>
 <div class="container-xl">
-    <form action="/gallery/card/${card.seq}/modify" method="post" id="card-form">
+    <form action="/gallery/card/${card.seq}/modify" method="post">
         <div class="row">
             <div class="con-md-12">
                 <p>AI 생성 그림인가요?</p>
@@ -92,7 +92,7 @@
                 <button type="submit">수정</button>
             </div>
             <div class="col-md-6">
-                <a href="/gallery">
+                <a href="/gallery/card/${card.seq}">
                     <button type="button">돌아가기</button>
                 </a>
             </div>
