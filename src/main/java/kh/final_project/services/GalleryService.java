@@ -32,10 +32,19 @@ public class GalleryService {
     }
 
     public GalleryContent selectOneContent(Integer cardSeq, Integer contentSeq) {
+        galleryDAO.updateViewCount(contentSeq);
         return galleryDAO.selectOneContent(cardSeq, contentSeq);
     }
 
     public List<GalleryContent> selectAllContents(Integer cardSeq) {
         return galleryDAO.selectAllContents(cardSeq);
+    }
+
+    public void insertContent(GalleryContent content) {
+        galleryDAO.insertContent(content);
+    }
+
+    public void updateCard(GalleryCard card) {
+        galleryDAO.updateCard(card);
     }
 }

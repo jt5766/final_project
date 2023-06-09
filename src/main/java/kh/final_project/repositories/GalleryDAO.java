@@ -43,4 +43,16 @@ public class GalleryDAO {
     public List<GalleryContent> selectAllContents(Integer cardSeq) {
         return db.selectList("Gallery.selectAllContents", cardSeq);
     }
+
+    public void insertContent(GalleryContent content) {
+        db.insert("Gallery.insertContent", content);
+    }
+
+    public void updateViewCount(Integer contentSeq) {
+        db.update("Gallery.updateViewCount", contentSeq);
+    }
+
+    public void updateCard(GalleryCard card) {
+        db.update("Gallery.updateCard", card);
+    }
 }

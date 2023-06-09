@@ -16,16 +16,17 @@
     </div>
 </div>
 <div class="container-xl">
-    <form action="/gallery/card/${cardSeq}/content">
+    <form action="/gallery/card/${cardSeq}/contents" method="post">
         <div class="row">
             <div class="col-md-12">
+                <input type="hidden" name="gallery_cards" value="${cardSeq}">
                 <label for="input_title">제목
                     <input type="text" name="title" id="input_title">
                 </label>
             </div>
         </div>
         <c:choose>
-            <c:when test="${content.category_type == 1005}">
+            <c:when test="${categoryType == 1005}">
                 <div class="row">
                     <div class="col-md-12">
                         <label for="input_video_url">
@@ -38,7 +39,7 @@
                     </div>
                 </div>
             </c:when>
-            <c:when test="${content.category_type == 1001}"></c:when>
+            <c:when test="${categoryType == 1001}"></c:when>
             <c:otherwise>
                 <div class="row">
                     <div class="col-md-12">

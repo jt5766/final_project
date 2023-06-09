@@ -21,6 +21,21 @@
             </otherwise>
         </choose>
     </insert>
+    <insert id="insertContent">
+        insert into gallery_contents values(${gallery_cards}, GALLERY_CONTENTS_SEQ.NEXTVAL, #{title},
+        <choose>
+            <when test="file_url != null">
+                #{file_url}, null,
+            </when>
+            <when test="video_url != null">
+                null, #{video_url}
+            </when>
+            <otherwise>
+                null, null,
+            </otherwise>
+        </choose>
+        #{txt}, #{yn}, default, default, default)
+    </insert>
     <select id="selectAllCards" resultType="kh.final_project.dto.GalleryCardView">
         select * from view_gallery_cards
     </select>
@@ -31,9 +46,33 @@
         select * from gallery_contents where gallery_cards = #{cardSeq}
     </select>
     <select id="selectOneContent" resultType="kh.final_project.dto.GalleryContent">
-        select gallery_contents(*), gallery_cards.category_type
+        select gallery_contents.*, gallery_cards.category_type
         from gallery_contents
-        left outer join gallery_contents.gallery_cards = gallery_cards.seq
-        where gallery_cards = #{cardSeq} and seq = #{contentSeq}
+        left outer join gallery_cards on gallery_contents.gallery_cards = gallery_cards.seq
+        where gallery_contents.gallery_cards = #{cardSeq} and gallery_contents.seq = #{contentSeq}
     </select>
+    <update id="updateViewCount">
+        update gallery_contents set total_count = total_count + 1, day_count = day_count + 1 where seq = ${contentSeq}
+    </update>
+
+    <update id="updateCard">
+        update gallery_cards set
+        <choose>
+            <when test="genre_type1 != null">
+                genre_type1 = ${genre_type1},
+            </when>
+            <otherwise>
+                genre_type1 = null,
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="genre_type2 != null">
+                genre_type2 = ${genre_type2},
+            </when>
+            <otherwise>
+                genre_type2 = null,
+            </otherwise>
+        </choose>
+        ai = #{ai}, title = #{title}, catchphrase = #{catchphrase}, synopsis = #{synopsis}, thumbnail_url = #{thumbnail_url}, yn = #{yn} where seq = ${seq}
+    </update>
 </mapper>
