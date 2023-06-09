@@ -16,6 +16,11 @@
         }
     </select>
 
+
+    <select id="passwordCheck" resultType="boolean">
+        select * from members where password = #{password} and nickname=#{nickname}
+    </select>
+
     <insert id="insert">
         <if test="member_type == 1000">
             insert into members (code, member_type, email,email_type,password,nickname) values(member_code_seq.nextval,${member_type},#{email},${email_type},#{password},#{nickname})

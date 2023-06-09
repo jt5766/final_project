@@ -48,7 +48,7 @@ public class MemberController {
 
     @PostMapping("createMember")
     public String createMember(MemberDTO dto){
-        System.out.println(dto);
+
 
         mdao.insert(dto);
         return "/member/loginForm";
@@ -66,10 +66,11 @@ public class MemberController {
         dto.setEmail_type(1002);
         mdao.login(dto);
 
-        System.out.println(dto);
-
+        System.out.println("로그인처리부분 넘겨온 값 :" +dto);
+        System.out.println("----------------------------");
         if(dto.getNickname() != null){
-
+            System.out.println("닉네임값 확인 세션 조건 충족:"+ dto.getNickname());
+            System.out.println("=============================");
             session.setAttribute("code",dto.getCode());
             session.setAttribute("nickName",dto.getNickname());
             session.setAttribute("memberType",dto.getMember_type());
@@ -99,9 +100,14 @@ public class MemberController {
 
     @RequestMapping("passwordCheck")
 
-    public String passwordCheck(String password){
-        String nickname = (String) session.getAttribute("nickname");
-        System.out.println(password+":"+nickname);
-        return "";
+    public void passwordCheck(MemberDTO dto){
+        System.out.println("닉네임 + 패스워드 값");
+        System.out.println(dto.getPassword()+":"+dto.getNickname());
+        System.out.println("======================");
+       boolean result = mdao.passwordCheck(dto);
+
+        if(mdao.passwordCheck(dto)){
+//            return "";
+        }
     }
 }

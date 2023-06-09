@@ -24,4 +24,8 @@ public class MemberDAO {
     public int insert(MemberDTO dto) {
         return db.insert("Member.insert",dto);
     }
+
+    public boolean passwordCheck(MemberDTO dto) {
+       return db.selectOne("Member.passwordCheck",dto);
+    }
 }
