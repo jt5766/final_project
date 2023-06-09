@@ -13,43 +13,43 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <style type="text/css">
+.btn-group label {
+	width: 33%;
+}
 </style>
 </head>
 <body>
 	<div class="container-xl">
 		<div class="row menu_btn_box">
-			<div class="col">
-				<div class="row">
-					<div class="col-4 p-0">
-						<button type="button" class="btn btn-light btn-outline-secondary w-100 h-100" onclick="selectType(this, 'EMAIL_TYPE');">이메일</button>
-					</div>
-					<div class="col-4 p-0">
-						<button type="button" class="btn btn-light btn-outline-secondary w-100 h-100" onclick="selectType(this, 'GENRE_TYPE');">장르</button>
-					</div>
-					<div class="col-4 p-0">
-						<button type="button" class="btn btn-light btn-outline-secondary w-100 h-100"></button>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-4 p-0">
-						<button type="button" class="btn btn-light btn-outline-secondary w-100 h-100" onclick="selectType(this, 'GALLERY_CARDS_SORT');">정렬(갤러리-카드)</button>
-					</div>
-					<div class="col-4 p-0">
-						<button type="button" class="btn btn-light btn-outline-secondary w-100 h-100" onclick="selectType(this, 'GALLERY_CONTENTS_SORT');">정렬(갤러리-)</button>
-					</div>
-					<div class="col-4 p-0">
-						<button type="button" class="btn btn-light btn-outline-secondary w-100 h-100" onclick="selectType(this, 'COMMUNITY_SORT');">정렬(커뮤니티)</button>
+			<div class="col btn_group_box">
+				<div class="row btn_group1">
+					<div class="col btn-group" role="group" aria-label="Basic radio toggle button group">
+						<input type="radio" class="btn-check" name="radio_type" id="EMAIL_TYPE" autocomplete="off" onclick="selectType(this);">
+						<label class="btn btn-outline-primary" for="EMAIL_TYPE">이메일</label>
+						<input type="radio" class="btn-check" name="radio_type" id="GENRE_TYPE" autocomplete="off" onclick="selectType(this);">
+						<label class="btn btn-outline-primary" for="GENRE_TYPE">장르</label>
+						<input type="radio" class="btn-check" name="radio_type" id="EMPTY1" autocomplete="off" disabled="disabled">
+						<label class="btn btn-outline-primary" for="EMPTY1"></label>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-4 p-0">
-						<button type="button" class="btn btn-light btn-outline-secondary w-100 h-100" onclick="selectType(this, 'GALLERY_CARDS_SEARCH');">검색(갤러리-카드)</button>
+				<div class="row btn_group1">
+					<div class="col btn-group" role="group" aria-label="Basic radio toggle button group">
+						<input type="radio" class="btn-check" name="radio_type" id="GALLERY_CARDS_SORT" autocomplete="off" onclick="selectType(this);">
+						<label class="btn btn-outline-primary" for="GALLERY_CARDS_SORT">정렬(갤러리-카드)</label>
+						<input type="radio" class="btn-check" name="radio_type" id="GALLERY_CONTENTS_SORT" autocomplete="off" onclick="selectType(this);">
+						<label class="btn btn-outline-primary" for="GALLERY_CONTENTS_SORT">정렬(갤러리-)</label>
+						<input type="radio" class="btn-check" name="radio_type" id="COMMUNITY_SORT" autocomplete="off" onclick="selectType(this);">
+						<label class="btn btn-outline-primary" for="COMMUNITY_SORT">정렬(커뮤니티)</label>
 					</div>
-					<div class="col-4 p-0">
-						<button type="button" class="btn btn-light btn-outline-secondary w-100 h-100"></button>
-					</div>
-					<div class="col-4 p-0">
-						<button type="button" class="btn btn-light btn-outline-secondary w-100 h-100" onclick="selectType(this, 'COMMUNITY_SEARCH');">검색(커뮤니티)</button>
+				</div>
+				<div class="row btn_group1">
+					<div class="col btn-group" role="group" aria-label="Basic radio toggle button group">
+						<input type="radio" class="btn-check" name="radio_type" id="GALLERY_CARDS_SEARCH" autocomplete="off" onclick="selectType(this);">
+						<label class="btn btn-outline-primary" for="GALLERY_CARDS_SEARCH">검색(갤러리-카드)</label>
+						<input type="radio" class="btn-check" name="radio_type" id="EMPTY2" autocomplete="off" disabled="disabled">
+						<label class="btn btn-outline-primary" for="EMPTY2"></label>
+						<input type="radio" class="btn-check" name="radio_type" id="COMMUNITY_SEARCH" autocomplete="off" onclick="selectType(this);">
+						<label class="btn btn-outline-primary" for="COMMUNITY_SEARCH">검색(커뮤니티)</label>
 					</div>
 				</div>
 			</div>
@@ -89,13 +89,13 @@
 		var max_sort = 0;
 		var max_code = 0;
 		// 비동기로 데이터 가져오는 함수
-		function selectType(target, tableName) {
+		function selectType(target) {
+			// tableName
+			let tableName = $(target).attr("id");
 			// form url 변경
 			$("form").attr("action", "/admin/update_category?tableName=" + tableName);
 			// TITLE 내용 변경
 			$("caption").text($(target).attr("value"));
-			// 취소 버튼 이벤트 변경
-			$("#btn_cancle").attr("onclick", "selectType(this, '" + tableName + "');")
 			// TABLE 내용 변경
 			$("tbody").html("");
 			// row 추가용 변수 초기화
@@ -122,13 +122,26 @@
 		function createRow(sort, code, name, yn) {
 			let tr = $("<tr>").addClass("ui-sortable-handle");
 			let td = $("<td>");
-			let inp = $("<input>", { type : "text" }).addClass("w-100");
+			let inp = $("<input>", {
+				type : "text"
+			}).addClass("w-100");
 
-			let inp_sort = $(inp.clone()).val(sort).attr({"name": "sort", "readonly": "readonly"});
-			let inp_code = $(inp.clone()).val(code).attr({"name": "code", "readonly": "readonly"});
-			let inp_name = $(inp.clone()).val(name).attr({"name": "name"}).prop("required", true);
+			let inp_sort = $(inp.clone()).val(sort).attr({
+				"name" : "sort",
+				"readonly" : "readonly"
+			});
+			let inp_code = $(inp.clone()).val(code).attr({
+				"name" : "code",
+				"readonly" : "readonly"
+			});
+			let inp_name = $(inp.clone()).val(name).attr({
+				"name" : "name"
+			}).prop("required", true);
 
-			let sel_yn = $("<select>").addClass("w-100").attr({"name": "yn"});
+			let sel_yn = $("<select>").addClass("w-100").attr({
+				"name" : "yn"
+			});
+			
 			let op_y = $("<option>").val("Y").text("Y");
 			let op_n = $("<option>").val("N").text("N");
 			sel_yn.append(op_y, op_n);
@@ -137,14 +150,25 @@
 			tr.append($(td.clone()).append(inp_sort),
 					  $(td.clone()).append(inp_code),
 					  $(td.clone()).append(inp_name),
-					  $(td.clone()).append(sel_yn), $(td.clone()));
+					  $(td.clone()).append(sel_yn),
+					  $(td.clone()));
 
-			if (yn == "Y")
-				$("#tbody_data").append(tr);
+			$("#tbody_data").append(tr);
 		}
 		// row 추가 이벤트 할당
 		$("#btn_addRow").on("click", function() {
 			createRow(max_sort = max_sort + 1, max_code = max_code + 1, "", "Y");
+		});
+		// 취소 이벤트 할당
+		$("#btn_cancle").on("click", function() {
+			let btns = $(".btn-check");
+			console.log(btns);
+			
+			for (var i = 0 ; i < btns.length ; i++) {
+				if ($(btns[i]).prop("checked")) {
+					return btn_click($(btns[i]).attr("id"));;
+				}
+			}
 		});
 		// row 드래그어블
 		$("#tbody_data").sortable({
@@ -162,10 +186,14 @@
 				});
 			}
 		}).disableSelection();
+		// btn_group_click 함수
+		function btn_click(btn_name) {
+			$($("#" + btn_name + "")).trigger("click");
+		}
 	</script>
 	<script type="text/javascript">
-		$(function() {
-			$($("[type='button']")[0]).trigger("click");
+		$(function () {
+			btn_click($($(".btn-check")[0]).attr("id"));
 		});
 	</script>
 </body>
