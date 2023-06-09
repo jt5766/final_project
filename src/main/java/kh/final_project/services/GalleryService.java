@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class GalleryService {
 
-    private GalleryDAO galleryDAO;
+    private final GalleryDAO galleryDAO;
 
     @Autowired
     public GalleryService(GalleryDAO galleryDAO) {

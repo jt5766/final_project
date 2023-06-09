@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/gallery")
 public class GalleryController {
 
-    private GalleryService galleryService;
+    private final GalleryService galleryService;
 
     @Autowired
     public GalleryController(GalleryService galleryService) {
@@ -73,28 +73,24 @@ public class GalleryController {
     @PostMapping("/card/insert")
     public String insertCard(GalleryCard card) {
         card.setWriter(10000001);
-        System.out.println("card = " + card);
         galleryService.insertCard(card);
         return "redirect:/gallery";
     }
 
     @PostMapping("/card/{cardSeq}/contents")
     public String insertContent(GalleryContent content, @PathVariable Integer cardSeq) {
-        System.out.println("content = " + content);
         galleryService.insertContent(content);
         return "redirect:/gallery/card/{cardSeq}";
     }
 
     @PostMapping("/card/{cardSeq}/modify")
-    public String modifyCard(GalleryCard card) {
-        System.out.println("card = " + card);
+    public String modifyCard(GalleryCard card, @PathVariable Integer cardSeq) {
         galleryService.updateCard(card);
         return "redirect:/gallery/card/{cardSeq}";
     }
 
     @PostMapping("/card/{cardSeq}/contents/{contentSeq}/modify")
     public String modifyContent(GalleryContent content, @PathVariable Integer cardSeq, @PathVariable Integer contentSeq) {
-        System.out.println("content = " + content);
         galleryService.updateContent(content);
         return "redirect:/gallery/card/{cardSeq}/contents/{contentSeq}";
     }

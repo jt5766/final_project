@@ -13,7 +13,7 @@ import java.util.Map;
 @Repository
 public class GalleryDAO {
 
-    private SqlSessionTemplate db;
+    private final SqlSessionTemplate db;
 
     @Autowired
     public GalleryDAO(SqlSessionTemplate db) {
