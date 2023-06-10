@@ -62,6 +62,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
+            <c:if test="${sessionScope.code == content}"
             <form action="/gallery/${cardSeq}/contents/${content.seq}/delete" method="post">
                 <input type="hidden" name="cardSeq" value="${cardSeq}">
                 <input type="hidden" name="contentSeq" value="${content.seq}">

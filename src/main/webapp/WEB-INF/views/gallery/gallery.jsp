@@ -26,7 +26,8 @@
         </div>
         <div class="row lnb">
             <div class="col-md-12">
-                <button>소설</button>
+                <!-- TODO: 버튼 누를 때 마다 카테고리별로 필터링 -->
+                <button onclick="location.href='/gallery/'">소설</button>
                 <button>만화</button>
                 <button>그림</button>
                 <button>사진</button>
@@ -43,6 +44,7 @@
                 <option value="name">닉네임</option>
             </select>
             <input type="text" name="search-keyword">
+            <!-- TODO: 버튼 누를 때 마다 order by 로 리스트 정렬 -->
             <a href="#"><span>new</span></a>
             <div class="vr"></div>
             <a href="#"><span>old</span></a>

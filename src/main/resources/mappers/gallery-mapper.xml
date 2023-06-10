@@ -46,7 +46,7 @@
         select * from gallery_contents where gallery_cards = #{cardSeq} order by seq desc
     </select>
     <select id="selectOneContent" resultType="kh.final_project.dto.GalleryContent">
-        select gallery_contents.*, gallery_cards.category_type
+        select gallery_contents.*, gallery_cards.category_type, gallery_cards.writer
         from gallery_contents
         left outer join gallery_cards on gallery_contents.gallery_cards = gallery_cards.seq
         where gallery_contents.gallery_cards = #{cardSeq} and gallery_contents.seq = #{contentSeq}

@@ -15,6 +15,7 @@ public class GalleryContent {
     private Integer total_count;
     private Integer day_count;
     private Integer category_type;
+    private Integer writer;
 
     public GalleryContent() {}
 
@@ -128,6 +129,14 @@ public class GalleryContent {
         this.category_type = category_type;
     }
 
+    public Integer getWriter() {
+        return writer;
+    }
+
+    public void setWriter(Integer writer) {
+        this.writer = writer;
+    }
+
     @Override
     public String toString() {
         return "GalleryContent{" +
@@ -142,6 +151,7 @@ public class GalleryContent {
                 "\ntotal_count=" + total_count +
                 "\nday_count=" + day_count +
                 "\ncategory_type=" + category_type +
+                "\nwriter=" + writer +
                 '}';
     }
 }

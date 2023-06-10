@@ -84,7 +84,7 @@
   <form action="/member/passwordCheck">
         비밀번호<br>
         <input type="text" name= "password" placeholder="내용을입력해주세요"> <button>확인</button>
-        <input type="hidden" name="nickname" value="${nickname}">
+        <input type="hidden" name="nickname" value="${nickName}">
   </form>
       </div><br>
       <div id="body_mid">
