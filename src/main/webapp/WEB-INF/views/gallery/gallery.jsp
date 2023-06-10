@@ -33,6 +33,7 @@
                 <button onclick="location.href='/gallery/category/1004'">사진</button>
                 <button onclick="location.href='/gallery/category/1005'">영상</button>
                 <button onclick="location.href='/gallery/category/1006'">음악</button>
+                <button onclick="location.href='/gallery'">전체</button>
             </div>
         </div>
     </div>

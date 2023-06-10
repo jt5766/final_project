@@ -53,7 +53,7 @@
     </select>
 
     <select id="selectCardsByCategoryType" resultType="kh.final_project.dto.GalleryCardView">
-        <!--TODO:쿼리문 구현~-->
+        select * from view_gallery_cards where category_type = #{category_type} order by seq desc
     </select>
 
     <update id="updateViewCount">
