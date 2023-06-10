@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kh.final_project.dto.BoardsDTO;
+import kh.final_project.dto.BoardsReplyDTO;
 import kh.final_project.dto.CategoryType;
 import kh.final_project.services.CommunityService;
 
@@ -65,7 +66,9 @@ public class CommunityController {
 	public String toBoardView(BoardsDTO boardsDTO, Model model) {
 		BoardsDTO info = communityService.selectBoardView(boardsDTO);
 		System.out.println("toBoardView info : " + info);
+		List<BoardsReplyDTO> reply = communityService.selectReply(boardsDTO);
 		model.addAttribute("info", info);
+		model.addAttribute("reply", reply);
 		return "community/board_view";
 	}
 
@@ -92,4 +95,11 @@ public class CommunityController {
 		return "redirect:/community/toBoard?code=" + boardsDTO.getBoard_type();
 	}
 
+	@RequestMapping("insertReply")
+	public String insertReply(BoardsReplyDTO boardsReplyDTO) {
+		System.out.println("reply : " + boardsReplyDTO);
+		communityService.insertReply(boardsReplyDTO);
+		return "redirect:/community/toBoardView?seq=" + boardsReplyDTO.getParent_board() + "&board_type="
+				+ boardsReplyDTO.getBoard_type();
+	}
 }

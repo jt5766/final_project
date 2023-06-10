@@ -17,10 +17,9 @@
 		select * from ${name}_BOARDS
 	</select>
 	
-	<update id="">
-		update ${board_name}_BOARDS 
+	<update id="viewUp">
+		update ${board_name}_BOARDS set total_count = total_count + 1
 	</update>
-
 	<select id="selectBoardView" resultType="kh.final_project.dto.BoardsDTO">
 		select * from ${board_name}_BOARDS where seq = #{seq}
 	</select>
@@ -32,4 +31,13 @@
 	<delete id="deleteBoard">
 		delete from ${board_name}_BOARDS where seq = ${seq}
 	</delete>
+	
+	<insert id="insertReply">
+		insert into ${board_name}_REPLYS values
+			(${board_name}_REPLYS_SEQ.NEXTVAL, #{reply_type}, #{parent_board}, null, #{writer}, #{txt}, default)
+	</insert>
+	
+	<select id="selectReply" resultType="kh.final_project.dto.BoardsReplyDTO">
+		select * from ${board_name}_REPLYS where parent_board = #{parent_board}
+	</select>
 </mapper>

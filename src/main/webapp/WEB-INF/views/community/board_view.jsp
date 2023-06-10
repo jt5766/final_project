@@ -45,6 +45,9 @@
 				</div>
 				<div>${info.formed_date}<input type="hidden" name="write_date" value="${info.write_date}">
 				</div>
+				<div>
+					${info.total_count}
+				</div>
 			</div>
 			<div>
 				<textarea name="txt" id="textarea_contents" cols="30" rows="10" readonly>${info.txt}</textarea>
@@ -59,20 +62,56 @@
 		</form>
 		<form action="/community/insertReply" method="post">
 			<div>
-				<div>
+				<div style="text-align: left;">
 					${sessionScope.loginID}
 					<input type="hidden" name="writer" value="${sessionScope.loginID}">
-					<input type="hidden" name="parent_board" value="${info.board_type}">
+					<input type="hidden" name="parent_board" value="${info.seq}">
+					<input type="hidden" name="board_type" value="${info.board_type}">
 					<input type="hidden" name="reply_type" value="1001">
 				</div>
 				<div>
-					<div style="display: flex;">
-						<textarea name="txt" style="flex: 6;"></textarea>
-						<input type="submit" value="댓글 달기" style="flex: 1;">
+					<div style="display: flex; align-items: center;">
+						<div style="flex: 6;">					
+							<textarea name="txt" style="text-align: left; width: 100%; resize: none;"></textarea>
+						</div>
+						<div style="flex: 1;">
+							<input type="submit" value="댓글 달기">
+						</div>
 					</div>
 				</div>
 			</div>
 		</form>
+		<hr>
+		<div style="text-align: left; background-color: pink;">
+			댓글 목록
+		</div>
+		<c:forEach var="i" items="${reply}">
+			<form action="/community/updateReply">
+				<div>
+					
+					<div style="display: flex;">
+						<div style="text-align: left; flex: 1;">
+							<input type="hidden" name="writer" value="${i.writer}">
+							${i.writer}
+						</div>
+						<div style="text-align: right; flex: 1;">
+							${i.write_date}
+						</div>
+					</div>
+					<div style="display: flex; align-items: center;">
+						<div style="flex: 6;">
+							<textarea name="txt" style="text-align: left; width: 100%; resize: none;" readonly>${i.txt}</textarea>
+						</div>
+						<div style="flex: 1;">
+							<c:if test="${i.writer == sessionScope.loginID}">
+								<input type="button" value="수정">	
+								<input type="button" value="삭제">
+							</c:if>
+						</div>
+					</div>
+				</div>
+			</form>
+		</c:forEach>
 		<div>FOOTER</div>
 	</div>
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kh.final_project.dto.BoardsDTO;
+import kh.final_project.dto.BoardsReplyDTO;
 import kh.final_project.dto.CategoryType;
 import kh.final_project.repositories.CommunityDAO;
 
@@ -30,16 +31,32 @@ public class CommunityService {
 	}
 
 	private void setBoardNameByBoardType(BoardsDTO boardsDTO) {
-		if (boardsDTO.getBoard_type() == 1001) {
+		int board_type = boardsDTO.getBoard_type();
+		if (board_type == 1001) {
 			boardsDTO.setBoard_name("NOTICE");
-		} else if (boardsDTO.getBoard_type() == 1002) {
+		} else if (board_type == 1002) {
 			boardsDTO.setBoard_name("FREE");
-		} else if (boardsDTO.getBoard_type() == 1003) {
+		} else if (board_type == 1003) {
 			boardsDTO.setBoard_name("TIP");
-		} else if (boardsDTO.getBoard_type() == 1004) {
+		} else if (board_type == 1004) {
 			boardsDTO.setBoard_name("QUESTION");
-		} else if (boardsDTO.getBoard_type() == 1005) {
+		} else if (board_type == 1005) {
 			boardsDTO.setBoard_name("COMPLAINT");
+		}
+	}
+
+	private void setBoardNameByBoardType(BoardsReplyDTO boardsReplyDTO) {
+		int board_type = boardsReplyDTO.getBoard_type();
+		if (board_type == 1001) {
+			boardsReplyDTO.setBoard_name("NOTICE");
+		} else if (board_type == 1002) {
+			boardsReplyDTO.setBoard_name("FREE");
+		} else if (board_type == 1003) {
+			boardsReplyDTO.setBoard_name("TIP");
+		} else if (board_type == 1004) {
+			boardsReplyDTO.setBoard_name("QUESTION");
+		} else if (board_type == 1005) {
+			boardsReplyDTO.setBoard_name("COMPLAINT");
 		}
 	}
 
@@ -70,5 +87,18 @@ public class CommunityService {
 	public int deleteBoard(BoardsDTO boardsDTO) {
 		this.setBoardNameByBoardType(boardsDTO);
 		return communityDAO.deleteBoard(boardsDTO);
+	}
+
+	public int insertReply(BoardsReplyDTO boardsReplyDTO) {
+		this.setBoardNameByBoardType(boardsReplyDTO);
+		return communityDAO.insertReply(boardsReplyDTO);
+	}
+
+	public List<BoardsReplyDTO> selectReply(BoardsDTO boardsDTO) {
+		BoardsReplyDTO boardsReplyDTO = new BoardsReplyDTO();
+		boardsReplyDTO.setParent_board(boardsDTO.getSeq());
+		boardsReplyDTO.setBoard_type(boardsDTO.getBoard_type());
+		this.setBoardNameByBoardType(boardsReplyDTO);
+		return communityDAO.selectReply(boardsReplyDTO);
 	}
 }

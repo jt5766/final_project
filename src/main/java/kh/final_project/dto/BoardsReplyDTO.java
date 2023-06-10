@@ -10,13 +10,14 @@ public class BoardsReplyDTO {
 	private Integer writer;
 	private String txt;
 	private Timestamp write_date;
+	private Integer board_type;
 	private String board_name;
 
 	public BoardsReplyDTO() {
 	}
 
 	public BoardsReplyDTO(Integer seq, Integer reply_type, Integer parent_board, Integer parent_reply, Integer writer,
-			String txt, Timestamp write_date, String board_name) {
+			String txt, Timestamp write_date, Integer board_type, String board_name) {
 		super();
 		this.seq = seq;
 		this.reply_type = reply_type;
@@ -25,6 +26,7 @@ public class BoardsReplyDTO {
 		this.writer = writer;
 		this.txt = txt;
 		this.write_date = write_date;
+		this.board_type = board_type;
 		this.board_name = board_name;
 	}
 
@@ -84,12 +86,27 @@ public class BoardsReplyDTO {
 		this.write_date = write_date;
 	}
 
+	public Integer getBoard_type() {
+		return board_type;
+	}
+
+	public void setBoard_type(Integer board_type) {
+		this.board_type = board_type;
+	}
+
 	public String getBoard_name() {
 		return board_name;
 	}
 
 	public void setBoard_name(String board_name) {
 		this.board_name = board_name;
+	}
+
+	@Override
+	public String toString() {
+		return "BoardsReplyDTO [seq=" + seq + ", reply_type=" + reply_type + ", parent_board=" + parent_board
+				+ ", parent_reply=" + parent_reply + ", writer=" + writer + ", txt=" + txt + ", write_date="
+				+ write_date + ", board_type=" + board_type + ", board_name=" + board_name + "]";
 	}
 
 }
