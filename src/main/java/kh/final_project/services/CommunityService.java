@@ -101,4 +101,14 @@ public class CommunityService {
 		this.setBoardNameByBoardType(boardsReplyDTO);
 		return communityDAO.selectReply(boardsReplyDTO);
 	}
+
+	public int deleteReply(BoardsReplyDTO boardsReplyDTO) {
+		this.setBoardNameByBoardType(boardsReplyDTO);
+		return communityDAO.deleteReply(boardsReplyDTO);
+	}
+
+	public int updateReply(BoardsReplyDTO boardsReplyDTO) {
+		this.setBoardNameByBoardType(boardsReplyDTO);
+		return communityDAO.updateReply(boardsReplyDTO);
+	}
 }

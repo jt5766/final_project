@@ -69,6 +69,7 @@ public class CommunityController {
 		List<BoardsReplyDTO> reply = communityService.selectReply(boardsDTO);
 		model.addAttribute("info", info);
 		model.addAttribute("reply", reply);
+		System.out.println(reply);
 		return "community/board_view";
 	}
 
@@ -99,6 +100,20 @@ public class CommunityController {
 	public String insertReply(BoardsReplyDTO boardsReplyDTO) {
 		System.out.println("reply : " + boardsReplyDTO);
 		communityService.insertReply(boardsReplyDTO);
+		return "redirect:/community/toBoardView?seq=" + boardsReplyDTO.getParent_board() + "&board_type="
+				+ boardsReplyDTO.getBoard_type();
+	}
+
+	@RequestMapping("deleteReply")
+	public String deleteReply(BoardsReplyDTO boardsReplyDTO) {
+		communityService.deleteReply(boardsReplyDTO);
+		return "redirect:/community/toBoardView?seq=" + boardsReplyDTO.getParent_board() + "&board_type="
+				+ boardsReplyDTO.getBoard_type();
+	}
+
+	@RequestMapping("updateReply")
+	public String updateReply(BoardsReplyDTO boardsReplyDTO) {
+		communityService.updateReply(boardsReplyDTO);
 		return "redirect:/community/toBoardView?seq=" + boardsReplyDTO.getParent_board() + "&board_type="
 				+ boardsReplyDTO.getBoard_type();
 	}

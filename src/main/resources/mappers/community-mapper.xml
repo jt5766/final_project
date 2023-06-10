@@ -40,4 +40,12 @@
 	<select id="selectReply" resultType="kh.final_project.dto.BoardsReplyDTO">
 		select * from ${board_name}_REPLYS where parent_board = #{parent_board}
 	</select>
+	
+	<delete id="deleteReply">
+		delete from ${board_name}_REPLYS where seq = #{seq}
+	</delete>
+	
+	<update id="updateReply">
+		update ${board_name}_REPLYS set txt = #{txt}, write_date = default where seq = #{seq}
+	</update>
 </mapper>

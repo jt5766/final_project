@@ -88,10 +88,11 @@
 		<c:forEach var="i" items="${reply}">
 			<form action="/community/updateReply">
 				<div>
-					
+					<input type="hidden" name="seq" value="${i.seq}">
+					<input type="hidden" name="board_type" value="${info.board_type}">
+					<input type="hidden" name="parent_board" value="${info.seq}">
 					<div style="display: flex;">
 						<div style="text-align: left; flex: 1;">
-							<input type="hidden" name="writer" value="${i.writer}">
 							${i.writer}
 						</div>
 						<div style="text-align: right; flex: 1;">
@@ -104,8 +105,10 @@
 						</div>
 						<div style="flex: 1;">
 							<c:if test="${i.writer == sessionScope.loginID}">
-								<input type="button" value="수정">	
-								<input type="button" value="삭제">
+								<input type="button" value="수정" class="updateReply">	
+								<input type="button" value="삭제" 
+								onclick="location.href = 
+								`/community/deleteReply?board_type=${info.board_type}&seq=${i.seq}&parent_board=${i.parent_board}`">
 							</c:if>
 						</div>
 					</div>
@@ -123,7 +126,23 @@
 	    shortcuts : false,
 	    tabDisable : true
 	});
+	
 	$("#textarea_contents").summernote("disable");
+	
+	$(".updateReply").on("click", function() {
+	    let submit = $("<input type='submit'>");
+	    submit.val("수정");
+	    let cancel = $("<input type='button'>");
+	    cancel.val("취소");
+	    cancel.on("click", function() {
+			location.reload();
+	    });
+	    $(this).parent().prev().find("textarea").removeAttr("readonly");
+	    $(this).parent().append(submit);
+	    $(this).parent().append(cancel);
+	    $(this).next().hide();
+		$(this).hide();
+	});
     </script>
 </body>
 
