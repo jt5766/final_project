@@ -59,4 +59,8 @@ public class GalleryService {
     public void deleteContent(Integer cardSeq, Integer contentSeq) {
         galleryDAO.deleteContent(cardSeq, contentSeq);
     }
+
+    public List<GalleryCardView> selectCardsByCategoryType(Integer categoryType) {
+        return galleryDAO.selectCardsByCategoryType(categoryType);
+    }
 }

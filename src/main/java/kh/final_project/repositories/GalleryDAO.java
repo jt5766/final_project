@@ -71,4 +71,8 @@ public class GalleryDAO {
         );
         db.delete("Gallery.deleteContent", params);
     }
+
+    public List<GalleryCardView> selectCardsByCategoryType(Integer categoryType) {
+        return db.selectList("Gallery.selectCardsByCategoryType", categoryType);
+    }
 }
