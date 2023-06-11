@@ -17,5 +17,4 @@
 		</foreach>
 		)}
 	</select>
-	<!-- #{item, mode=IN, javaType=oracle.sql.STRUCT, jdbcType=OTHER, typeHandler=kh.final_project.commons.YourObjectStructTypeHandler} -->
 </mapper>
