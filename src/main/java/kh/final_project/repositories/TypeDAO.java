@@ -1,14 +1,22 @@
 package kh.final_project.repositories;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Struct;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.sql.DataSource;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.final_project.commons.YourObjectConverter;
 import kh.final_project.dto.CategoryType;
+import oracle.jdbc.OracleConnection;
 
 /**
  * TYPE 관련 CRUD 작업하는 DAO
@@ -160,11 +168,28 @@ public class TypeDAO {
 	 * @param List<CategoryType> list
 	 * @return List<CategoryType>
 	 */
+
 	public boolean updateCategory(String tableName, List<CategoryType> list) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("tableName", tableName);
-		param.put("list", list);
+		param.put("list", Arrays.asList(list));
 		mybatis.selectOne("Type.PROC_TYPE_UI", param);
 		return false;
 	}
+
+//	public boolean updateCategory(String tableName, List<CategoryType> list) {
+//		Map<String, Object> param = new HashMap<String, Object>();
+//		param.put("tableName", tableName);
+////		List<Struct> structList = null;
+////		try {
+////			structList = YourObjectConverter.convertToStructList(list, oracleConnection.getConnection());
+////		} catch (SQLException e) {
+////			// TODO Auto-generated catch block
+////			e.printStackTrace();
+////		}
+////		param.put("list", structList);
+//		param.put("lsit", list);
+//		mybatis.selectOne("Type.PROC_TYPE_UI", param);
+//		return false;
+//	}
 }

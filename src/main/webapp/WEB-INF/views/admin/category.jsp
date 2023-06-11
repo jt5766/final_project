@@ -57,14 +57,14 @@
 		<div class="row justify-content-md-center">
 			<div class="col-md-8">
 				<div class="row">
-					<form>
+					<form action="/admin/update_category">
 						<table class="table table-bordered caption-top table-striped" id="table">
 							<caption></caption>
 							<thead align="center">
 								<tr>
 									<th class="justify-content-md-end" colspan="5">
 										<button type="button" class="btn btn-light btn-outline-secondary w-25 h-100" id="btn_addRow">Row 추가</button>
-										<button type="submit" class="btn btn-light btn-outline-secondary w-25 h-100">적용</button>
+										<button type="submit" class="btn btn-light btn-outline-secondary w-25 h-100" id="btn_submit">적용</button>
 										<button type="button" class="btn btn-light btn-outline-secondary w-25 h-100" id="btn_cancle">취소</button>
 									</th>
 								</tr>
@@ -85,17 +85,20 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		// submit용 table Name 히든 tag
+		var hidden_table_name = $("<input>", {
+			"type" : "hidden",
+			"name" : "tableName"
+		});
+		$("form").append(hidden_table_name);
 		// row 추가용 변수
 		var max_sort = 0;
 		var max_code = 0;
 		// 비동기로 데이터 가져오는 함수
 		function selectType(target) {
-			// tableName
+			// tableName & 히든 tag 값 수전
 			let tableName = $(target).attr("id");
-			// form url 변경
-			$("form").attr("action", "/admin/update_category?tableName=" + tableName);
-			// TITLE 내용 변경
-			$("caption").text($(target).attr("value"));
+			$(hidden_table_name).val(tableName);
 			// TABLE 내용 변경
 			$("tbody").html("");
 			// row 추가용 변수 초기화

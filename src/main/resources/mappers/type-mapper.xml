@@ -9,18 +9,13 @@
 	</select>
 
 
-	<select id="PROC_TYPE_UI" statementType="CALLABLE" parameterType="java.util.Map">
-
-		DECLARE DATA TYPE_OBJ
-
+	<select id="PROC_TYPE_UI" statementType="CALLABLE">
+		{ CALL PROC_TYPE_UI(
+		#{tableName, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
 		<foreach collection="list" item="item" separator=",">
-			INSERT INTO DATA VALUES (#{item.code},#{item.sort},#{item.name},#{item.yn})
+			#{item, mode=IN, javaType=kh.final_project.dto.CategoryType, jdbcType=OTHER, typeHandler=kh.final_project.commons.YourObjectStructTypeHandler}
 		</foreach>
-
-		<!-- call PROC_TYPE_UI( -->
-		<!-- #{tableName, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String} -->
-		<!-- #{tableName, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String} -->
-		<!-- ) -->
-		<!-- } -->
+		)}
 	</select>
+	<!-- #{item, mode=IN, javaType=oracle.sql.STRUCT, jdbcType=OTHER, typeHandler=kh.final_project.commons.YourObjectStructTypeHandler} -->
 </mapper>

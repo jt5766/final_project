@@ -50,12 +50,11 @@ public class AdminService {
 
 	public boolean updateCategoey(String tableName, String code, String sort, String name, String yn) {
 		List<CategoryType> list = new ArrayList<CategoryType>();
-		for (int i = 0; i < sort.split(",").length; i++) {
-			list.add(new CategoryType(Integer.parseInt(code.split(",")[i]), Integer.parseInt(sort.split(",")[i]),name.split(",")[i], yn.split(",")[i]));
-		}
-		
+		for (int i = 0; i < sort.split(",").length; i++)
+			list.add(new CategoryType(Integer.parseInt(code.split(",")[i]), Integer.parseInt(sort.split(",")[i]), name.split(",")[i], yn.split(",")[i]));
+
 		boolean result = typeDAO.updateCategory(tableName, list);
-		
+
 		return result;
 	}
 

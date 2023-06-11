@@ -62,7 +62,6 @@ public class AdminController {
 	@RequestMapping("update_category")
 	public String updateCategory(String tableName, String code, String sort, String name, String yn) {
 		adminService.updateCategoey(tableName, code, sort, name, yn);
-		
 		return "redirect: /admin/category";
 	}
 	
