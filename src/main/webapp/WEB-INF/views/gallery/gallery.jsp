@@ -27,12 +27,12 @@
         <div class="row lnb">
             <div class="col-md-12">
                 <!-- TODO: 버튼 누를 때 마다 카테고리별로 필터링 -->
-                <button onclick="location.href='/gallery/'">소설</button>
-                <button>만화</button>
-                <button>그림</button>
-                <button>사진</button>
-                <button>영상</button>
-                <button>음악</button>
+                <button onclick="location.href='/gallery/category/1001'">소설</button>
+                <button onclick="location.href='/gallery/category/1002'">만화</button>
+                <button onclick="location.href='/gallery/category/1003'">그림</button>
+                <button onclick="location.href='/gallery/category/1004'">사진</button>
+                <button onclick="location.href='/gallery/category/1005'">영상</button>
+                <button onclick="location.href='/gallery/category/1006'">음악</button>
             </div>
         </div>
     </div>

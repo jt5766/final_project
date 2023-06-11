@@ -38,6 +38,13 @@ public class GalleryController {
         return "/gallery/card/view";
     }
 
+    @GetMapping("/category/{categoryType}")
+    public String filterCard(@PathVariable Integer categoryType, Model model) {
+        List<GalleryCardView> cards = galleryService.selectCardsByCategoryType(categoryType);
+        model.addAttribute("cards", cards);
+        return "/gallery/gallery";
+    }
+
     @GetMapping("/{cardSeq}/contents/{contentSeq}")
     public String toContent(@ModelAttribute("cardSeq") @PathVariable Integer cardSeq, @PathVariable Integer contentSeq, Model model) {
         GalleryContent content = galleryService.selectOneContent(cardSeq, contentSeq);

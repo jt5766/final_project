@@ -51,6 +51,11 @@
         left outer join gallery_cards on gallery_contents.gallery_cards = gallery_cards.seq
         where gallery_contents.gallery_cards = #{cardSeq} and gallery_contents.seq = #{contentSeq}
     </select>
+
+    <select id="selectCardsByCategoryType" resultType="kh.final_project.dto.GalleryCardView">
+        <!--TODO:쿼리문 구현~-->
+    </select>
+
     <update id="updateViewCount">
         update gallery_contents set total_count = total_count + 1, day_count = day_count + 1 where seq = ${contentSeq}
     </update>

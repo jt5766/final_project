@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import kh.final_project.dto.BoardsDTO;
+import kh.final_project.dto.BoardsReplyDTO;
 import kh.final_project.dto.CategoryType;
 
 @Repository
@@ -27,6 +28,7 @@ public class CommunityDAO {
 	}
 
 	public BoardsDTO selectBoardView(BoardsDTO boardsDTO) {
+		sst.update("Community.viewUp", boardsDTO);
 		return sst.selectOne("Community.selectBoardView", boardsDTO);
 	}
 
@@ -36,5 +38,21 @@ public class CommunityDAO {
 
 	public int deleteBoard(BoardsDTO boardsDTO) {
 		return sst.delete("Community.deleteBoard", boardsDTO);
+	}
+
+	public int insertReply(BoardsReplyDTO boardsReplyDTO) {
+		return sst.insert("Community.insertReply", boardsReplyDTO);
+	}
+
+	public List<BoardsReplyDTO> selectReply(BoardsReplyDTO boardsReplyDTO) {
+		return sst.selectList("Community.selectReply", boardsReplyDTO);
+	}
+
+	public int deleteReply(BoardsReplyDTO boardsReplyDTO) {
+		return sst.delete("Community.deleteReply", boardsReplyDTO);
+	}
+
+	public int updateReply(BoardsReplyDTO boardsReplyDTO) {
+		return sst.update("Community.updateReply", boardsReplyDTO);
 	}
 }
