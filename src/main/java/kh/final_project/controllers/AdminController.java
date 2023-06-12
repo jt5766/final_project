@@ -8,7 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+
 import kh.final_project.dto.CategoryType;
+import kh.final_project.dto.CountDTO;
 import kh.final_project.services.AdminService;
 
 @Controller
@@ -24,7 +27,14 @@ public class AdminController {
 	}
 
 	@RequestMapping("chart")
-	public String chart() {
+	public String chart(Model model) {
+		// 회원 카운트
+		List<CountDTO> memberCount = adminService.selectMemberCount();
+		model.addAttribute("memberCount",new Gson().toJson(memberCount));
+		// 갤러리 별 조회수 합
+		List<CountDTO> galleryCount = adminService.selectGalleryCount();
+		System.out.println(new Gson().toJson(galleryCount));
+		model.addAttribute("galleryCount", new Gson().toJson(galleryCount));
 		return "/admin/chart";
 	}
 
@@ -52,21 +62,31 @@ public class AdminController {
 	public String main(Model model) {
 		return "/admin/category";
 	}
-	
+
+	/**
+	 * 
+	 * @param tableName 테이블 이름
+	 * @return List<CategoryType>
+	 */
 	@ResponseBody
 	@RequestMapping(value = "category/type", produces = "application/json;charset=utf8")
 	public List<CategoryType> type(String tableName) {
 		List<CategoryType> result = adminService.selectCategory(tableName);
 		return result;
 	}
+
+	/**
+	 * 
+	 * @param tableName 테이블 이름
+	 * @param code      코드
+	 * @param sort      순서
+	 * @param name      이름
+	 * @param yn        사용여부
+	 * @return
+	 */
 	@RequestMapping("update_category")
 	public String updateCategory(String tableName, String code, String sort, String name, String yn) {
 		adminService.updateCategoey(tableName, code, sort, name, yn);
 		return "redirect: /admin/category";
-	}
-	
-	@RequestMapping("test")
-	public void Test() {
-		adminService.selectGenreType();
 	}
 }

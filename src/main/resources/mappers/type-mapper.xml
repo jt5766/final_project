@@ -7,8 +7,6 @@
 	<select id="SelectType2" resultType="kh.final_project.dto.CategoryType">
 		SELECT * FROM ${value} ORDER BY YN DESC, SORT ASC
 	</select>
-
-
 	<select id="PROC_TYPE_UI" statementType="CALLABLE">
 		{ CALL PROC_TYPE_UI(
 		#{tableName, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
