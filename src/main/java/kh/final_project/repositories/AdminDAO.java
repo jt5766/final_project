@@ -11,7 +11,7 @@ import kh.final_project.dto.CountDTO;
 @Repository
 public class AdminDAO {
 	@Autowired
-	SqlSessionTemplate mybatis;
+	private SqlSessionTemplate mybatis;
 
 	public List<CountDTO> selectByMemberCount() {
 		List<CountDTO> result = mybatis.selectList("Admin.selectByMemberCount");
