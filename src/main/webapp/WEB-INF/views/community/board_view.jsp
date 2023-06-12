@@ -57,7 +57,7 @@
 				<input type="submit" value="수정하기">
 				<input type="button" value="삭제하기" onclick="location.href = '/community/deleteBoard?board_type=${info.board_type}&seq=${info.seq}'">
 				<%-- 								</c:if> --%>
-				<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${info.board_type}'">
+				<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${info.board_type}&currentPage=1'">
 			</div>
 		</form>
 		<form action="/community/insertReply" method="post">
