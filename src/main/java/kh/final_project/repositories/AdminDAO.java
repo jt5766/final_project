@@ -24,5 +24,4 @@ public class AdminDAO {
 		System.out.println(result.size());
 		return result;
 	}
-
 }
