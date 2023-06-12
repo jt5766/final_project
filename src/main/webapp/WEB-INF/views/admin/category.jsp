@@ -1,17 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Admin - Catrgory</title>
-<!-- JQuery CDN -->
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-<!-- Bootstrap CDN : CSS & JS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 공통 script -->
+<c:set var="path" value="${pageContext.request.contextPath}" />
+<c:import url="${path}/resources/js/scripts.jsp" />
+
 <style type="text/css">
 .btn-group label {
 	width: 33%;
@@ -84,6 +82,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<script type="text/javascript">
 		// submit용 table Name 히든 tag
 		var hidden_table_name = $("<input>", {
@@ -91,19 +90,24 @@
 			"name" : "tableName"
 		});
 		$("form").append(hidden_table_name);
+		
 		// row 추가용 변수
 		var max_sort = 0;
 		var max_code = 0;
+		
 		// 비동기로 데이터 가져오는 함수
 		function selectType(target) {
 			// tableName & 히든 tag 값 수전
 			let tableName = $(target).attr("id");
 			$(hidden_table_name).val(tableName);
-			// TABLE 내용 변경
+			
+			// TABLE 내용 변경을 위한 비우기.
 			$("tbody").html("");
+			
 			// row 추가용 변수 초기화
 			max_sort = 0;
 			max_code = 0;
+			
 			// 비동기 실행
 			$.ajax({
 				url : "/admin/category/type",
@@ -112,10 +116,10 @@
 				}
 			}).done(function(data) {
 				data.forEach(function(el, index) {
+					// max row 저장
 					if (max_sort < el.sort)
 						max_sort = el.sort;
-					if (max_code < el.code)
-						max_code = el.code;
+					
 					// tbody 생성 함수 호출
 					createRow(el.sort, el.code, el.name, el.yn);
 				});
@@ -144,32 +148,32 @@
 			let sel_yn = $("<select>").addClass("w-100").attr({
 				"name" : "yn"
 			});
-			
+
 			let op_y = $("<option>").val("Y").text("Y");
 			let op_n = $("<option>").val("N").text("N");
 			sel_yn.append(op_y, op_n);
 			sel_yn.val(yn).prop("selected", true);
 
 			tr.append($(td.clone()).append(inp_sort),
-					  $(td.clone()).append(inp_code),
-					  $(td.clone()).append(inp_name),
-					  $(td.clone()).append(sel_yn),
-					  $(td.clone()));
+					$(td.clone()).append(inp_code),
+					$(td.clone()).append(inp_name),
+					$(td.clone()).append(sel_yn),
+					$(td.clone()));
 
 			$("#tbody_data").append(tr);
 		}
 		// row 추가 이벤트 할당
 		$("#btn_addRow").on("click", function() {
-			createRow(max_sort = max_sort + 1, max_code = max_code + 1, "", "Y");
+			createRow(max_sort = max_sort + 1, max_code = max_code + 1,"", "Y");
 		});
-		// 취소 이벤트 할당
+		// 취소 이벤트
 		$("#btn_cancle").on("click", function() {
 			let btns = $(".btn-check");
-			console.log(btns);
-			
-			for (var i = 0 ; i < btns.length ; i++) {
+
+			// checked된 btn 클릭			
+			for (var i = 0; i < btns.length; i++) {
 				if ($(btns[i]).prop("checked")) {
-					return btn_click($(btns[i]).attr("id"));;
+					return btn_click($(btns[i]).attr("id"));
 				}
 			}
 		});
@@ -182,10 +186,10 @@
 			},
 			stop : function(G, ui) {
 				ui.item.removeClass("select");
+				
 				$(this).find("tr").each(function(GFG) {
-					if (GFG >= 0) {
+					if (GFG >= 0) 
 						$(this).find("input").eq(0).val(GFG + 1);
-					}
 				});
 			}
 		}).disableSelection();
@@ -194,8 +198,9 @@
 			$($("#" + btn_name + "")).trigger("click");
 		}
 	</script>
+	
 	<script type="text/javascript">
-		$(function () {
+		$(function() {
 			btn_click($($(".btn-check")[0]).attr("id"));
 		});
 	</script>
