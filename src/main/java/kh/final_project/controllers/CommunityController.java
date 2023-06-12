@@ -37,11 +37,14 @@ public class CommunityController {
 	}
 
 	@RequestMapping("toBoard")
-	public String toBoard(CategoryType categoryType, Model model) {
+	public String toBoard(CategoryType categoryType, Model model, int currentPage) {
+		currentPage = 1;
 		List<BoardsDTO> boardList = communityService.selectBoard(categoryType);
+		List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
 		System.out.println("name : " + categoryType.getName());
 		model.addAttribute("categoryType", categoryType);
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("pageNavi", pageNavi);
 		return "community/board";
 	}
 
@@ -59,7 +62,7 @@ public class CommunityController {
 		session.setAttribute("loginID", 10000001);
 		boardsDTO.setWriter((Integer) session.getAttribute("loginID"));
 		int result = communityService.insertBoard(boardsDTO);
-		return "redirect:/community/toBoard?code=" + boardsDTO.getBoard_type();
+		return "redirect:/community/toBoard?code=" + boardsDTO.getBoard_type() + "&currentPage=1";
 	}
 
 	@RequestMapping("toBoardView")
@@ -93,7 +96,7 @@ public class CommunityController {
 	public String deleteBoard(BoardsDTO boardsDTO) {
 		System.out.println("deleteBoard : " + boardsDTO);
 		communityService.deleteBoard(boardsDTO);
-		return "redirect:/community/toBoard?code=" + boardsDTO.getBoard_type();
+		return "redirect:/community/toBoard?code=" + boardsDTO.getBoard_type() + "&currentPage=1";
 	}
 
 	@RequestMapping("insertReply")
