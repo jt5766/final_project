@@ -135,7 +135,7 @@
 </style>
 <body>
 
-<form action="/member/register">
+<form action="/member/check">
 <div id="container">
     <div id="header"> GNB </div>
     <div id="body">
@@ -172,7 +172,7 @@
             </div>
             <div class="center_box"></div>
             <div class="center_box">
-                <button id="email_certification">이메일 인증</button>
+                <button type="submit" id="email_certification">이메일 인증</button>
             </div>
         </div>
         <div id="body_right">right</div>
@@ -185,7 +185,9 @@
 </body>
 
 <script>
-    $()
+    $("#email_certification").on("submit",function(){
+        alert("메일이 발송되었습니다.");
+    })
 
 
 </script>

@@ -31,10 +31,9 @@
 
             insert into members values(member_code_seq.nextval,${member_type},#{email},${email_type},#{password},#{nickname},${file_type},#{file_url},null,null,null,default,null,default)
         </if>
-
-
     </insert>
 
+    <!--이메일 인증 -->
 
 
 
