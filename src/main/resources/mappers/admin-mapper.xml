@@ -7,4 +7,21 @@
 	<select id="selectByGalleryCount" resultType="kh.final_project.dto.CountDTO">
 		SELECT * FROM VIEW_GALLERY_COUNT
 	</select>
+
+<!-- 	<select id="test" resultType="kh.final_project.dto.CategoryType"> -->
+<!-- 		SELECT * FROM ${tableName} WHERE -->
+<!-- 		<foreach collection="list" item="item" index="index" separator=" AND "> -->
+<!-- 			<if test="searchCol == 1001"> -->
+<!-- 				<if test="item.code != 1001"> -->
+<!-- 					item.colName LIKE '%' || #{searchTxt} || '%' -->
+<!-- 				</if> -->
+<!-- 			</if> -->
+<!-- 			<if test="searchCol != 1001"> -->
+<!-- 				<if test="item.code == searchCol"> -->
+<!-- 					item.colName LIKE '%' || #{searchTxt} || '%' -->
+<!-- 				</if> -->
+<!-- 			</if> -->
+<!-- 		</foreach> -->
+<!-- 		ORDER BY ${sortCol} ${sortOrder} -->
+<!-- 	</select> -->
 </mapper>
