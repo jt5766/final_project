@@ -25,7 +25,6 @@ public class AdminService {
 	 */
 	public List<CategoryType> selectCategory(String tableName) {
 		List<CategoryType> result = null;
-
 		if (tableName.equals("EMAIL_TYPE")) {
 			result = typeDAO.selectByEmailType();
 		} else if (tableName.equals("GENRE_TYPE")) {
@@ -63,6 +62,7 @@ public class AdminService {
 					name.split(",")[i], yn.split(",")[i]));
 
 		// 카테고리 수정 함수 실행
+		System.out.println(tableName);
 		boolean result = typeDAO.updateCategory(tableName, list);
 
 		return result;

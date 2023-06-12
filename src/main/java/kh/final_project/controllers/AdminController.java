@@ -33,7 +33,6 @@ public class AdminController {
 		model.addAttribute("memberCount",new Gson().toJson(memberCount));
 		// 갤러리 별 조회수 합
 		List<CountDTO> galleryCount = adminService.selectGalleryCount();
-		System.out.println(new Gson().toJson(galleryCount));
 		model.addAttribute("galleryCount", new Gson().toJson(galleryCount));
 		return "/admin/chart";
 	}
@@ -86,6 +85,7 @@ public class AdminController {
 	 */
 	@RequestMapping("update_category")
 	public String updateCategory(String tableName, String code, String sort, String name, String yn) {
+		System.out.println(tableName);
 		adminService.updateCategoey(tableName, code, sort, name, yn);
 		return "redirect: /admin/category";
 	}
