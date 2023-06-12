@@ -119,6 +119,8 @@
 					// max row 저장
 					if (max_sort < el.sort)
 						max_sort = el.sort;
+					if (max_code < el.code)
+						max_code = el.code;
 					
 					// tbody 생성 함수 호출
 					createRow(el.sort, el.code, el.name, el.yn);
