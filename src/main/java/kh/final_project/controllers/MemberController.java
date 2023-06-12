@@ -3,6 +3,7 @@ package kh.final_project.controllers;
 
 import kh.final_project.dto.MemberDTO;
 import kh.final_project.repositories.MemberDAO;
+import kh.final_project.services.EmailcheckService;
 import kh.final_project.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/member/")
 public class MemberController {
 
+    @Autowired
+    private EmailcheckService emailcheckService;
 
     @Autowired
     private HttpSession session;
@@ -38,19 +41,23 @@ public class MemberController {
         return"home";
     }
     @RequestMapping("register")
-    public String register(Model model , MemberDTO dto){
+    public String register(Model model , MemberDTO dto) {
+        boolean result = emailcheckService.checkingEmail(dto);
+        if (result) {
+            memberService.setEmailType(dto);
+            model.addAttribute("email", dto.getEmail());
+            model.addAttribute("emailType", dto.getEmail_type());
+            model.addAttribute("setEmailType", dto.getSet_email_type());
+            model.addAttribute("memberType", dto.getMember_type());
+            if (dto.getMember_type() == 2000) {
+                return "/member/expertRegisterForm";
+            }
 
-        memberService.setEmailType(dto);
-        model.addAttribute("email",dto.getEmail());
-        model.addAttribute("emailType",dto.getEmail_type());
-        model.addAttribute("setEmailType",dto.getSet_email_type());
-        model.addAttribute("memberType",dto.getMember_type());
-        if(dto.getMember_type()==2000){
-            return "/member/expertRegisterForm";
+
+            return "/member/registerForm";
+        }else {
+            return "/member/noemail";
         }
-
-
-        return "/member/registerForm";
     }
 
     @PostMapping("createMember")
