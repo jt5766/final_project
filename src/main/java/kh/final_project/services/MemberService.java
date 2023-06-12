@@ -36,6 +36,7 @@ public class MemberService {
 
     public void sendJoinCertificationMail(MemberDTO dto) throws MessagingException, UnsupportedEncodingException {
         //회원가입 완료하면 인증을 위한 이메일 발송
+
         MailHandler sendMail = new MailHandler(javaMailSender);
         sendMail.setSubject("[Kreate-Hub 이메일 인증메일 입니다.]"); //메일제목
         sendMail.setText(
