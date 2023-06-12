@@ -33,11 +33,11 @@
 				<p id="p_boardName"></p>
 			</div>
 			<div>
-				<input type="button" id="1001" value="공지 사항" onclick="location.href = '/community/toBoard?code=1001'">
-				<input type="button" id="1002" value="자유" onclick="location.href = '/community/toBoard?code=1002'">
-				<input type="button" id="1003" value="팁" onclick="location.href = '/community/toBoard?code=1003'">
-				<input type="button" id="1004" value="질문" onclick="location.href = '/community/toBoard?code=1004'">
-				<input type="button" id="1005" value="민원" onclick="location.href = '/community/toBoard?code=1005'">
+				<input type="button" id="1001" value="공지 사항" onclick="location.href = '/community/toBoard?code=1001&currentPage=1'">
+				<input type="button" id="1002" value="자유" onclick="location.href = '/community/toBoard?code=1002&currentPage=1'">
+				<input type="button" id="1003" value="팁" onclick="location.href = '/community/toBoard?code=1003&currentPage=1'">
+				<input type="button" id="1004" value="질문" onclick="location.href = '/community/toBoard?code=1004&currentPage=1'">
+				<input type="button" id="1005" value="민원" onclick="location.href = '/community/toBoard?code=1005&currentPage=1'">
 			</div>
 		</div>
 		<div>

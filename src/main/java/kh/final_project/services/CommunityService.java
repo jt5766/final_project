@@ -15,6 +15,7 @@ import kh.final_project.repositories.CommunityDAO;
 
 @Service
 public class CommunityService {
+
 	private int postPerPage = 30;
 	private int naviPerPage = 10;
 
@@ -66,22 +67,20 @@ public class CommunityService {
 	}
 
 	public List<CategoryType> getSelectTag() {
-		List<CategoryType> list = communityDAO.getSelectTag();
-		return list;
+		return communityDAO.getSelectTag();
 	}
 
 	public List<String> getPageNavi(String board_name, int currentPage) {
-		int max = communityDAO.getMax(board_name);
-		System.out.println("max : " + max);
 		int postPerPage = this.postPerPage;
 		int naviPerPage = this.naviPerPage;
+		int max = communityDAO.getMax(board_name);
+		System.out.println("max : " + max);
 		int totalPage;
 		if (max % postPerPage > 0) {
 			totalPage = max / postPerPage + 1;
 		} else {
 			totalPage = max / postPerPage;
 		}
-//		int currentPage
 		int startNavi = (currentPage - 1) / naviPerPage * naviPerPage + 1;
 		int endNavi = startNavi + (naviPerPage - 1);
 		if (currentPage < 1) {
