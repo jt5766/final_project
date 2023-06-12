@@ -15,6 +15,7 @@ public class GalleryCardView {
     private String member_name;
     private String catchphrase;
     private String synopsis;
+    private Integer total_count;
 
     public Long getSeq() {
         return seq;
@@ -126,5 +127,13 @@ public class GalleryCardView {
 
     public void setSynopsis(String synopsis) {
         this.synopsis = synopsis;
+    }
+
+    public Integer getTotal_count() {
+        return total_count;
+    }
+
+    public void setTotal_count(Integer total_count) {
+        this.total_count = total_count;
     }
 }

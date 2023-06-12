@@ -26,7 +26,6 @@
         </div>
         <div class="row lnb">
             <div class="col-md-12">
-                <!-- TODO: 버튼 누를 때 마다 카테고리별로 필터링 -->
                 <button onclick="location.href='/gallery/category/1001'">소설</button>
                 <button onclick="location.href='/gallery/category/1002'">만화</button>
                 <button onclick="location.href='/gallery/category/1003'">그림</button>
@@ -46,11 +45,34 @@
             </select>
             <input type="text" name="search-keyword">
             <!-- TODO: 버튼 누를 때 마다 order by 로 리스트 정렬 -->
-            <a href="#"><span>new</span></a>
-            <div class="vr"></div>
-            <a href="#"><span>old</span></a>
-            <div class="vr"></div>
-            <a href="#"><span>pop</span></a>
+            <c:choose>
+                <c:when test="${categoryType != null}">
+                    <form action="/gallery/category/${categoryType}/sort/new" method="post">
+                        <span onclick="$(this).parent().submit()">new</span>
+                    </form>
+                    <div class="vr"></div>
+                    <form action="/gallery/category/${categoryType}/sort/old" method="post">
+                        <span onclick="$(this).parent().submit()">old</span>
+                    </form>
+                    <div class="vr"></div>
+                    <form action="/gallery/category/${categoryType}/sort/pop" method="post">
+                        <span onclick="$(this).parent().submit()">pop</span>
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <form action="/gallery/sort/new" method="post">
+                        <span onclick="$(this).parent().submit()">new</span>
+                    </form>
+                    <div class="vr"></div>
+                    <form action="/gallery/sort/old" method="post">
+                        <span onclick="$(this).parent().submit()">old</span>
+                    </form>
+                    <div class="vr"></div>
+                    <form action="/gallery/sort/pop" method="post">
+                        <span onclick="$(this).parent().submit()">pop</span>
+                    </form>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
     <div class="row gallery-content">
@@ -83,6 +105,14 @@
                         </div>
                         <div class="synopsis">
                             ${card.synopsis}
+                        </div>
+                        <div class="totalCount">
+                            <c:if test="${card.total_count != null}">
+                                ${card.total_count}
+                            </c:if>
+                            <c:if test="${card.total_count == null}">
+                                0
+                            </c:if>
                         </div>
                     </div>
                 </div>

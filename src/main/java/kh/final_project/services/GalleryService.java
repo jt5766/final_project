@@ -1,8 +1,6 @@
 package kh.final_project.services;
 
-import kh.final_project.dto.GalleryCard;
-import kh.final_project.dto.GalleryContent;
-import kh.final_project.dto.GalleryCardView;
+import kh.final_project.dto.*;
 import kh.final_project.repositories.GalleryDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,20 +21,20 @@ public class GalleryService {
         galleryDAO.insertCard(card);
     }
 
-    public List<GalleryCardView> selectAllCards() {
-        return galleryDAO.selectAllCards();
+    public List<GalleryCardView> selectAllCards(GallerySort gallerySort) {
+        return galleryDAO.selectAllCards(gallerySort);
     }
 
-    public GalleryCardView selectOneCard(Integer cardSeq) {
+    public GalleryCardView selectOneCard(Long cardSeq) {
         return galleryDAO.selectOneCard(cardSeq);
     }
 
-    public GalleryContent selectOneContent(Integer cardSeq, Integer contentSeq) {
+    public GalleryContent selectOneContent(Long cardSeq, Long contentSeq) {
         galleryDAO.updateViewCount(contentSeq);
         return galleryDAO.selectOneContent(cardSeq, contentSeq);
     }
 
-    public List<GalleryContent> selectAllContents(Integer cardSeq) {
+    public List<GalleryContent> selectAllContents(Long cardSeq) {
         return galleryDAO.selectAllContents(cardSeq);
     }
 
@@ -52,15 +50,12 @@ public class GalleryService {
         galleryDAO.updateContent(content);
     }
 
-    public void deleteCard(Integer cardSeq) {
+    public void deleteCard(Long cardSeq) {
         galleryDAO.deleteCard(cardSeq);
     }
 
-    public void deleteContent(Integer cardSeq, Integer contentSeq) {
+    public void deleteContent(Long cardSeq, Long contentSeq) {
         galleryDAO.deleteContent(cardSeq, contentSeq);
     }
 
-    public List<GalleryCardView> selectCardsByCategoryType(Integer categoryType) {
-        return galleryDAO.selectCardsByCategoryType(categoryType);
-    }
 }
