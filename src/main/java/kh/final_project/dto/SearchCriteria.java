@@ -1,30 +1,40 @@
 package kh.final_project.dto;
 
-public class GallerySort {
-    private Integer categoryType;
-    private String sortType;
+public class SearchCriteria {
+    private Integer typeCode;
+    private Integer sortType;
+    private String keyword;
 
-    public GallerySort() {
+    public SearchCriteria() {
     }
 
-    public GallerySort(Integer categoryType, String sortType) {
-        this.categoryType = categoryType;
+    public SearchCriteria(Integer typeCode, Integer sortType, String keyword) {
+        this.typeCode = typeCode;
         this.sortType = sortType;
+        this.keyword = keyword;
     }
 
-    public Integer getCategoryType() {
-        return categoryType;
+    public Integer getTypeCode() {
+        return typeCode;
     }
 
-    public void setCategoryType(Integer categoryType) {
-        this.categoryType = categoryType;
+    public void setTypeCode(Integer typeCode) {
+        this.typeCode = typeCode;
     }
 
-    public String getSortType() {
+    public Integer getSortType() {
         return sortType;
     }
 
-    public void setSortType(String sortType) {
+    public void setSortType(Integer sortType) {
         this.sortType = sortType;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 }

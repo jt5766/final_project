@@ -22,7 +22,7 @@ public class GalleryController {
 
     @GetMapping
     public String toGallery(Model model) {
-        GallerySort gallerySort = new GallerySort();
+        SearchCriteria gallerySort = new SearchCriteria();
         List<GalleryCardView> cards = galleryService.selectAllCards(gallerySort);
         model.addAttribute("cards", cards);
         return "/gallery/gallery";
@@ -39,23 +39,23 @@ public class GalleryController {
 
     @GetMapping("/category/{categoryType}")
     public String filterCard(@ModelAttribute("categoryType") @PathVariable Integer categoryType, Model model) {
-        GallerySort gallerySort = new GallerySort(categoryType, null);
+        SearchCriteria gallerySort = new SearchCriteria(categoryType, null, null);
         List<GalleryCardView> cards = galleryService.selectAllCards(gallerySort);
         model.addAttribute("cards", cards);
         return "/gallery/gallery";
     }
 
-    @PostMapping("/sort/{sortType}")
-    public String sortCard(@PathVariable String sortType, Model model) {
-        GallerySort gallerySort = new GallerySort(null, sortType);
+    @PostMapping("/sort/{sortCode}")
+    public String sortCard(@PathVariable Integer sortCode, Model model) {
+        SearchCriteria gallerySort = new SearchCriteria(null, sortCode, null);
         List<GalleryCardView> cards = galleryService.selectAllCards(gallerySort);
         model.addAttribute("cards", cards);
         return "gallery/gallery";
     }
 
-    @PostMapping("/category/{categoryType}/sort/{sortType}")
-    public String sortCardWithCategory(@ModelAttribute("categoryType") @PathVariable Integer categoryType, @PathVariable String sortType, Model model) {
-        GallerySort gallerySort = new GallerySort(categoryType, sortType);
+    @PostMapping("/category/{categoryType}/sort/{sortCode}")
+    public String sortCardWithCategory(@ModelAttribute("categoryType") @PathVariable Integer categoryType, @PathVariable Integer sortCode, Model model) {
+        SearchCriteria gallerySort = new SearchCriteria(categoryType, sortCode, null);
         List<GalleryCardView> cards = galleryService.selectAllCards(gallerySort);
         model.addAttribute("cards", cards);
         return "gallery/gallery";

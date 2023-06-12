@@ -21,7 +21,7 @@ public class GalleryService {
         galleryDAO.insertCard(card);
     }
 
-    public List<GalleryCardView> selectAllCards(GallerySort gallerySort) {
+    public List<GalleryCardView> selectAllCards(SearchCriteria gallerySort) {
         return galleryDAO.selectAllCards(gallerySort);
     }
 

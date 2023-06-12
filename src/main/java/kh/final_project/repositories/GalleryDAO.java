@@ -22,7 +22,7 @@ public class GalleryDAO {
         db.insert("Gallery.insertCard", card);
     }
 
-    public List<GalleryCardView> selectAllCards(GallerySort gallerySort) {
+    public List<GalleryCardView> selectAllCards(SearchCriteria gallerySort) {
         return db.selectList("Gallery.selectAllCards", gallerySort);
     }
 
@@ -74,7 +74,7 @@ public class GalleryDAO {
         return db.selectList("Gallery.selectCardsByCategoryType", categoryType);
     }
 
-    public List<GalleryCardView> selectAllCardsWithSort(GallerySort gallerySort) {
+    public List<GalleryCardView> selectAllCardsWithSort(SearchCriteria gallerySort) {
         return db.selectList("Gallery.selectAllCardsWithSort", gallerySort);
         //TODO: 쿼리문 작성
     }
