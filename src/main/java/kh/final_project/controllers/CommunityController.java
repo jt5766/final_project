@@ -38,9 +38,8 @@ public class CommunityController {
 
 	@RequestMapping("toBoard")
 	public String toBoard(CategoryType categoryType, Model model, int currentPage) {
-		currentPage = 1;
-		List<BoardsDTO> boardList = communityService.selectBoard(categoryType);
 		List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
+		List<BoardsDTO> boardList = communityService.selectBoardByPage(categoryType, currentPage);
 		System.out.println("name : " + categoryType.getName());
 		model.addAttribute("categoryType", categoryType);
 		model.addAttribute("boardList", boardList);

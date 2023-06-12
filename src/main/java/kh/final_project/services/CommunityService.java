@@ -1,7 +1,9 @@
 package kh.final_project.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,8 @@ import kh.final_project.repositories.CommunityDAO;
 
 @Service
 public class CommunityService {
+	private int postPerPage = 30;
+	private int naviPerPage = 10;
 
 	@Autowired
 	private CommunityDAO communityDAO;
@@ -69,8 +73,8 @@ public class CommunityService {
 	public List<String> getPageNavi(String board_name, int currentPage) {
 		int max = communityDAO.getMax(board_name);
 		System.out.println("max : " + max);
-		int postPerPage = 30;
-		int naviPerPage = 10;
+		int postPerPage = this.postPerPage;
+		int naviPerPage = this.naviPerPage;
 		int totalPage;
 		if (max % postPerPage > 0) {
 			totalPage = max / postPerPage + 1;
@@ -123,6 +127,17 @@ public class CommunityService {
 	public List<BoardsDTO> selectBoard(CategoryType categoryType) {
 		this.setNameByCode(categoryType);
 		return communityDAO.selectBoard(categoryType);
+	}
+
+	public List<BoardsDTO> selectBoardByPage(CategoryType categoryType, int currentPage) {
+		this.setNameByCode(categoryType);
+		int startPost = (currentPage * this.postPerPage) - (this.postPerPage - 1);
+		int endPost = (currentPage * this.postPerPage);
+		Map<String, Object> pageInfo = new HashMap<>();
+		pageInfo.put("board_name", categoryType.getName());
+		pageInfo.put("startPost", startPost);
+		pageInfo.put("endPost", endPost);
+		return communityDAO.selectBoardByPage(pageInfo);
 	}
 
 	public BoardsDTO selectBoardView(BoardsDTO boardsDTO) {
