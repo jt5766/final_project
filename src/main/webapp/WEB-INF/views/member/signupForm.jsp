@@ -172,10 +172,7 @@
             </div>
             <div class="center_box"></div>
             <div class="center_box">
-
-                <button id="register_btn">회원가입</button>
-
-<%--      인증나중에          <button id="email_certification">이메일 인증</button>--%>
+                <button id="email_certification">이메일 인증</button>
             </div>
         </div>
         <div id="body_right">right</div>

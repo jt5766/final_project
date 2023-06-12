@@ -100,14 +100,16 @@ public class MemberController {
 
     @RequestMapping("passwordCheck")
 
-    public void passwordCheck(MemberDTO dto){
+    public String passwordCheck(MemberDTO dto){
         System.out.println("닉네임 + 패스워드 값");
         System.out.println(dto.getPassword()+":"+dto.getNickname());
         System.out.println("======================");
-       boolean result = mdao.passwordCheck(dto);
+        mdao.passwordCheck(dto);
 
         if(mdao.passwordCheck(dto)){
-//            return "";
+            return "/member/myInfoUpdateForm";
         }
+        return "";
     }
 }
+
