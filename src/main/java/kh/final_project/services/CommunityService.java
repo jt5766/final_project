@@ -1,5 +1,6 @@
 package kh.final_project.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,56 @@ public class CommunityService {
 	public List<CategoryType> getSelectTag() {
 		List<CategoryType> list = communityDAO.getSelectTag();
 		return list;
+	}
+
+	public List<String> getPageNavi(String board_name, int currentPage) {
+		int max = communityDAO.getMax(board_name);
+		System.out.println("max : " + max);
+		int postPerPage = 30;
+		int naviPerPage = 10;
+		int totalPage;
+		if (max % postPerPage > 0) {
+			totalPage = max / postPerPage + 1;
+		} else {
+			totalPage = max / postPerPage;
+		}
+//		int currentPage
+		int startNavi = (currentPage - 1) / naviPerPage * naviPerPage + 1;
+		int endNavi = startNavi + (naviPerPage - 1);
+		if (currentPage < 1) {
+			currentPage = 1;
+		} else if (currentPage > totalPage) {
+			currentPage = totalPage;
+		}
+		if (endNavi > totalPage) {
+			endNavi = totalPage;
+		}
+		System.out.println("totalPage : " + totalPage);
+		System.out.println("endNavi : " + endNavi);
+		boolean needPrev = false;
+		if (currentPage > naviPerPage) {
+			needPrev = true;
+		}
+		boolean needNext = false;
+		if (endNavi < totalPage) {
+			needNext = true;
+		}
+		List<String> pageNavi = new ArrayList<>();
+		if (needPrev) {
+			pageNavi.add("<");
+		}
+		for (int i = startNavi; i <= endNavi; i++) {
+			pageNavi.add(String.valueOf(i));
+		}
+		if (needNext) {
+			pageNavi.add(">");
+		}
+		return pageNavi;
+	}
+
+	public List<String> returnPageNavi(CategoryType categoryType, int currentPage) {
+		this.setNameByCode(categoryType);
+		return this.getPageNavi(categoryType.getName(), currentPage);
 	}
 
 	public int insertBoard(BoardsDTO boardsDTO) {

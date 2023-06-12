@@ -52,7 +52,7 @@
 			</div>
 			<div>
 				<input type="submit" value="등록하기">
-				<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${boardCode}'">
+				<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${boardCode}&currentPage=1'">
 			</div>
 		</form>
 		<div>FOOTER</div>

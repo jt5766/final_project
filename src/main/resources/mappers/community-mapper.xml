@@ -18,7 +18,7 @@
 	</select>
 	
 	<update id="viewUp">
-		update ${board_name}_BOARDS set total_count = total_count + 1
+		update ${board_name}_BOARDS set total_count = total_count + 1 where seq = #{seq}
 	</update>
 	<select id="selectBoardView" resultType="kh.final_project.dto.BoardsDTO">
 		select * from ${board_name}_BOARDS where seq = #{seq}
@@ -48,4 +48,8 @@
 	<update id="updateReply">
 		update ${board_name}_REPLYS set txt = #{txt}, write_date = default where seq = #{seq}
 	</update>
+	
+	<select id="getMax" resultType="int">
+		select count(*) from ${value}_BOARDS
+	</select>
 </mapper>

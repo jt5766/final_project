@@ -21,7 +21,7 @@ public class MemberController {
     private HttpSession session;
 
     @Autowired
-    private MemberService MemberService;
+    private MemberService memberService;
 
     @Autowired
     private MemberDAO mdao;
@@ -30,10 +30,17 @@ public class MemberController {
         return"member/signupForm";
     }
 
+    @RequestMapping("check")
+    public String check(MemberDTO dto , Model model)throws  Exception{
+        memberService.setEmailType(dto);
+        memberService.sendJoinCertificationMail(dto); //인증메일 보내기
+
+        return"home";
+    }
     @RequestMapping("register")
     public String register(Model model , MemberDTO dto){
 
-        MemberService.setEmailType(dto);
+        memberService.setEmailType(dto);
         model.addAttribute("email",dto.getEmail());
         model.addAttribute("emailType",dto.getEmail_type());
         model.addAttribute("setEmailType",dto.getSet_email_type());
@@ -63,11 +70,13 @@ public class MemberController {
     public String login(MemberDTO dto){
 
 
-        dto.setEmail_type(1002);
-        mdao.login(dto);
+        memberService.login(dto);
 
         System.out.println("로그인처리부분 넘겨온 값 :" +dto);
         System.out.println("----------------------------");
+
+
+
         if(dto.getNickname() != null){
             System.out.println("닉네임값 확인 세션 조건 충족:"+ dto.getNickname());
             System.out.println("=============================");

@@ -55,4 +55,8 @@ public class CommunityDAO {
 	public int updateReply(BoardsReplyDTO boardsReplyDTO) {
 		return sst.update("Community.updateReply", boardsReplyDTO);
 	}
+
+	public int getMax(String board_name) {
+		return sst.selectOne("Community.getMax", board_name);
+	}
 }

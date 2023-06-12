@@ -70,7 +70,19 @@
 					<td>
 					</td>
 					<td colspan="3">
-						<a href="#">1 2 3 4 5</a>
+						<c:forEach var="i" items="${pageNavi}" varStatus="status">
+							<c:choose>
+								<c:when test="${i == '<'}">
+									<a href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index+1]-1}">${i}</a>	
+								</c:when>
+								<c:when test="${i == '>'}">
+									<a href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index-1]+1}">${i}</a>						
+								</c:when>
+								<c:otherwise>
+									<a href="/community/toBoard?code=${categoryType.code}&currentPage=${i}">${i}</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
 					</td>
 					<td>
 						<input type="button" value="등록" onclick="location.href = '/community/toWriteForm?code=${categoryType.code}'">
