@@ -29,7 +29,6 @@
 			const stompClient = Stomp.over(socket);
 			
 			stompClient.connect({},function(){
-				alert("접속 성공");
 				const subscription = stompClient.subscribe("/topic/${chatseq}", function(message){
 					body = JSON.parse(message.body);
 					console.log(message);
@@ -45,7 +44,11 @@
 					}
 					linediv.append(textdiv);
 					$("#div_contents").append(linediv);
+					let chatbox = document.querySelector('#div_contents');
+					chatbox.scrollTop = chatbox.scrollHeight;
 				});
+				let chatbox = document.querySelector('#div_contents');
+				chatbox.scrollTop = chatbox.scrollHeight;
 			},function(){
 				alert("접속 실패");
 			});
@@ -55,6 +58,8 @@
 				const header = {};
 				const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html()});
 				stompClient.send(destination,header,body);
+				$("#div_text").html("");
+				$("#div_text").focus();
 			})
 		})
 	</script>
