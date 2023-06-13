@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 
 import kh.final_project.dto.CategoryType;
 import kh.final_project.dto.CountDTO;
+import kh.final_project.dto.MemberDTO;
 import kh.final_project.services.AdminService;
 
 @Controller
@@ -26,6 +27,11 @@ public class AdminController {
 		return "/admin/home";
 	}
 
+	/**
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("chart")
 	public String chart(Model model) {
 		// 회원 카운트
@@ -37,8 +43,14 @@ public class AdminController {
 		return "/admin/chart";
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	@RequestMapping("join")
-	public String join() {
+	public String join(Model model) {
+		List<MemberDTO> result = adminService.selectMember2000();
+		model.addAttribute("list", result);
 		return "/admin/join";
 	}
 
@@ -85,7 +97,6 @@ public class AdminController {
 	 */
 	@RequestMapping("update_category")
 	public String updateCategory(String tableName, String code, String sort, String name, String yn) {
-		System.out.println(tableName);
 		adminService.updateCategoey(tableName, code, sort, name, yn);
 		return "redirect: /admin/category";
 	}

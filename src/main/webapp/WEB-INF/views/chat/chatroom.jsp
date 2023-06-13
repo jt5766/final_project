@@ -14,10 +14,12 @@
 	<style>
         *{box-sizing: border-box;}
         div{border: 1px solid black;}
-        #div_contents{height: 700px;}
+        #div_contents{height: 700px; overflow: auto;}
         #div_text{height: 100px; overflow: auto;}
         .btn{width: 100%; height: 100%; background-color: gray;color: black;}
         .btn:hover{background-color: black;color:gray;}
+        .mytext{text-align: right;}
+        .othertext{text-align: left;}
     </style>
 </head>
 <body>
@@ -32,7 +34,17 @@
 					body = JSON.parse(message.body);
 					console.log(message);
 					console.log(body);
-					$("#div_contents").append("<div>"+body.writer+" : "+body.txt+"</div>");
+					const linediv = $("<div>");
+					const textdiv = $("<div>");
+					if(body.writer == ${code}){
+						textdiv.addClass("mytext");
+						textdiv.append(body.txt);
+					}else{
+						textdiv.addClass("othertext");
+						textdiv.append(body.writer+" : "+body.txt);
+					}
+					linediv.append(textdiv);
+					$("#div_contents").append(linediv);
 				});
 			},function(){
 				alert("접속 실패");
@@ -54,7 +66,19 @@
         <div class="row">
             <div class="col-md-12" id="div_contents">
             	<c:forEach var="log" items="${chatlog}">
-            		${log.writer} : ${log.txt}<br>
+            		<c:choose>
+            			<c:when test="${log.writer==code}">
+            				<div>
+            					<div class="mytext">${log.txt}</div>
+            				</div>
+            			</c:when>
+            			<c:otherwise>
+            				<div>
+            					<div class="othertext">${log.writer} : ${log.txt}</div>
+            				</div>
+            			</c:otherwise>
+            		</c:choose>
+            		
             	</c:forEach>
             </div>
         </div>

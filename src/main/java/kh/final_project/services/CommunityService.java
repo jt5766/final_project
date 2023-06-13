@@ -16,8 +16,8 @@ import kh.final_project.repositories.CommunityDAO;
 @Service
 public class CommunityService {
 
-	private int postPerPage = 30;
-	private int naviPerPage = 10;
+	private int postPerPage = 30; // 한 페이지당 보여줄 게시글 수
+	private int naviPerPage = 10; // 한 페이지당 보여줄 최대 네비 수
 
 	@Autowired
 	private CommunityDAO communityDAO;
@@ -70,10 +70,10 @@ public class CommunityService {
 		return communityDAO.getSelectTag();
 	}
 
-	public List<String> getPageNavi(String board_name, int currentPage) {
+	public List<String> getPageNavi(String tableName, int currentPage) {
 		int postPerPage = this.postPerPage;
 		int naviPerPage = this.naviPerPage;
-		int max = communityDAO.getMax(board_name);
+		int max = communityDAO.getMax(tableName);
 		System.out.println("max : " + max);
 		int totalPage;
 		if (max % postPerPage > 0) {
