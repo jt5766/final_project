@@ -21,6 +21,8 @@ public class MemberDTO {
     private Timestamp stop_date;
     private String yn;
 
+    public MemberDTO(){}
+
 
     public MemberDTO(Integer code, Integer member_type, String email, Integer email_type, String set_email_type, String password, String nickname, Integer file_type, String file_url, String company, String name, String tel, Timestamp join_date, Timestamp stop_date, String yn) {
         this.code = code;

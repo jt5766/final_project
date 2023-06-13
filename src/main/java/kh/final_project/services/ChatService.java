@@ -1,6 +1,8 @@
 package kh.final_project.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,13 @@ public class ChatService {
 	
 	public List<ChatlistDTO> select(int loginID){
 		return dao.select(loginID);
+	}
+	
+	public boolean checkUser(Integer code,Long seq) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("code", code);
+		param.put("seq", seq);
+		return dao.checkUser(param);
 	}
 	
 }

@@ -10,6 +10,6 @@
 <c:import url="${path}/resources/js/scripts.jsp" />
 </head>
 <body>
-
+	console.log(${list});
 </body>
 </html>

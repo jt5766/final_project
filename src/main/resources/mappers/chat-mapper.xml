@@ -19,4 +19,8 @@
 		select * from chat_list where mentor = #{loginID} or mentee = #{loginID}
 	</select>
 	
+	<select id="check" resultType="boolean">
+		select count(*) from chat_list where seq = ${seq} and ( mentor = ${code} or mentee = ${code} )
+	</select>
+	
 </mapper>
