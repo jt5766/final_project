@@ -36,8 +36,15 @@
         </choose>
         #{txt}, #{yn}, default, default, default)
     </insert>
+
+    <select id="selectAllCardsPage" resultType="kh.final_project.dto.GalleryCardView">
+        select * from(select view_gallery_cards.*, row_number() over(order by seq desc) rn from view_gallery_cards)
+        where rn between #{startPost} and #{endPost}
+    </select>
+
     <select id="selectAllCards" resultType="kh.final_project.dto.GalleryCardView">
-        select * from view_gallery_cards
+        select * from (
+        select view_gallery_cards.*, row_number() over(order by seq desc) rn from view_gallery_cards
         <trim prefix="where" prefixOverrides="and |or ">
             <if test="typeCode != null">
                 category_type = ${typeCode}
@@ -49,8 +56,9 @@
                 and (title like '%'||#{searchQuery}||'%' or writer like '%'||#{searchQuery}||'%')
             </if>
         </trim>
+        ) where rn between ${start} and ${end}
         <if test="sortCode != null">
-            order by ${sortKeyword} ${sortVal}
+            order by ${sortKeyword} ${sortVal} nulls last
         </if>
     </select>
     <select id="selectOneCard" resultType="kh.final_project.dto.GalleryCardView">
@@ -111,4 +119,21 @@
     <delete id="deleteContent">
         delete from gallery_contents where seq = ${contentSeq} and gallery_cards = ${cardSeq}
     </delete>
+
+    <!--페이징-->
+    <select id="totalCards" resultType="java.lang.Integer">
+        select count(*) from view_gallery_cards
+        <trim prefix="where" prefixOverrides="and |or ">
+            <if test="typeCode != null">
+                category_type = ${typeCode}
+            </if>
+            <if test="searchQuery != null">
+                <if test="searchCode != 1001">
+                    and ${searchKeyword} like '%'||#{searchQuery}||'%'
+                </if>
+                and (title like '%'||#{searchQuery}||'%' or writer like '%'||#{searchQuery}||'%')
+            </if>
+        </trim>
+    </select>
+
 </mapper>

@@ -7,28 +7,38 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/gallery")
 public class GalleryController {
 
     private final GalleryService galleryService;
+    private final HttpServletRequest request;
 
     @Autowired
-    public GalleryController(GalleryService galleryService) {
+    public GalleryController(GalleryService galleryService, HttpServletRequest request) {
         this.galleryService = galleryService;
+        this.request = request;
     }
 
     @GetMapping
-    public String toGallery(Model model) {
-        SearchCriteria searchCriteria = new SearchCriteria();
+    public String toGallery(Model model, SearchCriteria searchCriteria) {
         List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
+        setNavi(model, searchCriteria);
         setConditions(model);
         model.addAttribute("cards", cards);
         return "/gallery/gallery";
+    }
+
+    @GetMapping("/search")
+    public String searchCards(SearchCriteria searchCriteria, Model model) {
+        List<GalleryCardView> cards = galleryService.searchCards(searchCriteria);
+        setNavi(model, searchCriteria);
+        setConditions(model);
+        model.addAttribute("cards", cards);
+        return "gallery/gallery";
     }
 
     @GetMapping("/{cardSeq}")
@@ -41,30 +51,13 @@ public class GalleryController {
     }
 
     @GetMapping("/category/{categoryType}")
-    public String filterCard(@ModelAttribute("categoryType") @PathVariable Integer categoryType, Model model) {
-        SearchCriteria searchCriteria = new SearchCriteria("", categoryType, null, null, null);
+    public String filterCard(@ModelAttribute("categoryType") @PathVariable Integer categoryType, SearchCriteria searchCriteria, Model model) {
+        searchCriteria.setTypeCode(categoryType);
         List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
+        setNavi(model, searchCriteria);
         setConditions(model);
         model.addAttribute("cards", cards);
         return "/gallery/gallery";
-    }
-
-    @PostMapping("/sort/{sortCode}")
-    public String sortCard(@PathVariable Integer sortCode, Model model) {
-        SearchCriteria gallerySort = new SearchCriteria("", null, sortCode, null, null);
-        List<GalleryCardView> cards = galleryService.selectAllCards(gallerySort);
-        setConditions(model);
-        model.addAttribute("cards", cards);
-        return "gallery/gallery";
-    }
-
-    @PostMapping("/category/{categoryType}/sort/{sortCode}")
-    public String sortCardWithCategory(@ModelAttribute("categoryType") @PathVariable Integer categoryType, @PathVariable Integer sortCode, Model model) {
-        SearchCriteria searchCriteria = new SearchCriteria("", categoryType, sortCode, null, null);
-        List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
-        setConditions(model);
-        model.addAttribute("cards", cards);
-        return "gallery/gallery";
     }
 
     @GetMapping("/{cardSeq}/contents/{contentSeq}")
@@ -107,7 +100,6 @@ public class GalleryController {
 
     @PostMapping("/{cardSeq}/contents")
     public String insertContent(GalleryContent content, @PathVariable Long cardSeq) {
-        System.out.println("content = " + content);
         galleryService.insertContent(content);
         return "redirect:/gallery/{cardSeq}";
     }
@@ -136,19 +128,16 @@ public class GalleryController {
         return "redirect:/gallery/{cardSeq}";
     }
 
-    @GetMapping("/search")
-    public String searchCards(SearchCriteria searchCriteria, Model model) {
-        System.out.println("searchCriteria = " + searchCriteria);
-        List<GalleryCardView> cards = galleryService.searchCards(searchCriteria);
-        setConditions(model);
-        model.addAttribute("cards", cards);
-        return "gallery/gallery";
-    }
-
     private void setConditions(Model model) {
         List<List<CategoryType>> result = galleryService.getConditions();
         model.addAttribute("categoryTypes", result.get(0));
         model.addAttribute("searchConditions", result.get(1));
         model.addAttribute("sortConditions", result.get(2));
+        model.addAttribute("requestURI", request.getRequestURI());
+    }
+
+    private void setNavi(Model model, SearchCriteria searchCriteria) {
+        List<String> navi = galleryService.getPageNavi(searchCriteria);
+        model.addAttribute("navi", navi);
     }
 }

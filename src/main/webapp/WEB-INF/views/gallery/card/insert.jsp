@@ -76,6 +76,7 @@
                 <label for="input_thumbnail_url">썸네일</label>
                 <input type="file" id="thumbnail" onchange="readURL(this)">
                 <input type="url" name="thumbnail_url" id="input_thumbnail_url" placeholder="http://...">
+                <img src="" alt="1" id="img1">
             </div>
         </div>
         <div class="row">
@@ -147,13 +148,28 @@
   function readURL(input) {
     if (input.files && input.files[0]) {
       const reader = new FileReader();
+      const blob = new Blob([input.files[0]]);
       reader.onload = function (e) {
         $('#input_thumbnail_url').val(e.target.result);
+        $('#img1').attr('src', URL.createObjectURL(blob));
+        // $('#img1').attr('src', e.target.result);
       };
-      reader.readAsDataURL(input.files[0]);
+      reader.readAsDataURL(blob);
+      // console.log(URL.createObjectURL(blob));
     } else {
       $('#input_thumbnail_url').val('');
     }
+  }
+  const encodeImageToBase64 = function(imageURI){
+      var fileReader = new FileReader();
+      var blob = new Blob([imageURI], { type: 'image/jpeg'});
+      var result = {};
+
+      fileReader.onloadend = function(){
+          result = fileReaders.result.split(',')[1];
+          console.log("Result: " + result);
+      }
+      fileReader.readAsDataURL(blob);
   }
 </script>
 </body>

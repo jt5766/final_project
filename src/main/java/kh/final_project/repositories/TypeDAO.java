@@ -161,9 +161,11 @@ public class TypeDAO {
 	 * @param code
 	 * @return CategoryType
 	 */
-	public CategoryType selectByCode(String tableName, int code) {
+	public CategoryType selectByCode(String tableName, Integer code) {
 		Map<String, Object> param = new HashMap<String, Object>();
-		return mybatis.selectOne("Type.SelecType2ByCode", param);
+		param.put("value", tableName);
+		param.put("code", code);
+		return mybatis.selectOne("Type.SelectType2ByCode", param);
 	}
 
 	/**

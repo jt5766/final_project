@@ -84,7 +84,7 @@
     <div class="row lnb">
         <div class="col-md-12">
             <c:forEach items="${categoryTypes}" var="category">
-                <button onclick="location.href='/gallery/category/${category.code}'">${category.name}</button>
+                <button onclick="location.href='/gallery/category/${category.code}?page=1'">${category.name}</button>
             </c:forEach>
             <button onclick="location.href='/gallery'">전체</button>
         </div>
@@ -103,7 +103,8 @@
                 </select>
                 <input type="text" name="searchQuery">
                 <c:forEach items="${sortConditions}" var="sortContidion" varStatus="status">
-                    <input type="radio" name="sortCode" value="${sortContidion.code}" <c:if test="${status.index == 0}">checked</c:if>>${sortContidion.name}
+                    <input type="radio" name="sortCode" value="${sortContidion.code}"
+                           <c:if test="${status.index == 0}">checked</c:if>>${sortContidion.name}
                 </c:forEach>
             </div>
         </div>
@@ -152,15 +153,42 @@
             </div>
         </c:forEach>
     </div>
-    <select name="categoryType" id="category">
-        <option value="1001">소설</option>
-        <option value="1002">만화</option>
-        <option value="1003">그림</option>
-        <option value="1004">사진</option>
-        <option value="1005">영상</option>
-        <option value="1006">음악</option>
-    </select>
-    <button type="button" id="to-insert">입력페이지로</button>
+    <div class="row">
+        <div class="col-12">
+            <select name="categoryType" id="category">
+                <option value="1001">소설</option>
+                <option value="1002">만화</option>
+                <option value="1003">그림</option>
+                <option value="1004">사진</option>
+                <option value="1005">영상</option>
+                <option value="1006">음악</option>
+            </select>
+            <button type="button" id="to-insert">입력페이지로</button>
+            <nav>
+                <ul class="pagination">
+                    <c:forEach items="${navi}" var="n" varStatus="status">
+                        <c:choose>
+                            <c:when test="${n == 'Prev'}">
+                                <li class="page-items">
+                                    <a class="page-link" href="${requestURI}/?page=${navi[1] - 1}">${n}</a>
+                                </li>
+                            </c:when>
+                            <c:when test="${n == 'Next'}">
+                                <li class="page-items">
+                                    <a class="page-link" href="${requestURI}/?page=${navi[status.index - 1] + 1}">${n}</a>
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="page-items">
+                                    <a class="page-link" href="${requestURI}/?page=${n}">${n}</a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </div>
 <script>
     $('#to-insert').on('click', function () {

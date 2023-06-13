@@ -70,4 +70,7 @@ public class GalleryDAO {
         db.delete("Gallery.deleteContent", params);
     }
 
+    public Integer getTotalCards(SearchCriteria searchCriteria) {
+        return db.selectOne("Gallery.totalCards", searchCriteria);
+    }
 }

@@ -9,16 +9,14 @@ public class SearchCriteria {
     private Integer searchCode;
     private String searchKeyword;
     private String searchQuery;
+    private Integer page;
+    private Integer start;
+    private Integer end;
 
     public SearchCriteria() {
-    }
-
-    public SearchCriteria(String tableName, Integer typeCode, Integer sortCode, Integer conditionCode, String keyword) {
-        this.tableName = tableName;
-        this.typeCode = typeCode;
-        this.sortCode = sortCode;
-        this.searchCode = conditionCode;
-        this.searchQuery = keyword;
+        if (page == null) {
+            page = 1;
+        }
     }
 
     public Integer getTypeCode() {
@@ -83,6 +81,30 @@ public class SearchCriteria {
 
     public void setSearchKeyword(String searchKeyword) {
         this.searchKeyword = searchKeyword;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getStart() {
+        return start;
+    }
+
+    public void setStart(Integer start) {
+        this.start = start;
+    }
+
+    public Integer getEnd() {
+        return end;
+    }
+
+    public void setEnd(Integer end) {
+        this.end = end;
     }
 
     @Override

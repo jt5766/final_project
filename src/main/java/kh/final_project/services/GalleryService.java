@@ -14,6 +14,8 @@ public class GalleryService {
 
     private final GalleryDAO galleryDAO;
     private final TypeDAO typeDAO;
+    private final Integer postPerPage = 1;
+    private final Integer naviPerPage = 10;
 
     @Autowired
     public GalleryService(GalleryDAO galleryDAO, TypeDAO typeDAO) {
@@ -26,6 +28,7 @@ public class GalleryService {
     }
 
     public List<GalleryCardView> selectAllCards(SearchCriteria searchCriteria) {
+        setRange(searchCriteria);
         return galleryDAO.selectAllCards(searchCriteria);
     }
 
@@ -35,7 +38,7 @@ public class GalleryService {
         searchCriteria.setSearchKeyword(galleryCardsSearch.getKeyword());
         searchCriteria.setSortKeyword(galleryCardsSort.getKeyword());
         searchCriteria.setSortVal(galleryCardsSort.getVal());
-        System.out.println("searchCriteria = " + searchCriteria);
+        setRange(searchCriteria);
         return galleryDAO.selectAllCards(searchCriteria);
     }
 
@@ -78,5 +81,49 @@ public class GalleryService {
         result.add(typeDAO.selectByGallery_Cards_Search());
         result.add(typeDAO.selectByGallery_Cards_Sort());
         return result;
+    }
+
+    public List<String> getPageNavi(SearchCriteria searchCriteria) {
+        Integer currentPage = searchCriteria.getPage();
+        Integer totalCount = galleryDAO.getTotalCards(searchCriteria);
+        Integer totalPage;
+        if (totalCount % postPerPage > 0) {
+            totalPage = totalCount / postPerPage + 1;
+        } else {
+            totalPage = totalCount / postPerPage;
+        }
+        Integer startNavi = (currentPage - 1) / naviPerPage * naviPerPage + 1;
+        Integer endNavi = startNavi + (naviPerPage - 1);
+        if (currentPage < 1) {
+            currentPage = 1;
+        } else if (currentPage > totalPage) {
+            currentPage = totalPage;
+        }
+        if (endNavi > totalPage) {
+            endNavi = totalPage;
+        }
+        boolean needPrev = false;
+        if (currentPage > naviPerPage) {
+            needPrev = true;
+        }
+        boolean needNext = false;
+        if (endNavi < totalPage) {
+            needNext = true;
+        }
+        List<String> pageNavi = new ArrayList<>();
+        if (needPrev) {
+            pageNavi.add("Prev");
+        }
+        for (Integer i = startNavi; i <= endNavi; i++) {
+            pageNavi.add(String.valueOf(i));
+        }
+        if (needNext) {
+            pageNavi.add("Next");
+        }
+        return pageNavi;
+    }
+    private void setRange(SearchCriteria searchCriteria) {
+        searchCriteria.setStart((searchCriteria.getPage() * postPerPage) - (postPerPage - 1));
+        searchCriteria.setEnd((searchCriteria.getPage() * postPerPage));
     }
 }
