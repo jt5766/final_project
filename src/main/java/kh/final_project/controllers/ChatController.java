@@ -56,10 +56,15 @@ public class ChatController {
 	//이부분 seq 들어가는거 수정 해야함
 	@RequestMapping("entrance")
 	public String entrance(Long seq,Model model) {
-		List<ChatlogDTO> logdto = chatlogservice.selectLog(seq);
-		model.addAttribute("chatseq",seq);
-		model.addAttribute("chatlog", logdto);
-		return "chat/chatroom";
+		boolean result = chatservice.checkUser((Integer)session.getAttribute("code"),seq);
+		if(result) {
+			List<ChatlogDTO> logdto = chatlogservice.selectLog(seq);
+			model.addAttribute("chatseq",seq);
+			model.addAttribute("chatlog", logdto);
+			return "chat/chatroom";
+		}else {
+			return "home";
+		}
 	}
 	
 }

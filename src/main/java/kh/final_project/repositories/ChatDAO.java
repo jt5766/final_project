@@ -1,6 +1,7 @@
 package kh.final_project.repositories;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,10 @@ public class ChatDAO {
 	
 	public List<ChatlistDTO> select(int loginID){
 		return db.selectList("Chat.select",loginID);
+	}
+	
+	public boolean checkUser(Map<String, Object> param) {
+		return db.selectOne("Chat.check",param);
 	}
 	
 }
