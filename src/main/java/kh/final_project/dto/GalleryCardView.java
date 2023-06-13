@@ -1,5 +1,9 @@
 package kh.final_project.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
+
 public class GalleryCardView {
     private Long seq;
     private String thumbnail_url;
@@ -16,6 +20,8 @@ public class GalleryCardView {
     private String catchphrase;
     private String synopsis;
     private Integer total_count;
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    private LocalDateTime write_date;
 
     public Long getSeq() {
         return seq;
@@ -135,5 +141,13 @@ public class GalleryCardView {
 
     public void setTotal_count(Integer total_count) {
         this.total_count = total_count;
+    }
+
+    public LocalDateTime getWrite_date() {
+        return write_date;
+    }
+
+    public void setWrite_date(LocalDateTime write_date) {
+        this.write_date = write_date;
     }
 }

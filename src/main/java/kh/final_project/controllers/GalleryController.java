@@ -93,7 +93,10 @@ public class GalleryController {
 
     @PostMapping("/insert")
     public String insertCard(GalleryCard card) {
-        card.setWriter(10000001);
+        if (card.getWriter() == null) {
+            card.setWriter(10000001);
+        // 접속중인 아이디가 없을 경우 기본 아이디 추가 (이후 삭제 예정)
+        }
         galleryService.insertCard(card);
         return "redirect:/gallery";
     }
