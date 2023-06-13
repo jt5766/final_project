@@ -38,10 +38,11 @@
 					const textdiv = $("<div>");
 					if(body.writer == ${code}){
 						textdiv.addClass("mytext");
+						textdiv.append(body.txt);
 					}else{
 						textdiv.addClass("othertext");
+						textdiv.append(body.writer+" : "+body.txt);
 					}
-					textdiv.append(body.writer+" : "+body.txt);
 					linediv.append(textdiv);
 					$("#div_contents").append(linediv);
 				});
@@ -65,7 +66,19 @@
         <div class="row">
             <div class="col-md-12" id="div_contents">
             	<c:forEach var="log" items="${chatlog}">
-            		${log.writer} : ${log.txt}<br>
+            		<c:choose>
+            			<c:when test="${log.writer==code}">
+            				<div>
+            					<div class="mytext">${log.txt}</div>
+            				</div>
+            			</c:when>
+            			<c:otherwise>
+            				<div>
+            					<div class="othertext">${log.writer} : ${log.txt}</div>
+            				</div>
+            			</c:otherwise>
+            		</c:choose>
+            		
             	</c:forEach>
             </div>
         </div>
