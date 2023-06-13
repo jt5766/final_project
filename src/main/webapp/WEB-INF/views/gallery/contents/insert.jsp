@@ -62,8 +62,8 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="form-check form-switch">
-                    <input type="hidden" name="yn" id="hidden_allow" value="N">
-                    <input class="form-check-input" type="checkbox" role="switch" id="input_allow_show" value="Y">
+                    <input type="hidden" name="yn" id="hidden_allow" value="Y">
+                    <input class="form-check-input" type="checkbox" role="switch" id="input_allow_show" value="Y" checked>
                     <label class="form-check-label" for="input_allow_show">공개 여부</label>
                 </div>
             </div>

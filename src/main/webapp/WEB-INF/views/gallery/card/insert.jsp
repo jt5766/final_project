@@ -22,7 +22,7 @@
                 <p>AI 생성 그림인가요?</p>
                 <input type="radio" name="ai" id="input_ai_y" value="Y">
                 <label for="input_ai_y">네</label>
-                <input type="radio" name="ai" id="input_ai_n" value="N">
+                <input type="radio" name="ai" id="input_ai_n" value="N" checked>
                 <label for="input_ai_n">아니오</label>
             </div>
         </div>
@@ -74,14 +74,16 @@
         <div class="row">
             <div class="col-md-12">
                 <label for="input_thumbnail_url">썸네일</label>
+                <input type="file" id="thumbnail" onchange="readURL(this)">
                 <input type="url" name="thumbnail_url" id="input_thumbnail_url" placeholder="http://...">
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="form-check form-switch">
-                    <input type="hidden" name="yn" id="hidden_allow" value="N">
-                    <input class="form-check-input" type="checkbox" role="switch" id="input_allow_show" value="Y">
+                    <input type="hidden" name="yn" id="hidden_allow" value="Y">
+                    <input class="form-check-input" type="checkbox" role="switch" id="input_allow_show" value="Y"
+                           checked>
                     <label class="form-check-label" for="input_allow_show">공개 여부</label>
                 </div>
             </div>
@@ -99,22 +101,60 @@
     </form>
 </div>
 <script>
-    $("input[name='genreType']").on("click", function() {
-       const count = $("input:checked[name='genreType']").length;
-        if (count > 2) {
-            $(this).prop('checked', false);
-            alert('장르는 최대 2개까지만 선택 가능합니다.');
-        }
-    });
-    const allowVal = $('#input_allow_show');
-    $(allowVal).on('change', function () {
-        const hiddenAllow = $('#hidden_allow');
-        if (allowVal.prop('checked')) {
-            hiddenAllow.val('Y');
-        } else {
-            hiddenAllow.val('N');
-        }
-    });
+  $("input[name='genreType']").on("click", function () {
+    const count = $("input:checked[name='genreType']").length;
+    if (count > 2) {
+      $(this).prop('checked', false);
+      alert('장르는 최대 2개까지만 선택 가능합니다.');
+    }
+  });
+  const allowVal = $('#input_allow_show');
+  $(allowVal).on('change', function () {
+    const hiddenAllow = $('#hidden_allow');
+    if (allowVal.prop('checked')) {
+      hiddenAllow.val('Y');
+    } else {
+      hiddenAllow.val('N');
+    }
+  });
+  $('#card-form').on('submit', (e) => {
+    if ($('#input_title').val().trim() === '') {
+      e.preventDefault();
+      alert("제목을 입력해주세요.");
+      return false;
+    }
+    if ((${categoryType <= 1002}) && ($("input:checked[name='genreType']").length === 0)) {
+      e.preventDefault();
+      alert("장르를 체크해주세요.");
+      return false;
+    }
+    if ($('#input_catchphrase').val().trim() === '') {
+      e.preventDefault();
+      alert("한 줄 요약을 입력해주세요.");
+      return false;
+    }
+    if ($('#input_synopsis').val().trim() === '') {
+      e.preventDefault();
+      alert("줄거리를 입력해주세요.");
+      return false;
+    }
+    if ($('#input_thumbnail_url').val().trim() === '') {
+      e.preventDefault();
+      alert("썸네일을 등록해주세요.");
+      return false;
+    }
+  });
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        $('#input_thumbnail_url').val(e.target.result);
+      };
+      reader.readAsDataURL(input.files[0]);
+    } else {
+      $('#input_thumbnail_url').val('');
+    }
+  }
 </script>
 </body>
 </html>

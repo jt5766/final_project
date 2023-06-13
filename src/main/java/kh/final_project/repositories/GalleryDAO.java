@@ -22,8 +22,8 @@ public class GalleryDAO {
         db.insert("Gallery.insertCard", card);
     }
 
-    public List<GalleryCardView> selectAllCards(SearchCriteria gallerySort) {
-        return db.selectList("Gallery.selectAllCards", gallerySort);
+    public List<GalleryCardView> selectAllCards(SearchCriteria searchCriteria) {
+        return db.selectList("Gallery.selectAllCards", searchCriteria);
     }
 
     public GalleryCardView selectOneCard(Long cardSeq) {
@@ -70,12 +70,4 @@ public class GalleryDAO {
         db.delete("Gallery.deleteContent", params);
     }
 
-    public List<GalleryCardView> selectCardsByCategoryType(Integer categoryType) {
-        return db.selectList("Gallery.selectCardsByCategoryType", categoryType);
-    }
-
-    public List<GalleryCardView> selectAllCardsWithSort(SearchCriteria gallerySort) {
-        return db.selectList("Gallery.selectAllCardsWithSort", gallerySort);
-        //TODO: 쿼리문 작성
-    }
 }

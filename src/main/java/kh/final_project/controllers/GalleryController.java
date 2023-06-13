@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/gallery")
@@ -22,8 +24,9 @@ public class GalleryController {
 
     @GetMapping
     public String toGallery(Model model) {
-        SearchCriteria gallerySort = new SearchCriteria();
-        List<GalleryCardView> cards = galleryService.selectAllCards(gallerySort);
+        SearchCriteria searchCriteria = new SearchCriteria();
+        List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
+        setConditions(model);
         model.addAttribute("cards", cards);
         return "/gallery/gallery";
     }
@@ -39,24 +42,27 @@ public class GalleryController {
 
     @GetMapping("/category/{categoryType}")
     public String filterCard(@ModelAttribute("categoryType") @PathVariable Integer categoryType, Model model) {
-        SearchCriteria gallerySort = new SearchCriteria(categoryType, null, null);
-        List<GalleryCardView> cards = galleryService.selectAllCards(gallerySort);
+        SearchCriteria searchCriteria = new SearchCriteria("", categoryType, null, null, null);
+        List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
+        setConditions(model);
         model.addAttribute("cards", cards);
         return "/gallery/gallery";
     }
 
     @PostMapping("/sort/{sortCode}")
     public String sortCard(@PathVariable Integer sortCode, Model model) {
-        SearchCriteria gallerySort = new SearchCriteria(null, sortCode, null);
+        SearchCriteria gallerySort = new SearchCriteria("", null, sortCode, null, null);
         List<GalleryCardView> cards = galleryService.selectAllCards(gallerySort);
+        setConditions(model);
         model.addAttribute("cards", cards);
         return "gallery/gallery";
     }
 
     @PostMapping("/category/{categoryType}/sort/{sortCode}")
     public String sortCardWithCategory(@ModelAttribute("categoryType") @PathVariable Integer categoryType, @PathVariable Integer sortCode, Model model) {
-        SearchCriteria gallerySort = new SearchCriteria(categoryType, sortCode, null);
-        List<GalleryCardView> cards = galleryService.selectAllCards(gallerySort);
+        SearchCriteria searchCriteria = new SearchCriteria("", categoryType, sortCode, null, null);
+        List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
+        setConditions(model);
         model.addAttribute("cards", cards);
         return "gallery/gallery";
     }
@@ -128,5 +134,21 @@ public class GalleryController {
     public String deleteContents(@PathVariable Long cardSeq, @PathVariable Long contentSeq) {
         galleryService.deleteContent(cardSeq, contentSeq);
         return "redirect:/gallery/{cardSeq}";
+    }
+
+    @GetMapping("/search")
+    public String searchCards(SearchCriteria searchCriteria, Model model) {
+        System.out.println("searchCriteria = " + searchCriteria);
+        List<GalleryCardView> cards = galleryService.searchCards(searchCriteria);
+        setConditions(model);
+        model.addAttribute("cards", cards);
+        return "gallery/gallery";
+    }
+
+    private void setConditions(Model model) {
+        List<List<CategoryType>> result = galleryService.getConditions();
+        model.addAttribute("categoryTypes", result.get(0));
+        model.addAttribute("searchConditions", result.get(1));
+        model.addAttribute("sortConditions", result.get(2));
     }
 }

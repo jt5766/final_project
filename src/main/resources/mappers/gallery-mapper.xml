@@ -11,7 +11,7 @@
                 null,
             </otherwise>
         </choose>
-         #{ai}, #{title}, ${writer}, #{catchphrase}, #{synopsis}, #{thumbnail_url}, #{yn}, default,
+        #{ai}, #{title}, ${writer}, #{catchphrase}, #{synopsis}, #{thumbnail_url}, #{yn}, default,
         <choose>
             <when test="genre_type2 != null">
                 ${genre_type2})
@@ -39,21 +39,19 @@
     <select id="selectAllCards" resultType="kh.final_project.dto.GalleryCardView">
         select * from view_gallery_cards
         <trim prefix="where" prefixOverrides="and |or ">
-            <if test="categoryType != null">
-                category_type = ${categoryType}
+            <if test="typeCode != null">
+                category_type = ${typeCode}
+            </if>
+            <if test="searchQuery != null">
+                <if test="searchCode != 1001">
+                    and ${searchKeyword} like '%'||#{searchQuery}||'%'
+                </if>
+                and (title like '%'||#{searchQuery}||'%' or writer like '%'||#{searchQuery}||'%')
             </if>
         </trim>
-        <choose>
-            <when test="sortType == 'old'">
-                order by seq asc nulls last
-            </when>
-            <when test="sortType == 'pop'">
-                order by total_count desc nulls last
-            </when>
-            <otherwise>
-                order by seq desc nulls last
-            </otherwise>
-        </choose>
+        <if test="sortCode != null">
+            order by ${sortKeyword} ${sortVal}
+        </if>
     </select>
     <select id="selectOneCard" resultType="kh.final_project.dto.GalleryCardView">
         select * from view_gallery_cards where seq = ${cardSeq}
@@ -68,25 +66,6 @@
         where gallery_contents.gallery_cards = ${cardSeq} and gallery_contents.seq = ${contentSeq}
     </select>
 
-    <select id="selectCardsByCategoryType" resultType="kh.final_project.dto.GalleryCardView">
-        select * from view_gallery_cards where category_type = ${categoryType} order by seq desc
-    </select>
-
-    <select id="selectAllCardsWithSort" resultType="kh.final_project.dto.GalleryCardView">
-        select * from view_gallery_cards
-        <trim prefix="where" prefixOverrides="and |or ">
-
-        </trim>
-        <trim prefix="where" prefixOverrides="and |or ">
-            <if test="title != null">
-                and title like concat('%', #{title}, '%')
-            </if>
-            <if test="genre != null">
-                and genre = #{genre}
-            </if>
-        </trim>
-    </select>
-    
     <update id="updateViewCount">
         update gallery_contents set total_count = total_count + 1, day_count = day_count + 1 where seq = ${contentSeq}
     </update>
@@ -109,7 +88,8 @@
                 genre_type2 = null,
             </otherwise>
         </choose>
-        ai = #{ai}, title = #{title}, catchphrase = #{catchphrase}, synopsis = #{synopsis}, thumbnail_url = #{thumbnail_url}, yn = #{yn} where seq = ${seq}
+        ai = #{ai}, title = #{title}, catchphrase = #{catchphrase}, synopsis = #{synopsis}, thumbnail_url =
+        #{thumbnail_url}, yn = #{yn} where seq = ${seq}
     </update>
     <update id="updateContent">
         update gallery_contents set title = #{title},
