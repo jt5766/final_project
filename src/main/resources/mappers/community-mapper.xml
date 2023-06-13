@@ -17,38 +17,45 @@
 		select * from ${name}_BOARDS
 	</select>
 	
+	<!-- 페이징 -->
+	<select id="selectBoardByPage" resultType="kh.final_project.dto.BoardsDTO">
+		select * from(select ${board_name}_BOARDS.*, row_number() over(order by seq desc) rn from ${board_name}_BOARDS)
+		where rn between #{startPost} and #{endPost}
+	</select>
+	<!-- 페이징 -->
+
 	<update id="viewUp">
 		update ${board_name}_BOARDS set total_count = total_count + 1 where seq = #{seq}
 	</update>
 	<select id="selectBoardView" resultType="kh.final_project.dto.BoardsDTO">
 		select * from ${board_name}_BOARDS where seq = #{seq}
 	</select>
-	
+
 	<update id="updateBoard">
 		update ${board_name}_BOARDS set title = #{title}, txt = #{txt}, write_date = default where seq = #{seq}
 	</update>
-	
+
 	<delete id="deleteBoard">
 		delete from ${board_name}_BOARDS where seq = ${seq}
 	</delete>
-	
+
 	<insert id="insertReply">
 		insert into ${board_name}_REPLYS values
-			(${board_name}_REPLYS_SEQ.NEXTVAL, #{reply_type}, #{parent_board}, null, #{writer}, #{txt}, default)
+		(${board_name}_REPLYS_SEQ.NEXTVAL, #{reply_type}, #{parent_board}, null, #{writer}, #{txt}, default)
 	</insert>
-	
+
 	<select id="selectReply" resultType="kh.final_project.dto.BoardsReplyDTO">
 		select * from ${board_name}_REPLYS where parent_board = #{parent_board}
 	</select>
-	
+
 	<delete id="deleteReply">
 		delete from ${board_name}_REPLYS where seq = #{seq}
 	</delete>
-	
+
 	<update id="updateReply">
 		update ${board_name}_REPLYS set txt = #{txt}, write_date = default where seq = #{seq}
 	</update>
-	
+
 	<select id="getMax" resultType="int">
 		select count(*) from ${value}_BOARDS
 	</select>

@@ -155,6 +155,18 @@ public class TypeDAO {
 	}
 
 	/**
+	 * TYPE 테이블 CODE로 조회
+	 * 
+	 * @param tableName
+	 * @param code
+	 * @return CategoryType
+	 */
+	public CategoryType selectByCode(String tableName, int code) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		return mybatis.selectOne("Type.SelecType2ByCode", param);
+	}
+
+	/**
 	 * {tableName} 테이블 삽입 & 수정
 	 * 
 	 * @param String             tableName

@@ -2,6 +2,7 @@ package kh.final_project.services;
 
 import kh.final_project.dto.MemberDTO;
 import kh.final_project.mail.MailHandler;
+import kh.final_project.repositories.EmailcheckDAO;
 import kh.final_project.repositories.MemberDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,6 +14,9 @@ import java.io.UnsupportedEncodingException;
 
 @Service
 public class MemberService {
+
+    @Autowired
+    private EmailcheckDAO edao;
 
     @Autowired
     private MemberDAO mdao;
@@ -36,6 +40,7 @@ public class MemberService {
 
     public void sendJoinCertificationMail(MemberDTO dto) throws MessagingException, UnsupportedEncodingException {
         //회원가입 완료하면 인증을 위한 이메일 발송
+        edao.addemail(dto);
         MailHandler sendMail = new MailHandler(javaMailSender);
         sendMail.setSubject("[Kreate-Hub 이메일 인증메일 입니다.]"); //메일제목
         sendMail.setText(

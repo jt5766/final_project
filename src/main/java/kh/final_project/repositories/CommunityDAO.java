@@ -1,6 +1,7 @@
 package kh.final_project.repositories;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,9 @@ public class CommunityDAO {
 
 	public int getMax(String board_name) {
 		return sst.selectOne("Community.getMax", board_name);
+	}
+
+	public List<BoardsDTO> selectBoardByPage(Map<String, Object> pageInfo) {
+		return sst.selectList("Community.selectBoardByPage", pageInfo);
 	}
 }
