@@ -14,12 +14,13 @@
 	<style>
         *{box-sizing: border-box;}
         div{border: 1px solid black;}
-        #div_contents{height: 700px; overflow: auto;}
+        #div_contents{height: 700px; overflow: auto;background-color:yellow;}
+        .linebox{overflow: auto;}
+        .mytext{float:right;max-width:35%;word-break:break-all;padding-right:3px;background-color:red;}
+        .othertext{float:left;max-width:35%;word-break:break-all;padding-right:3px;background-color:orange;}
         #div_text{height: 100px; overflow: auto;}
         .btn{width: 100%; height: 100%; background-color: gray;color: black;}
         .btn:hover{background-color: black;color:gray;}
-        .mytext{text-align: right;}
-        .othertext{text-align: left;}
     </style>
 </head>
 <body>
@@ -34,13 +35,18 @@
 					console.log(message);
 					console.log(body);
 					const linediv = $("<div>");
+					linediv.addClass("linebox");
 					const textdiv = $("<div>");
 					if(body.writer == ${code}){
 						textdiv.addClass("mytext");
 						textdiv.append(body.txt);
 					}else{
+						const writerbox = $("<div>");
+						writerbox.addClass("writerbox");
+						writerbox.append(body.writer);
+						linediv.append(writerbox);
 						textdiv.addClass("othertext");
-						textdiv.append(body.writer+" : "+body.txt);
+						textdiv.append(body.txt);
 					}
 					linediv.append(textdiv);
 					$("#div_contents").append(linediv);
@@ -52,6 +58,24 @@
 			},function(){
 				alert("접속 실패");
 			});
+			
+			$("#div_text").on("keydown",function(e){
+				if(e.key == "Enter" && e.shiftKey){
+						
+				}else if(e.key == "Enter"){
+					e.preventDefault();
+					if($("#div_text").text().trim() == ""){
+						return false;
+					}else{
+						const destination = "/app/message";
+						const header = {};
+						const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html()});
+						stompClient.send(destination,header,body);
+						$("#div_text").html("");
+						$("#div_text").focus();
+					}
+				}
+			})
 			
 			$("#button_send").on("click",function(){
 				const destination = "/app/message";
@@ -73,13 +97,14 @@
             	<c:forEach var="log" items="${chatlog}">
             		<c:choose>
             			<c:when test="${log.writer==code}">
-            				<div>
+            				<div class="linebox">
             					<div class="mytext">${log.txt}</div>
             				</div>
             			</c:when>
             			<c:otherwise>
-            				<div>
-            					<div class="othertext">${log.writer} : ${log.txt}</div>
+            				<div class="linebox">
+            					<div class="writerbox">${log.writer}</div>
+            					<div class="othertext">${log.txt}</div>
             				</div>
             			</c:otherwise>
             		</c:choose>
