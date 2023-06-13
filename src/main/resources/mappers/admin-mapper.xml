@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Admin">
-	<select id="selectByMemberCount" resultType="kh.final_project.dto.CountDTO">
+	<select id="selectMemberCount" resultType="kh.final_project.dto.CountDTO">
 		SELECT * FROM VIEW_MEMBER_COUNT
 	</select>
-	<select id="selectByGalleryCount" resultType="kh.final_project.dto.CountDTO">
+	<select id="selectGalleryCount" resultType="kh.final_project.dto.CountDTO">
 		SELECT * FROM VIEW_GALLERY_COUNT
+	</select>
+	<select id="selectMember2000" resultType="kh.final_project.dto.MemberDTO">
+		SELECT CODE FROM MEMBERS WHERE MEMBER_TYPE = 2000 AND (NAME IS NULL OR TEL IS NULL)
 	</select>
 </mapper>

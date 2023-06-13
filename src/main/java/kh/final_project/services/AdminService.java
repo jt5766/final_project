@@ -8,17 +8,49 @@ import org.springframework.stereotype.Service;
 
 import kh.final_project.dto.CategoryType;
 import kh.final_project.dto.CountDTO;
+import kh.final_project.dto.MemberDTO;
 import kh.final_project.repositories.AdminDAO;
 import kh.final_project.repositories.TypeDAO;
 
 @Service
 public class AdminService {
 	@Autowired
-	private TypeDAO typeDAO;
-	@Autowired
 	private AdminDAO adminDAO;
 
+	@Autowired
+	private TypeDAO typeDAO;
+
 	/**
+	 * 관리자 페이지 중 차트의 멤버 관련 메서드
+	 * 
+	 * @return Map<String, Integer>
+	 */
+	public List<CountDTO> selectMemberCount() {
+		List<CountDTO> result = adminDAO.selectMemberCount();
+		return result;
+	}
+
+	/**
+	 * 관리자 페이지 중 차트의 갤러리 관련 메서드
+	 * 
+	 * @return Map<String, Integer>
+	 */
+	public List<CountDTO> selectGalleryCount() {
+		List<CountDTO> result = adminDAO.selectGalleryCount();
+		return result;
+	}
+	
+	/**
+	 * 관리자 페이지 중 회원가입 [전문가] 관련 메서드
+	 * @return
+	 */
+	public List<MemberDTO> selectMember2000() {
+		List<MemberDTO> result = adminDAO.selectMember2000();
+		return result;
+	}
+
+	/**
+	 * 관리자 페이지 중 카테고리의 버튼 그룹의 버튼에 해당되는 값 가져오는 메서드
 	 * 
 	 * @param tableName 테이블 이름
 	 * @return List<CategoryType>
@@ -45,6 +77,7 @@ public class AdminService {
 	}
 
 	/**
+	 * 관리자 페이지 중 카테고리의 적용 관련 메서드
 	 * 
 	 * @param tableName 테이블 이름
 	 * @param code      코드
@@ -62,27 +95,8 @@ public class AdminService {
 					name.split(",")[i], yn.split(",")[i]));
 
 		// 카테고리 수정 함수 실행
-		System.out.println(tableName);
 		boolean result = typeDAO.updateCategory(tableName, list);
 
-		return result;
-	}
-
-	/**
-	 * 
-	 * @return Map<String, Integer>
-	 */
-	public List<CountDTO> selectMemberCount() {
-		List<CountDTO> result = adminDAO.selectByMemberCount();
-		return result;
-	}
-
-	/**
-	 * 
-	 * @return Map<String, Integer>
-	 */
-	public List<CountDTO> selectGalleryCount() {
-		List<CountDTO> result = adminDAO.selectByGalleryCount();
 		return result;
 	}
 
