@@ -105,11 +105,16 @@
 						</div>
 						<div style="flex: 1;">
 							<c:if test="${i.writer == sessionScope.loginID}">
-								<input type="button" value="수정" class="updateReply">	
-								<input type="button" value="삭제" 
-								onclick="location.href = 
-								`/community/deleteReply?board_type=${info.board_type}&seq=${i.seq}&parent_board=${i.parent_board}`">
+								<div>
+									<input type="button" value="수정" class="updateReply">	
+									<input type="button" value="삭제" 
+									onclick="location.href = 
+									`/community/deleteReply?board_type=${info.board_type}&seq=${i.seq}&parent_board=${i.parent_board}`">
+								</div>
 							</c:if>
+							<div>
+								<input type="button" value="답글 달기">
+							</div>
 						</div>
 					</div>
 				</div>
