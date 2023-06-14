@@ -63,8 +63,8 @@
 		<form action="/community/insertReply" method="post">
 			<div>
 				<div style="text-align: left;">
-					${sessionScope.loginID}
-					<input type="hidden" name="writer" value="${sessionScope.loginID}">
+					${sessionScope.code}
+					<input type="hidden" name="writer" value="${sessionScope.code}">
 					<input type="hidden" name="parent_board" value="${info.seq}">
 					<input type="hidden" name="board_type" value="${info.board_type}">
 					<input type="hidden" name="reply_type" value="1001">
@@ -88,8 +88,8 @@
 		<hr>
 		<c:forEach var="i" items="${reply}">
 			<form action="/community/updateReply">
-				<div id="reply">
-					<input type="hidden" name="seq" value="${i.seq}" id="replySeq">
+				<div class="reply">
+					<input type="hidden" name="seq" value="${i.seq}" class="replySeq">
 					<input type="hidden" name="board_type" value="${info.board_type}">
 					<input type="hidden" name="parent_board" value="${info.seq}">
 					<div style="display: flex;">
@@ -105,7 +105,7 @@
 							<textarea name="txt" style="text-align: left; width: 100%; resize: none;" readonly>${i.txt}</textarea>
 						</div>
 						<div style="flex: 1;">
-							<c:if test="${i.writer == sessionScope.loginID}">
+							<c:if test="${i.writer == sessionScope.code}">
 								<div>
 									<input type="button" value="수정" class="updateReply">	
 									<input type="button" value="삭제" 
@@ -114,16 +114,50 @@
 								</div>
 							</c:if>
 							<div>
-								<input type="button" id="reReplyBtn" value="답글 달기">
+								<input type="button" class="reReplyBtn" value="답글 달기">
 							</div>
 						</div>
 					</div>
 				</div>
 			</form>
 		</c:forEach>
-<%-- 		<c:forEach var="i" items="${reReply}"> --%>
-		
-<%-- 		</c:forEach> --%>
+		<c:forEach var="i" items="${reReply}">
+			<script>
+				var reReplyForm = $("<form action='/community/updateReply'>");
+				var reReply = $("<div class='reReply'>");
+				var hiddenSeq = $("<input type='hidden' name='seq' value='${i.seq}'>");
+				var hiddenType = $("<input type='hidden' name='board_type' value='${info.board_type}'>");
+				var hiddenParent = $("<input type='hidden' name='parent_board' value='${info.seq}'>");
+				var header = $("<div style='display: flex;'>");
+				var space = $("<div style='flex: 1;'>")
+				var writer = $("<div style='flex: 10; text-align: left;'>");
+				writer.text("${sessionScope.code}");
+				var write_date = $("<div style='flex: 10; text-align: right;'>");
+				write_date.text("${i.write_date}");
+				var headerSpace = space.clone().text("ㄴ");
+				header.append(headerSpace, writer, write_date);
+				var txt = $("<textarea name='txt' style='text-align: left; width: 100%; resize: none;'>");
+				txt.text("${i.txt}");
+				var txtDiv = $("<div style='flex: 12;'>");
+				txtDiv.append(txt);
+				var body = $("<div style='display: flex; align-items: center;'>");
+				var target = $(".replySeq[value=${i.parent_reply}]");
+				var updateDiv = $("<div style='flex: 2;'>");
+				if("${sessionScope.code}" == ${i.writer}) {
+				    var submit = $("<input type='button' value='수정' class='updateReply'>");
+				    var del = $("<input type='button' value='삭제'>");
+				    del.on("click", function(){
+						location.href = "/community/deleteReply?board_type=${info.board_type}&seq=${i.seq}&parent_board=${i.parent_board}";
+				    });
+				    updateDiv.append(submit, del);
+				}
+				body.append(space.clone(), txtDiv, updateDiv);
+				reReply.append(hiddenSeq, hiddenType, hiddenParent);
+				reReply.append(header, body);
+				reReplyForm.append(reReply);
+				target.closest($(".reply")).parent().after(reReplyForm);
+			</script>
+		</c:forEach>
 		<div>FOOTER</div>
 	</div>
 
@@ -135,7 +169,7 @@
 	    shortcuts : false,
 	    tabDisable : true
 	});
-	
+	$('.note-statusbar').hide();
 	$("#textarea_contents").summernote("disable");
 	
 	$(".updateReply").on("click", function() {
@@ -153,18 +187,24 @@
 		$(this).hide();
 	});
 	
-	$("#reReplyBtn").on("click", function () {
+	$(".reReplyBtn").on("click", function () {
 	    const reply = $(this).closest($("#reply"));
-	    const writer = ${sessionScope.loginID};
+	    const writer = "${code}";
 	    const reReplyForm = $("<form action='/community/insertReply'>");
-	    const container = $("<div id='reReply' style='display: flex;'>");
+	    const container = $("<div id='reReply'>");
+	    const header = $("<div style='display: flex;'>");
 	    const headerSpace = $("<div style='flex: 1;'>")
-	    const header = $("<div style='text-align: left; flex: 5'>");
+	    const headerContent = $("<div style='text-align: left; flex: 5'>");
+	    header.append(headerSpace, headerContent);
+	    headerSpace.text("ㄴ");
+	    const body = $("<div style='display: flex;'>");
 	    const bodySpace = $("<div style='flex: 1;'>");
-	    const body = $("<div style='flex: 5;'>");
+	    const bodyContent = $("<div style='flex: 4;'>");
+	    const bodyButton = $("<div style='flex: 1;'>");
+	    body.append(bodySpace, bodyContent, bodyButton);
 	    const textarea = $("<textarea style='text-align: left; width: 100%; resize: none; flex: 6' name='txt'>");
 	   	const submit = $("<input type='submit' value='답글 달기' style='flex: 1'>");
-	   	const parent_reply = $(this).closest($("#reply")).find($("#replySeq")).val();
+	   	const parent_reply = $(this).closest($(".reply")).find($(".replySeq")).val();
 	   	const hiddenParentReply = $("<input type='hidden' name='parent_reply'>");
 	   	hiddenParentReply.val(parent_reply);
 	   	const hiddenBoardType = $("<input type='hidden' name='board_type'>");
@@ -175,10 +215,11 @@
 		hiddenParentBoard.val(${info.seq});
 		const hiddenWriter = $("<input type='hidden' name='writer'>");
 		hiddenWriter.val(writer);
-	   	header.text(${sessionScope.loginID});
-	   	header.append(hiddenParentReply, hiddenBoardType, hiddenReplyType, hiddenParentBoard, hiddenWriter);
-	   	body.append(textarea, submit);
-	   	container.append(headerSpace, header, bodySpace, body);
+	   	headerContent.html(writer);
+	   	headerSpace.append(hiddenParentReply, hiddenBoardType, hiddenReplyType, hiddenParentBoard, hiddenWriter);
+	   	bodyContent.append(textarea);
+	   	bodyButton.append(submit);
+	   	container.append(header, body);
 	   	reReplyForm.append(container);
 	   	$(this).closest($("form")).after(reReplyForm);
 	});

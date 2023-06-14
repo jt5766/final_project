@@ -55,7 +55,7 @@
 	</select>
 	
 	<select id="selectReReply" resultType="kh.final_project.dto.BoardsReplyDTO">
-		select * from ${board_name}_REPLYS where parent_board = #{parent_board} and reply_type = 1002 order by write_date asc
+		select * from ${board_name}_REPLYS where parent_board = #{parent_board} and reply_type = 1002 order by write_date desc
 	</select>
 
 	<delete id="deleteReply">
