@@ -1,7 +1,5 @@
 package kh.final_project.dto;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,7 +16,6 @@ public class GalleryCard {
     private String synopsis;
     private String thumbnail_url;
     private String yn; // Y,N
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime write_date;
 
     public GalleryCard() {}
