@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin - Catrgory</title>
-
 <!-- 공통 script -->
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <c:import url="${path}/resources/js/scripts.jsp" />
@@ -81,7 +80,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<script type="text/javascript">
 		// submit용 table Name 히든 tag
 		var hidden_table_name = $("<input>", {
@@ -89,24 +88,24 @@
 			"name" : "tableName"
 		});
 		$("form").append(hidden_table_name);
-		
+
 		// row 추가용 변수
 		var max_sort = 0;
 		var max_code = 0;
-		
+
 		// 비동기로 데이터 가져오는 함수
 		function selectType(target) {
 			// tableName & 히든 tag 값 수전
 			let tableName = $(target).attr("id");
 			$(hidden_table_name).val(tableName);
-			
+
 			// TABLE 내용 변경을 위한 비우기.
 			$("tbody").html("");
-			
+
 			// row 추가용 변수 초기화
 			max_sort = 0;
 			max_code = 0;
-			
+
 			// 비동기 실행
 			$.ajax({
 				url : "/admin/category/type",
@@ -120,7 +119,7 @@
 						max_sort = el.sort;
 					if (max_code < el.code)
 						max_code = el.code;
-					
+
 					// tbody 생성 함수 호출
 					createRow(el.sort, el.code, el.name, el.yn);
 				});
@@ -155,18 +154,19 @@
 			sel_yn.append(op_y, op_n);
 			sel_yn.val(yn).prop("selected", true);
 
-			tr.append($(td.clone()).append(inp_sort),
-					$(td.clone()).append(inp_code),
-					$(td.clone()).append(inp_name),
-					$(td.clone()).append(sel_yn),
-					$(td.clone()));
+			tr.append($(td.clone()).append(inp_sort), $(td.clone()).append(
+					inp_code), $(td.clone()).append(inp_name), $(td.clone())
+					.append(sel_yn), $(td.clone()));
 
 			$("#tbody_data").append(tr);
 		}
 		// row 추가 이벤트 할당
-		$("#btn_addRow").on("click", function() {
-			createRow(max_sort = max_sort + 1, max_code = max_code + 1,"", "Y");
-		});
+		$("#btn_addRow").on(
+				"click",
+				function() {
+					createRow(max_sort = max_sort + 1, max_code = max_code + 1,
+							"", "Y");
+				});
 		// 취소 이벤트
 		$("#btn_cancle").on("click", function() {
 			let btns = $(".btn-check");
@@ -187,9 +187,9 @@
 			},
 			stop : function(G, ui) {
 				ui.item.removeClass("select");
-				
+
 				$(this).find("tr").each(function(GFG) {
-					if (GFG >= 0) 
+					if (GFG >= 0)
 						$(this).find("input").eq(0).val(GFG + 1);
 				});
 			}
@@ -199,7 +199,7 @@
 			$($("#" + btn_name + "")).trigger("click");
 		}
 	</script>
-	
+
 	<script type="text/javascript">
 		$(function() {
 			btn_click($($(".btn-check")[0]).attr("id"));

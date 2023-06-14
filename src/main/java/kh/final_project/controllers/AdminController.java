@@ -50,8 +50,21 @@ public class AdminController {
 	@RequestMapping("join")
 	public String join(Model model) {
 		List<MemberDTO> result = adminService.selectMember2000();
-		model.addAttribute("list", new Gson().toJson(result));
+		model.addAttribute("list", result);
 		return "/admin/join";
+	}
+
+	@RequestMapping("join/approve")
+	public String joinApprove(MemberDTO dto) {
+		boolean result = adminService.approveMember(dto);
+		return "redirect: /admin/join";
+	}
+
+	@RequestMapping("join/reject")
+	public String joinReject(MemberDTO dto) {
+		System.out.println(dto.getCode());
+		boolean result = adminService.rejectMember(dto);
+		return "redirect: /admin/join";
 	}
 
 	@RequestMapping("member")

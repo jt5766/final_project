@@ -28,4 +28,14 @@ public class AdminDAO {
 		List<MemberDTO> result = mybatis.selectList("Admin.selectMember2000");
 		return result;
 	}
+
+	public boolean approveMember(MemberDTO dto) {
+		boolean result = mybatis.update("Admin.approveMember", dto) > 0 ? true : false;
+		return result;
+	}
+
+	public boolean rejectMember(MemberDTO dto) {
+		boolean result = mybatis.delete("Admin.rejectMember", dto) > 0 ? true : false;
+		return result;
+	}
 }

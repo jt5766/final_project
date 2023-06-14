@@ -39,9 +39,10 @@ public class AdminService {
 		List<CountDTO> result = adminDAO.selectGalleryCount();
 		return result;
 	}
-	
+
 	/**
 	 * 관리자 페이지 중 회원가입 [전문가] 관련 메서드
+	 * 
 	 * @return
 	 */
 	public List<MemberDTO> selectMember2000() {
@@ -97,6 +98,16 @@ public class AdminService {
 		// 카테고리 수정 함수 실행
 		boolean result = typeDAO.updateCategory(tableName, list);
 
+		return result;
+	}
+
+	public boolean approveMember(MemberDTO dto) {
+		boolean result = adminDAO.approveMember(dto);
+		return result;
+	}
+
+	public boolean rejectMember(MemberDTO dto) {
+		boolean result = adminDAO.rejectMember(dto);
 		return result;
 	}
 

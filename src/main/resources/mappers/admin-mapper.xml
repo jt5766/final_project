@@ -10,4 +10,10 @@
 	<select id="selectMember2000" resultType="kh.final_project.dto.MemberDTO">
 		SELECT * FROM VIEW_MEMBER_TYPE2000
 	</select>
+	<update id="approveMember">
+		UPDATE MEMBERS SET NAME = #{name}, TEL = #{tel} WHERE CODE = #{code}
+	</update>
+	<delete id="rejectMember">
+		DELETE FROM MEMBERS WHERE CODE = #{code}
+	</delete>
 </mapper>
