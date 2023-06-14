@@ -150,8 +150,4 @@ public class GalleryService {
             multipartFile.transferTo(file);
         }
     }
-
-    public String getFilePath(String filename) {
-        return galleryDAO.selectFilePath(filename);
-    }
 }
