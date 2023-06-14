@@ -1,5 +1,6 @@
 package kh.final_project.services;
 
+import kh.final_project.dto.EmailTypeDTO;
 import kh.final_project.dto.MemberDTO;
 import kh.final_project.mail.MailHandler;
 import kh.final_project.repositories.EmailcheckDAO;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -24,22 +26,17 @@ public class MemberService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    public void setEmailType(MemberDTO dto) {
-        if (dto.getEmail_type()==1001){
-            dto.setSet_email_type("gamil.com");
-        } else if (dto.getEmail_type()==1002) {
-            dto.setSet_email_type("naver.com");
-        } else if (dto.getEmail_type()==1003) {
-            dto.setSet_email_type("daum.com");
-        } else if (dto.getEmail_type()==1004) {
-            dto.setSet_email_type("nate.com");
-        }
-
+    public List<EmailTypeDTO> emailType(){
+        return mdao.emailType();
     }
 
 
+    public String getEmailName(MemberDTO dto){
+        return mdao.getEmailName(dto);
+    }
+
     public void sendJoinCertificationMail(MemberDTO dto) throws MessagingException, UnsupportedEncodingException {
-        //회원가입 완료하면 인증을 위한 이메일 발송
+        //이메일 인증하는 순간 멤버타입 , 이메일 타입, 이메일 따로 저장
         edao.addemail(dto);
         MailHandler sendMail = new MailHandler(javaMailSender);
         sendMail.setSubject("[Kreate-Hub 이메일 인증메일 입니다.]"); //메일제목
@@ -60,19 +57,21 @@ public class MemberService {
     }
 
 
-    public void login(MemberDTO dto){
+    public void emailTypeChange(MemberDTO dto){
         String email = dto.getEmail();
         String[] mail = email.split("@");
         dto.setEmail(mail[0]);
-        if(mail[1].equals("gmail.com")){
-            dto.setEmail_type(1001);
-        } else if (mail[1].equals("naver.com")) {
-            dto.setEmail_type(1002);
-        } else if (mail[1].equals("daum.com")) {
-            dto.setEmail_type(1003);
-        }else if (mail[1].equals("nate.com")) {
-            dto.setEmail_type(1004);
-        }
+        Integer email_type = mdao.getEmailCode(mail[1]);
+        dto.setEmail_type(email_type);
+//        if(mail[1].equals("gmail.com")){
+//            dto.setEmail_type(1001);
+//        } else if (mail[1].equals("naver.com")) {
+//            dto.setEmail_type(1002);
+//        } else if (mail[1].equals("daum.net")) {
+//            dto.setEmail_type(1003);
+//        }else if (mail[1].equals("nate.com")) {
+//            dto.setEmail_type(1004);
+//        }
 
         mdao.login(dto);
 

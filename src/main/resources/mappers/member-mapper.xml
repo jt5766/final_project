@@ -34,7 +34,15 @@
     </insert>
 
     <!--이메일 인증 -->
+    <select id="selectEmail" resultType="kh.final_project.dto.EmailTypeDTO">
+        select * from email_type where yn = 'Y'
+    </select>
+    <select id="getEmailName" resultType="String">
+        select name from email_type where code = #{email_type}
+    </select>
 
-
+    <select id="getEmailCode" resultType="Integer">
+        select code from email_type where name= #{value}
+    </select>
 
 </mapper>

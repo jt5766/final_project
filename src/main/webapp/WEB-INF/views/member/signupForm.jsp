@@ -142,8 +142,6 @@
         <div id="body_left">left</div>
         <div id="body_center">
             <div id="btn_box">
-
-
                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                     <input type="radio" class="btn-check " name="member_type" value="1000" id="btn1" autocomplete="off" checked>
                     <label class="btn btn-outline-primary lab p-0" for="btn1">일반</label>
@@ -162,10 +160,9 @@
                 <div id="icon">@</div>
                 <div id="drop">
                     <select id="sel" name="email_type">
-                        <option value="1001">gmail.com</option>
-                        <option value="1002">naver.com</option>
-                        <option value="1003">daum.com</option>
-                        <option value="1004">nate.com</option>
+                        <c:forEach var="i" items="${list}">
+                            <option value="${i.code}">${i.name}</option>
+                        </c:forEach>
                     </select>
 
                 </div>
