@@ -136,14 +136,16 @@
 				write_date.text("${i.write_date}");
 				var headerSpace = space.clone().text("ㄴ");
 				header.append(headerSpace, writer, write_date);
-				var txt = $("<textarea name='txt' style='text-align: left; width: 100%; resize: none;'>");
+				var txt = $("<textarea name='txt' style='text-align: left; width: 100%; resize: none;' readonly>");
 				txt.text("${i.txt}");
 				var txtDiv = $("<div style='flex: 12;'>");
 				txtDiv.append(txt);
 				var body = $("<div style='display: flex; align-items: center;'>");
+				var buttonDiv = $("<div style='flex: 2;'>")
 				var target = $(".replySeq[value=${i.parent_reply}]");
-				var updateDiv = $("<div style='flex: 2;'>");
-				if("${sessionScope.code}" == ${i.writer}) {
+				var updateDiv = $("<div>");
+				if(${sessionScope.code} == ${i.writer}) {
+				    console.log("!!!!!!!!");
 				    var submit = $("<input type='button' value='수정' class='updateReply'>");
 				    var del = $("<input type='button' value='삭제'>");
 				    del.on("click", function(){
@@ -151,7 +153,8 @@
 				    });
 				    updateDiv.append(submit, del);
 				}
-				body.append(space.clone(), txtDiv, updateDiv);
+				buttonDiv.append(updateDiv);
+				body.append(space.clone(), txtDiv, buttonDiv);
 				reReply.append(hiddenSeq, hiddenType, hiddenParent);
 				reReply.append(header, body);
 				reReplyForm.append(reReply);
