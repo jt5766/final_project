@@ -5,9 +5,13 @@ import kh.final_project.repositories.GalleryDAO;
 import kh.final_project.repositories.TypeDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class GalleryService {
@@ -23,7 +27,16 @@ public class GalleryService {
         this.typeDAO = typeDAO;
     }
 
-    public void insertCard(GalleryCard card) {
+    public void insertCard(GalleryCard card, MultipartFile multipartFile, String realPath) throws IOException {
+        card.setThumbnail_url(
+                new StringBuilder()
+                        .append("/gallery/card/thumbnails/")
+                        .append(UUID.randomUUID())
+                        .append("_")
+                        .append(card.getThumbnail_url())
+                        .toString()
+        );
+        transferFile(realPath + card.getThumbnail_url(), multipartFile);
         galleryDAO.insertCard(card);
     }
 
@@ -122,8 +135,23 @@ public class GalleryService {
         }
         return pageNavi;
     }
+
     private void setRange(SearchCriteria searchCriteria) {
         searchCriteria.setStart((searchCriteria.getPage() * postPerPage) - (postPerPage - 1));
         searchCriteria.setEnd((searchCriteria.getPage() * postPerPage));
+    }
+
+    private void transferFile(String fileName, MultipartFile multipartFile) throws IOException {
+        if (!multipartFile.isEmpty()) {
+            File file = new File(fileName);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            multipartFile.transferTo(file);
+        }
+    }
+
+    public String getFilePath(String filename) {
+        return galleryDAO.selectFilePath(filename);
     }
 }
