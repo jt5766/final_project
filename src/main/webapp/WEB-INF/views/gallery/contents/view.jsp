@@ -62,14 +62,14 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <c:if test="${sessionScope.code == content}">
+            <c:if test="${sessionScope.code == content.writer}">
                 <form action="/gallery/${cardSeq}/contents/${content.seq}/delete" method="post">
                     <input type="hidden" name="cardSeq" value="${cardSeq}">
                     <input type="hidden" name="contentSeq" value="${content.seq}">
                     <button type="submit">삭제하기</button>
                 </form>
+                <button onclick="location.href='/gallery/${cardSeq}/contents/${content.seq}/modify'">수정하기</button>
             </c:if>
-            <button onclick="location.href='/gallery/${cardSeq}/contents/${content.seq}/modify'">수정하기</button>
         </div>
         <div class="col-md-6">
             <button onclick="location.href='/gallery/${cardSeq}'">돌아가기</button>

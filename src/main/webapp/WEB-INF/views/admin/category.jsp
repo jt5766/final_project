@@ -57,7 +57,6 @@
 				<div class="row">
 					<form action="/admin/update_category">
 						<table class="table table-bordered caption-top table-striped" id="table">
-							<caption></caption>
 							<thead align="center">
 								<tr>
 									<th class="justify-content-md-end" colspan="5">

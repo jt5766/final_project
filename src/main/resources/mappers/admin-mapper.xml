@@ -8,6 +8,6 @@
 		SELECT * FROM VIEW_GALLERY_COUNT
 	</select>
 	<select id="selectMember2000" resultType="kh.final_project.dto.MemberDTO">
-		SELECT CODE FROM MEMBERS WHERE MEMBER_TYPE = 2000 AND (NAME IS NULL OR TEL IS NULL)
+		SELECT * FROM VIEW_MEMBER_TYPE2000
 	</select>
 </mapper>

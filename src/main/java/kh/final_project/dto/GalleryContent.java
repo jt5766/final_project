@@ -1,8 +1,6 @@
 package kh.final_project.dto;
 
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.LocalDateTime;
 
 public class GalleryContent {
@@ -13,7 +11,6 @@ public class GalleryContent {
     private String video_url;
     private String txt;
     private String yn; //Y,N
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime write_date;
     private Integer total_count;
     private Integer day_count;

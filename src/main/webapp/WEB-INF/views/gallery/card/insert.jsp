@@ -16,8 +16,9 @@
     </div>
 </div>
 <div class="container-xl">
-    <form action="/gallery/insert" method="post" id="card-form">
+    <form action="/gallery/insert" method="post" id="card-form" enctype="multipart/form-data">
         <div class="row">
+
             <div class="con-md-12">
                 <p>AI 생성 그림인가요?</p>
                 <input type="radio" name="ai" id="input_ai_y" value="Y">
@@ -74,9 +75,9 @@
         <div class="row">
             <div class="col-md-12">
                 <label for="input_thumbnail_url">썸네일</label>
-                <input type="file" id="thumbnail" onchange="readURL(this)">
-                <input type="url" name="thumbnail_url" id="input_thumbnail_url" placeholder="http://...">
-                <img src="" alt="1" id="img1">
+                <input type="file" name="thumbnail_image" id="input_thumbnail_url" onchange="readURL(this)" formenctype="multipart/form-data">
+                <input type="hidden" name="thumbnail_url">
+                <img src="" alt="preview thumbnail here..." id="img">
             </div>
         </div>
         <div class="row">
@@ -149,27 +150,15 @@
     if (input.files && input.files[0]) {
       const reader = new FileReader();
       const blob = new Blob([input.files[0]]);
-      reader.onload = function (e) {
-        $('#input_thumbnail_url').val(e.target.result);
-        $('#img1').attr('src', URL.createObjectURL(blob));
-        // $('#img1').attr('src', e.target.result);
+      reader.onload = function () {
+        $('#img').attr('src', URL.createObjectURL(blob));
+        $('input[name="thumbnail_url"]').val(input.files[0].name);
       };
       reader.readAsDataURL(blob);
-      // console.log(URL.createObjectURL(blob));
     } else {
-      $('#input_thumbnail_url').val('');
+        $('#img').attr('src', "");
+        $('input[name="thumbnail_url"]').val("");
     }
-  }
-  const encodeImageToBase64 = function(imageURI){
-      var fileReader = new FileReader();
-      var blob = new Blob([imageURI], { type: 'image/jpeg'});
-      var result = {};
-
-      fileReader.onloadend = function(){
-          result = fileReaders.result.split(',')[1];
-          console.log("Result: " + result);
-      }
-      fileReader.readAsDataURL(blob);
   }
 </script>
 </body>

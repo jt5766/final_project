@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -16,11 +19,13 @@ public class GalleryController {
 
     private final GalleryService galleryService;
     private final HttpServletRequest request;
+    private final HttpSession session;
 
     @Autowired
-    public GalleryController(GalleryService galleryService, HttpServletRequest request) {
+    public GalleryController(GalleryService galleryService, HttpServletRequest request, HttpSession session) {
         this.galleryService = galleryService;
         this.request = request;
+        this.session = session;
     }
 
     @GetMapping
@@ -92,12 +97,14 @@ public class GalleryController {
     }
 
     @PostMapping("/insert")
-    public String insertCard(GalleryCard card) {
+    public String insertCard(GalleryCard card, @RequestPart(value = "thumbnail_image", required = false) MultipartFile multipartFile) throws IOException {
         if (card.getWriter() == null) {
             card.setWriter(10000001);
         // 접속중인 아이디가 없을 경우 기본 아이디 추가 (이후 삭제 예정)
         }
-        galleryService.insertCard(card);
+        String realPath = session.getServletContext().getRealPath("upload");
+        galleryService.insertCard(card, multipartFile, realPath);
+        // TODO: 파일 업로드 및 출력 성공, 서버 종료 시 파일 사라지는 문제 해결해야함
         return "redirect:/gallery";
     }
 
