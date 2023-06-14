@@ -1,6 +1,9 @@
 package kh.final_project.repositories;
 
-import kh.final_project.dto.*;
+import kh.final_project.dto.GalleryCard;
+import kh.final_project.dto.GalleryCardView;
+import kh.final_project.dto.GalleryContent;
+import kh.final_project.dto.SearchCriteria;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
