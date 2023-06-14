@@ -36,7 +36,7 @@ public class AdminController {
 	public String chart(Model model) {
 		// 회원 카운트
 		List<CountDTO> memberCount = adminService.selectMemberCount();
-		model.addAttribute("memberCount",new Gson().toJson(memberCount));
+		model.addAttribute("memberCount", new Gson().toJson(memberCount));
 		// 갤러리 별 조회수 합
 		List<CountDTO> galleryCount = adminService.selectGalleryCount();
 		model.addAttribute("galleryCount", new Gson().toJson(galleryCount));
@@ -50,7 +50,7 @@ public class AdminController {
 	@RequestMapping("join")
 	public String join(Model model) {
 		List<MemberDTO> result = adminService.selectMember2000();
-		model.addAttribute("list", result);
+		model.addAttribute("list", new Gson().toJson(result));
 		return "/admin/join";
 	}
 
