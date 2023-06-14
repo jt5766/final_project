@@ -32,7 +32,6 @@ public class CommunityController {
 
 	@RequestMapping("toHome")
 	public String toHome() {
-		session.setAttribute("loginID", 10000001);
 		return "community/community_home";
 	}
 
@@ -69,9 +68,10 @@ public class CommunityController {
 		BoardsDTO info = communityService.selectBoardView(boardsDTO);
 		System.out.println("toBoardView info : " + info);
 		List<BoardsReplyDTO> reply = communityService.selectReply(boardsDTO);
+		List<BoardsReplyDTO> reReply = communityService.selectReReply(boardsDTO);
 		model.addAttribute("info", info);
 		model.addAttribute("reply", reply);
-		System.out.println(reply);
+		model.addAttribute("reReply", reReply);
 		return "community/board_view";
 	}
 

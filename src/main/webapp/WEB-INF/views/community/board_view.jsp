@@ -85,10 +85,11 @@
 		<div style="text-align: left; background-color: pink;">
 			댓글 목록
 		</div>
+		<hr>
 		<c:forEach var="i" items="${reply}">
 			<form action="/community/updateReply">
-				<div>
-					<input type="hidden" name="seq" value="${i.seq}">
+				<div id="reply">
+					<input type="hidden" name="seq" value="${i.seq}" id="replySeq">
 					<input type="hidden" name="board_type" value="${info.board_type}">
 					<input type="hidden" name="parent_board" value="${info.seq}">
 					<div style="display: flex;">
@@ -113,13 +114,16 @@
 								</div>
 							</c:if>
 							<div>
-								<input type="button" value="답글 달기">
+								<input type="button" id="reReplyBtn" value="답글 달기">
 							</div>
 						</div>
 					</div>
 				</div>
 			</form>
 		</c:forEach>
+<%-- 		<c:forEach var="i" items="${reReply}"> --%>
+		
+<%-- 		</c:forEach> --%>
 		<div>FOOTER</div>
 	</div>
 
@@ -142,11 +146,41 @@
 	    cancel.on("click", function() {
 			location.reload();
 	    });
-	    $(this).parent().prev().find("textarea").removeAttr("readonly");
-	    $(this).parent().append(submit);
-	    $(this).parent().append(cancel);
+	    $(this).parent().parent().prev().find("textarea").removeAttr("readonly");
+	    $(this).parent().parent().prev().find("textarea").focus();
+	    $(this).parent().append(submit, cancel);
 	    $(this).next().hide();
 		$(this).hide();
+	});
+	
+	$("#reReplyBtn").on("click", function () {
+	    const reply = $(this).closest($("#reply"));
+	    const writer = ${sessionScope.loginID};
+	    const reReplyForm = $("<form action='/community/insertReply'>");
+	    const container = $("<div id='reReply' style='display: flex;'>");
+	    const headerSpace = $("<div style='flex: 1;'>")
+	    const header = $("<div style='text-align: left; flex: 5'>");
+	    const bodySpace = $("<div style='flex: 1;'>");
+	    const body = $("<div style='flex: 5;'>");
+	    const textarea = $("<textarea style='text-align: left; width: 100%; resize: none; flex: 6' name='txt'>");
+	   	const submit = $("<input type='submit' value='답글 달기' style='flex: 1'>");
+	   	const parent_reply = $(this).closest($("#reply")).find($("#replySeq")).val();
+	   	const hiddenParentReply = $("<input type='hidden' name='parent_reply'>");
+	   	hiddenParentReply.val(parent_reply);
+	   	const hiddenBoardType = $("<input type='hidden' name='board_type'>");
+	   	hiddenBoardType.val(${info.board_type});
+	   	const hiddenReplyType = $("<input type='hidden' name='reply_type'>");
+		hiddenReplyType.val(1002);
+		const hiddenParentBoard = $("<input type='hidden' name='parent_board'>");
+		hiddenParentBoard.val(${info.seq});
+		const hiddenWriter = $("<input type='hidden' name='writer'>");
+		hiddenWriter.val(writer);
+	   	header.text(${sessionScope.loginID});
+	   	header.append(hiddenParentReply, hiddenBoardType, hiddenReplyType, hiddenParentBoard, hiddenWriter);
+	   	body.append(textarea, submit);
+	   	container.append(headerSpace, header, bodySpace, body);
+	   	reReplyForm.append(container);
+	   	$(this).closest($("form")).after(reReplyForm);
 	});
     </script>
 </body>

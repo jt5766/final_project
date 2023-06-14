@@ -49,6 +49,10 @@ public class CommunityDAO {
 		return sst.selectList("Community.selectReply", boardsReplyDTO);
 	}
 
+	public List<BoardsReplyDTO> selectReReply(BoardsReplyDTO boardsReplyDTO) {
+		return sst.selectList("Community.selectReReply", boardsReplyDTO);
+	}
+
 	public int deleteReply(BoardsReplyDTO boardsReplyDTO) {
 		return sst.delete("Community.deleteReply", boardsReplyDTO);
 	}

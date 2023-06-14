@@ -167,6 +167,14 @@ public class CommunityService {
 		return communityDAO.selectReply(boardsReplyDTO);
 	}
 
+	public List<BoardsReplyDTO> selectReReply(BoardsDTO boardsDTO) {
+		BoardsReplyDTO boardsReplyDTO = new BoardsReplyDTO();
+		boardsReplyDTO.setParent_board(boardsDTO.getSeq());
+		boardsReplyDTO.setBoard_type(boardsDTO.getBoard_type());
+		this.setBoardNameByBoardType(boardsReplyDTO);
+		return communityDAO.selectReReply(boardsReplyDTO);
+	}
+
 	public int deleteReply(BoardsReplyDTO boardsReplyDTO) {
 		this.setBoardNameByBoardType(boardsReplyDTO);
 		return communityDAO.deleteReply(boardsReplyDTO);
