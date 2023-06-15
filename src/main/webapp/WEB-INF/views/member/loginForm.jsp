@@ -112,7 +112,7 @@
                     <div id="password_box_left">비밀번호</div>
                     <div id="password_box_right"></div>
                 </div>
-                <div><input id="input_pw" name="password" type="text" placeholder="내용을 입력해주세요"></div>
+                <div><input id="input_pw" name="password" type="password" placeholder="내용을 입력해주세요"></div>
                 <div></div>
                 <div><a href="#">비밀번호 찾기</a></div>
                 <div>

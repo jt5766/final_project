@@ -35,7 +35,7 @@ public class MemberController {
 
     List<EmailTypeDTO> emailType =memberService.emailType();
     model.addAttribute("list",emailType);
-        return "member/signupForm";
+        return "member/emailCheckForm";
     }
 
     @RequestMapping("check")  /* 최초 이메일 인증시 이메일 입력후 오는 곳*/
@@ -47,9 +47,11 @@ public class MemberController {
     }
     @RequestMapping("register")
     public String register(Model model , MemberDTO dto) {
-
+        System.out.println("register로 넘어온 dto :"+dto);
+        System.out.println("==========================");
         //따로 저장된 멤버 타입 , 이메일 ,이메일 타입과 동일시 트루 반환후 회원가입 진행
         boolean result = emailcheckService.checkingEmail(dto);
+
         if (result) {
             String emailName = memberService.getEmailName(dto);
             dto.setSet_email_type(emailName);
@@ -58,6 +60,7 @@ public class MemberController {
             model.addAttribute("setEmailType", dto.getSet_email_type());
             model.addAttribute("memberType", dto.getMember_type());
             if (dto.getMember_type() == 2000) {
+
                 return "/member/expertRegisterForm";
             }
 
@@ -70,8 +73,8 @@ public class MemberController {
 
     @PostMapping("createMember")    /*회원가입할시 오는 곳 인서트 후 로그인폼으로*/
     public String createMember(MemberDTO dto){
-
-
+        System.out.println("createMember로 넘어온 dto :"+dto);
+        System.out.println("========================");
         mdao.insert(dto);
         return "/member/loginForm";
     }
