@@ -9,6 +9,11 @@ import org.springframework.stereotype.Repository;
 import kh.final_project.dto.CountDTO;
 import kh.final_project.dto.MemberDTO;
 
+/**
+ * <b>[ Admin ]</b> 관련 Repository Layer
+ * 
+ * @author LSJ
+ */
 @Repository
 public class AdminDAO {
 	@Autowired
@@ -37,5 +42,15 @@ public class AdminDAO {
 	public boolean rejectMember(MemberDTO dto) {
 		boolean result = mybatis.delete("Admin.rejectMember", dto) > 0 ? true : false;
 		return result;
+	}
+
+	public List<MemberDTO> selectMember() {
+		List<MemberDTO> result = mybatis.selectList("Admin.selectMember");
+		return result;
+	}
+
+	public boolean banMember(MemberDTO dto) {
+		boolean result = mybatis.delete("Admin.banMember", dto) > 0 ? true : false;
+		return false;
 	}
 }

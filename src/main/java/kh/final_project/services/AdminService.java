@@ -1,5 +1,9 @@
 package kh.final_project.services;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +16,11 @@ import kh.final_project.dto.MemberDTO;
 import kh.final_project.repositories.AdminDAO;
 import kh.final_project.repositories.TypeDAO;
 
+/**
+ * <b>[ Admin ]</b> 관련 Service Layer
+ * 
+ * @author LSJ
+ */
 @Service
 public class AdminService {
 	@Autowired
@@ -21,9 +30,10 @@ public class AdminService {
 	private TypeDAO typeDAO;
 
 	/**
-	 * 관리자 페이지 중 차트의 멤버 관련 메서드
-	 * 
-	 * @return Map<String, Integer>
+	 * <b>[ 그래프 ]</b>
+	 * <p>
+	 * 멤버 유형별 멤버 수
+	 * </p>
 	 */
 	public List<CountDTO> selectMemberCount() {
 		List<CountDTO> result = adminDAO.selectMemberCount();
@@ -31,9 +41,10 @@ public class AdminService {
 	}
 
 	/**
-	 * 관리자 페이지 중 차트의 갤러리 관련 메서드
-	 * 
-	 * @return Map<String, Integer>
+	 * <b>[ 그래프 ]</b>
+	 * <p>
+	 * 갤러리 유형별 조회 수
+	 * </p>
 	 */
 	public List<CountDTO> selectGalleryCount() {
 		List<CountDTO> result = adminDAO.selectGalleryCount();
@@ -41,9 +52,10 @@ public class AdminService {
 	}
 
 	/**
-	 * 관리자 페이지 중 회원가입 [전문가] 관련 메서드
-	 * 
-	 * @return
+	 * <b>[ 가입 승인 ]</b>
+	 * <p>
+	 * 가입 승인 대기 중인 전문가 : SELECT
+	 * </p>
 	 */
 	public List<MemberDTO> selectMember2000() {
 		List<MemberDTO> result = adminDAO.selectMember2000();
@@ -51,10 +63,60 @@ public class AdminService {
 	}
 
 	/**
-	 * 관리자 페이지 중 카테고리의 버튼 그룹의 버튼에 해당되는 값 가져오는 메서드
-	 * 
-	 * @param tableName 테이블 이름
-	 * @return List<CategoryType>
+	 * <b>[ 가입 승인 ]</b>
+	 * <p>
+	 * 가입 승인 : UPDATE [ Name, Tel ]
+	 * </p>
+	 */
+	public boolean approveMember(MemberDTO dto) {
+		boolean result = adminDAO.approveMember(dto);
+		return result;
+	}
+
+	/**
+	 * <b>[ 가입 승인 ]</b>
+	 * <p>
+	 * 가입 거절 : DELETE
+	 * </p>
+	 */
+	public boolean rejectMember(MemberDTO dto) {
+		boolean result = adminDAO.rejectMember(dto);
+		return result;
+	}
+
+	/**
+	 * <b>[ 회원 ]</b>
+	 * <p>
+	 * 회원 정보 : SELECT
+	 * </p>
+	 */
+	public List<MemberDTO> selectMember() {
+		List<MemberDTO> result = adminDAO.selectMember();
+		return result;
+	}
+
+	/**
+	 * <b>[ 회원 ]</b>
+	 * <p>
+	 * 회원 기간 밴 : UPDATE
+	 * </p>
+	 * 현재 시간에 밴 기간을 더해서 dto의 stop_date에 값 세팅
+	 */
+	public boolean banMember(MemberDTO dto, int ban_day) {
+		// 현재 시간에 ban_day를 더한 값
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Seoul")).plusDays(ban_day);
+		// DTO 에 밴 기간 세팅
+		dto.setStop_date(Timestamp.from(now.toInstant(ZoneOffset.ofHours(9))));
+
+		boolean result = adminDAO.banMember(dto);
+		return result;
+	}
+
+	/**
+	 * <b>[ 카테고리 ]</b>
+	 * <p>
+	 * 카테고리별 정보 : SELECT
+	 * </p>
 	 */
 	public List<CategoryType> selectCategory(String tableName) {
 		List<CategoryType> result = null;
@@ -78,14 +140,11 @@ public class AdminService {
 	}
 
 	/**
-	 * 관리자 페이지 중 카테고리의 적용 관련 메서드
-	 * 
-	 * @param tableName 테이블 이름
-	 * @param code      코드
-	 * @param sort      순서
-	 * @param name      이름
-	 * @param yn        사용여부
-	 * @return boolean
+	 * <b>[ 카테고리 ]</b>
+	 * <p>
+	 * 카테고리 입력 및 수정 : INSERT & UPDATE
+	 * </p>
+	 * 스트링 문자열을 Split(,)을 이용하여 List로 변환
 	 */
 	public boolean updateCategoey(String tableName, String code, String sort, String name, String yn) {
 		// code, sort, name, yn 이 "a,b,c,d,..." 으로 넘어 오기때문에
@@ -98,16 +157,6 @@ public class AdminService {
 		// 카테고리 수정 함수 실행
 		boolean result = typeDAO.updateCategory(tableName, list);
 
-		return result;
-	}
-
-	public boolean approveMember(MemberDTO dto) {
-		boolean result = adminDAO.approveMember(dto);
-		return result;
-	}
-
-	public boolean rejectMember(MemberDTO dto) {
-		boolean result = adminDAO.rejectMember(dto);
 		return result;
 	}
 

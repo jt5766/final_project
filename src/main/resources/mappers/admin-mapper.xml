@@ -16,4 +16,10 @@
 	<delete id="rejectMember">
 		DELETE FROM MEMBERS WHERE CODE = #{code}
 	</delete>
+	<select id="selectMember" resultType="kh.final_project.dto.MemberDTO">
+		SELECT * FROM VIEW_MEMBER
+	</select>
+	<update id="banMember">
+		UPDATE MEMBERS SET STOP_DATE = #{stop_date} WHERE CODE = #{code}
+	</update>
 </mapper>

@@ -16,6 +16,17 @@
 <script src="https://cdn.jsdelivr.net/npm/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
 <!-- Google Charts -->
 <script src="https://www.gstatic.com/charts/loader.js"></script>
+<!-- 공통 Style -->
+<style type="text/css">
+/* 전체 가리기 */
+body {
+	-ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+</style>
 </head>
 <body>
 
