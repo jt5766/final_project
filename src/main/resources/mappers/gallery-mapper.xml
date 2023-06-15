@@ -2,27 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Gallery">
     <insert id="insertCard">
-        insert into gallery_cards values(GALLERY_CARDS_SEQ.NEXTVAL, ${category_type},
-        <choose>
-            <when test="genre_type1 != null">
-                ${genre_type1},
-            </when>
-            <otherwise>
-                null,
-            </otherwise>
-        </choose>
-        #{ai}, #{title}, ${writer}, #{catchphrase}, #{synopsis}, #{thumbnail_url}, #{yn}, default,
-        <choose>
-            <when test="genre_type2 != null">
-                ${genre_type2})
-            </when>
-            <otherwise>
-                null)
-            </otherwise>
-        </choose>
+        insert into gallery_cards values(GALLERY_CARDS_SEQ.NEXTVAL, #{category_type},
+        #{genre_type1, jdbcType=NUMERIC}, #{ai}, #{title}, #{writer}, #{catchphrase}, #{synopsis}, #{thumbnail_url},
+        #{yn}, default, #{genre_type2, jdbcType=NUMERIC})
     </insert>
     <insert id="insertContent">
-        insert into gallery_contents values(${gallery_cards}, GALLERY_CONTENTS_SEQ.NEXTVAL, #{title},
+        insert into gallery_contents values(#{gallery_cards}, GALLERY_CONTENTS_SEQ.NEXTVAL, #{title},
         <choose>
             <when test="file_url != null">
                 #{file_url}, null,
@@ -47,16 +32,16 @@
         select view_gallery_cards.*, row_number() over(order by seq desc) rn from view_gallery_cards
         <trim prefix="where" prefixOverrides="and |or ">
             <if test="typeCode != null">
-                category_type = ${typeCode}
+                category_type = #{typeCode}
             </if>
             <if test="searchQuery != null">
                 <if test="searchCode != 1001">
-                    and ${searchKeyword} like '%'||#{searchQuery}||'%'
+                    and ${searchKeyword} like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%'
                 </if>
-                and (title like '%'||#{searchQuery}||'%' or writer like '%'||#{searchQuery}||'%')
+                and (title like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%' or writer like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%')
             </if>
         </trim>
-        ) where rn between ${start} and ${end}
+        ) where rn between #{start} and #{end}
         <if test="sortCode != null">
             order by ${sortKeyword} ${sortVal} nulls last
         </if>

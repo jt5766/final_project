@@ -104,7 +104,6 @@ public class GalleryController {
         }
         String realPath = session.getServletContext().getRealPath("upload");
         galleryService.insertCard(card, multipartFile, realPath);
-        // TODO: 파일 업로드 및 출력 성공, 서버 종료 시 파일 사라지는 문제 해결해야함
         return "redirect:/gallery";
     }
 
