@@ -63,7 +63,7 @@
 		<form action="/community/insertReply" method="post">
 			<div>
 				<div style="text-align: left;">
-					${sessionScope.code}
+					${sessionScope.nickName}
 					<input type="hidden" name="writer" value="${sessionScope.code}">
 					<input type="hidden" name="parent_board" value="${info.seq}">
 					<input type="hidden" name="board_type" value="${info.board_type}">
@@ -105,7 +105,7 @@
 							<textarea name="txt" style="text-align: left; width: 100%; resize: none;" readonly>${i.txt}</textarea>
 						</div>
 						<div style="flex: 1;">
-							<c:if test="${i.writer == sessionScope.code}">
+							<c:if test="${i.writer == sessionScope.nickName}">
 								<div>
 									<input type="button" value="수정" class="updateReply">	
 									<input type="button" value="삭제" 
@@ -131,7 +131,7 @@
 				var header = $("<div style='display: flex;'>");
 				var space = $("<div style='flex: 1;'>")
 				var writer = $("<div style='flex: 10; text-align: left;'>");
-				writer.text("${sessionScope.code}");
+				writer.text("${i.writer}");
 				var write_date = $("<div style='flex: 10; text-align: right;'>");
 				write_date.text("${i.write_date}");
 				var headerSpace = space.clone().text("ㄴ");
@@ -144,8 +144,7 @@
 				var buttonDiv = $("<div style='flex: 2;'>")
 				var target = $(".replySeq[value=${i.parent_reply}]");
 				var updateDiv = $("<div>");
-				if(${sessionScope.code} == ${i.writer}) {
-				    console.log("!!!!!!!!");
+				if("${sessionScope.nickName}" == "${i.writer}") {
 				    var submit = $("<input type='button' value='수정' class='updateReply'>");
 				    var del = $("<input type='button' value='삭제'>");
 				    del.on("click", function(){
@@ -192,7 +191,7 @@
 	
 	$(".reReplyBtn").on("click", function () {
 	    const reply = $(this).closest($("#reply"));
-	    const writer = "${code}";
+	    const writer = "${sessionScope.nickName}";
 	    const reReplyForm = $("<form action='/community/insertReply'>");
 	    const container = $("<div id='reReply'>");
 	    const header = $("<div style='display: flex;'>");
@@ -217,7 +216,7 @@
 		const hiddenParentBoard = $("<input type='hidden' name='parent_board'>");
 		hiddenParentBoard.val(${info.seq});
 		const hiddenWriter = $("<input type='hidden' name='writer'>");
-		hiddenWriter.val(writer);
+		hiddenWriter.val("${sessionScope.code}");
 	   	headerContent.html(writer);
 	   	headerSpace.append(hiddenParentReply, hiddenBoardType, hiddenReplyType, hiddenParentBoard, hiddenWriter);
 	   	bodyContent.append(textarea);
