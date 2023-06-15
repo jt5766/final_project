@@ -79,7 +79,6 @@
 										<tbody class="table-group-divider">
 											<tr>
 												<td class="m-0 p-0" colspan="5">
-
 													<table class="table table-striped table-hove m-0 p-0" id="table">
 														<thead align="center">
 															<tr>
