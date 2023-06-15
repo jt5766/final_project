@@ -8,75 +8,100 @@
 <!-- 공통 script -->
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <c:import url="${path}/resources/js/scripts.jsp" />
-
-<style type="text/css">
-.btn-group label {
-	width: 33%;
-}
-</style>
 </head>
 <body>
 	<div class="container-xl">
-		<div class="row menu_btn_box">
-			<div class="col btn_group_box">
-				<div class="row btn_group1">
-					<div class="col btn-group" role="group" aria-label="Basic radio toggle button group">
-						<input type="radio" class="btn-check" name="radio_type" id="EMAIL_TYPE" autocomplete="off" onclick="selectType(this);">
-						<label class="btn btn-outline-primary" for="EMAIL_TYPE">이메일</label>
-						<input type="radio" class="btn-check" name="radio_type" id="GENRE_TYPE" autocomplete="off" onclick="selectType(this);">
-						<label class="btn btn-outline-primary" for="GENRE_TYPE">장르</label>
-						<input type="radio" class="btn-check" name="radio_type" id="EMPTY1" autocomplete="off" disabled="disabled">
-						<label class="btn btn-outline-primary" for="EMPTY1"></label>
-					</div>
-				</div>
-				<div class="row btn_group1">
-					<div class="col btn-group" role="group" aria-label="Basic radio toggle button group">
-						<input type="radio" class="btn-check" name="radio_type" id="GALLERY_CARDS_SORT" autocomplete="off" onclick="selectType(this);">
-						<label class="btn btn-outline-primary" for="GALLERY_CARDS_SORT">정렬(갤러리-카드)</label>
-						<input type="radio" class="btn-check" name="radio_type" id="GALLERY_CONTENTS_SORT" autocomplete="off" onclick="selectType(this);">
-						<label class="btn btn-outline-primary" for="GALLERY_CONTENTS_SORT">정렬(갤러리-)</label>
-						<input type="radio" class="btn-check" name="radio_type" id="COMMUNITY_SORT" autocomplete="off" onclick="selectType(this);">
-						<label class="btn btn-outline-primary" for="COMMUNITY_SORT">정렬(커뮤니티)</label>
-					</div>
-				</div>
-				<div class="row btn_group1">
-					<div class="col btn-group" role="group" aria-label="Basic radio toggle button group">
-						<input type="radio" class="btn-check" name="radio_type" id="GALLERY_CARDS_SEARCH" autocomplete="off" onclick="selectType(this);">
-						<label class="btn btn-outline-primary" for="GALLERY_CARDS_SEARCH">검색(갤러리-카드)</label>
-						<input type="radio" class="btn-check" name="radio_type" id="EMPTY2" autocomplete="off" disabled="disabled">
-						<label class="btn btn-outline-primary" for="EMPTY2"></label>
-						<input type="radio" class="btn-check" name="radio_type" id="COMMUNITY_SEARCH" autocomplete="off" onclick="selectType(this);">
-						<label class="btn btn-outline-primary" for="COMMUNITY_SEARCH">검색(커뮤니티)</label>
-					</div>
-				</div>
-			</div>
-		</div>
 		<div class="row justify-content-md-center">
-			<div class="col-md-8">
-				<div class="row">
-					<form action="/admin/update_category">
-						<table class="table table-bordered caption-top table-striped" id="table">
-							<thead align="center">
-								<tr>
-									<th class="justify-content-md-end" colspan="5">
-										<button type="button" class="btn btn-light btn-outline-secondary w-25 h-100" id="btn_addRow">Row 추가</button>
-										<button type="submit" class="btn btn-light btn-outline-secondary w-25 h-100" id="btn_submit">적용</button>
-										<button type="button" class="btn btn-light btn-outline-secondary w-25 h-100" id="btn_cancle">취소</button>
-									</th>
-								</tr>
-								<tr>
-									<th>SEQ</th>
-									<th>CODE</th>
-									<th>NAME</th>
-									<th>YN</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody id="tbody_data">
-							</tbody>
-						</table>
-					</form>
-				</div>
+			<div class="col-md-12">
+				<table class="table table-light table-bordered border-secondary table-striped">
+					<thead>
+						<tr class="btn_group" role="group" aria-label="Basic radio toggle button group">
+							<th width="33%">
+								<input type="radio" class="btn-check" name="radio_type" id="EMAIL_TYPE" autocomplete="off" onclick="selectType(this);">
+								<label class="btn btn-outline-primary btn-sm w-100" for="EMAIL_TYPE">이메일</label>
+							</th>
+							<th width="33%">
+								<input type="radio" class="btn-check" name="radio_type" id="GENRE_TYPE" autocomplete="off" onclick="selectType(this);">
+								<label class="btn btn-outline-primary btn-sm w-100" for="GENRE_TYPE">장르</label>
+							</th>
+							<th width="33%">
+								<input type="radio" class="btn-check" name="radio_type" id="EMPTY1" autocomplete="off" disabled="disabled">
+								<label class="btn btn-outline-primary btn-sm w-100" for="EMPTY1">&nbsp;</label>
+							</th>
+						</tr>
+						<tr class="btn_group" role="group" aria-label="Basic radio toggle button group">
+							<th width="33%">
+								<input type="radio" class="btn-check" name="radio_type" id="GALLERY_CARDS_SORT" autocomplete="off" onclick="selectType(this);">
+								<label class="btn btn-outline-primary btn-sm w-100" for="GALLERY_CARDS_SORT">정렬(갤러리-카드)</label>
+							</th>
+							<th width="33%">
+								<input type="radio" class="btn-check" name="radio_type" id="GALLERY_CONTENTS_SORT" autocomplete="off" onclick="selectType(this);">
+								<label class="btn btn-outline-primary btn-sm w-100" for="GALLERY_CONTENTS_SORT">정렬(갤러리-)</label>
+							</th>
+							<th width="33%">
+								<input type="radio" class="btn-check" name="radio_type" id="COMMUNITY_SORT" autocomplete="off" onclick="selectType(this);">
+								<label class="btn btn-outline-primary btn-sm w-100" for="COMMUNITY_SORT">정렬(커뮤니티)</label>
+							</th>
+						</tr>
+						<tr class="btn_group" role="group" aria-label="Basic radio toggle button group">
+							<th width="33%">
+								<input type="radio" class="btn-check" name="radio_type" id="GALLERY_CARDS_SEARCH" autocomplete="off" onclick="selectType(this);">
+								<label class="btn btn-outline-primary btn-sm w-100" for="GALLERY_CARDS_SEARCH">검색(갤러리-카드)</label>
+							</th>
+							<th width="33%">
+								<input type="radio" class="btn-check" name="radio_type" id="EMPTY2" autocomplete="off" disabled="disabled">
+								<label class="btn btn-outline-primary btn-sm w-100" for="EMPTY2">&nbsp;</label>
+							</th>
+							<th width="33%">
+								<input type="radio" class="btn-check" name="radio_type" id="COMMUNITY_SEARCH" autocomplete="off" onclick="selectType(this);">
+								<label class="btn btn-outline-primary btn-sm w-100" for="COMMUNITY_SEARCH">검색(커뮤니티)</label>
+							</th>
+						</tr>
+					</thead>
+					<tbody class="table-group-divider">
+						<tr>
+							<td class="m-0 p-0" colspan="5">
+								<form action="/admin/update_category">
+									<table class="table table-secondary border-secondary table-striped  m-0 p-0">
+										<thead>
+											<tr>
+												<td width="33%">
+													<button type="button" class="btn btn-light btn-outline-secondary btn-sm w-100" id="btn_addRow">Row 추가</button>
+												</td>
+												<td width="33%">
+													<button type="submit" class="btn btn-light btn-outline-secondary btn-sm w-100" id="btn_submit">적용</button>
+												</td>
+												<td width="33%">
+													<button type="button" class="btn btn-light btn-outline-secondary btn-sm w-100" id="btn_cancle">취소</button>
+												</td>
+											</tr>
+										</thead>
+										<tbody class="table-group-divider">
+											<tr>
+												<td class="m-0 p-0" colspan="5">
+
+													<table class="table table-striped table-hove m-0 p-0" id="table">
+														<thead align="center">
+															<tr>
+																<th>SEQ</th>
+																<th>CODE</th>
+																<th>NAME</th>
+																<th>YN</th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody id="tbody_data">
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
@@ -100,7 +125,7 @@
 			$(hidden_table_name).val(tableName);
 
 			// TABLE 내용 변경을 위한 비우기.
-			$("tbody").html("");
+			$("#tbody_data").html("");
 
 			// row 추가용 변수 초기화
 			max_sort = 0;
@@ -164,8 +189,7 @@
 		$("#btn_addRow").on(
 				"click",
 				function() {
-					createRow(max_sort = max_sort + 1, max_code = max_code + 1,
-							"", "Y");
+					createRow(max_sort = max_sort + 1, max_code = max_code + 1, "", "Y");
 				});
 		// 취소 이벤트
 		$("#btn_cancle").on("click", function() {
