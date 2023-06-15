@@ -28,7 +28,7 @@
 <body>
 	<div>
 		<div>GNB</div>
-		<form action="/community/insertBoard" method="post">
+		<form action="/community/insertBoard" method="post" id="boardForm">
 			<div>
 				<select>
 					<c:forEach var="i" items="${selectTag}">
@@ -44,6 +44,7 @@
 				</select>
 			</div>
 			<div>
+				<input type="hidden" name="writer" value="${sessionScope.code}">
 				<input type="hidden" name="board_type" value="${boardCode}">
 				<input type="text" name="title" placeholder="제목을 입력해주세요" id="inputTitle">
 			</div>
@@ -51,7 +52,7 @@
 				<textarea name="txt" id="textarea_contents" cols="30" rows="10"></textarea>
 			</div>
 			<div>
-				<input type="submit" value="등록하기">
+				<input type="button" id="formSubmit" value="등록하기">
 				<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${boardCode}&currentPage=1'">
 			</div>
 		</form>
@@ -60,8 +61,80 @@
 
 	<script>
 	$("#textarea_contents").summernote({
-	    height : 500
+	    height : 500, // 에디터 높이
+		minHeight : null, // 최소 높이
+		maxHeight : null, // 최대 높이
+		focus : true, // 에디터 로딩후 포커스를 맞출지 여부
+		lang : "ko-KR", // 한글 설정
+		codeviewIframeFilter: true,
+		placeholder : '내용을 입력해주세요', //placeholder 설정
+		disableDragAndDrop : true,
+		toolbar : [ [ 'style', [ 'style' ] ],
+				[ 'font', [ 'bold', 'underline', 'clear' ] ],
+				[ 'fontname', [ 'fontname' ] ],
+				[ 'color', [ 'color' ] ],
+				[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
+				[ 'table', [ 'table' ] ],
+				[ 'insert', [ 'picture' ] ],
+				[ 'view', [ 'fullscreen', 'codeview', 'help' ] ] ],
+		callbacks : { //여기 부분이 이미지를 첨부하는 부분
+			onImageUpload : function(files) {
+				for (let i = 0; i < files.length; i++) {
+					let blobUrl = URL.createObjectURL(files[i]);
+					$(this).summernote("insertImage", blobUrl, files[i].name);
+				}
+			}
+		}
 	});
+	$("#formSubmit").on("click", async function(e) {
+	    e.preventDefault();
+		let imgList = $(".note-editable img");
+		let fileArr = [];
+		for(let i = 0; i < imgList.length; i++) {
+			let imgSrc = imgList[i].src;
+			let imgName = imgList.eq(i).attr("data-filename");
+			if(imgSrc.startsWith("blob:")) {
+				let blob = await fetch(imgSrc).then(r => r.blob());
+				let file = new File([blob], imgName);
+				fileArr.push(file);
+			}
+		}
+		if(fileArr.length == 0){
+			$("#boardForm").submit();   
+		}
+		console.log(fileArr);
+		uploadImg(fileArr);
+		let contents = $("#textarea_contents").val();
+		$("#boardForm").submit();
+	});
+	
+	function uploadImg(fileArr) {
+	    console.log("uploadImg");
+	    console.log(fileArr);
+		let formData = new FormData();
+		fileArr.map(function(e, i){
+		    console.log(e);
+			formData.append("files", e);
+		});
+		console.log(formData);
+		$.ajax({
+			data : formData,
+			type : "POST",
+			url : "/community/uploadFile",
+			async : false,
+			contentType : false,
+			processData : false,
+			encType : "multipart/form-data"
+		}).done(function(response) {
+		    response = JSON.parse(response);
+		    response.map(function(e){
+				let targetImg = $(".note-editable img[data-filename ='"+e.oriName+"']");
+				targetImg.attr("src", e.imgSrc);
+			});
+			let div = $(".note-editable").html();
+			$("#textarea_contents").val(div);
+		});
+	}
     </script>
 </body>
 
