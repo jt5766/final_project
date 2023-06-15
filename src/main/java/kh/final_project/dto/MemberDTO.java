@@ -9,6 +9,7 @@ public class MemberDTO {
 	private String email;
 	private Integer email_type;
 	private String set_email_type;
+	private String random_key;
 	private String password;
 	private String nickname;
 	private String file_url;
@@ -31,6 +32,7 @@ public class MemberDTO {
 		this.email = email;
 		this.email_type = email_type;
 		this.set_email_type = set_email_type;
+
 		this.password = password;
 		this.nickname = nickname;
 		this.file_url = file_url;
@@ -39,6 +41,14 @@ public class MemberDTO {
 		this.join_date = join_date;
 		this.stop_date = stop_date;
 		this.yn = yn;
+	}
+
+	public String getRandom_key() {
+		return random_key;
+	}
+
+	public void setRandom_key(String random_key) {
+		this.random_key = random_key;
 	}
 
 	public Integer getCode() {
@@ -80,6 +90,8 @@ public class MemberDTO {
 	public void setSet_email_type(String set_email_type) {
 		this.set_email_type = set_email_type;
 	}
+
+
 
 	public String getPassword() {
 		return password;
@@ -150,7 +162,7 @@ public class MemberDTO {
 		return "MemberDTO [code=" + code + ", member_type=" + member_type + ", email=" + email + ", email_type="
 				+ email_type + ", set_email_type=" + set_email_type + ", password=" + password + ", nickname="
 				+ nickname + ", file_url=" + file_url + ", name=" + name + ", tel=" + tel + ", join_date=" + join_date
-				+ ", stop_date=" + stop_date + ", yn=" + yn + "]";
+				+ ", stop_date=" + stop_date + ", yn=" + yn + ", random_key ="+random_key+"]";
 	}
 
 }

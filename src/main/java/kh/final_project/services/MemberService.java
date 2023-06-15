@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class MemberService {
@@ -36,8 +37,12 @@ public class MemberService {
     }
 
     public void sendJoinCertificationMail(MemberDTO dto) throws MessagingException, UnsupportedEncodingException {
+
         //이메일 인증하는 순간 멤버타입 , 이메일 타입, 이메일 따로 저장
+        UUID uuid = UUID.randomUUID();
+        dto.setRandom_key(String.valueOf(uuid));
         edao.addemail(dto);
+
         MailHandler sendMail = new MailHandler(javaMailSender);
         sendMail.setSubject("[Kreate-Hub 이메일 인증메일 입니다.]"); //메일제목
         sendMail.setText(
@@ -47,6 +52,7 @@ public class MemberService {
                         "<br><a href='http://localhost:8080/member/register?member_type="+dto.getMember_type()+
                         "&email=" +dto.getEmail()+
                         "&email_type="+dto.getEmail_type()+
+                        "&random_key="+dto.getRandom_key()+
                         "'>이메일 인증 확인</a>");
         sendMail.setFrom("rkqudwns@gmail.com", "강병준");
         System.out.println(dto.getEmail()+"@"+dto.getSet_email_type()+" / "+dto.getMember_type());
