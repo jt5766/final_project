@@ -25,7 +25,7 @@
     <div class="row card-info">
         <div class="col-md-12">
             <div class="thumbnail_url">
-                <img class="thumbnail" src="${card.thumbnail_url}" alt="${card.thumbnail_url}">
+                <img class="thumbnail" src="/upload${card.thumbnail_url}" alt="${card.thumbnail_url}">
             </div>
             <div class="card-body">
                 <div class="info">
@@ -48,7 +48,7 @@
                     ${card.title}
                 </div>
                 <div class="writer">
-                    ${card.member_name}
+                    ${card.writer}
                 </div>
                 <div class="catchphrase">
                     ${card.catchphrase}
