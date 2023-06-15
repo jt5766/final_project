@@ -69,4 +69,8 @@
 	<select id="getMax" resultType="int">
 		select count(*) from ${value}_BOARDS
 	</select>
+	
+	<select id="selectBoardType" resultType="kh.final_project.dto.CategoryType">
+		select code, name from board_type
+	</select>
 </mapper>

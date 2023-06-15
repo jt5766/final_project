@@ -128,6 +128,10 @@ public class CommunityService {
 		return communityDAO.selectBoard(categoryType);
 	}
 
+	public List<CategoryType> selectBoardType() {
+		return communityDAO.selectBoardType();
+	}
+
 	public List<BoardsDTO> selectBoardByPage(CategoryType categoryType, int currentPage) {
 		this.setNameByCode(categoryType);
 		int startPost = (currentPage * this.postPerPage) - (this.postPerPage - 1);

@@ -60,7 +60,31 @@
 
 	<script>
 	$("#textarea_contents").summernote({
-	    height : 500
+	    height : 500, // 에디터 높이
+		minHeight : null, // 최소 높이
+		maxHeight : null, // 최대 높이
+		focus : true, // 에디터 로딩후 포커스를 맞출지 여부
+		lang : "ko-KR", // 한글 설정
+		codeviewIframeFilter: true,
+		placeholder : '내용을 입력해주세요', //placeholder 설정
+		disableDragAndDrop : true,
+		toolbar : [ [ 'style', [ 'style' ] ],
+				[ 'font', [ 'bold', 'underline', 'clear' ] ],
+				[ 'fontname', [ 'fontname' ] ],
+				[ 'color', [ 'color' ] ],
+				[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
+				[ 'table', [ 'table' ] ],
+				[ 'insert', [ 'picture' ] ],
+				[ 'view', [ 'fullscreen', 'codeview', 'help' ] ] ],
+		callbacks : { //여기 부분이 이미지를 첨부하는 부분
+			onImageUpload : function(files) {
+				console.log("files.length : "+files.length);
+				for (let i = 0; i < files.length; i++) {
+					let blobUrl = URL.createObjectURL(files[i]);
+					$(this).summernote("insertImage", blobUrl, files[i].name);
+				}
+			}
+		}
 	});
     </script>
 </body>

@@ -39,8 +39,9 @@ public class CommunityController {
 	public String toBoard(CategoryType categoryType, Model model, int currentPage) {
 		List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
 		List<BoardsDTO> boardList = communityService.selectBoardByPage(categoryType, currentPage);
-		System.out.println("name : " + categoryType.getName());
+		List<CategoryType> boardType = communityService.selectBoardType();
 		model.addAttribute("categoryType", categoryType);
+		model.addAttribute("boardType", boardType);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("pageNavi", pageNavi);
 		return "community/board";
