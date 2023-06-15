@@ -10,9 +10,11 @@
 <c:import url="${path}/resources/js/scripts.jsp" />
 </head>
 <body>
-	<div class="container-xl">
-		<div class="row chart-box">
-			<div class="col-12 w-100" id="member_type_chart" style="height: 500px"></div>
+	<div class="container-xl chart-box">
+		<div class="row">
+			<div class="col-9 w-100" id="member_type_chart" style="height: 500px"></div>
+		</div>
+		<div class="row">
 			<div class="col-12 w-100" id="gallery_type_chart" style="height: 500px"></div>
 		</div>
 	</div>
@@ -42,8 +44,6 @@
 			chart.setContainerId(target);
 			
 			chart.draw();
-// 			var chart = new google.visualization.PieChart(document.getElementById(target));
-// 			chart.draw(data, options);
 		}
 		
 		// 데이터 변환 함수
