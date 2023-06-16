@@ -28,6 +28,7 @@
             background-color: #19197050;
             cursor: pointer;
         }
+
         #modal_link:hover {
             background-color: #19197080;
         }
@@ -211,6 +212,10 @@
 <script>
     const youtube_regex = /https:\/\/youtu\.be\/.*/;
     const cut_youtubeURL = "https://youtu.be/";
+    const replace_youtubeURL = "https://youtube.com/embed/";
+    const naver_regex = /https:\/\/tv\.naver\.com\/v\/.*/;
+    const cut_naverURL = "https://tv.naver.com/v/";
+    const replace_naverURL = "https://tv.naver.com/embed/";
     const allowVal = $('#input_allow_show');
     const btn = document.querySelector('#modal_link');
     const modal = $('#modalWrap');
@@ -249,8 +254,13 @@
     $('#modal_confirm_link').on('click', function () {
         const urlVal = $('#modal_video_link').val().trim();
         if (youtube_regex.test(urlVal)) {
-            $('#input_video_url').val(urlVal.replace(cut_youtubeURL, ''));
-            $('#preview_video').attr('src', "https://youtube.com/embed/"+urlVal.replace(cut_youtubeURL, ''));
+            $('#input_video_url').val(urlVal.replace(cut_youtubeURL, replace_youtubeURL));
+            $('#preview_video').attr('src', urlVal.replace(cut_youtubeURL, replace_youtubeURL));
+            $('.preview').removeClass('hidden');
+            pop_modal();
+        } else if (naver_regex.test(urlVal)) {
+            $('#input_video_url').val(urlVal.replace(cut_naverURL, replace_naverURL));
+            $('#preview_video').attr('src', urlVal.replace(cut_naverURL, replace_naverURL));
             $('.preview').removeClass('hidden');
             pop_modal();
         } else {

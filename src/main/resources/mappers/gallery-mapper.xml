@@ -22,14 +22,23 @@
         #{txt}, #{yn}, default, default, default)
     </insert>
 
-    <select id="selectAllCardsPage" resultType="kh.final_project.dto.GalleryCardView">
-        select * from(select view_gallery_cards.*, row_number() over(order by seq desc) rn from view_gallery_cards)
-        where rn between #{startPost} and #{endPost}
-    </select>
+<!--    <select id="selectAllCardsPage" resultType="kh.final_project.dto.GalleryCardView">-->
+<!--        select * from(select view_gallery_cards.*, row_number() over(order by seq desc) rn from view_gallery_cards)-->
+<!--        where rn between #{startPost} and #{endPost}-->
+<!--    </select>-->
 
     <select id="selectAllCards" resultType="kh.final_project.dto.GalleryCardView">
         select * from (
-        select view_gallery_cards.*, row_number() over(order by seq desc) rn from view_gallery_cards
+        select view_gallery_cards.*, row_number() over(order by
+        <choose>
+            <when test="sortCode != null">
+                ${sortKeyword} ${sortVal} nulls last
+            </when>
+            <otherwise>
+                write_date desc nulls last
+            </otherwise>
+        </choose>
+        ) rn from view_gallery_cards
         <trim prefix="where" prefixOverrides="and |or ">
             <if test="typeCode != null">
                 category_type = #{typeCode}
@@ -42,9 +51,6 @@
             </if>
         </trim>
         ) where rn between #{start} and #{end}
-        <if test="sortCode != null">
-            order by ${sortKeyword} ${sortVal} nulls last
-        </if>
     </select>
     <select id="selectOneCard" resultType="kh.final_project.dto.GalleryCardView">
         select * from view_gallery_cards where seq = ${cardSeq}

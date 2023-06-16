@@ -11,7 +11,7 @@
 		SELECT * FROM VIEW_MEMBER_TYPE2000
 	</select>
 	<update id="approveMember">
-		UPDATE MEMBERS SET NAME = #{name}, TEL = #{tel} WHERE CODE = #{code}
+		UPDATE MEMBERS SET NAME = #{name, jdbcType=VARCHAR}, TEL = #{tel, jdbcType=VARCHAR} WHERE CODE = #{code}
 	</update>
 	<delete id="rejectMember">
 		DELETE FROM MEMBERS WHERE CODE = #{code}
@@ -20,6 +20,6 @@
 		SELECT * FROM VIEW_MEMBER
 	</select>
 	<update id="banMember">
-		UPDATE MEMBERS SET STOP_DATE = #{stop_date} WHERE CODE = #{code}
+		UPDATE MEMBERS SET STOP_DATE = #{stop_date, jdbcType=BINARY} WHERE CODE = #{code}
 	</update>
 </mapper>

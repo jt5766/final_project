@@ -77,6 +77,7 @@ public class AdminController {
 	 */
 	@RequestMapping("join/approve")
 	public String joinApprove(MemberDTO dto) {
+		System.out.println(dto);
 		boolean result = adminService.approveMember(dto);
 		return "redirect: /admin/join";
 	}
