@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import kh.final_project.dto.BoardsDTO;
 import kh.final_project.dto.BoardsReplyDTO;
 import kh.final_project.dto.CategoryType;
+import kh.final_project.dto.ComplaintBoardsDTO;
 
 @Repository
 public class CommunityDAO {
@@ -24,6 +25,10 @@ public class CommunityDAO {
 		return sst.insert("Community.insertBoard", boardsDTO);
 	}
 
+	public int insertComplaint(ComplaintBoardsDTO complaintBoardsDTO) {
+		return sst.insert("Community.insertComplaint", complaintBoardsDTO);
+	}
+
 	public List<BoardsDTO> selectBoard(CategoryType categoryType) {
 		return sst.selectList("Community.selectBoard", categoryType);
 	}
@@ -31,6 +36,11 @@ public class CommunityDAO {
 	public BoardsDTO selectBoardView(BoardsDTO boardsDTO) {
 		sst.update("Community.viewUp", boardsDTO);
 		return sst.selectOne("Community.selectBoardView", boardsDTO);
+	}
+
+	public ComplaintBoardsDTO selectComplaintView(ComplaintBoardsDTO complaintBoardsDTO) {
+		sst.update("Community.viewUp", complaintBoardsDTO);
+		return sst.selectOne("Community.selectComplaintView", complaintBoardsDTO);
 	}
 
 	public int updateBoard(BoardsDTO boardsDTO) {
@@ -69,7 +79,19 @@ public class CommunityDAO {
 		return sst.selectList("Community.selectBoardByPage", pageInfo);
 	}
 
+	public List<ComplaintBoardsDTO> selectComplaintByPage(Map<String, Object> pageInfo) {
+		return sst.selectList("Community.selectComplaintByPage", pageInfo);
+	}
+
 	public List<CategoryType> selectBoardType() {
 		return sst.selectList("Community.selectBoardType");
+	}
+
+	public List<BoardsDTO> selectAllComplaints() {
+		return sst.selectList("Community.selectAllComplaints");
+	}
+
+	public int insertProcess(ComplaintBoardsDTO complaintBoardsDTO) {
+		return sst.update("Community.insertProcess", complaintBoardsDTO);
 	}
 }

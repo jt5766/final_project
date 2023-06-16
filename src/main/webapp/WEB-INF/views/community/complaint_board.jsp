@@ -19,19 +19,23 @@
 	margin: auto;
 	width: 80%;
 }
+
+#p_boardName {
+	margin: 0px;
+}
 </style>
 </head>
 <body>
 	<div>
 		<div>GNB</div>
 		<div>
-			커뮤니티 ${categoryType.name}
 			<div>
-				<input type="button" value="공지 사항" onclick="location.href = '/community/toBoard?code=1001'">
-				<input type="button" value="자유" onclick="location.href = '/community/toBoard?code=1002'">
-				<input type="button" value="팁" onclick="location.href = '/community/toBoard?code=1003'">
-				<input type="button" value="질문" onclick="location.href = '/community/toBoard?code=1004'">
-				<input type="button" value="민원" onclick="location.href = '/community/toBoard?code=1005'">
+				<p id="p_boardName"></p>
+			</div>
+			<div>
+				<c:forEach var="i" items="${boardType}">				
+					<input type="button" id="${i.code}" value="${i.name}" onclick="location.href = '/community/toBoard?code=${i.code}&currentPage=1'">
+				</c:forEach>
 			</div>
 		</div>
 		<div>
@@ -48,24 +52,45 @@
 					<th>글 번호</th>
 					<th>제목</th>
 					<th>작성자</th>
-					<th>조회수</th>
+					<th>작성일</th>
+					<th>구분</th>
 				</tr>
 				<c:forEach var="i" items="${boardList}">
-					<tr>
+					<tr onclick="location.href = '/community/toComplaintView?seq=${i.seq}&board_type=${categoryType.code}'">
 						<td>${i.seq}</td>
 						<td>${i.title}</td>
 						<td>${i.writer}</td>
-						<td>${i.total_count}</td>
+						<td>${i.write_date}</td>
+						<td>${i.complaint_type}</td>
 					</tr>
 				</c:forEach>
 				<tr>
-					<td colspan="4">
-						<a href="#">1 2 3 4 5</a>
+					<td></td>
+					<td colspan="3">
+						<c:forEach var="i" items="${pageNavi}" varStatus="status">
+							<c:choose>
+								<c:when test="${i == '<'}">
+									<a href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index+1]-1}">${i}</a>	
+								</c:when>
+								<c:when test="${i == '>'}">
+									<a href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index-1]+1}">${i}</a>						
+								</c:when>
+								<c:otherwise>
+									<a href="/community/toBoard?code=${categoryType.code}&currentPage=${i}">${i}</a>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</td>
+					<td>
 						<input type="button" value="등록" onclick="location.href = '/community/toWriteForm?code=${categoryType.code}'">
 					</td>
 				</tr>
 			</table>
 		</div>
 	</div>
+	
+	<script>
+		$("#p_boardName").text($("#${categoryType.code}").val() + " 게시판");
+	</script>
 </body>
 </html>

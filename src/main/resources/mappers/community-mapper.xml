@@ -12,15 +12,20 @@
 		insert into ${board_name}_BOARDS values
 		(${board_name}_BOARDS_SEQ.NEXTVAL, #{board_type}, #{title}, #{writer}, #{txt}, default, default)
 	</insert>
+	
+	<insert id="insertComplaint">
+		<selectKey keyProperty="board_name" resultType="String" order="BEFORE">
+			select board_name from board_type where code = #{board_type}
+		</selectKey>
+		insert into ${board_name}_BOARDS values
+		(${board_name}_BOARDS_SEQ.NEXTVAL, #{board_type}, 
+		#{complaint_type}, #{title}, #{writer}, #{txt}, default, null, null, default)
+	</insert>
 
 	<select id="selectBoard" resultType="kh.final_project.dto.BoardsDTO">
 		SELECT b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count
 		FROM ${name}_BOARDS b
 		JOIN members m ON b.writer = m.code;
-	</select>
-	
-	<select id="getNicknameByCode" resultType="String">
-		select nickname from members where code = #{code}
 	</select>
 	
 	<select id="selectBoardByPage" resultType="kh.final_project.dto.BoardsDTO">
@@ -33,16 +38,40 @@
 		)
 		WHERE rn BETWEEN #{startPost} AND #{endPost}
 	</select>
-
+	
+	<select id="selectComplaintByPage" resultType="kh.final_project.dto.ComplaintBoardsDTO">
+		SELECT *
+		FROM (
+		  SELECT b.seq, b.board_type, b.complaint_type, b.title, m.nickname as writer, b.txt, b.write_date, 
+		  b.process, b.process_date, b.total_count, row_number() over (order by b.seq desc) as rn
+		  FROM ${board_name}_BOARDS b
+		  JOIN members m ON b.writer = m.code
+		)
+		WHERE rn BETWEEN #{startPost} AND #{endPost}
+	</select>
+	
 	<update id="viewUp">
 		update ${board_name}_BOARDS set total_count = total_count + 1 where seq = #{seq}
 	</update>
+	
 	<select id="selectBoardView" resultType="kh.final_project.dto.BoardsDTO">
 		SELECT b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count
 		FROM ${board_name}_BOARDS b
 		JOIN members m ON b.writer = m.code
 		WHERE b.seq = #{seq}
 	</select>
+	
+	<select id="selectComplaintView" resultType="kh.final_project.dto.ComplaintBoardsDTO">
+		SELECT b.seq, b.board_type, b.complaint_type, b.title, m.nickname as writer, 
+		b.txt, b.write_date, b.process, b.process_date, b.total_count
+		FROM ${board_name}_BOARDS b
+		JOIN members m ON b.writer = m.code
+		WHERE b.seq = #{seq}		
+	</select>
+
+	<update id="insertProcess">
+		UPDATE complaint_boards set process = #{process} process_date = default where seq = #{seq}
+	</update>
 
 	<update id="updateBoard">
 		update ${board_name}_BOARDS set title = #{title}, txt = #{txt}, write_date = default where seq = #{seq}
@@ -95,5 +124,9 @@
 	
 	<select id="selectBoardType" resultType="kh.final_project.dto.CategoryType">
 		select code, name from board_type
+	</select>
+	
+	<select id="selectAllComplaints" resultType="kh.final_project.dto.BoardsDTO">
+		select * from complaint_boards
 	</select>
 </mapper>
