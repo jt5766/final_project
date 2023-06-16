@@ -10,9 +10,10 @@
 <c:import url="${path}/resources/js/scripts.jsp" />
 </head>
 <body>
-	<div class="container-xl mt-4">
+	<div class="container-xl">
 		<div class="row justify-content-md-center">
 			<div class="col-md-12">
+				<form class="hidden_form"></form>
 				<table class="table table-light table-bordered border-secondary table-striped">
 					<thead>
 						<tr>
@@ -78,7 +79,6 @@
 						</tr>
 					</tbody>
 				</table>
-				<form></form>
 			</div>
 		</div>
 	</div>
@@ -115,7 +115,7 @@
 		function approve_member(index) {
 			let row = $("#tbody_data>tr:nth-child(" + (index + 1) + ")");
 			
-			let form = $("form").attr("action","/admin/join/approve");
+			let form = $(".hidden_form").attr("action","/admin/join/approve");
 			let seq = $("<input>", {"type":"hidden", "name":"code"}).val(row.find(".col_code").text());
 			let name = $("<input>", {"type":"hidden", "name":"name"}).val(row.find(".col_name").val());
 			let tel = $("<input>", {"type":"hidden", "name":"tel"}).val(row.find(".col_tel").val());
@@ -129,7 +129,7 @@
 		function reject_member(index) {
 			let row = $("#tbody_data>tr:nth-child(" + (index + 1) + ")");
 			
-			let form = $("form").attr("action","/admin/join/reject");
+			let form = $(".hidden_form").attr("action","/admin/join/reject");
 			let seq = $("<input>", {"type":"hidden", "name":"code"}).val(row.find(".col_code").text());
 			
 			form.append(seq);

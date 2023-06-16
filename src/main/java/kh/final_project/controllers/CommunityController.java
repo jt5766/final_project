@@ -2,6 +2,7 @@ package kh.final_project.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import kh.final_project.dto.BoardsDTO;
 import kh.final_project.dto.BoardsReplyDTO;
@@ -18,6 +20,7 @@ import kh.final_project.services.CommunityService;
 @Controller
 @RequestMapping("/community/")
 public class CommunityController {
+
 	@Autowired
 	private HttpSession session;
 
@@ -39,8 +42,9 @@ public class CommunityController {
 	public String toBoard(CategoryType categoryType, Model model, int currentPage) {
 		List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
 		List<BoardsDTO> boardList = communityService.selectBoardByPage(categoryType, currentPage);
-		System.out.println("name : " + categoryType.getName());
+		List<CategoryType> boardType = communityService.selectBoardType();
 		model.addAttribute("categoryType", categoryType);
+		model.addAttribute("boardType", boardType);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("pageNavi", pageNavi);
 		return "community/board";
@@ -57,10 +61,15 @@ public class CommunityController {
 	@RequestMapping("insertBoard")
 	public String insertBoard(BoardsDTO boardsDTO) {
 		System.out.println(boardsDTO);
-		session.setAttribute("loginID", 10000001);
-		boardsDTO.setWriter((Integer) session.getAttribute("loginID"));
 		int result = communityService.insertBoard(boardsDTO);
 		return "redirect:/community/toBoard?code=" + boardsDTO.getBoard_type() + "&currentPage=1";
+	}
+
+	@RequestMapping("uploadFile")
+	public void uploadFile(MultipartFile[] files, HttpServletResponse response) throws Exception {
+		System.out.println("uploadFile");
+		System.out.println(files);
+		communityService.uploadFile(files, session, response);
 	}
 
 	@RequestMapping("toBoardView")

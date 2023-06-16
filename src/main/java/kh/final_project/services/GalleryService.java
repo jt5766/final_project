@@ -18,7 +18,7 @@ public class GalleryService {
 
     private final GalleryDAO galleryDAO;
     private final TypeDAO typeDAO;
-    private final Integer postPerPage = 1;
+    private final Integer postPerPage = 4;
     private final Integer naviPerPage = 10;
 
     @Autowired

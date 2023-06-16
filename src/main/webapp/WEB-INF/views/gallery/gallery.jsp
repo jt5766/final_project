@@ -132,7 +132,7 @@
                                 ${card.title}
                         </div>
                         <div class="writer">
-                                ${card.member_name}
+                                ${card.writer}
                         </div>
                         <div class="catchphrase">
                                 ${card.catchphrase}
@@ -170,17 +170,18 @@
                         <c:choose>
                             <c:when test="${n == 'Prev'}">
                                 <li class="page-items">
-                                    <a class="page-link" href="${requestURI}/?page=${navi[1] - 1}">${n}</a>
+                                    <a class="page-link" href="${requestURI}?${queryString}&page=${navi[1] - 1}">${n}</a>
                                 </li>
                             </c:when>
                             <c:when test="${n == 'Next'}">
                                 <li class="page-items">
-                                    <a class="page-link" href="${requestURI}/?page=${navi[status.index - 1] + 1}">${n}</a>
+                                    <a class="page-link" href="${requestURI}?${queryString}&page=${navi[status.index - 1] + 1}">${n}</a>
                                 </li>
                             </c:when>
                             <c:otherwise>
+
                                 <li class="page-items">
-                                    <a class="page-link" href="${requestURI}/?page=${n}">${n}</a>
+                                    <a class="page-link" href="${requestURI}?${queryString}&page=${n}">${n}</a>
                                 </li>
                             </c:otherwise>
                         </c:choose>

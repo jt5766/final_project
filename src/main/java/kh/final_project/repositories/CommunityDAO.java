@@ -68,4 +68,8 @@ public class CommunityDAO {
 	public List<BoardsDTO> selectBoardByPage(Map<String, Object> pageInfo) {
 		return sst.selectList("Community.selectBoardByPage", pageInfo);
 	}
+
+	public List<CategoryType> selectBoardType() {
+		return sst.selectList("Community.selectBoardType");
+	}
 }

@@ -15,6 +15,11 @@ import kh.final_project.dto.CountDTO;
 import kh.final_project.dto.MemberDTO;
 import kh.final_project.services.AdminService;
 
+/**
+ * <b>[ Admin ]</b> 관련 Web Layer 중 Conteoller
+ * 
+ * @author LSJ
+ */
 @Controller
 @RequestMapping("/admin/")
 public class AdminController {
@@ -28,9 +33,13 @@ public class AdminController {
 	}
 
 	/**
+	 * <b>[ 그래프 ]</b>
+	 * <p>
+	 * 멤버 유형별 멤버 수 : SELECT <br>
+	 * 갤러리 유형별 조회 수 : SELECT
+	 * </p>
 	 * 
-	 * @param model
-	 * @return
+	 * @return /admin/chart
 	 */
 	@RequestMapping("chart")
 	public String chart(Model model) {
@@ -44,8 +53,12 @@ public class AdminController {
 	}
 
 	/**
+	 * <b>[ 가입 승인 ]</b>
+	 * <p>
+	 * 가입 승인 대기 중인 전문가 : SELECT
+	 * </p>
 	 * 
-	 * @return
+	 * @return /admin/join
 	 */
 	@RequestMapping("join")
 	public String join(Model model) {
@@ -54,22 +67,61 @@ public class AdminController {
 		return "/admin/join";
 	}
 
+	/**
+	 * <b>[ 가입 승인 ]</b>
+	 * <p>
+	 * 가입 승인 : UPDATE [ Name, Tel ]
+	 * </p>
+	 * 
+	 * @return redirect: /admin/join
+	 */
 	@RequestMapping("join/approve")
 	public String joinApprove(MemberDTO dto) {
 		boolean result = adminService.approveMember(dto);
 		return "redirect: /admin/join";
 	}
 
+	/**
+	 * <b>[ 가입 승인 ]</b>
+	 * <p>
+	 * 가입 거절 : DELETE
+	 * </p>
+	 * 
+	 * @return redirect: /admin/join
+	 */
 	@RequestMapping("join/reject")
 	public String joinReject(MemberDTO dto) {
-		System.out.println(dto.getCode());
 		boolean result = adminService.rejectMember(dto);
 		return "redirect: /admin/join";
 	}
 
+	/**
+	 * <b>[ 회원 ]</b>
+	 * <p>
+	 * 회원 정보 : SELECT
+	 * </p>
+	 * 
+	 * @return /admin/member
+	 */
 	@RequestMapping("member")
-	public String member() {
+	public String member(Model model) {
+		List<MemberDTO> result = adminService.selectMember();
+		model.addAttribute("list", result);
 		return "/admin/member";
+	}
+	
+	/**
+	 * <b>[ 회원 ]</b>
+	 * <p>
+	 * 밴 : UPDATE
+	 * </p>
+	 * 
+	 * @return /admin/member
+	 */
+	@RequestMapping("member/ban")
+	public String memberBan(MemberDTO dto, int ban_day) {
+		boolean result = adminService.banMember(dto, ban_day);
+		return "redirect: /admin/member";
 	}
 
 	@RequestMapping("gallery")
@@ -82,15 +134,21 @@ public class AdminController {
 		return "/admin/community";
 	}
 
+	/**
+	 * <b>[ 카테고리 ]</b>
+	 * 
+	 * @return /admin/category
+	 */
 	@RequestMapping("category")
 	public String main(Model model) {
 		return "/admin/category";
 	}
 
 	/**
-	 * 
-	 * @param tableName 테이블 이름
-	 * @return List<CategoryType>
+	 * <b>[ 카테고리 ]</b>
+	 * <p>
+	 * 카테고리 정보 - 비동기 : SELECT
+	 * </p>
 	 */
 	@ResponseBody
 	@RequestMapping(value = "category/type", produces = "application/json;charset=utf8")
@@ -100,13 +158,12 @@ public class AdminController {
 	}
 
 	/**
+	 * <b>[ 카테고리 ]</b>
+	 * <p>
+	 * 카테고리 입력 및 수정 : INSERT & UPDATE
+	 * </p>
 	 * 
-	 * @param tableName 테이블 이름
-	 * @param code      코드
-	 * @param sort      순서
-	 * @param name      이름
-	 * @param yn        사용여부
-	 * @return
+	 * @return redirect: /admin/category
 	 */
 	@RequestMapping("update_category")
 	public String updateCategory(String tableName, String code, String sort, String name, String yn) {

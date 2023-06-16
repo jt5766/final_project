@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/gallery")
@@ -104,7 +105,6 @@ public class GalleryController {
         }
         String realPath = session.getServletContext().getRealPath("upload");
         galleryService.insertCard(card, multipartFile, realPath);
-        // TODO: 파일 업로드 및 출력 성공, 서버 종료 시 파일 사라지는 문제 해결해야함
         return "redirect:/gallery";
     }
 
@@ -144,6 +144,11 @@ public class GalleryController {
         model.addAttribute("searchConditions", result.get(1));
         model.addAttribute("sortConditions", result.get(2));
         model.addAttribute("requestURI", request.getRequestURI());
+        String queryString = Optional.ofNullable(request.getQueryString())
+                .map(e -> e.replaceAll("&?page=?[0-9]*", ""))
+                .orElse("");
+        System.out.println("queryString = " + queryString);
+        model.addAttribute("queryString", queryString);
     }
 
     private void setNavi(Model model, SearchCriteria searchCriteria) {

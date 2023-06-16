@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-md-12">
                 <input type="hidden" name="category_type" value="${categoryType}">
-                <input type="hidden" name="writer" value="${loginID}">
+                <input type="hidden" name="writer" value="${sessionScope.code}">
                 <label for="input_title">제목</label>
                 <input type="text" name="title" id="input_title" placeholder="대,소문자 / 숫자 / 한글 : 최대 30자">
             </div>

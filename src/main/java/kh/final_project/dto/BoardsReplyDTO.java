@@ -7,7 +7,7 @@ public class BoardsReplyDTO {
 	private Integer reply_type;
 	private Integer parent_board;
 	private Integer parent_reply;
-	private Integer writer;
+	private String writer;
 	private String txt;
 	private Timestamp write_date;
 	private Integer board_type;
@@ -16,7 +16,7 @@ public class BoardsReplyDTO {
 	public BoardsReplyDTO() {
 	}
 
-	public BoardsReplyDTO(Integer seq, Integer reply_type, Integer parent_board, Integer parent_reply, Integer writer,
+	public BoardsReplyDTO(Integer seq, Integer reply_type, Integer parent_board, Integer parent_reply, String writer,
 			String txt, Timestamp write_date, Integer board_type, String board_name) {
 		super();
 		this.seq = seq;
@@ -62,11 +62,11 @@ public class BoardsReplyDTO {
 		this.parent_reply = parent_reply;
 	}
 
-	public Integer getWriter() {
+	public String getWriter() {
 		return writer;
 	}
 
-	public void setWriter(Integer writer) {
+	public void setWriter(String writer) {
 		this.writer = writer;
 	}
 

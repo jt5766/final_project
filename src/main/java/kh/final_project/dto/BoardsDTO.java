@@ -8,7 +8,7 @@ public class BoardsDTO {
 	private Integer seq;
 	private Integer board_type;
 	private String title;
-	private Integer writer;
+	private String writer;
 	private String txt;
 	private Timestamp write_date;
 	private Integer total_count;
@@ -17,7 +17,7 @@ public class BoardsDTO {
 	public BoardsDTO() {
 	}
 
-	public BoardsDTO(Integer seq, Integer board_type, String title, Integer writer, String txt, Timestamp write_date,
+	public BoardsDTO(Integer seq, Integer board_type, String title, String writer, String txt, Timestamp write_date,
 			Integer total_count, String board_name) {
 		super();
 		this.seq = seq;
@@ -54,11 +54,11 @@ public class BoardsDTO {
 		this.title = title;
 	}
 
-	public Integer getWriter() {
+	public String getWriter() {
 		return writer;
 	}
 
-	public void setWriter(Integer writer) {
+	public void setWriter(String writer) {
 		this.writer = writer;
 	}
 
@@ -100,12 +100,4 @@ public class BoardsDTO {
 		Date date = new Date(wd);
 		return sdf.format(date);
 	}
-
-	@Override
-	public String toString() {
-		return "BoardsDTO [seq=" + seq + ", board_type=" + board_type + ", title=" + title + ", writer=" + writer
-				+ ", txt=" + txt + ", write_date=" + write_date + ", total_count=" + total_count + ", board_name="
-				+ board_name + "]";
-	}
-
 }

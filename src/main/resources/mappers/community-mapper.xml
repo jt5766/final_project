@@ -14,19 +14,34 @@
 	</insert>
 
 	<select id="selectBoard" resultType="kh.final_project.dto.BoardsDTO">
-		select * from ${name}_BOARDS
+		SELECT b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count
+		FROM ${name}_BOARDS b
+		JOIN members m ON b.writer = m.code;
+	</select>
+	
+	<select id="getNicknameByCode" resultType="String">
+		select nickname from members where code = #{code}
 	</select>
 	
 	<select id="selectBoardByPage" resultType="kh.final_project.dto.BoardsDTO">
-		select * from(select ${board_name}_BOARDS.*, row_number() over(order by seq desc) rn from ${board_name}_BOARDS)
-		where rn between #{startPost} and #{endPost}
+		SELECT *
+		FROM (
+		  SELECT b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count,
+		         row_number() over (order by b.seq desc) as rn
+		  FROM ${board_name}_BOARDS b
+		  JOIN members m ON b.writer = m.code
+		)
+		WHERE rn BETWEEN #{startPost} AND #{endPost}
 	</select>
 
 	<update id="viewUp">
 		update ${board_name}_BOARDS set total_count = total_count + 1 where seq = #{seq}
 	</update>
 	<select id="selectBoardView" resultType="kh.final_project.dto.BoardsDTO">
-		select * from ${board_name}_BOARDS where seq = #{seq}
+		SELECT b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count
+		FROM ${board_name}_BOARDS b
+		JOIN members m ON b.writer = m.code
+		WHERE b.seq = #{seq}
 	</select>
 
 	<update id="updateBoard">
@@ -51,11 +66,19 @@
 	</insert>
 
 	<select id="selectReply" resultType="kh.final_project.dto.BoardsReplyDTO">
-		select * from ${board_name}_REPLYS where parent_board = #{parent_board} and reply_type = 1001 order by write_date asc
+		SELECT r.seq, r.reply_type, r.parent_board, r.parent_reply, m.nickname as writer, r.txt, r.write_date
+		FROM ${board_name}_REPLYS r
+		JOIN members m ON r.writer = m.code
+		WHERE r.reply_type = 1001
+		ORDER BY r.write_date ASC
 	</select>
 	
 	<select id="selectReReply" resultType="kh.final_project.dto.BoardsReplyDTO">
-		select * from ${board_name}_REPLYS where parent_board = #{parent_board} and reply_type = 1002 order by write_date desc
+		SELECT r.seq, r.reply_type, r.parent_board, r.parent_reply, m.nickname as writer, r.txt, r.write_date
+		FROM ${board_name}_REPLYS r
+		JOIN members m ON r.writer = m.code
+		WHERE r.reply_type = 1002
+		ORDER BY r.write_date ASC
 	</select>
 
 	<delete id="deleteReply">
@@ -68,5 +91,9 @@
 
 	<select id="getMax" resultType="int">
 		select count(*) from ${value}_BOARDS
+	</select>
+	
+	<select id="selectBoardType" resultType="kh.final_project.dto.CategoryType">
+		select code, name from board_type
 	</select>
 </mapper>

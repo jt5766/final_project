@@ -1,12 +1,21 @@
 package kh.final_project.services;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import kh.final_project.dto.BoardsDTO;
 import kh.final_project.dto.BoardsReplyDTO;
@@ -123,15 +132,57 @@ public class CommunityService {
 		return communityDAO.insertBoard(boardsDTO);
 	}
 
+	public void uploadFile(MultipartFile[] files, HttpSession session, HttpServletResponse response) throws Exception {
+		String targetPath = session.getServletContext().getRealPath("/resources/community");
+		System.out.println("137");
+		File targetDir = new File(targetPath);
+		if (!targetDir.exists()) {
+			targetDir.mkdir();
+		}
+		if (files != null) {
+			System.out.println("143");
+			for (MultipartFile file : files) {
+				if (file.isEmpty()) {
+					System.out.println("file is empty!");
+					continue;
+				}
+				String oriName = file.getOriginalFilename();
+				System.out.println(oriName);
+				String sysName = UUID.randomUUID() + "_" + oriName;
+				System.out.println(sysName);
+				String uploadPath = targetPath + "/" + sysName;
+				file.transferTo(new File(uploadPath));
+				System.out.println("complete");
+				String imgSrc = "/resources/community/" + sysName;
+				JsonArray jsonArray = new JsonArray();
+				JsonObject jsonObject = new JsonObject();
+				jsonObject.addProperty("imgSrc", imgSrc);
+				jsonObject.addProperty("oriName", oriName);
+				jsonArray.add(jsonObject);
+				System.out.println(jsonArray.toString());
+				response.getWriter().append(jsonArray.toString());
+			}
+		}
+	}
+
 	public List<BoardsDTO> selectBoard(CategoryType categoryType) {
 		this.setNameByCode(categoryType);
 		return communityDAO.selectBoard(categoryType);
 	}
 
+	public List<CategoryType> selectBoardType() {
+		return communityDAO.selectBoardType();
+	}
+
 	public List<BoardsDTO> selectBoardByPage(CategoryType categoryType, int currentPage) {
 		this.setNameByCode(categoryType);
+		System.out.println(categoryType.getName());
+		System.out.println(categoryType.getCode());
+		System.out.println(currentPage);
 		int startPost = (currentPage * this.postPerPage) - (this.postPerPage - 1);
 		int endPost = (currentPage * this.postPerPage);
+		System.out.println(startPost);
+		System.out.println(endPost);
 		Map<String, Object> pageInfo = new HashMap<>();
 		pageInfo.put("board_name", categoryType.getName());
 		pageInfo.put("startPost", startPost);
