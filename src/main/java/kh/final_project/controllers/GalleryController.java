@@ -44,6 +44,7 @@ public class GalleryController {
         setNavi(model, searchCriteria);
         setConditions(model);
         model.addAttribute("cards", cards);
+        model.addAttribute("categoryType", searchCriteria.getTypeCode());
         return "gallery/gallery";
     }
 
@@ -103,7 +104,7 @@ public class GalleryController {
             card.setWriter(10000001);
         // 접속중인 아이디가 없을 경우 기본 아이디 추가 (이후 삭제 예정)
         }
-        String realPath = session.getServletContext().getRealPath("upload");
+        String realPath = session.getServletContext().getRealPath("resources");
         galleryService.insertCard(card, multipartFile, realPath);
         return "redirect:/gallery";
     }
