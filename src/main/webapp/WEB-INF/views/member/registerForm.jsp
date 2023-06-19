@@ -24,7 +24,7 @@
 <input type="text" name="nickname" placeholder="내용을 입력해주세요"><br>
 
 <button>회원가입</button><br>
-<button>취소</button>
+<button onclick="location.href='/'">취소</button>
 </form>
 
 </body>

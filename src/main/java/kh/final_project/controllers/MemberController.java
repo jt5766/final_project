@@ -7,13 +7,18 @@ import kh.final_project.repositories.MemberDAO;
 import kh.final_project.services.EmailcheckService;
 import kh.final_project.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/member/")
@@ -72,10 +77,9 @@ public class MemberController {
     }
 
     @PostMapping("createMember")    /*회원가입할시 오는 곳 인서트 후 로그인폼으로*/
-    public String createMember(MemberDTO dto){
-        System.out.println("createMember로 넘어온 dto :"+dto);
-        System.out.println("========================");
-        mdao.insert(dto);
+    public String createMember(MemberDTO dto, MultipartFile file) throws Exception{
+        String realPath = session.getServletContext().getRealPath("/resources/member");
+        memberService.uploadFile(dto, file, realPath);
         return "/member/loginForm";
     }
 
@@ -85,33 +89,64 @@ public class MemberController {
         return "/member/loginForm";
     }
 
-    @PostMapping("login")
+    @ResponseBody
+    @RequestMapping("login")
     public String login(MemberDTO dto){
+        System.out.println("ajax로 넘어온 값"+dto);
         /*넘어온 문자열 이메일 형식 이메일 타입과 이메일 로 분리 작업*/
         memberService.emailTypeChange(dto);
+        memberService.login(dto);
+
+
+        System.out.println("넘어온 코드 : "+dto.getCode());
+
 
         System.out.println("로그인처리부분 넘겨온 값 :" +dto);
         System.out.println("----------------------------");
 
-        if(dto.getNickname() != null){
-            System.out.println("닉네임값 확인 세션 조건 충족:"+ dto.getNickname());
-            System.out.println("=============================");
+        if ( dto.getCode()> 10000000 && dto.getCode() < 100000000) {
+
             session.setAttribute("code",dto.getCode());
             session.setAttribute("nickName",dto.getNickname());
             session.setAttribute("memberType",dto.getMember_type());
+//        }
         }
-        return "home";
+//            . ri (CHK dto.getCode())
+        return  String.valueOf(dto.getCode());
     }
 
     @RequestMapping("logOut")
-    public String logOut(){
+
+    public String logOut(MemberDTO dto){
+        System.out.println("로그아웃 dto :"+dto);
+        dto.setCode((Integer) session.getAttribute("code"));
+        memberService.Nupdate(dto);
         session.removeAttribute("code");
-        session.removeAttribute("nickname");
+        session.removeAttribute("nickName");
         session.removeAttribute("memberType");
 
         return "redirect:/member/loginForm";
     }
+    @RequestMapping("findPassword")
+    public String findPassword(MemberDTO dto, Model model) {
+        model.addAttribute("email",dto.getEmail());
+        model.addAttribute("email_type",dto.getEmail_type());
+        return "member/findPassword";
+    }
 
+    @RequestMapping("passwordChange")
+    public String passwordChange(MemberDTO dto)throws Exception{
+        System.out.println("1" + dto);
+        memberService.findPassword(dto);
+        return "redirect:/member/loginForm";
+    }
+
+    @RequestMapping("updatePassword")
+    public String updatePassword(MemberDTO dto){
+        System.out.println("비밀번호 변경 :"+dto);
+        memberService.updatePassword(dto);
+        return "redirect:/member/loginForm";
+    }
     @RequestMapping("mypage")
     public String mypage(){
         return "/member/myPageForm";

@@ -96,7 +96,7 @@
 
 </style>
 <body>
-<form action="/member/login" method="post">
+
     <div id="container">
         <div id="header">GNB</div>
         <div id="body">
@@ -114,9 +114,9 @@
                 </div>
                 <div><input id="input_pw" name="password" type="password" placeholder="내용을 입력해주세요"></div>
                 <div></div>
-                <div><a href="#">비밀번호 찾기</a></div>
+                <div><a href="/member/findPassword">비밀번호 찾기</a></div>
                 <div>
-                    <button id="login_btn">로그인</button>
+                    <button type="button" id="login_btn">로그인</button>
                 </div>
                 <div>
                     <button type="button" id="signup_btn">회원가입</button>
@@ -129,7 +129,7 @@
         <div id="footer">FOOTER</div>
 
     </div>
-</form>
+
 </body>
 
 <script>
@@ -139,6 +139,39 @@
     $("#signup_btn").click(function(){
         location.href="/member/signup";
     })
+
+
+
+    $("#login_btn").click(function (){
+        const email = $("#input_id").val();
+        const password = $("#input_pw").val();
+        $.ajax({
+            url:"/member/login",
+            data:{
+                "email": email,
+                "password": password
+            },
+            method:"post"
+        }).done(function(resp){
+            if(resp == 11){
+                   alert("등록된 정보가 없습니다.")
+            }else if(resp == 22){
+                alert("가입대기중인 상태입니다")
+            }else  if(resp == 33){
+                alert("이용이 정지된 고객입니다.")
+            }else if(resp ==44){
+                alert("이미 접속중인 이용자입니다")
+            }else{
+                alert("로그인 성공");
+                location.href="/";
+            }
+
+        })
+
+
+
+    })
+
 
 </script>
 
