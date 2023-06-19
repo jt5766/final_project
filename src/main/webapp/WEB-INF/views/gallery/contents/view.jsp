@@ -27,7 +27,7 @@
         <c:when test="${content.category_type == 1005}">
             <div class="row">
                 <div class="col-md-12">
-                    <iframe width="560" height="315" src="https://youtube.com/embed/${content.video_url}"
+                    <iframe width="560" height="315" src="${content.video_url}"
                             title="YouTube video player" frameborder="0"
                             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowfullscreen>

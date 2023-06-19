@@ -99,7 +99,7 @@
 				fileArr.push(file);
 			}
 		}
-		if(fileArr.length == 0){
+		if(fileArr.length == 0) {
 			$("#boardForm").submit();   
 		}
 		console.log(fileArr);

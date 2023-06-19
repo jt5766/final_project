@@ -114,7 +114,7 @@
             <div class="col-md-6">
                 <div class="gallery-card">
                     <div class="thumbnail_url">
-                        <img class="thumbnail" src="/upload${card.thumbnail_url}" alt="${card.thumbnail_url}">
+                        <img class="thumbnail" src="/resources${card.thumbnail_url}" alt="${card.thumbnail_url}">
                     </div>
                     <div class="card-body">
                         <div class="info">

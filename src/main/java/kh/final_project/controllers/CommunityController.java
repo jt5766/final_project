@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kh.final_project.dto.BoardsDTO;
 import kh.final_project.dto.BoardsReplyDTO;
 import kh.final_project.dto.CategoryType;
+import kh.final_project.dto.ComplaintBoardsDTO;
 import kh.final_project.services.CommunityService;
 
 @Controller
@@ -40,14 +41,38 @@ public class CommunityController {
 
 	@RequestMapping("toBoard")
 	public String toBoard(CategoryType categoryType, Model model, int currentPage) {
-		List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
-		List<BoardsDTO> boardList = communityService.selectBoardByPage(categoryType, currentPage);
-		List<CategoryType> boardType = communityService.selectBoardType();
-		model.addAttribute("categoryType", categoryType);
-		model.addAttribute("boardType", boardType);
-		model.addAttribute("boardList", boardList);
-		model.addAttribute("pageNavi", pageNavi);
-		return "community/board";
+		if (categoryType.getCode() == 1005) {
+			System.out.println("COMPLAINT");
+			if ((int) session.getAttribute("code") == 9999) {
+				List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
+				List<CategoryType> boardType = communityService.selectBoardType();
+				List<ComplaintBoardsDTO> boardList = communityService.selectComplaintByPage(categoryType, currentPage);
+				model.addAttribute("categoryType", categoryType);
+				model.addAttribute("boardType", boardType);
+				model.addAttribute("boardList", boardList);
+				model.addAttribute("pageNavi", pageNavi);
+				return "community/complaint_board";
+			} else {
+				int writer = (int) session.getAttribute("code");
+				List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
+				List<CategoryType> boardType = communityService.selectBoardType();
+				List<ComplaintBoardsDTO> boardList = communityService.selectComplaintByPage(categoryType, currentPage);
+				model.addAttribute("categoryType", categoryType);
+				model.addAttribute("boardType", boardType);
+				model.addAttribute("boardList", boardList);
+				model.addAttribute("pageNavi", pageNavi);
+				return "community/complaint_board";
+			}
+		} else {
+			List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
+			List<BoardsDTO> boardList = communityService.selectBoardByPage(categoryType, currentPage);
+			List<CategoryType> boardType = communityService.selectBoardType();
+			model.addAttribute("categoryType", categoryType);
+			model.addAttribute("boardType", boardType);
+			model.addAttribute("boardList", boardList);
+			model.addAttribute("pageNavi", pageNavi);
+			return "community/board";
+		}
 	}
 
 	@RequestMapping("toWriteForm")
@@ -55,14 +80,24 @@ public class CommunityController {
 		List<CategoryType> selectTag = communityService.getSelectTag();
 		model.addAttribute("boardCode", categoryType.getCode());
 		model.addAttribute("selectTag", selectTag);
-		return "community/write_form";
+		if (categoryType.getCode() == 1005) {
+			return "community/complaint_writeForm";
+		} else {
+			return "community/write_form";
+		}
 	}
 
 	@RequestMapping("insertBoard")
 	public String insertBoard(BoardsDTO boardsDTO) {
-		System.out.println(boardsDTO);
-		int result = communityService.insertBoard(boardsDTO);
-		return "redirect:/community/toBoard?code=" + boardsDTO.getBoard_type() + "&currentPage=1";
+		communityService.insertBoard(boardsDTO);
+		return "redirect:/community/toBoardView?code=" + boardsDTO.getBoard_type() + "&currentPage=1";
+	}
+
+	@RequestMapping("insertComplaint")
+	public String insertComplaint(ComplaintBoardsDTO complaintBoardsDTO) {
+		System.out.println(complaintBoardsDTO);
+		communityService.insertComplaint(complaintBoardsDTO);
+		return "redirect:/community/toBoard?code=" + complaintBoardsDTO.getBoard_type() + "&currentPage=1";
 	}
 
 	@RequestMapping("uploadFile")
@@ -75,13 +110,19 @@ public class CommunityController {
 	@RequestMapping("toBoardView")
 	public String toBoardView(BoardsDTO boardsDTO, Model model) {
 		BoardsDTO info = communityService.selectBoardView(boardsDTO);
-		System.out.println("toBoardView info : " + info);
 		List<BoardsReplyDTO> reply = communityService.selectReply(boardsDTO);
 		List<BoardsReplyDTO> reReply = communityService.selectReReply(boardsDTO);
 		model.addAttribute("info", info);
 		model.addAttribute("reply", reply);
 		model.addAttribute("reReply", reReply);
 		return "community/board_view";
+	}
+
+	@RequestMapping("toComplaintView")
+	public String toComplaintView(ComplaintBoardsDTO complaintBoardsDTO, Model model) {
+		ComplaintBoardsDTO info = communityService.selectComplaintView(complaintBoardsDTO);
+		model.addAttribute("info", info);
+		return "community/complaint_board_view";
 	}
 
 	@RequestMapping("toUpdate")
@@ -127,5 +168,11 @@ public class CommunityController {
 		communityService.updateReply(boardsReplyDTO);
 		return "redirect:/community/toBoardView?seq=" + boardsReplyDTO.getParent_board() + "&board_type="
 				+ boardsReplyDTO.getBoard_type();
+	}
+
+	@RequestMapping("")
+	public String insertProcess(ComplaintBoardsDTO complaintBoardsDTO) {
+		communityService.insertProcess(complaintBoardsDTO);
+		return "redirect:/community/toBoardView?seq=" + complaintBoardsDTO.getSeq() + "&board_type=1005";
 	}
 }

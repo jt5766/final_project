@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 import kh.final_project.dto.BoardsDTO;
 import kh.final_project.dto.BoardsReplyDTO;
 import kh.final_project.dto.CategoryType;
+import kh.final_project.dto.ComplaintBoardsDTO;
 import kh.final_project.repositories.CommunityDAO;
 
 @Service
@@ -132,15 +133,17 @@ public class CommunityService {
 		return communityDAO.insertBoard(boardsDTO);
 	}
 
+	public int insertComplaint(ComplaintBoardsDTO complaintBoardsDTO) {
+		return communityDAO.insertComplaint(complaintBoardsDTO);
+	}
+
 	public void uploadFile(MultipartFile[] files, HttpSession session, HttpServletResponse response) throws Exception {
 		String targetPath = session.getServletContext().getRealPath("/resources/community");
-		System.out.println("137");
 		File targetDir = new File(targetPath);
 		if (!targetDir.exists()) {
 			targetDir.mkdir();
 		}
 		if (files != null) {
-			System.out.println("143");
 			for (MultipartFile file : files) {
 				if (file.isEmpty()) {
 					System.out.println("file is empty!");
@@ -176,9 +179,6 @@ public class CommunityService {
 
 	public List<BoardsDTO> selectBoardByPage(CategoryType categoryType, int currentPage) {
 		this.setNameByCode(categoryType);
-		System.out.println(categoryType.getName());
-		System.out.println(categoryType.getCode());
-		System.out.println(currentPage);
 		int startPost = (currentPage * this.postPerPage) - (this.postPerPage - 1);
 		int endPost = (currentPage * this.postPerPage);
 		System.out.println(startPost);
@@ -190,9 +190,27 @@ public class CommunityService {
 		return communityDAO.selectBoardByPage(pageInfo);
 	}
 
+	public List<ComplaintBoardsDTO> selectComplaintByPage(CategoryType categoryType, int currentPage) {
+		this.setNameByCode(categoryType);
+		int startPost = (currentPage * this.postPerPage) - (this.postPerPage - 1);
+		int endPost = (currentPage * this.postPerPage);
+		System.out.println(startPost);
+		System.out.println(endPost);
+		Map<String, Object> pageInfo = new HashMap<>();
+		pageInfo.put("board_name", categoryType.getName());
+		pageInfo.put("startPost", startPost);
+		pageInfo.put("endPost", endPost);
+		return communityDAO.selectComplaintByPage(pageInfo);
+	}
+
 	public BoardsDTO selectBoardView(BoardsDTO boardsDTO) {
 		this.setBoardNameByBoardType(boardsDTO);
 		return communityDAO.selectBoardView(boardsDTO);
+	}
+
+	public ComplaintBoardsDTO selectComplaintView(ComplaintBoardsDTO complaintBoardsDTO) {
+		complaintBoardsDTO.setBoard_name("COMPLAINT");
+		return communityDAO.selectComplaintView(complaintBoardsDTO);
 	}
 
 	public int updateBoard(BoardsDTO boardsDTO) {
@@ -234,5 +252,13 @@ public class CommunityService {
 	public int updateReply(BoardsReplyDTO boardsReplyDTO) {
 		this.setBoardNameByBoardType(boardsReplyDTO);
 		return communityDAO.updateReply(boardsReplyDTO);
+	}
+
+	public List<BoardsDTO> selectAllComplaints() {
+		return communityDAO.selectAllComplaints();
+	}
+
+	public int insertProcess(ComplaintBoardsDTO complaintBoardsDTO) {
+		return communityDAO.insertComplaint(complaintBoardsDTO);
 	}
 }

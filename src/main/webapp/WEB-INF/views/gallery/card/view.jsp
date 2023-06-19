@@ -25,7 +25,7 @@
     <div class="row card-info">
         <div class="col-md-12">
             <div class="thumbnail_url">
-                <img class="thumbnail" src="/upload${card.thumbnail_url}" alt="${card.thumbnail_url}">
+                <img class="thumbnail" src="/resources${card.thumbnail_url}" alt="${card.thumbnail_url}">
             </div>
             <div class="card-body">
                 <div class="info">
@@ -70,6 +70,7 @@
                             <button type="submit">삭제</button>
                         </form>
                         <button onclick="location.href='/gallery/${card.seq}/modify'">수정</button>
+                        <button type="button" onclick="location.href='/gallery/${card.seq}/contents/insert/${card.category_type}'">등록하기</button>
                     </c:if>
                 </div>
                 <div class="return-button">
@@ -79,9 +80,6 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
-            <button type="button" onclick="location.href='/gallery/${card.seq}/contents/insert/${card.category_type}'">등록하기</button>
-        </div>
         <div class="col-md-12">
             <a href="#">최신</a><div class="vr"></div><a href="#">1화</a>
         </div>
