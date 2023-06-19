@@ -39,12 +39,35 @@
 			</div>
 		</div>
 		<div>
-			<select name="" id="">
-				<option value="검색옵션">검색옵션</option>
-			</select>
-			<input type="button" value="검색">
-			<input type="text">
+<!-- 			<form action="/gallery/search"> -->
+<!--         <input type="hidden" name="tableName" value="VIEW_GALLEY_CARDS"> -->
+<%--         <input type="hidden" name="typeCode" value="${categoryType}"> --%>
+<!--         <div class="row search-box"> -->
+<!--             <div class="col-md-12"> -->
+<!--                 <select name="searchCode"> -->
+<%--                     <c:forEach items="${searchConditions}" var="searchCondition"> --%>
+<%--                         <option value="${searchCondition.code}">${searchCondition.name}</option> --%>
+<%--                     </c:forEach> --%>
+<!--                 </select> -->
+<!--                 <input type="text" name="searchQuery"> -->
+<%--                 <c:forEach items="${sortConditions}" var="sortContidion" varStatus="status"> --%>
+<%--                     <input type="radio" name="sortCode" value="${sortContidion.code}" --%>
+<%--                            <c:if test="${status.index == 0}">checked</c:if>>${sortContidion.name} --%>
+<%--                 </c:forEach> --%>
+<!--             </div> -->
+<!--         </div> -->
+<!--     </form> -->
+			<form action="/community/search">
+				<input type="hidden" name="typeCode" value="${categoryType.code}">
+				<select name="searchCode">
+					<option value="검색옵션">검색옵션</option>
+					<option value="검색옵션">제목</option>
+					<option value="검색옵션">작성자</option>
+				</select>
+				<input type="button" value="검색">
+				<input type="text">
 			<a href="#">NEW / OLD / MAX(COUNT)</a>
+			</form>
 		</div>
 		<div>
 			<table id="table_list">

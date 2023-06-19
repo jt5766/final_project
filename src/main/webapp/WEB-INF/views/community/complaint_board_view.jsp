@@ -37,15 +37,20 @@
 			<div id="div_info">
 				<input type="hidden" name="seq" value="${info.seq}">
 				<input type="hidden" name="board_type" value="${info.board_type}">
-				<div>${info.seq}<input type="hidden" name="seq" value="${info.seq}">
+				<div>
+					${info.seq}<input type="hidden" name="seq" value="${info.seq}">
 				</div>
-				<div>${info.title}<input type="hidden" name="title" value="${info.title}">
+				<div>
+					${info.title}<input type="hidden" name="title" value="${info.title}">
 				</div>
-				<div>${info.writer}<input type="hidden" name="writer" value="${info.writer}">
+				<div>
+					${info.writer}<input type="hidden" name="writer" value="${info.writer}">
 				</div>
-				<div>${info.write_date}<input type="hidden" name="write_date" value="${info.write_date}">
+				<div>
+					${info.write_date}<input type="hidden" name="write_date" value="${info.write_date}">
 				</div>
-				<div>${info.complaint_type}<input type="hidden" name="write_date" value="${info.complaint_type}">
+				<div>
+					${info.complaint_type}<input type="hidden" name="write_date" value="${info.complaint_type}">
 				</div>
 				<div>
 					${info.total_count}
@@ -63,7 +68,7 @@
 				<form action="/community/insertProcess">
 					<input type="hidden" name="seq" value="${info.seq}"> 
 					<div style='display: flex;'>
-						<textarea style="flex: 6" placeholder="처리내용" name="process"></textarea>
+						<textarea style="flex: 6" placeholder="처리내용 작성" name="process"></textarea>
 						<input type="submit" value="처리 등록" style="flex: 1;">
 					</div>
 				</form>

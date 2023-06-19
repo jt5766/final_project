@@ -259,6 +259,6 @@ public class CommunityService {
 	}
 
 	public int insertProcess(ComplaintBoardsDTO complaintBoardsDTO) {
-		return communityDAO.insertComplaint(complaintBoardsDTO);
+		return communityDAO.insertProcess(complaintBoardsDTO);
 	}
 }

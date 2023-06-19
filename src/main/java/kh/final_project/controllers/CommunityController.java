@@ -43,7 +43,7 @@ public class CommunityController {
 	public String toBoard(CategoryType categoryType, Model model, int currentPage) {
 		if (categoryType.getCode() == 1005) {
 			System.out.println("COMPLAINT");
-			if ((int) session.getAttribute("code") == 9999) {
+			if ((Integer) session.getAttribute("code") == 9999) {
 				List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
 				List<CategoryType> boardType = communityService.selectBoardType();
 				List<ComplaintBoardsDTO> boardList = communityService.selectComplaintByPage(categoryType, currentPage);
@@ -53,7 +53,6 @@ public class CommunityController {
 				model.addAttribute("pageNavi", pageNavi);
 				return "community/complaint_board";
 			} else {
-				int writer = (int) session.getAttribute("code");
 				List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
 				List<CategoryType> boardType = communityService.selectBoardType();
 				List<ComplaintBoardsDTO> boardList = communityService.selectComplaintByPage(categoryType, currentPage);
@@ -170,7 +169,7 @@ public class CommunityController {
 				+ boardsReplyDTO.getBoard_type();
 	}
 
-	@RequestMapping("")
+	@RequestMapping("insertProcess")
 	public String insertProcess(ComplaintBoardsDTO complaintBoardsDTO) {
 		communityService.insertProcess(complaintBoardsDTO);
 		return "redirect:/community/toBoardView?seq=" + complaintBoardsDTO.getSeq() + "&board_type=1005";
