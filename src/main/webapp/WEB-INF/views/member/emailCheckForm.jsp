@@ -135,7 +135,7 @@
 </style>
 <body>
 
-<form action="/member/check">
+<form action="/member/check" id="email_certification">
 <div id="container">
     <div id="header"> GNB </div>
     <div id="body">
@@ -169,7 +169,7 @@
             </div>
             <div class="center_box"></div>
             <div class="center_box">
-                <button type="submit" id="email_certification">이메일 인증</button>
+                <button type="submit">이메일 인증</button>
             </div>
         </div>
         <div id="body_right">right</div>

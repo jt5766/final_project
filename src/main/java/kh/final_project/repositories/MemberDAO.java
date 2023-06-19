@@ -37,9 +37,9 @@ public class MemberDAO {
 
 
     public void login(MemberDTO dto) {
-
+        System.out.println("///"+dto);
         db.selectOne("Member.PROC_CHK_MEMBER", dto);
-
+        db.update("Member.Yupdate", dto);
     }
 
 
@@ -52,4 +52,11 @@ public class MemberDAO {
     }
 
 
+    public void Nupdate(MemberDTO dto) {
+        db.update("Member.Nupdate",dto);
+    }
+
+    public void updatePassword(MemberDTO dto) {
+        db.update("Member.updatePassword",dto);
+    }
 }

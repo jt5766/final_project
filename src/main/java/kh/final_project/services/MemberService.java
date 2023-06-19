@@ -8,9 +8,11 @@ import kh.final_project.repositories.MemberDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.UUID;
@@ -26,6 +28,8 @@ public class MemberService {
 
     @Autowired
     private JavaMailSender javaMailSender;
+
+
 
     public List<EmailTypeDTO> emailType(){
         return mdao.emailType();
@@ -61,6 +65,30 @@ public class MemberService {
 
 
     }
+    public void findPassword(MemberDTO dto) throws MessagingException, UnsupportedEncodingException{
+        System.out.println("2" + dto);
+        this.emailTypeChange(dto);
+        System.out.println("3" + dto);
+        UUID uuid = UUID.randomUUID();
+        dto.setRandom_key(String.valueOf(uuid));
+
+        MailHandler sendMail = new MailHandler(javaMailSender);
+        sendMail.setSubject("[Kreate-Hub 비밀번호찾기 메일 입니다.]"); //메일제목
+        sendMail.setText(
+                "<h1>Kreate-Hub 비밀번호 찾기</h1>" +
+
+                        "<br>아래 [비밀번호 찾기를 눌러주세요]" +
+                        "<br><a href='http://localhost:8080/member/findPassword" +
+                        "?email="+dto.getEmail()+
+                        "&email_type="+dto.getEmail_type()+
+                        "&random_key="+dto.getRandom_key()+
+                        "'>비밀번호 찾기</a>");
+        sendMail.setFrom("rkqudwns@gmail.com", "강병준");
+        String emailName = this.getEmailName(dto);
+        dto.setSet_email_type(emailName);
+        sendMail.setTo(dto.getEmail()+"@"+dto.getSet_email_type());
+        sendMail.send();
+    }
 
 
     public void emailTypeChange(MemberDTO dto){
@@ -79,12 +107,45 @@ public class MemberService {
 //            dto.setEmail_type(1004);
 //        }
 
-        mdao.login(dto);
-
-
 
     }
 
 
+    public void uploadFile(MemberDTO dto , MultipartFile file,String realPath) throws  Exception{
+        System.out.println("create");
+        String path = "/resources/member";
+        System.out.println(realPath);
+        File realPathFile = new File(realPath);
+        if(!realPathFile.exists()) realPathFile.mkdirs();
+        if(file != null) {
 
+            String oriName = file.getOriginalFilename();
+            System.out.println(oriName);
+            String[] arr = oriName.split("\\.");
+            System.out.println(arr.length);
+            String sysname = dto.getEmail()+"_"+dto.getEmail_type()+"."+arr[arr.length-1];
+            System.out.println(sysname);
+            String fileURL = realPath+"/"+sysname;
+            System.out.println(fileURL);
+            String url = path+"/"+sysname;
+            file.transferTo(new File(fileURL));
+            dto.setFile_url(url);
+        }
+
+        System.out.println("createMember로 넘어온 dto :"+dto);
+        System.out.println("========================");
+        mdao.insert(dto);
+    }
+
+    public void Nupdate(MemberDTO dto) {
+        mdao.Nupdate(dto);
+    }
+
+    public void updatePassword(MemberDTO dto) {
+        mdao.updatePassword(dto);
+    }
+
+    public void login(MemberDTO dto) {
+        mdao.login(dto);
+    }
 }

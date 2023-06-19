@@ -5,17 +5,28 @@
 <mapper namespace="Member">
     <select id="PROC_CHK_MEMBER" statementType="CALLABLE" resultType="kh.final_project.dto.MemberDTO">
         {
-        call PROC_CHK_MEMBER(
-        #{email, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
-        #{email_type, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer},
-        #{password, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
-        #{code, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer},
-        #{member_type, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer},
-        #{nickname, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
-        )
+            call PROC_CHK_MEMBER(
+                #{email, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
+                #{email_type, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer},
+                #{password, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
+                #{code, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer},
+                #{member_type, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer},
+                #{nickname, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+            )
         }
     </select>
 
+    <update id="Yupdate">
+        update members set yn = 'Y' where email = #{email} and email_type = #{email_type}
+    </update>
+
+    <update id="Nupdate">
+        update members set yn ='N' where code = #{code}
+    </update>
+
+    <update id="updatePassword">
+        update members set password = #{password} where email = #{email} and email_type = #{email_type}
+    </update>
 
     <select id="passwordCheck" resultType="boolean">
         select * from members where password = #{password} and nickname=#{nickname}
