@@ -45,6 +45,36 @@
 			</foreach>
 		</trim>
 	</select>
+	<delete id="deleteGallery">
+		DELETE FROM GALLERY_CARDS WHERE CATEGORY_TYPE = #{type, jdbcType=NUMERIC} AND SEQ = #{seq, jdbcType=NUMERIC}
+	</delete>
 	<!-- 커뮤니티 -->
-
+	<select id="searchCommunity" parameterType="java.util.Map" resultType="kh.final_project.dto.AdminCommunityDTO">
+		SELECT * FROM VIEW_ADMIN_COMMUNITY WHERE TYPE IN (#{dto.type, jdbcType=NUMERIC})
+		<trim prefix="AND (" prefixOverrides="OR" suffix=")">
+			<foreach collection="list" item="item">
+				<choose>
+					<when test="dto.search == 1001">
+						<if test="dto.search != item.code">
+							OR ${item.keyword} LIKE '%'||NVL(#{dto.keyword, jdbcType=VARCHAR}, '')||'%'
+						</if>
+					</when>
+					<otherwise>
+						<if test="dto.search == item.code">
+							OR ${item.keyword} LIKE '%'||NVL(#{dto.keyword, jdbcType=VARCHAR}, '')||'%'
+						</if>
+					</otherwise>
+				</choose>
+			</foreach>
+		</trim>
+	</select>
+	<delete id="deleteCommunity">
+		DELETE FROM
+		<foreach collection="list" item="item">
+			<if test="dto.type == item.code">
+				${item.board_name}_BOARDS
+			</if>
+		</foreach>
+		WHERE BOARD_TYPE = #{dto.type, jdbcType=NUMERIC} AND SEQ = #{dto.seq, jdbcType=NUMERIC}
+	</delete>
 </mapper>

@@ -81,7 +81,6 @@ public class AdminController {
 	 */
 	@RequestMapping("join/approve")
 	public String joinApprove(MemberDTO dto) {
-		System.out.println(dto);
 		boolean result = adminService.approveMember(dto);
 		return "redirect: /admin/join";
 	}
@@ -156,9 +155,22 @@ public class AdminController {
 	@ResponseBody
 	@RequestMapping(value = "gallery/search", produces = "application/json;charset=utf8")
 	public List<AdminGalleryDTO> searchGallery(AdminSearchDTO dto) {
-		System.out.println(dto);
 		List<AdminGalleryDTO> result = adminService.searchGallery(dto);
 		return result;
+	}
+
+	/**
+	 * <b>[ 갤러리 ]</b>
+	 * <p>
+	 * 갤러리 삭제 : DELETE
+	 * </p>
+	 * 
+	 * @return /admin/gallery/delete
+	 */
+	@RequestMapping("gallery/delete")
+	public String deleteGallery(AdminGalleryDTO dto) {
+		boolean result = adminService.deleteGallery(dto);
+		return "redirect:/admin/gallery";
 	}
 
 	/**
@@ -190,6 +202,20 @@ public class AdminController {
 	public List<AdminCommunityDTO> searchCommunity(AdminSearchDTO dto) {
 		List<AdminCommunityDTO> result = adminService.searchCommunity(dto);
 		return result;
+	}
+
+	/**
+	 * <b>[ 갤러리 ]</b>
+	 * <p>
+	 * 갤러리 삭제 : DELETE
+	 * </p>
+	 * 
+	 * @return /admin/community/delete
+	 */
+	@RequestMapping("community/delete")
+	public String deleteCommunity(AdminCommunityDTO dto) {
+		boolean result = adminService.deleteCommunity(dto);
+		return "redirect:/admin/community";
 	}
 
 	/**

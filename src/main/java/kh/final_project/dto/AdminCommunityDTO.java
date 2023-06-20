@@ -1,8 +1,8 @@
 package kh.final_project.dto;
 
 public class AdminCommunityDTO {
-	private Integer boardType;
-	private String boardTypeName;
+	private Integer type;
+	private String typeName;
 	private Integer seq;
 	private String title;
 	private Integer writer;
@@ -12,31 +12,31 @@ public class AdminCommunityDTO {
 		super();
 	}
 
-	public AdminCommunityDTO(Integer boardType, String boardTypeName, Integer seq, String title, Integer writer,
+	public AdminCommunityDTO(Integer type, String typeName, Integer seq, String title, Integer writer,
 			String nickname) {
 		super();
-		this.boardType = boardType;
-		this.boardTypeName = boardTypeName;
+		this.type = type;
+		this.typeName = typeName;
 		this.seq = seq;
 		this.title = title;
 		this.writer = writer;
 		this.nickname = nickname;
 	}
 
-	public Integer getBoardType() {
-		return boardType;
+	public Integer getType() {
+		return type;
 	}
 
-	public void setBoardType(Integer boardType) {
-		this.boardType = boardType;
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
-	public String getBoardTypeName() {
-		return boardTypeName;
+	public String getTypeName() {
+		return typeName;
 	}
 
-	public void setBoardTypeName(String boardTypeName) {
-		this.boardTypeName = boardTypeName;
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 
 	public Integer getSeq() {
@@ -69,6 +69,12 @@ public class AdminCommunityDTO {
 
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	@Override
+	public String toString() {
+		return "AdminCommunityDTO [type=" + type + ", typeName=" + typeName + ", seq=" + seq + ", title=" + title
+				+ ", writer=" + writer + ", nickname=" + nickname + "]";
 	}
 
 }
