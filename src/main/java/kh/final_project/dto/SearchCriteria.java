@@ -12,6 +12,7 @@ public class SearchCriteria {
     private Integer page;
     private Integer start;
     private Integer end;
+    private Integer writer;
 
     public SearchCriteria() {
         if (page == null) {
@@ -107,6 +108,14 @@ public class SearchCriteria {
         this.end = end;
     }
 
+    public Integer getWriter() {
+        return writer;
+    }
+
+    public void setWriter(Integer writer) {
+        this.writer = writer;
+    }
+
     @Override
     public String toString() {
         return "SearchCriteria{" +
@@ -118,6 +127,10 @@ public class SearchCriteria {
                 ", searchCode=" + searchCode +
                 ", searchKeyword='" + searchKeyword + '\'' +
                 ", searchQuery='" + searchQuery + '\'' +
+                ", page=" + page +
+                ", start=" + start +
+                ", end=" + end +
+                ", writer=" + writer +
                 '}';
     }
 }
