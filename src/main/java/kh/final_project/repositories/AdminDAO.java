@@ -1,11 +1,17 @@
 package kh.final_project.repositories;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kh.final_project.dto.AdminCommunityDTO;
+import kh.final_project.dto.AdminGalleryDTO;
+import kh.final_project.dto.AdminSearchDTO;
+import kh.final_project.dto.CategoryType;
 import kh.final_project.dto.CountDTO;
 import kh.final_project.dto.MemberDTO;
 
@@ -51,6 +57,19 @@ public class AdminDAO {
 
 	public boolean banMember(MemberDTO dto) {
 		boolean result = mybatis.delete("Admin.banMember", dto) > 0 ? true : false;
-		return false;
+		return result;
+	}
+	
+	public List<AdminGalleryDTO> searchGallery(AdminSearchDTO dto, List<CategoryType> list) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dto", dto);
+		map.put("list", list);
+		List<AdminGalleryDTO> result = mybatis.selectList("Admin.searchGallery", map);
+		return result;
+	}
+	
+	public List<AdminCommunityDTO> searchCommunity(AdminSearchDTO dto) {
+		List<AdminCommunityDTO> result = mybatis.selectList("Admin.searchCommunity", dto);
+		return result;
 	}
 }
