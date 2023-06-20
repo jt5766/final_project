@@ -145,8 +145,4 @@
 		JOIN complaint_type t
 		ON b.complaint_type = t.code
 	</select>
-	
-	<select id="getSort" resultType="kh.final_project.dto.CommunitySort">
-		select sysdate from dual
-	</select>
 </mapper>
