@@ -59,7 +59,7 @@ public class AdminDAO {
 		boolean result = mybatis.delete("Admin.banMember", dto) > 0 ? true : false;
 		return result;
 	}
-	
+
 	public List<AdminGalleryDTO> searchGallery(AdminSearchDTO dto, List<CategoryType> list) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("dto", dto);
@@ -67,9 +67,25 @@ public class AdminDAO {
 		List<AdminGalleryDTO> result = mybatis.selectList("Admin.searchGallery", map);
 		return result;
 	}
-	
-	public List<AdminCommunityDTO> searchCommunity(AdminSearchDTO dto) {
-		List<AdminCommunityDTO> result = mybatis.selectList("Admin.searchCommunity", dto);
+
+	public boolean deleteGallery(AdminGalleryDTO dto) {
+		boolean result = mybatis.delete("Admin.deleteGallery", dto) > 0 ? true : false;
+		return result;
+	}
+
+	public List<AdminCommunityDTO> searchCommunity(AdminSearchDTO dto, List<CategoryType> list) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dto", dto);
+		map.put("list", list);
+		List<AdminCommunityDTO> result = mybatis.selectList("Admin.searchCommunity", map);
+		return result;
+	}
+
+	public boolean deleteCommunity(AdminCommunityDTO dto, List<CategoryType> list) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("dto", dto);
+		map.put("list", list);
+		boolean result = mybatis.delete("Admin.deleteCommunity", map) > 0 ? true : false;
 		return result;
 	}
 }

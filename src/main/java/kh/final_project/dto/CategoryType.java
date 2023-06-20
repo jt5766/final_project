@@ -7,6 +7,7 @@ public class CategoryType {
 	private String yn;
 	private String keyword;
 	private String val;
+	private String board_name;
 
 	public CategoryType() {
 		super();
@@ -34,6 +35,18 @@ public class CategoryType {
 		this.yn = yn;
 		this.keyword = keyword;
 		this.val = val;
+	}
+
+	public CategoryType(Integer code, Integer sort, String name, String yn, String keyword, String val,
+			String board_name) {
+		super();
+		this.code = code;
+		this.sort = sort;
+		this.name = name;
+		this.yn = yn;
+		this.keyword = keyword;
+		this.val = val;
+		this.board_name = board_name;
 	}
 
 	public Integer getCode() {
@@ -84,10 +97,18 @@ public class CategoryType {
 		this.val = val;
 	}
 
+	public String getBoard_name() {
+		return board_name;
+	}
+
+	public void setBoard_name(String board_name) {
+		this.board_name = board_name;
+	}
+
 	@Override
 	public String toString() {
 		return "CategoryType [code=" + code + ", sort=" + sort + ", name=" + name + ", yn=" + yn + ", keyword="
-				+ keyword + ", val=" + val + "]";
+				+ keyword + ", val=" + val + ", board_name=" + board_name + "]";
 	}
 
 }

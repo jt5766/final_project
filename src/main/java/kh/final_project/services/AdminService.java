@@ -145,6 +145,17 @@ public class AdminService {
 	}
 
 	/**
+	 * <b>[ 갤러리 ]</b>
+	 * <p>
+	 * 갤러리 삭제 : DELETE
+	 * </p>
+	 */
+	public boolean deleteGallery(AdminGalleryDTO dto) {
+		boolean result = adminDAO.deleteGallery(dto);
+		return result;
+	}
+
+	/**
 	 * <b>[ 커뮤니티 ]</b>
 	 * <p>
 	 * 커뮤니티 타입 정보 : SELECT<br>
@@ -167,7 +178,18 @@ public class AdminService {
 	 * </p>
 	 */
 	public List<AdminCommunityDTO> searchCommunity(AdminSearchDTO dto) {
-		List<AdminCommunityDTO> result = adminDAO.searchCommunity(dto);
+		List<AdminCommunityDTO> result = adminDAO.searchCommunity(dto, typeDAO.selectByCommunity_Search());
+		return result;
+	}
+
+	/**
+	 * <b>[ 커뮤니티 ]</b>
+	 * <p>
+	 * 커뮤니티 삭제 : DELETE
+	 * </p>
+	 */
+	public boolean deleteCommunity(AdminCommunityDTO dto) {
+		boolean result = adminDAO.deleteCommunity(dto, typeDAO.selectByBoardType());
 		return result;
 	}
 

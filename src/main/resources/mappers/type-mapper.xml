@@ -8,7 +8,7 @@
 		SELECT * FROM ${value} ORDER BY YN DESC, SORT ASC
 	</select>
 	<select id="SelectType2ByCode" resultType="kh.final_project.dto.CategoryType">
-		SELECT * FROM ${value} WHERE CODE = #{code}
+		SELECT * FROM ${value} WHERE CODE = #{code, jdbcType = NUMERIC}
 	</select>
 	<select id="PROC_TYPE_UI" statementType="CALLABLE">
 		{ CALL PROC_TYPE_UI(
