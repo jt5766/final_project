@@ -138,11 +138,43 @@
 	</select>
 	
 	<select id="selectAllComplaints" resultType="kh.final_project.dto.BoardsDTO">
-		SELECT 
+		SELECT
 		b.seq, b.board_type, t.name as complaint_type, b.writer, b.txt, 
 		b.write_date, b.process, b.process_date, b.total_count
 		FROM complaint_boards b
 		JOIN complaint_type t
 		ON b.complaint_type = t.code
+	</select>
+	
+	<select id="search" resultType="kh.final_project.dto.BoardsDTO">
+		SELECT *
+		FROM (
+		  SELECT 
+		    b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count,
+		    row_number() over (order by b.${sortKeyword} ${sortVal}) as rn
+		  FROM ${tableName} b
+		  JOIN members m ON b.writer = m.code
+		  <choose>
+		  	<when test="searchKeyword == ALL"></when>
+		  	<when test="searchKeyword == TITLE">
+		  		WHERE b.${searchKeyword} LIKE '%' || #{searchQuery} || '%'
+		  	</when>
+		  	<when test="searchKeyword == WRITER">
+		  		WHERE m.nickname LIKE '%' || #{searchQuery} || '%'
+		  	</when>
+		  </choose>
+		)
+		WHERE rn BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="getSearchMax" resultType="int">
+		SELECT COUNT(*) FROM (
+		  SELECT 
+		    b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count,
+		    row_number() over (order by b.${sortKeyword} ${sortVal}) as rn
+		  FROM ${tableName} b
+		  JOIN members m ON b.writer = m.code
+		  WHERE b.{searchKeyword} LIKE '%' || #{searchQuery} || '%'
+		)
 	</select>
 </mapper>
