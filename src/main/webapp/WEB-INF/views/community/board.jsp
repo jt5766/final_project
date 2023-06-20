@@ -47,9 +47,10 @@
 					</c:forEach>
 				</select>
 				<input type="submit" value="검색">
-				<input type="text" name="searchQuery">
-				<c:forEach var="i" items="${sort}">
-					${i.name} <input type="radio" name="sortCode" value="${i.code}">
+				<input type="text" name="searchQuery" required>
+				<c:forEach var="i" items="${sort}" varStatus="status">
+					${i.name} <input type="radio" name="sortCode" value="${i.code}"
+					<c:if test ="${status.index == 0}">checked</c:if>>
 				</c:forEach>
 			</form>
 		</div>

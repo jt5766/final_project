@@ -40,19 +40,25 @@
 	</select>
 	
 	<select id="selectComplaintByPage" resultType="kh.final_project.dto.ComplaintBoardsDTO">
-		SELECT 
-		    b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname AS writer, b.txt, 
-		    b.write_date, b.process, b.process_date, b.total_count
-		FROM 
-		    complaint_boards b
-		JOIN 
-		    complaint_type t ON b.complaint_type = t.code
-		JOIN 
-		    members m ON b.writer = m.code
-		WHERE 
-		    b.seq BETWEEN #{startPost} AND #{endPost}
-		ORDER BY 
-		    b.seq DESC
+	SELECT 
+	    *
+	FROM 
+	    (
+	        SELECT 
+	            b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname AS writer, b.txt, 
+	            b.write_date, b.process, b.process_date, b.total_count, 
+	            row_number() over (order by b.seq desc) as rn
+	        FROM 
+	            complaint_boards b
+	        JOIN 
+	            complaint_type t ON b.complaint_type = t.code
+	        JOIN 
+	            members m ON b.writer = m.code
+	    )
+	WHERE 
+	    rn BETWEEN #{startPost} AND #{endPost}
+	ORDER BY 
+	    seq DESC
 	</select>
 	
 	<update id="viewUp">
@@ -155,11 +161,13 @@
 		  FROM ${tableName} b
 		  JOIN members m ON b.writer = m.code
 		  <choose>
-		  	<when test="searchKeyword == ALL"></when>
-		  	<when test="searchKeyword == TITLE">
-		  		WHERE b.${searchKeyword} LIKE '%' || #{searchQuery} || '%'
+		  	<when test="searchKeyword = 'ALL'">
+		 		WHERE b.title LIKE '%' || #{searchQuery} || '%' OR m.nickname LIKE '%' || #{searchQuery} || '%' 
 		  	</when>
-		  	<when test="searchKeyword == WRITER">
+		  	<when test="searchKeyword = 'TITLE'">
+		  		WHERE b.title LIKE '%' || #{searchQuery} || '%'
+		  	</when>
+		  	<when test="searchKeyword = 'WRITER'">
 		  		WHERE m.nickname LIKE '%' || #{searchQuery} || '%'
 		  	</when>
 		  </choose>
@@ -174,7 +182,43 @@
 		    row_number() over (order by b.${sortKeyword} ${sortVal}) as rn
 		  FROM ${tableName} b
 		  JOIN members m ON b.writer = m.code
-		  WHERE b.{searchKeyword} LIKE '%' || #{searchQuery} || '%'
+		  <choose>
+		  	<when test="searchKeyword = 'ALL'">
+		 		WHERE b.title LIKE '%' || #{searchQuery} || '%' OR m.nickname LIKE '%' || #{searchQuery} || '%' 
+		  	</when>
+		  	<when test="searchKeyword = 'TITLE'">
+		  		WHERE b.title LIKE '%' || #{searchQuery} || '%'
+		  	</when>
+		  	<when test="searchKeyword = 'WRITER'">
+		  		WHERE m.nickname LIKE '%' || #{searchQuery} || '%'
+		  	</when>
+		  </choose>
 		)
+	</select>
+	
+	<select id="searchComplaint" resultType="kh.final_project.dto.ComplaintBoardsDTO">
+		SELECT *
+		FROM (
+		  SELECT 
+		    b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname as writer, b.txt, 
+		    b.write_date, b.process, b.process_date, b.total_count,
+		    row_number() over (order by b.${sortKeyword} ${sortVal}) as rn
+		  FROM ${tableName} b
+		  JOIN members m ON b.writer = m.code
+		  JOIN complaint_type t ON b.complaint_type = t.code
+		  WHERE 
+		    <choose>
+		      <when test="searchKeyword == 'ALL'">
+		        (b.title LIKE '%' || #{searchQuery} || '%' OR m.nickname LIKE '%' || #{searchQuery} || '%')
+		      </when>
+		      <when test="searchKeyword == 'TITLE'">
+		        b.title LIKE '%' || #{searchQuery} || '%'
+		      </when>
+		      <when test="searchKeyword == 'WRITER'">
+		        m.nickname LIKE '%' || #{searchQuery} || '%'
+		      </when>
+		    </choose>
+		)
+		WHERE rn BETWEEN #{start} AND #{end}
 	</select>
 </mapper>

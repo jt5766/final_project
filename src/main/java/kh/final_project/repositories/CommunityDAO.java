@@ -103,4 +103,8 @@ public class CommunityDAO {
 	public int getSearchMax(SearchCriteria searchCriteria) {
 		return sst.selectOne("Community.getSearchMax", searchCriteria);
 	}
+
+	public List<ComplaintBoardsDTO> searchComplaint(SearchCriteria searchCriteria) {
+		return sst.selectList("Community.searchComplaint", searchCriteria);
+	}
 }

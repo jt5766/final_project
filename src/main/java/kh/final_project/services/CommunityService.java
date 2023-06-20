@@ -355,6 +355,20 @@ public class CommunityService {
 		searchCriteria.setSearchKeyword(search.getKeyword());
 		searchCriteria.setStart(this.getStart(searchCriteria.getPage()));
 		searchCriteria.setEnd(this.getEnd(searchCriteria.getPage()));
+		System.out.println("search : " + searchCriteria);
 		return communityDAO.search(searchCriteria);
+	}
+
+	public List<ComplaintBoardsDTO> searchComplaint(SearchCriteria searchCriteria) {
+		this.setTableNameByTypeCode(searchCriteria);
+		CategoryType sort = typeDAO.selectByCode("community_sort", searchCriteria.getSortCode());
+		CategoryType search = typeDAO.selectByCode("community_search", searchCriteria.getSearchCode());
+		searchCriteria.setSortKeyword(sort.getKeyword());
+		searchCriteria.setSortVal(sort.getVal());
+		searchCriteria.setSearchKeyword(search.getKeyword());
+		searchCriteria.setStart(this.getStart(searchCriteria.getPage()));
+		searchCriteria.setEnd(this.getEnd(searchCriteria.getPage()));
+		System.out.println("search : " + searchCriteria);
+		return communityDAO.searchComplaint(searchCriteria);
 	}
 }

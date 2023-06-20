@@ -189,4 +189,22 @@ public class CommunityController {
 		model.addAttribute("pageNavi", pageNavi);
 		return "community/board";
 	}
+
+	@RequestMapping("searchComplaint")
+	public String searchComplaint(SearchCriteria searchCriteria, Model model) {
+		List<ComplaintBoardsDTO> boardList = communityService.searchComplaint(searchCriteria);
+		List<String> pageNavi = communityService.returnPageNavi(searchCriteria);
+		List<CategoryType> boardType = communityService.selectBoardType();
+		CategoryType categoryType = new CategoryType();
+		categoryType.setCode(searchCriteria.getTypeCode());
+		List<CategoryType> search = communityService.getCommunitySearch();
+		List<CategoryType> sort = communityService.getCommunitySort();
+		model.addAttribute("search", search);
+		model.addAttribute("sort", sort);
+		model.addAttribute("categoryType", categoryType);
+		model.addAttribute("boardType", boardType);
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("pageNavi", pageNavi);
+		return "community/complaint_board";
+	}
 }
