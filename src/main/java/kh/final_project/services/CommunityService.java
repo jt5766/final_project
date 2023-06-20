@@ -21,16 +21,20 @@ import kh.final_project.dto.BoardsDTO;
 import kh.final_project.dto.BoardsReplyDTO;
 import kh.final_project.dto.CategoryType;
 import kh.final_project.dto.ComplaintBoardsDTO;
+import kh.final_project.dto.SearchCriteria;
 import kh.final_project.repositories.CommunityDAO;
+import kh.final_project.repositories.TypeDAO;
 
 @Service
 public class CommunityService {
-
 	private int postPerPage = 30; // 한 페이지당 보여줄 게시글 수
 	private int naviPerPage = 10; // 한 페이지당 보여줄 최대 네비 수
 
 	@Autowired
 	private CommunityDAO communityDAO;
+
+	@Autowired
+	private TypeDAO typeDAO;
 
 	private void setNameByCode(CategoryType categoryType) {
 		if (categoryType.getCode() == 1001) {
@@ -76,8 +80,67 @@ public class CommunityService {
 		}
 	}
 
+	private void setTableNameByTypeCode(SearchCriteria searchCriteria) {
+		int typeCode = searchCriteria.getTypeCode();
+		if (typeCode == 1001) {
+			searchCriteria.setTableName("NOTICE_BOARDS");
+		} else if (typeCode == 1002) {
+			searchCriteria.setTableName("FREE_BOARDS");
+		} else if (typeCode == 1003) {
+			searchCriteria.setTableName("TIP_BOARDS");
+		} else if (typeCode == 1004) {
+			searchCriteria.setTableName("QUESTION_BOARDS");
+		} else if (typeCode == 1005) {
+			searchCriteria.setTableName("COMPLAINT_BOARDS");
+		}
+	}
+
 	public List<CategoryType> getSelectTag() {
 		return communityDAO.getSelectTag();
+	}
+
+	public List<String> getPageNavi(SearchCriteria searchCriteria) {
+		int postPerPage = this.postPerPage;
+		int naviPerPage = this.naviPerPage;
+		int max = communityDAO.getSearchMax(searchCriteria);
+		int totalPage;
+		if (max % postPerPage > 0) {
+			totalPage = max / postPerPage + 1;
+		} else {
+			totalPage = max / postPerPage;
+		}
+		int currentPage = searchCriteria.getPage();
+		int startNavi = (currentPage - 1) / naviPerPage * naviPerPage + 1;
+		int endNavi = startNavi + (naviPerPage - 1);
+		if (currentPage < 1) {
+			currentPage = 1;
+		} else if (currentPage > totalPage) {
+			currentPage = totalPage;
+		}
+		if (endNavi > totalPage) {
+			endNavi = totalPage;
+		}
+		System.out.println("totalPage : " + totalPage);
+		System.out.println("endNavi : " + endNavi);
+		boolean needPrev = false;
+		if (currentPage > naviPerPage) {
+			needPrev = true;
+		}
+		boolean needNext = false;
+		if (endNavi < totalPage) {
+			needNext = true;
+		}
+		List<String> pageNavi = new ArrayList<>();
+		if (needPrev) {
+			pageNavi.add("<");
+		}
+		for (int i = startNavi; i <= endNavi; i++) {
+			pageNavi.add(String.valueOf(i));
+		}
+		if (needNext) {
+			pageNavi.add(">");
+		}
+		return pageNavi;
 	}
 
 	public List<String> getPageNavi(String tableName, int currentPage) {
@@ -129,6 +192,11 @@ public class CommunityService {
 		return this.getPageNavi(categoryType.getName(), currentPage);
 	}
 
+	public List<String> returnPageNavi(SearchCriteria searchCriteria) {
+		this.setTableNameByTypeCode(searchCriteria);
+		return this.getPageNavi(searchCriteria);
+	}
+
 	public int insertBoard(BoardsDTO boardsDTO) {
 		return communityDAO.insertBoard(boardsDTO);
 	}
@@ -177,10 +245,18 @@ public class CommunityService {
 		return communityDAO.selectBoardType();
 	}
 
+	private int getStart(int currentPage) {
+		return (currentPage * this.postPerPage) - (this.postPerPage - 1);
+	}
+
+	private int getEnd(int currentPage) {
+		return (currentPage * this.postPerPage);
+	}
+
 	public List<BoardsDTO> selectBoardByPage(CategoryType categoryType, int currentPage) {
 		this.setNameByCode(categoryType);
-		int startPost = (currentPage * this.postPerPage) - (this.postPerPage - 1);
-		int endPost = (currentPage * this.postPerPage);
+		int startPost = this.getStart(currentPage);
+		int endPost = this.getEnd(currentPage);
 		System.out.println(startPost);
 		System.out.println(endPost);
 		Map<String, Object> pageInfo = new HashMap<>();
@@ -192,8 +268,8 @@ public class CommunityService {
 
 	public List<ComplaintBoardsDTO> selectComplaintByPage(CategoryType categoryType, int currentPage) {
 		this.setNameByCode(categoryType);
-		int startPost = (currentPage * this.postPerPage) - (this.postPerPage - 1);
-		int endPost = (currentPage * this.postPerPage);
+		int startPost = this.getStart(currentPage);
+		int endPost = this.getEnd(currentPage);
 		System.out.println(startPost);
 		System.out.println(endPost);
 		Map<String, Object> pageInfo = new HashMap<>();
@@ -260,5 +336,39 @@ public class CommunityService {
 
 	public int insertProcess(ComplaintBoardsDTO complaintBoardsDTO) {
 		return communityDAO.insertProcess(complaintBoardsDTO);
+	}
+
+	public List<CategoryType> getCommunitySearch() {
+		return typeDAO.selectByCommunity_Search();
+	}
+
+	public List<CategoryType> getCommunitySort() {
+		return typeDAO.selectByCommunity_Sort();
+	}
+
+	public List<BoardsDTO> search(SearchCriteria searchCriteria) {
+		this.setTableNameByTypeCode(searchCriteria);
+		CategoryType sort = typeDAO.selectByCode("community_sort", searchCriteria.getSortCode());
+		CategoryType search = typeDAO.selectByCode("community_search", searchCriteria.getSearchCode());
+		searchCriteria.setSortKeyword(sort.getKeyword());
+		searchCriteria.setSortVal(sort.getVal());
+		searchCriteria.setSearchKeyword(search.getKeyword());
+		searchCriteria.setStart(this.getStart(searchCriteria.getPage()));
+		searchCriteria.setEnd(this.getEnd(searchCriteria.getPage()));
+		System.out.println("search : " + searchCriteria);
+		return communityDAO.search(searchCriteria);
+	}
+
+	public List<ComplaintBoardsDTO> searchComplaint(SearchCriteria searchCriteria) {
+		this.setTableNameByTypeCode(searchCriteria);
+		CategoryType sort = typeDAO.selectByCode("community_sort", searchCriteria.getSortCode());
+		CategoryType search = typeDAO.selectByCode("community_search", searchCriteria.getSearchCode());
+		searchCriteria.setSortKeyword(sort.getKeyword());
+		searchCriteria.setSortVal(sort.getVal());
+		searchCriteria.setSearchKeyword(search.getKeyword());
+		searchCriteria.setStart(this.getStart(searchCriteria.getPage()));
+		searchCriteria.setEnd(this.getEnd(searchCriteria.getPage()));
+		System.out.println("search : " + searchCriteria);
+		return communityDAO.searchComplaint(searchCriteria);
 	}
 }

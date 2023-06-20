@@ -11,6 +11,7 @@ import kh.final_project.dto.BoardsDTO;
 import kh.final_project.dto.BoardsReplyDTO;
 import kh.final_project.dto.CategoryType;
 import kh.final_project.dto.ComplaintBoardsDTO;
+import kh.final_project.dto.SearchCriteria;
 
 @Repository
 public class CommunityDAO {
@@ -93,5 +94,17 @@ public class CommunityDAO {
 
 	public int insertProcess(ComplaintBoardsDTO complaintBoardsDTO) {
 		return sst.update("Community.insertProcess", complaintBoardsDTO);
+	}
+
+	public List<BoardsDTO> search(SearchCriteria searchCriteria) {
+		return sst.selectList("Community.search", searchCriteria);
+	}
+
+	public int getSearchMax(SearchCriteria searchCriteria) {
+		return sst.selectOne("Community.getSearchMax", searchCriteria);
+	}
+
+	public List<ComplaintBoardsDTO> searchComplaint(SearchCriteria searchCriteria) {
+		return sst.selectList("Community.searchComplaint", searchCriteria);
 	}
 }
