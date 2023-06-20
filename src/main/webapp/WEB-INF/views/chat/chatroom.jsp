@@ -85,6 +85,21 @@
 				$("#div_text").html("");
 				$("#div_text").focus();
 			})
+			
+			let lastScroll = 1;
+			
+			$("#div_contents").scroll(function(e){
+				let currentScroll = $(this).scrollBottom();
+				let contents_height = $("#div_contents").height();
+				
+				let now_height = $(this).scrollBottom()+$("#div_contents").height();
+				
+				if(currentScroll < lastScroll){
+					if(contents_height < (now_height + (contents_height*0.1))){
+						console.log("data 가져오기");
+					}
+				}
+			})
 		})
 	</script>
     <div class="container-fluid">
