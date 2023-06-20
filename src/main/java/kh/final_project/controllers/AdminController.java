@@ -1,6 +1,7 @@
 package kh.final_project.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
+import kh.final_project.dto.AdminCommunityDTO;
+import kh.final_project.dto.AdminGalleryDTO;
+import kh.final_project.dto.AdminSearchDTO;
 import kh.final_project.dto.CategoryType;
 import kh.final_project.dto.CountDTO;
 import kh.final_project.dto.MemberDTO;
@@ -110,7 +114,7 @@ public class AdminController {
 		model.addAttribute("list", result);
 		return "/admin/member";
 	}
-	
+
 	/**
 	 * <b>[ 회원 ]</b>
 	 * <p>
@@ -125,14 +129,67 @@ public class AdminController {
 		return "redirect: /admin/member";
 	}
 
+	/**
+	 * <b>[ 갤러리 ]</b>
+	 * <p>
+	 * 갤러리 초기 정보 : SELECT
+	 * </p>
+	 * 
+	 * @return /admin/gallery
+	 */
 	@RequestMapping("gallery")
-	public String gallery() {
+	public String gallery(Model model) {
+		Map<String, List<CategoryType>> result = adminService.galleryInit();
+		model.addAttribute("typeList", result.get("typeList"));
+		model.addAttribute("searchList", result.get("searchList"));
 		return "/admin/gallery";
 	}
 
+	/**
+	 * <b>[ 갤러리 ]</b>
+	 * <p>
+	 * 갤러리 검색 - 비동기 : SELECT
+	 * </p>
+	 * 
+	 * @return /admin/gallery/search
+	 */
+	@ResponseBody
+	@RequestMapping(value = "gallery/search", produces = "application/json;charset=utf8")
+	public List<AdminGalleryDTO> searchGallery(AdminSearchDTO dto) {
+		System.out.println(dto);
+		List<AdminGalleryDTO> result = adminService.searchGallery(dto);
+		return result;
+	}
+
+	/**
+	 * <b>[ 커뮤니티 ]</b>
+	 * <p>
+	 * 커뮤니티 초기 정보 : SELECT
+	 * </p>
+	 * 
+	 * @return /admin/community
+	 */
 	@RequestMapping("community")
-	public String community() {
+	public String community(Model model) {
+		Map<String, List<CategoryType>> result = adminService.communityInit();
+		model.addAttribute("typeList", result.get("typeList"));
+		model.addAttribute("searchList", result.get("searchList"));
 		return "/admin/community";
+	}
+
+	/**
+	 * <b>[ 커뮤니티 ]</b>
+	 * <p>
+	 * 커뮤니티 검색 - 비동기 : SELECT
+	 * </p>
+	 * 
+	 * @return /admin/community/search
+	 */
+	@ResponseBody
+	@RequestMapping(value = "community/search", produces = "application/json;charset=utf8")
+	public List<AdminCommunityDTO> searchCommunity(AdminSearchDTO dto) {
+		List<AdminCommunityDTO> result = adminService.searchCommunity(dto);
+		return result;
 	}
 
 	/**

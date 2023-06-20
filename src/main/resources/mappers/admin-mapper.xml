@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Admin">
+	<!-- 그래프 -->
 	<select id="selectMemberCount" resultType="kh.final_project.dto.CountDTO">
 		SELECT * FROM VIEW_MEMBER_COUNT
 	</select>
 	<select id="selectGalleryCount" resultType="kh.final_project.dto.CountDTO">
 		SELECT * FROM VIEW_GALLERY_COUNT
 	</select>
+	<!-- 회원가입 관리 -->
 	<select id="selectMember2000" resultType="kh.final_project.dto.MemberDTO">
 		SELECT * FROM VIEW_MEMBER_TYPE2000
 	</select>
@@ -16,10 +18,33 @@
 	<delete id="rejectMember">
 		DELETE FROM MEMBERS WHERE CODE = #{code}
 	</delete>
+	<!-- 회원 관리 -->
 	<select id="selectMember" resultType="kh.final_project.dto.MemberDTO">
 		SELECT * FROM VIEW_MEMBER
 	</select>
 	<update id="banMember">
 		UPDATE MEMBERS SET STOP_DATE = #{stop_date, jdbcType=BINARY} WHERE CODE = #{code}
 	</update>
+	<!-- 갤러리 -->
+	<select id="searchGallery" parameterType="java.util.Map" resultType="kh.final_project.dto.AdminGalleryDTO">
+		SELECT * FROM VIEW_ADMIN_GALLERY WHERE TYPE IN (#{dto.type, jdbcType=NUMERIC})
+		<trim prefix="AND (" prefixOverrides="OR" suffix=")">
+			<foreach collection="list" item="item">
+				<choose>
+					<when test="dto.search == 1001">
+						<if test="dto.search != item.code">
+							OR ${item.keyword} LIKE '%'||NVL(#{dto.keyword, jdbcType=VARCHAR}, '')||'%'
+						</if>
+					</when>
+					<otherwise>
+						<if test="dto.search == item.code">
+							OR ${item.keyword} LIKE '%'||NVL(#{dto.keyword, jdbcType=VARCHAR}, '')||'%'
+						</if>
+					</otherwise>
+				</choose>
+			</foreach>
+		</trim>
+	</select>
+	<!-- 커뮤니티 -->
+
 </mapper>

@@ -5,11 +5,16 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kh.final_project.dto.AdminCommunityDTO;
+import kh.final_project.dto.AdminGalleryDTO;
+import kh.final_project.dto.AdminSearchDTO;
 import kh.final_project.dto.CategoryType;
 import kh.final_project.dto.CountDTO;
 import kh.final_project.dto.MemberDTO;
@@ -109,6 +114,60 @@ public class AdminService {
 		dto.setStop_date(Timestamp.from(now.toInstant(ZoneOffset.ofHours(9))));
 
 		boolean result = adminDAO.banMember(dto);
+		return result;
+	}
+
+	/**
+	 * <b>[ 갤러리 ]</b>
+	 * <p>
+	 * 갤러리 타입 정보 : SELECT<br>
+	 * 갤러리 검색 정보 : SELECT
+	 * </p>
+	 */
+	public Map<String, List<CategoryType>> galleryInit() {
+		Map<String, List<CategoryType>> result = new HashMap<String, List<CategoryType>>();
+		List<CategoryType> typeList = typeDAO.selectByCategoryType();
+		result.put("typeList", typeList);
+		List<CategoryType> searchList = typeDAO.selectByGallery_Cards_Search();
+		result.put("searchList", searchList);
+		return result;
+	}
+
+	/**
+	 * <b>[ 갤러리 ]</b>
+	 * <p>
+	 * 갤러리 정보 : SELECT
+	 * </p>
+	 */
+	public List<AdminGalleryDTO> searchGallery(AdminSearchDTO dto) {
+		List<AdminGalleryDTO> result = adminDAO.searchGallery(dto, typeDAO.selectByGallery_Cards_Search());
+		return result;
+	}
+
+	/**
+	 * <b>[ 커뮤니티 ]</b>
+	 * <p>
+	 * 커뮤니티 타입 정보 : SELECT<br>
+	 * 커뮤니티 검색 정보 : SELECT
+	 * </p>
+	 */
+	public Map<String, List<CategoryType>> communityInit() {
+		Map<String, List<CategoryType>> result = new HashMap<String, List<CategoryType>>();
+		List<CategoryType> typeList = typeDAO.selectByBoardType();
+		result.put("typeList", typeList);
+		List<CategoryType> searchList = typeDAO.selectByCommunity_Search();
+		result.put("searchList", searchList);
+		return result;
+	}
+
+	/**
+	 * <b>[ 커뮤니티 ]</b>
+	 * <p>
+	 * 커뮤니티 정보 : SELECT
+	 * </p>
+	 */
+	public List<AdminCommunityDTO> searchCommunity(AdminSearchDTO dto) {
+		List<AdminCommunityDTO> result = adminDAO.searchCommunity(dto);
 		return result;
 	}
 
