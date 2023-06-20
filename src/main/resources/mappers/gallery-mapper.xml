@@ -49,11 +49,12 @@
                 </if>
                 and (title like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%' or writer like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%')
             </if>
+            and (writer = #{writer, jdbcType=NUMERIC} or yn = 'Y')
         </trim>
         ) where rn between #{start} and #{end}
     </select>
     <select id="selectOneCard" resultType="kh.final_project.dto.GalleryCardView">
-        select * from view_gallery_cards where seq = ${cardSeq}
+        select * from view_gallery_cards where seq = #{cardSeq}
     </select>
     <select id="selectAllContents" resultType="kh.final_project.dto.GalleryContent">
         select * from gallery_contents where gallery_cards = ${cardSeq} order by seq desc
