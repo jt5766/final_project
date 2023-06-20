@@ -147,6 +147,6 @@
 	</select>
 	
 	<select id="getSort" resultType="kh.final_project.dto.CommunitySort">
-	
+		select sysdate from dual
 	</select>
 </mapper>
