@@ -58,9 +58,9 @@ public class ChatController {
 	public String entrance(Long seq,Model model) {
 		boolean result = chatservice.checkUser((Integer)session.getAttribute("code"),seq);
 		if(result) {
-			List<ChatlogDTO> logdto = chatlogservice.selectLog(seq);
+			List<ChatlogDTO> loglist = chatlogservice.selectLog(seq);
 			model.addAttribute("chatseq",seq);
-			model.addAttribute("chatlog", logdto);
+			model.addAttribute("chatlog", loglist);
 			return "chat/chatroom";
 		}else {
 			return "home";
