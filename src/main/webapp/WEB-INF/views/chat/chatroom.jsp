@@ -89,14 +89,44 @@
 			let lastScroll = 1;
 			
 			$("#div_contents").scroll(function(e){
-				let currentScroll = $(this).scrollBottom();
+				let currentScroll = $(this).scrollTop();
 				let contents_height = $("#div_contents").height();
 				
-				let now_height = $(this).scrollBottom()+$("#div_contents").height();
+				let now_height = $(this).scrollTop()+$("#div_contents").height();
 				
 				if(currentScroll < lastScroll){
 					if(contents_height < (now_height + (contents_height*0.1))){
-						console.log("data 가져오기");
+						lastScroll++;
+						$.ajax({
+							url: "/chatlog",
+							method:"post",
+							data:{
+								seq:"${chatseq}",
+								currentPage:lastScroll
+							}
+						}).done(function(resp){
+							console.log(resp);
+							for(var i = 0;i < resp.length;i++){
+								const datalinediv = $("<div>");
+								datalinediv.addClass("linebox");
+								const datatextdiv = $("<div>");
+								if(resp[i].writer == ${code}){
+									datatextdiv.addClass("mytext");
+									datatextdiv.append(resp[i].txt);
+								}else{
+									const datawriterbox = $("<div>");
+									datawriterbox.addClass("writerbox");
+									datawriterbox.append(resp[i].writer);
+									datalinediv.append(datawriterbox);
+									datatextdiv.addClass("othertext");
+									datatextdiv.append(resp[i].txt);
+								}
+								datalinediv.append(datatextdiv);
+								$("#div_contents").prepend(datalinediv);
+							}
+							
+							let chatbox = document.querySelector('#div_contents');
+						})
 					}
 				}
 			})
