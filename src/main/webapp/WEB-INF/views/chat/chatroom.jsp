@@ -86,23 +86,35 @@
 				$("#div_text").focus();
 			})
 			
-			let lastScroll = 1;
+			let lastScroll = 0;
+			let currentPage = 1;
+			let maxScroll = ${maxScroll};
+			let dragFlag = false;
 			
 			$("#div_contents").scroll(function(e){
+				if (dragFlag || (maxScroll <= currentPage)){
+					return;
+				}
 				let currentScroll = $(this).scrollTop();
 				let contents_height = $("#div_contents").height();
 				
 				let now_height = $(this).scrollTop()+$("#div_contents").height();
-				
+				console.log("라스트 스크롤"+lastScroll)
+				console.log("커런트 스크롤"+currentScroll);
+				console.log("최대높이"+contents_height);
+				console.log("커런트+최대높이"+now_height);
 				if(currentScroll < lastScroll){
-					if(contents_height < (now_height + (contents_height*0.1))){
-						lastScroll++;
+					if(currentScroll < 200){
+						
+						currentPage++;
+						dragFlag = true;
+						
 						$.ajax({
 							url: "/chatlog",
 							method:"post",
 							data:{
 								seq:"${chatseq}",
-								currentPage:lastScroll
+								currentPage:currentPage
 							}
 						}).done(function(resp){
 							console.log(resp);
@@ -122,13 +134,14 @@
 									datatextdiv.append(resp[i].txt);
 								}
 								datalinediv.append(datatextdiv);
-								$("#div_contents").prepend(datalinediv);
+								$("#div_contents").prepend(datalinediv);	
 							}
-							
+							dragFlag = false;
 							let chatbox = document.querySelector('#div_contents');
 						})
 					}
 				}
+				lastScroll = currentScroll;
 			})
 		})
 	</script>

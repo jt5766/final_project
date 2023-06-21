@@ -25,18 +25,17 @@ public class ChatlogService {
 		return dao.selectLog(seq);
 	}
 	
-//	public List<String> getPageNavi(Long seq, int currentPage) {
-//		int postPerPage = this.postPerPage;
-//		int max = dao.maxData(seq);
-//		System.out.println("max : " + max);
-//		int totalPage;
-//		if (max % postPerPage > 0) {
-//			totalPage = max / postPerPage + 1;
-//		} else {
-//			totalPage = max / postPerPage;
-//		}
-//		return pageNavi;
-//	}
+	public int maxScroll(Long seq) {
+		int postPerPage = this.postPerPage;
+		int max = dao.maxData(seq);
+		int totalPage;
+		if (max % postPerPage > 0) {
+			totalPage = max / postPerPage + 1;
+		} else {
+			totalPage = max / postPerPage;
+		}
+		return totalPage;
+	}
 	
 	public List<ChatlogDTO> selectChatLog(Long seq, int currentPage) {
 //		스크롤마다 20개씩 가져올 코드
