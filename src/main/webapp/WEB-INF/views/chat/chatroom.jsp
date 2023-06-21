@@ -86,23 +86,25 @@
 				$("#div_text").focus();
 			})
 			
-			let lastScroll = 1;
+			let currentPage = 1;
 			
 			$("#div_contents").scroll(function(e){
-				let currentScroll = $(this).scrollTop();
-				let contents_height = $("#div_contents").height();
+				let contents_height = $(this).scrollTop();
+				let currentScroll = $("#div_contents").height();
 				
 				let now_height = $(this).scrollTop()+$("#div_contents").height();
-				
-				if(currentScroll < lastScroll){
-					if(contents_height < (now_height + (contents_height*0.1))){
-						lastScroll++;
+				console.log(currentScroll);
+				console.log(contents_height);
+				console.log(now_height);
+				if(contents_height < currentScroll){
+					if(contents_height < ((now_height*1.1) - contents_height)){
+						currentPage++;
 						$.ajax({
 							url: "/chatlog",
 							method:"post",
 							data:{
 								seq:"${chatseq}",
-								currentPage:lastScroll
+								currentPage:currentPage
 							}
 						}).done(function(resp){
 							console.log(resp);

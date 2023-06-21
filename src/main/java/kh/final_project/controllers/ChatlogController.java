@@ -1,6 +1,8 @@
 package kh.final_project.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -35,6 +37,7 @@ public class ChatlogController {
 	@RequestMapping("/chatlog")
 	@ResponseBody
 	public List<ChatlogDTO> chatlog(Long seq, int currentPage) {
-		return chatlogservice.selectChatLog(seq, currentPage);
+		Map<String,Object> param = new HashMap<>();
+		param.put("list",chatlogservice.selectChatLog(seq, currentPage));
 	}
 }
