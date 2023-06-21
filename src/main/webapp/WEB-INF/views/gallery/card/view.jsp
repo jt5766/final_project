@@ -209,11 +209,11 @@
   $('#invite').on('click', function () {
     $.ajax({
       url: "/chat/application",
-      dats: {
+      data: {
         mentor:${sessionScope.code},
         mentee:${card.writer}
       },
-      method: "get"
+      method: "post"
     }).done(function (resp) {
       console.log(resp);
     });
