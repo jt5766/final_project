@@ -22,11 +22,6 @@
         #{txt}, #{yn}, default, default, default)
     </insert>
 
-<!--    <select id="selectAllCardsPage" resultType="kh.final_project.dto.GalleryCardView">-->
-<!--        select * from(select view_gallery_cards.*, row_number() over(order by seq desc) rn from view_gallery_cards)-->
-<!--        where rn between #{startPost} and #{endPost}-->
-<!--    </select>-->
-
     <select id="selectAllCards" resultType="kh.final_project.dto.GalleryCardView">
         select * from (
         select view_gallery_cards.*, row_number() over(order by
@@ -105,6 +100,10 @@
         </choose>
         txt = #{txt}, yn = #{yn} where seq = ${seq} and gallery_cards = ${gallery_cards}
     </update>
+    <update id="updateDisclosure">
+        update gallery_cards set yn = #{value} where seq = #{cardSeq}
+    </update>
+
     <delete id="deleteCard">
         delete from gallery_cards where seq = #{cardSeq}
     </delete>

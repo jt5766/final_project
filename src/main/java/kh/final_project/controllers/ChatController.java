@@ -1,18 +1,17 @@
 package kh.final_project.controllers;
 
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import kh.final_project.dto.ChatlistDTO;
 import kh.final_project.dto.ChatlogDTO;
 import kh.final_project.services.ChatService;
 import kh.final_project.services.ChatlogService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/chat/")
@@ -34,10 +33,9 @@ public class ChatController {
 		return "chat/chatlist";
 	}
 	
-	@RequestMapping("application")
-	public String application(int mentor,int mentee) {
+	@RequestMapping(value = "application", method = RequestMethod.POST)
+	public void application(int mentor, int mentee) {
 		chatservice.application(mentor, mentee);
-		return "/";
 	}
 	
 	@RequestMapping("accept")
@@ -58,10 +56,11 @@ public class ChatController {
 	public String entrance(Long seq,Model model) {
 		boolean result = chatservice.checkUser((Integer)session.getAttribute("code"),seq);
 		if(result) {
-			List<ChatlogDTO> loglist = chatlogservice.selectLog(seq);
+			chatlogservice.maxScroll(seq);
+			List<ChatlogDTO> loglist = chatlogservice.selectChatLog(seq);
+			System.out.println(loglist.get(0).getWriter());
 			model.addAttribute("chatseq",seq);
 			model.addAttribute("chatlog", loglist);
-			model.addAttribute("maxScroll", chatlogservice.maxScroll(seq));
 			return "chat/chatroom";
 		}else {
 			return "home";

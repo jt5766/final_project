@@ -78,21 +78,24 @@
 			})
 			
 			$("#button_send").on("click",function(){
-				const destination = "/app/message";
-				const header = {};
-				const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html()});
-				stompClient.send(destination,header,body);
-				$("#div_text").html("");
-				$("#div_text").focus();
+				if($("#div_text").text().trim() == ""){
+					return false;
+				}else{
+					const destination = "/app/message";
+					const header = {};
+					const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html()});
+					stompClient.send(destination,header,body);
+					$("#div_text").html("");
+					$("#div_text").focus();
+				}
 			})
 			
 			let lastScroll = 0;
-			let currentPage = 1;
-			let maxScroll = ${maxScroll};
 			let dragFlag = false;
+			let lengthsize = false;
 			
 			$("#div_contents").scroll(function(e){
-				if (dragFlag || (maxScroll <= currentPage)){
+				if (dragFlag || lengthsize){
 					return;
 				}
 				let currentScroll = $(this).scrollTop();
@@ -106,19 +109,20 @@
 				if(currentScroll < lastScroll){
 					if(currentScroll < 200){
 						
-						currentPage++;
 						dragFlag = true;
 						
 						$.ajax({
 							url: "/chatlog",
 							method:"post",
 							data:{
-								seq:"${chatseq}",
-								currentPage:currentPage
+								seq:"${chatseq}"
 							}
 						}).done(function(resp){
 							console.log(resp);
-							for(var i = 0;i < resp.length;i++){
+							if(resp.length == 0){
+								lengthsize = true;
+							}
+							for(var i = resp.length-1;i >= 0;i--){
 								const datalinediv = $("<div>");
 								datalinediv.addClass("linebox");
 								const datatextdiv = $("<div>");
@@ -152,6 +156,7 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-md-12" id="div_contents">
+            
             	<c:forEach var="log" items="${chatlog}">
             		<c:choose>
             			<c:when test="${log.writer==code}">
@@ -177,13 +182,8 @@
             </div>
         </div>
         <div class="row">
-        	메모 : 1. 무한 스크롤링을 할껀데 20개씩 데이터를 잘라서 가져오도록 할려고함.
-        		  2. 무한 스크롤링을 할 때 마다 date 값을 불러와서 만약 전에 나왔던 (20개씩 불러오니깐) 숫자랑 같으면
-        		  전에 띄웠던 date div 를 삭제하고 date 값을 다시 띄운다 ex) 카카오톡 스크롤링
-        		  3. 처음 20개를 띄웠을 때 date 값을 어떻게 띄워야 할지 고민 해봐야겠다.
-        		  4. 고민 해봤는데 다 가져와서 if 문으로 해야할 것 같긴 한데 띄울때 즉 c:forEach 돌릴 때 안쪽에 if 문
-        		  쓰는건 거의 확실한데 전에 띄웠던 값을 seq-1 로 해서 할까? for 문으로 하는게 좋을듯?
-        		  5. 컬럼을 한개 더 만들어서 date 가 전에 들어간 date 와 다르면 y 같으면 n 으로 하는거 어떰?
+        	메모 : 1. 시간을 나타내야 함 일단 시/분은 채팅 옆쪽에 출력하고 년 월 일은 모아서 위쪽에 추가 ( 카톡처럼 )
+        		  2. regex 1300자 제한 해줘야 함 안그럼 DB 에 안들어가서 오류남 ( DB는 4000자 까지 되는데 한글은 3배라 1300자만 )
         </div>
     </div>
 </body>

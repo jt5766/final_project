@@ -19,34 +19,35 @@ public class ChatlogService {
 	@Autowired
 	private ChatlogDAO dao;
 	
-	private final Integer postPerPage = 20;
+	private int startPost;
+	
+	private final Integer postPerPage = 30;
 	
 	public List<ChatlogDTO> selectLog(Long seq) {
 		return dao.selectLog(seq);
 	}
 	
 	public int maxScroll(Long seq) {
-		int postPerPage = this.postPerPage;
-		int max = dao.maxData(seq);
-		int totalPage;
-		if (max % postPerPage > 0) {
-			totalPage = max / postPerPage + 1;
-		} else {
-			totalPage = max / postPerPage;
-		}
-		return totalPage;
+		startPost = dao.maxData(seq);
+		return startPost;
 	}
 	
-	public List<ChatlogDTO> selectChatLog(Long seq, int currentPage) {
-//		스크롤마다 20개씩 가져올 코드
-		int startPost = (currentPage * this.postPerPage) - (this.postPerPage - 1);
-		int endPost = (currentPage * this.postPerPage);
+	public List<ChatlogDTO> selectChatLog(Long seq) {
+//		스크롤마다 30개씩 가져올 코드
+		if(startPost < 0) {
+			startPost = 0;
+		}
+		int endPost = startPost-postPerPage+1;
+		if(endPost<0) {
+			endPost = 0;
+		}
 		System.out.println(startPost);
 		System.out.println(endPost);
 		Map<String, Object> scrollList = new HashMap<>();
 		scrollList.put("seq", seq);
 		scrollList.put("startPost", startPost);
 		scrollList.put("endPost", endPost);
+		startPost -= postPerPage;
 //		Map에 동적 쿼리를 위한 테이블 이름 String, startPost와 endPost를 put하고 DAO로 전달하여 MAPPER의 매개변수로 사용
 		return dao.selectScrollList(scrollList);
 	}
