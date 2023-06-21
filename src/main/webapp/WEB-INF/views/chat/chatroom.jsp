@@ -91,12 +91,11 @@
 			})
 			
 			let lastScroll = 0;
-			let currentPage = 1;
-			let maxScroll = ${maxScroll};
 			let dragFlag = false;
+			let lengthsize = false;
 			
 			$("#div_contents").scroll(function(e){
-				if (dragFlag || (maxScroll <= currentPage)){
+				if (dragFlag || lengthsize){
 					return;
 				}
 				let currentScroll = $(this).scrollTop();
@@ -110,18 +109,19 @@
 				if(currentScroll < lastScroll){
 					if(currentScroll < 200){
 						
-						currentPage++;
 						dragFlag = true;
 						
 						$.ajax({
 							url: "/chatlog",
 							method:"post",
 							data:{
-								seq:"${chatseq}",
-								currentPage:currentPage
+								seq:"${chatseq}"
 							}
 						}).done(function(resp){
 							console.log(resp);
+							if(resp.length == 0){
+								lengthsize = true;
+							}
 							for(var i = resp.length-1;i >= 0;i--){
 								const datalinediv = $("<div>");
 								datalinediv.addClass("linebox");

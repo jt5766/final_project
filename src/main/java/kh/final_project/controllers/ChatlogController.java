@@ -36,8 +36,7 @@ public class ChatlogController {
 	
 	@RequestMapping("/chatlog")
 	@ResponseBody
-	public List<ChatlogDTO> chatlog(Long seq, int currentPage) {
-		System.out.println(currentPage);
-		return chatlogservice.selectChatLog(seq, currentPage);
+	public List<ChatlogDTO> chatlog(Long seq) {
+		return chatlogservice.selectChatLog(seq);
 	}
 }
