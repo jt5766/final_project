@@ -28,7 +28,5 @@ body {
 }
 </style>
 </head>
-<body>
-
-</body>
+<body></body>
 </html>
