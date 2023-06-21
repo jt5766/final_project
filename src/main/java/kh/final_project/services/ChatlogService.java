@@ -19,7 +19,7 @@ public class ChatlogService {
 	@Autowired
 	private ChatlogDAO dao;
 	
-	private final Integer postPerPage = 20;
+	private final Integer postPerPage = 30;
 	
 	public List<ChatlogDTO> selectLog(Long seq) {
 		return dao.selectLog(seq);
@@ -38,7 +38,7 @@ public class ChatlogService {
 	}
 	
 	public List<ChatlogDTO> selectChatLog(Long seq, int currentPage) {
-//		스크롤마다 20개씩 가져올 코드
+//		스크롤마다 30개씩 가져올 코드
 		int startPost = (currentPage * this.postPerPage) - (this.postPerPage - 1);
 		int endPost = (currentPage * this.postPerPage);
 		System.out.println(startPost);

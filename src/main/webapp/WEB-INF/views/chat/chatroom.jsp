@@ -78,12 +78,16 @@
 			})
 			
 			$("#button_send").on("click",function(){
-				const destination = "/app/message";
-				const header = {};
-				const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html()});
-				stompClient.send(destination,header,body);
-				$("#div_text").html("");
-				$("#div_text").focus();
+				if($("#div_text").text().trim() == ""){
+					return false;
+				}else{
+					const destination = "/app/message";
+					const header = {};
+					const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html()});
+					stompClient.send(destination,header,body);
+					$("#div_text").html("");
+					$("#div_text").focus();
+				}
 			})
 			
 			let lastScroll = 0;
@@ -118,7 +122,7 @@
 							}
 						}).done(function(resp){
 							console.log(resp);
-							for(var i = 0;i < resp.length;i++){
+							for(var i = resp.length-1;i >= 0;i--){
 								const datalinediv = $("<div>");
 								datalinediv.addClass("linebox");
 								const datatextdiv = $("<div>");
@@ -152,6 +156,7 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-md-12" id="div_contents">
+            
             	<c:forEach var="log" items="${chatlog}">
             		<c:choose>
             			<c:when test="${log.writer==code}">
