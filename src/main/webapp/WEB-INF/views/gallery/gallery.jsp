@@ -35,20 +35,21 @@
             display: flex;
         }
 
-        .category {
-            background-color: limegreen;
-            padding: 1px;
+        .info>div {
+            min-width: 2rem;
+            padding: 1px 5px;
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
             margin: 0 3px 0 0;
+            text-align: center;
+        }
+
+        .category {
+            background-color: limegreen;
         }
 
         .genre-name {
             background-color: lightgray;
-            padding: 1px;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            margin: 0 3px 0 0;
         }
 
         .title {
@@ -164,6 +165,7 @@
                 <option value="1006">음악</option>
             </select>
             <button type="button" id="to-insert">입력페이지로</button>
+            <button type="button" id="to-home">메인으로</button>
             <nav>
                 <ul class="pagination">
                     <c:forEach items="${navi}" var="n" varStatus="status">
@@ -195,6 +197,9 @@
     $('#to-insert').on('click', function () {
         location.href = '/gallery/insert/' + $('#category option:selected').val();
     });
+    $('#to-home').on('click', function () {
+      location.href = '/';
+    })
 </script>
 </body>
 </html>
