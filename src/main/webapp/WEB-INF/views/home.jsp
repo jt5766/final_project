@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- 공통 script -->
+<!-- 공통 script & css -->
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <c:import url="${path}/resources/js/scripts.jsp" />
+<link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 	<!-- GNB -->
@@ -14,7 +15,7 @@
 	<!-- LNB -->
 
 	<!-- CONTENTS -->
-	<div class="container-xl">
+	<div class="container-xl bg-light">
 		<div class="row">
 			<button onclick="location.href='/member/loginForm'">로그인</button>
 			<br> ${nickName}님환영 ${code}
@@ -107,6 +108,9 @@
 			<button onclick="location.href='/admin/'">관리자 페이지</button>
 		</div>
 	</div>
+	<!-- GNB -->
+	<c:import url="${path}/resources/js/FOOTER.jsp" />
+	<!-- script - Contents -->
 	<script type="text/javascript">
 		// Contents 위치 조정.
 		$(document).ready(function() {
