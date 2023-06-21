@@ -115,6 +115,10 @@ public class GalleryController {
         return "redirect:/gallery/{cardSeq}";
     }
 
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
     @PostMapping("/{cardSeq}/modify")
     public String modifyCard(GalleryCard card, @PathVariable Long cardSeq) {
         galleryService.updateCard(card);

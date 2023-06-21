@@ -133,7 +133,7 @@
                                 ${card.title}
                         </div>
                         <div class="writer">
-                                ${card.writer}
+                                ${card.member_name}
                         </div>
                         <div class="catchphrase">
                                 ${card.catchphrase}
