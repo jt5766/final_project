@@ -6,6 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="/resources/oembed/jquery.oembed.css">
+    <script src="/resources/oembed/jquery.oembed.js"></script>
     <style>
 
         * {
@@ -14,12 +16,12 @@
             box-sizing: border-box;
         }
 
-        #btnWrap {
+        .btnWrap {
             width: 500px;
             margin: 30px 0px;
         }
 
-        #modal_link {
+        .modal_link {
             width: 150px;
             height: 50px;
             padding: 10px 5px;
@@ -29,15 +31,15 @@
             cursor: pointer;
         }
 
-        #modal_link:hover {
+        .modal_link:hover {
             background-color: #19197080;
         }
 
-        #modal_link:active {
+        .modal_link:active {
             background-color: #19197097;
         }
 
-        #modalWrap {
+        .modalWrap {
             position: fixed;
             z-index: 1;
             padding-top: 100px;
@@ -50,11 +52,11 @@
             animation: fadeInModal 500ms linear;
         }
 
-        #modalContent {
+        .modalContent {
             height: 450px;
         }
 
-        #modalBody {
+        .modalBody {
             width: 600px;
             height: 450px;
             padding: 30px 30px;
@@ -62,13 +64,13 @@
             background-color: #fff;
         }
 
-        #modal_input_box {
+        .modal_input_box {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
         }
 
-        #modal_video_link {
+        .third_party_link {
             width: 100%;
             padding: 5px 10px 5px 10px;
             border-top-left-radius: 10px;
@@ -78,7 +80,7 @@
             background-color: #80808020;
         }
 
-        #modal_confirm_link {
+        .confirm_video_link {
             padding: 5px 10px;
             cursor: pointer;
             border: none;
@@ -87,7 +89,7 @@
             background-color: #19197050;
         }
 
-        #closeBtn {
+        .closeBtn {
             float: right;
             font-weight: bold;
             color: #777;
@@ -138,17 +140,17 @@
                 <div class="row">
                     <div class="col-md-12">
                         <input type="hidden" name="video_url" id="input_video_url">
-                        <div id="btnWrap">
-                            <button type="button" id="modal_link">링크 올리기</button>
+                        <div class="btnWrap">
+                            <button type="button" class="modal_link">링크 올리기</button>
                         </div>
-                        <div id="modalWrap" class="hidden">
-                            <div id="modalContent">
-                                <div id="modalBody">
-                                    <span id="closeBtn">&times;</span>
+                        <div class="hidden modalWrap">
+                            <div class="modalContent">
+                                <div class="modalBody">
+                                    <span class="closeBtn">&times;</span>
                                     <h5>영상 링크를 복사하여 붙여주세요.</h5>
-                                    <div id="modal_input_box">
-                                        <input type="text" id="modal_video_link" placeholder="paste url here">
-                                        <button type="button" id="modal_confirm_link">업로드</button>
+                                    <div class="modal_input_box">
+                                        <input type="text" class="third_party_link" placeholder="paste url here">
+                                        <button type="button" class="confirm_video_link">업로드</button>
                                     </div>
                                 </div>
                             </div>
@@ -157,8 +159,33 @@
                             <iframe width="560" height="315" src=""
                                     title="YouTube video player" frameborder="0"
                                     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    allowfullscreen id="preview_video">
+                                    allowfullscreen class="preview_video">
                             </iframe>
+                        </div>
+                    </div>
+                </div>
+            </c:when>
+            <c:when test="${categoryType == 1006}">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="hidden" name="file_url" id="input_audio_url">
+                        <div class="btnWrap">
+                            <button type="button" class="modal_link">링크 올리기</button>
+                        </div>
+                        <div class="hidden modalWrap">
+                            <div class="modalContent">
+                                <div class="modalBody">
+                                    <span class="closeBtn">&times;</span>
+                                    <h5>사운드클라우드 링크를 복사하여 붙여주세요.</h5>
+                                    <div class="modal_input_box">
+                                        <input type="text" class="third_party_link" placeholder="paste url here">
+                                        <button type="button" class="confirm_audio_link">업로드</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview hidden">
+                            <a href="" class="preview_audio"></a>
                         </div>
                     </div>
                 </div>
@@ -216,10 +243,11 @@
     const naver_regex = /https:\/\/tv\.naver\.com\/v\/.*/;
     const cut_naverURL = "https://tv.naver.com/v/";
     const replace_naverURL = "https://tv.naver.com/embed/";
+    const soundcloud_regex = /https:\/\/(?:on\.)?soundcloud\.com\/.*/;
     const allowVal = $('#input_allow_show');
-    const btn = document.querySelector('#modal_link');
-    const modal = $('#modalWrap');
-    const closeBtn = document.querySelector('#closeBtn');
+    const btn = document.querySelector('.modal_link');
+    const modal = $('.modalWrap');
+    const closeBtn = document.querySelector('.closeBtn');
 
 
     const pop_modal = function () {
@@ -251,22 +279,33 @@
             // modal.fadeOut();
         }
     }
-    $('#modal_confirm_link').on('click', function () {
-        const urlVal = $('#modal_video_link').val().trim();
+    $('.confirm_video_link').on('click', function () {
+        const urlVal = $('.third_party_link').val().trim();
         if (youtube_regex.test(urlVal)) {
             $('#input_video_url').val(urlVal.replace(cut_youtubeURL, replace_youtubeURL));
-            $('#preview_video').attr('src', urlVal.replace(cut_youtubeURL, replace_youtubeURL));
+            $('.preview_video').attr('src', urlVal.replace(cut_youtubeURL, replace_youtubeURL));
             $('.preview').removeClass('hidden');
             pop_modal();
         } else if (naver_regex.test(urlVal)) {
             $('#input_video_url').val(urlVal.replace(cut_naverURL, replace_naverURL));
-            $('#preview_video').attr('src', urlVal.replace(cut_naverURL, replace_naverURL));
+            $('.preview_video').attr('src', urlVal.replace(cut_naverURL, replace_naverURL));
             $('.preview').removeClass('hidden');
             pop_modal();
         } else {
             alert("올바른 주소가 아닙니다.");
         }
-    })
+    });
+    $('.confirm_audio_link').on('click', function () {
+        const urlVal = $('.third_party_link').val().trim();
+        if (soundcloud_regex.test(urlVal)) {
+            $('#input_audio_url').val(urlVal);
+            $('.preview_audio').attr('href', urlVal).oembed();
+            $('.preview').removeClass('hidden');
+            pop_modal();
+        } else {
+            alert("올바른 주소가 아닙니다.");
+        }
+    });
 </script>
 </body>
 </html>

@@ -17,8 +17,9 @@ public class GalleryCardView {
     private String member_name;
     private String catchphrase;
     private String synopsis;
-    private Integer total_count;
     private LocalDateTime write_date;
+    private Integer total_count;
+    private String yn;
 
     public Long getSeq() {
         return seq;
@@ -146,5 +147,13 @@ public class GalleryCardView {
 
     public void setWrite_date(LocalDateTime write_date) {
         this.write_date = write_date;
+    }
+
+    public String getYn() {
+        return yn;
+    }
+
+    public void setYn(String yn) {
+        this.yn = yn;
     }
 }
