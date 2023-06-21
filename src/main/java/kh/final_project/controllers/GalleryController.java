@@ -103,18 +103,15 @@ public class GalleryController {
 
     @PostMapping("/insert")
     public String insertCard(GalleryCard card, @RequestPart(value = "thumbnail_image", required = false) MultipartFile multipartFile) throws IOException {
-        if (card.getWriter() == null) {
-            card.setWriter(10000001);
-        // 접속중인 아이디가 없을 경우 기본 아이디 추가 (이후 삭제 예정)
-        }
         String realPath = session.getServletContext().getRealPath("resources");
         galleryService.insertCard(card, multipartFile, realPath);
         return "redirect:/gallery";
     }
 
     @PostMapping("/{cardSeq}/contents")
-    public String insertContent(GalleryContent content, @PathVariable Long cardSeq) {
-        galleryService.insertContent(content);
+    public String insertContent(GalleryContent content, @PathVariable Long cardSeq, @RequestPart(value = "file_image", required = false) MultipartFile multipartFile) throws IOException {
+        String realPath = session.getServletContext().getRealPath("resources");
+        galleryService.insertContent(content, multipartFile, realPath);
         return "redirect:/gallery/{cardSeq}";
     }
 

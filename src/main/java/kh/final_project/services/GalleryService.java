@@ -68,7 +68,16 @@ public class GalleryService {
         return galleryDAO.selectAllContents(cardSeq);
     }
 
-    public void insertContent(GalleryContent content) {
+    public void insertContent(GalleryContent content, MultipartFile multipartFile, String realPath) throws IOException {
+        content.setFile_url(
+                new StringBuilder()
+                        .append("/gallery/content/files/")
+                        .append(UUID.randomUUID())
+                        .append("_")
+                        .append(content.getFile_url())
+                        .toString()
+        );
+        transferFile(realPath + content.getFile_url(), multipartFile);
         galleryDAO.insertContent(content);
     }
 

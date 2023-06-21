@@ -126,7 +126,7 @@
     </div>
 </div>
 <div class="container-xl">
-    <form action="/gallery/${cardSeq}/contents" method="post">
+    <form action="/gallery/${cardSeq}/contents" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-12">
                 <input type="hidden" name="gallery_cards" value="${cardSeq}">
@@ -194,10 +194,12 @@
             <c:otherwise>
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="input_file_url">
-                            [이미지/오디오] 파일 선택 - 만화 / 그림 / 사진 / 음악
-                            <input type="file" name="file_url" id="input_file_url">
+                        <label for="input_file_image">
+                            [이미지] 파일 선택 - 만화 / 그림 / 사진
                         </label>
+                        <input type="file" name="file_image" id="input_file_image" onchange="readURL(this)" formenctype="multipart/form-data">
+                        <input type="hidden" name="file_url">
+                        <img src="" alt="preview" id="img">
                     </div>
                 </div>
             </c:otherwise>
@@ -306,6 +308,20 @@
             alert("올바른 주소가 아닙니다.");
         }
     });
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            const blob = new Blob([input.files[0]]);
+            reader.onload = function () {
+                $('#img').attr('src', URL.createObjectURL(blob));
+                $('input[name="file_url"]').val(input.files[0].name);
+            };
+            reader.readAsDataURL(blob);
+        } else {
+            $('#img').attr('src', "");
+            $('input[name="file_url"]').val("");
+        }
+    }
 </script>
 </body>
 </html>

@@ -45,7 +45,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="file">
-            <img src="${content.file_url}" alt="${content.file_url}">
+            <img class="file" src="/resources${content.file_url}" alt="${content.file_url}">
           </div>
         </div>
       </div>
