@@ -61,6 +61,7 @@ public class ChatController {
 			List<ChatlogDTO> loglist = chatlogservice.selectLog(seq);
 			model.addAttribute("chatseq",seq);
 			model.addAttribute("chatlog", loglist);
+			model.addAttribute("maxScroll", chatlogservice.maxScroll(seq));
 			return "chat/chatroom";
 		}else {
 			return "home";

@@ -36,10 +36,8 @@ public class ChatlogController {
 	
 	@RequestMapping("/chatlog")
 	@ResponseBody
-	public Map<String,Object> chatlog(Long seq, int currentPage) {
-		Map<String,Object> param = new HashMap<>();
-		param.put("list",chatlogservice.selectChatLog(seq, currentPage));
-		param.put("maxScroll", chatlogservice.maxScroll(seq, currentPage));
-		return param;
+	public List<ChatlogDTO> chatlog(Long seq, int currentPage) {
+		System.out.println(currentPage);
+		return chatlogservice.selectChatLog(seq, currentPage);
 	}
 }

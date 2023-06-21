@@ -25,7 +25,7 @@ public class ChatlogService {
 		return dao.selectLog(seq);
 	}
 	
-	public int maxScroll(Long seq, int currentPage) {
+	public int maxScroll(Long seq) {
 		int postPerPage = this.postPerPage;
 		int max = dao.maxData(seq);
 		int totalPage;
