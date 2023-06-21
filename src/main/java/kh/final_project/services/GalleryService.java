@@ -150,4 +150,8 @@ public class GalleryService {
             multipartFile.transferTo(file);
         }
     }
+
+    public void updateCardDisclosure(Long cardSeq, String value) {
+        galleryDAO.updateCardDisclosure(cardSeq, value);
+    }
 }

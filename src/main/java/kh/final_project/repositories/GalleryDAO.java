@@ -76,4 +76,12 @@ public class GalleryDAO {
     public Integer getTotalCards(SearchCriteria searchCriteria) {
         return db.selectOne("Gallery.totalCards", searchCriteria);
     }
+
+    public void updateCardDisclosure(Long cardSeq, String value) {
+        Map<String, Object> params = Map.ofEntries(
+                Map.entry("cardSeq", cardSeq),
+                Map.entry("value", value)
+        );
+        db.update("Gallery.updateDisclosure", params);
+    }
 }

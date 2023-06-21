@@ -142,6 +142,12 @@ public class GalleryController {
         return "redirect:/gallery/{cardSeq}";
     }
 
+    @PutMapping(value = "/disclosure/{cardSeq}")
+    @ResponseBody
+    public void updateDisclosure(@PathVariable Long cardSeq, @RequestBody String value) {
+        galleryService.updateCardDisclosure(cardSeq, value);
+    }
+
     private void setConditions(Model model) {
         List<List<CategoryType>> result = galleryService.getConditions();
         model.addAttribute("categoryTypes", result.get(0));
