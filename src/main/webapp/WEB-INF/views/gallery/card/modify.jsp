@@ -48,22 +48,10 @@
                 <div class="col-md-12">
                     <div class="genre">
                         <p>장르 / 최대 2개</p>
-                        <input type="checkbox" name="genreType" id="romance" value="1001">
-                        <label for="romance">로맨스</label>
-                        <input type="checkbox" name="genreType" id="fantasy" value="1002">
-                        <label for="fantasy">판타지</label>
-                        <input type="checkbox" name="genreType" id="action" value="1003">
-                        <label for="action">액션</label>
-                        <input type="checkbox" name="genreType" id="thriller" value="1004">
-                        <label for="thriller">스릴러</label>
-                        <input type="checkbox" name="genreType" id="gag" value="1005">
-                        <label for="gag">개그</label>
-                        <input type="checkbox" name="genreType" id="wuxia" value="1006">
-                        <label for="wuxia">무협/사극</label>
-                        <input type="checkbox" name="genreType" id="drama" value="1007">
-                        <label for="drama">드라마</label>
-                        <input type="checkbox" name="genreType" id="sports" value="1008">
-                        <label for="sports">스포츠</label>
+                        <c:forEach items="${genreTypes}" var="genreType">
+                            <input type="checkbox" name="genreType" id="genre-${genreType.code}" value="${genreType.code}">
+                            <label for="genre-${genreType.code}">${genreType.name}</label>
+                        </c:forEach>
                     </div>
                 </div>
             </div>

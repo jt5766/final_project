@@ -219,4 +219,8 @@ public class GalleryService {
             boolean delete = file.delete();
         }
     }
+
+    public List<CategoryType> getGenreTypes() {
+        return typeDAO.selectByGenreType();
+    }
 }

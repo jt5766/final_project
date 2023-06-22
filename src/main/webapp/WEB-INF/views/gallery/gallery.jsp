@@ -104,8 +104,9 @@
                 </select>
                 <input type="text" name="searchQuery">
                 <c:forEach items="${sortConditions}" var="sortContidion" varStatus="status">
-                    <input type="radio" name="sortCode" value="${sortContidion.code}"
-                           <c:if test="${status.index == 0}">checked</c:if>>${sortContidion.name}
+                    <input type="radio" name="sortCode" value="${sortContidion.code}" id="sort-${sortContidion.code}"
+                           <c:if test="${status.index == 0}">checked</c:if>>
+                    <label for="sort-${sortContidion.code}">${sortContidion.name}</label>
                 </c:forEach>
             </div>
         </div>

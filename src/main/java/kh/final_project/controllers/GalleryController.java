@@ -79,7 +79,8 @@ public class GalleryController {
     }
 
     @GetMapping("/insert/{categoryType}")
-    public String toCardInsert(@ModelAttribute("categoryType") @PathVariable Integer categoryType) {
+    public String toCardInsert(@ModelAttribute("categoryType") @PathVariable Integer categoryType, Model model) {
+        setGenreTypes(model);
         return "/gallery/card/insert";
     }
 
@@ -92,6 +93,7 @@ public class GalleryController {
     public String toCardModify(@PathVariable Long cardSeq, @ModelAttribute("categoryType") @PathVariable Integer categoryType, Model model) {
         GalleryCardView card = galleryService.selectOneCard(cardSeq);
         model.addAttribute("card", card);
+        setGenreTypes(model);
         return "/gallery/card/modify";
     }
 
@@ -178,6 +180,11 @@ public class GalleryController {
                 .map(e -> e.replaceAll("&?page=?[0-9]*", ""))
                 .orElse("");
         model.addAttribute("queryString", queryString);
+    }
+
+    private void setGenreTypes(Model model) {
+        List<CategoryType> genreTypes = galleryService.getGenreTypes();
+        model.addAttribute("genreTypes", genreTypes);
     }
 
     private void setNaviOfCards(Model model, SearchCriteria searchCriteria) {
