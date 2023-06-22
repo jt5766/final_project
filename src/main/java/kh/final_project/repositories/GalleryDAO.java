@@ -1,9 +1,6 @@
 package kh.final_project.repositories;
 
-import kh.final_project.dto.GalleryCard;
-import kh.final_project.dto.GalleryCardView;
-import kh.final_project.dto.GalleryContent;
-import kh.final_project.dto.SearchCriteria;
+import kh.final_project.dto.*;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -41,8 +38,8 @@ public class GalleryDAO {
         return db.selectOne("Gallery.selectOneContent", params);
     }
 
-    public List<GalleryContent> selectAllContents(Long cardSeq) {
-        return db.selectList("Gallery.selectAllContents", cardSeq);
+    public List<GalleryContent> selectAllContents(GalleryCardDTO galleryCardDTO) {
+        return db.selectList("Gallery.selectAllContents", galleryCardDTO);
     }
 
     public void insertContent(GalleryContent content) {
@@ -75,6 +72,10 @@ public class GalleryDAO {
 
     public Integer getTotalCards(SearchCriteria searchCriteria) {
         return db.selectOne("Gallery.totalCards", searchCriteria);
+    }
+
+    public Integer getTotalContents(GalleryCardDTO galleryCardDTO) {
+        return db.selectOne("Gallery.totalContents", galleryCardDTO);
     }
 
     public void updateCardDisclosure(Long cardSeq, String value) {

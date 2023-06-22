@@ -24,11 +24,11 @@
             flex: 2 0 0;
         }
 
-        .card-body>div {
+        .card-body > div {
             flex: 1 0 0;
         }
 
-        .card-body>.info {
+        .card-body > .info {
             display: flex;
             justify-content: left;
             justify-self: flex-start;
@@ -57,7 +57,7 @@
             background-color: lightgray;
         }
 
-        .card-body>.title {
+        .card-body > .title {
             font-size: 20pt;
             flex: 2 0 0;
         }
@@ -224,13 +224,41 @@
         <div class="row">
             <div class="col-md-12">
                 <div onclick="location.href='/gallery/${card.seq}/contents/${content.seq}'" class="content-link">
-                    ${content.title}
+                        ${content.title}
                 </div>
-<%--                <a href="/gallery/${card.seq}/contents/${content.seq}">${content.title}</a>--%>
+                    <%--                <a href="/gallery/${card.seq}/contents/${content.seq}">${content.title}</a>--%>
             </div>
         </div>
     </c:forEach>
-    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <nav>
+                <ul class="pagination">
+                    <c:forEach items="${navi}" var="n" varStatus="status">
+                        <c:choose>
+                            <c:when test="${n == 'Prev'}">
+                                <li class="page-items">
+                                    <a class="page-link"
+                                       href="${requestURI}?${queryString}&page=${navi[1] - 1}">${n}</a>
+                                </li>
+                            </c:when>
+                            <c:when test="${n == 'Next'}">
+                                <li class="page-items">
+                                    <a class="page-link"
+                                       href="${requestURI}?${queryString}&page=${navi[status.index - 1] + 1}">${n}</a>
+                                </li>
+                            </c:when>
+                            <c:otherwise>
+                                <li class="page-items">
+                                    <a class="page-link" href="${requestURI}?${queryString}&page=${n}">${n}</a>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </div>
 <script>
     $('#invite').on('click', function () {

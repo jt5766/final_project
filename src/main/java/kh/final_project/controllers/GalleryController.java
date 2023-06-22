@@ -33,7 +33,7 @@ public class GalleryController {
     public String toGallery(Model model, SearchCriteria searchCriteria) {
         searchCriteria.setWriter((Integer)session.getAttribute("code"));
         List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
-        setNavi(model, searchCriteria);
+        setNaviOfCards(model, searchCriteria);
         setConditions(model);
         model.addAttribute("cards", cards);
         return "/gallery/gallery";
@@ -43,7 +43,7 @@ public class GalleryController {
     public String searchCards(SearchCriteria searchCriteria, Model model) {
         searchCriteria.setWriter((Integer)session.getAttribute("code"));
         List<GalleryCardView> cards = galleryService.searchCards(searchCriteria);
-        setNavi(model, searchCriteria);
+        setNaviOfCards(model, searchCriteria);
         setConditions(model);
         model.addAttribute("cards", cards);
         model.addAttribute("categoryType", searchCriteria.getTypeCode());
@@ -51,9 +51,10 @@ public class GalleryController {
     }
 
     @GetMapping("/{cardSeq}")
-    public String toCard(@PathVariable Long cardSeq, Model model) {
+    public String toCard(@PathVariable Long cardSeq, GalleryCardDTO galleryCardDTO, Model model) {
         GalleryCardView card = galleryService.selectOneCard(cardSeq);
-        List<GalleryContent> contents = galleryService.selectAllContents(cardSeq);
+        List<GalleryContent> contents = galleryService.selectAllContents(galleryCardDTO);
+        setNaviOfContents(model, galleryCardDTO);
         model.addAttribute("card", card);
         model.addAttribute("contents", contents);
         return "/gallery/card/view";
@@ -64,7 +65,7 @@ public class GalleryController {
         searchCriteria.setTypeCode(categoryType);
         searchCriteria.setWriter((Integer)session.getAttribute("code"));
         List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
-        setNavi(model, searchCriteria);
+        setNaviOfCards(model, searchCriteria);
         setConditions(model);
         model.addAttribute("cards", cards);
         return "/gallery/gallery";
@@ -109,6 +110,12 @@ public class GalleryController {
     }
 
     @PostMapping("/{cardSeq}/contents")
+    public String insertContent(GalleryContent content, @PathVariable Long cardSeq) {
+        galleryService.insertContent(content);
+        return "redirect:/gallery/{cardSeq}";
+    }
+
+    @PostMapping("/{cardSeq}/contents/withFile")
     public String insertContent(GalleryContent content, @PathVariable Long cardSeq, @RequestPart(value = "file_image", required = false) MultipartFile multipartFile) throws IOException {
         String realPath = session.getServletContext().getRealPath("resources");
         galleryService.insertContent(content, multipartFile, realPath);
@@ -158,12 +165,16 @@ public class GalleryController {
         String queryString = Optional.ofNullable(request.getQueryString())
                 .map(e -> e.replaceAll("&?page=?[0-9]*", ""))
                 .orElse("");
-        System.out.println("queryString = " + queryString);
         model.addAttribute("queryString", queryString);
     }
 
-    private void setNavi(Model model, SearchCriteria searchCriteria) {
-        List<String> navi = galleryService.getPageNavi(searchCriteria);
+    private void setNaviOfCards(Model model, SearchCriteria searchCriteria) {
+        List<String> navi = galleryService.getPageNaviOfCards(searchCriteria);
+        model.addAttribute("navi", navi);
+    }
+
+    private void setNaviOfContents(Model model, GalleryCardDTO galleryCardDTO) {
+        List<String> navi = galleryService.getPageNaviOfContents(galleryCardDTO);
         model.addAttribute("navi", navi);
     }
 }
