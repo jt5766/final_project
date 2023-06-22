@@ -37,10 +37,10 @@
 							<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/community/toBoard?code=1001&currentPage=1" aria-current="true">커뮤니티</a>
 						</li>
 						<li class="nav-item col-12 col-lg-auto">
-							<c:if test="${sessionScope.memberType eq 2000}">
+							<c:if test="${sessionScope.memberType eq 9999}">
 								<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/admin/" aria-current="true">관리자페이지</a>
 							</c:if>
-							<c:if test="${sessionScope.memberType ne 2000}">
+							<c:if test="${sessionScope.memberType ne 9999}">
 								<c:if test="${not empty sessionScope.code}">
 									<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/member/mypage/" aria-current="true">마이페이지</a>
 								</c:if>
