@@ -10,8 +10,7 @@
 	<header class="navbar navbar-dark bg-dark navbar-expand-lg sticky-top">
 		<nav class="container-fluid bd-guatter flex-wrap flex-lg-nowrap position-relative">
 			<!-- 브랜드 - 로고 -->
-			<a class="navbar-brand p-0 mx-auto mx-lg-5 my-0" href="/">
-				<img class="logo" src="${path}/resources/img/kh_logo.png">
+			<a class="navbar-brand p-0 mx-auto mx-lg-5 my-0" href="/"> <img class="logo" src="${path}/resources/img/kh_logo.png">
 			</a>
 			<!-- 토글 버튼 -->
 			<div class="d-flex">
@@ -30,36 +29,26 @@
 				<div class="offcanvas-body p-4 pt-0 p-lg-0 justify-content-between">
 					<hr class="d-lg-none text-white-50">
 					<ul class="navbar-nav flex-row flex-wrap bd-navbar-nav">
-						<li class="nav-item col-12 col-lg-auto">
-							<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/gallery/" aria-current="true">갤러리</a>
-						</li>
-						<li class="nav-item col-12 col-lg-auto">
-							<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/community/toBoard?code=1001&currentPage=1" aria-current="true">커뮤니티</a>
-						</li>
-						<li class="nav-item col-12 col-lg-auto">
-							<c:if test="${sessionScope.memberType eq 2000}">
+						<li class="nav-item col-12 col-lg-auto"><a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/gallery/" aria-current="true">갤러리</a></li>
+						<li class="nav-item col-12 col-lg-auto"><a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/community/toBoard?code=1001&currentPage=1" aria-current="true">커뮤니티</a></li>
+						<li class="nav-item col-12 col-lg-auto"><c:if test="${sessionScope.memberType eq 2000}">
 								<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/admin/" aria-current="true">관리자페이지</a>
-							</c:if>
-							<c:if test="${sessionScope.memberType ne 2000}">
+							</c:if> <c:if test="${sessionScope.memberType ne 2000}">
 								<c:if test="${not empty sessionScope.code}">
 									<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/member/mypage/" aria-current="true">마이페이지</a>
 								</c:if>
 								<c:if test="${empty sessionScope.code}">
-									<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/member/mypage/" onclick="alert('로그인을 해주세요.');" aria-current="true">마이페이지</a>
+									<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/member/loginForm/" onclick="alert('로그인을 해주세요.');" aria-current="true">마이페이지</a>
 								</c:if>
-							</c:if>
-						</li>
+							</c:if></li>
 					</ul>
 					<hr class="d-lg-none text-white-50">
 					<ul class="navbar-nav flex-row flex-wrap bd-navbar-nav">
-						<li class="nav-item col-12 col-lg-auto">
-							<c:if test="${empty sessionScope.code}">
+						<li class="nav-item col-12 col-lg-auto"><c:if test="${empty sessionScope.code}">
 								<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/member/loginForm/" aria-current="true">로그인</a>
-							</c:if>
-							<c:if test="${not empty sessionScope.code}">
+							</c:if> <c:if test="${not empty sessionScope.code}">
 								<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/member/logOut/" aria-current="true">로그아웃</a>
-							</c:if>
-						</li>
+							</c:if></li>
 					</ul>
 				</div>
 			</div>
