@@ -22,12 +22,14 @@ public class MemberDAO {
     public List<EmailTypeDTO> emailType(){
        return db.selectList("Member.selectEmail");
     }
-    /*받은 이메일 타입을 String 타입으로 변환*/
+
+
+    /*받은 이메일 타입을(1001) String 타입으로 변환*/
     public String getEmailName(MemberDTO dto){
         return db.selectOne("Member.getEmailName", dto);
     }
 
-    /*문자열인 이메일 타입을 integer 형으로 재변환 DB에 등록하기 위함*/
+    /*문자열인 이메일 타입을(naver.com) integer 형으로 재변환 DB에 등록하기 위함*/
     public Integer getEmailCode(String emailName) {
         return db.selectOne("Member.getEmailCode", emailName);
     }
@@ -58,5 +60,13 @@ public class MemberDAO {
 
     public void updatePassword(MemberDTO dto) {
         db.update("Member.updatePassword",dto);
+    }
+
+    public MemberDTO selectDTO(int code) {
+        return db.selectOne("Member.selectDTO",code);
+    }
+
+    public void update(MemberDTO dto) {
+        db.update("Member.update",dto);
     }
 }

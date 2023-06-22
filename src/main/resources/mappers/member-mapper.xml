@@ -29,7 +29,7 @@
     </update>
 
     <select id="passwordCheck" resultType="boolean">
-        select * from members where password = #{password} and nickname=#{nickname}
+        select count(*) from members where password = #{password} and nickname=#{nickname}
     </select>
 
     <insert id="insert">
@@ -50,5 +50,13 @@
     <select id="getEmailCode" resultType="Integer">
         select code from email_type where name= #{value}
     </select>
+
+    <select id="selectDTO" resultType="kh.final_project.dto.MemberDTO">
+        select * from members where code = ${code}
+    </select>
+
+    <update id="update">
+        update members set nickname = #{nickname} , password = #{password} where code = ${code}
+    </update>
 
 </mapper>

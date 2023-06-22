@@ -309,6 +309,7 @@ public class CommunityService {
 		boardsReplyDTO.setParent_board(boardsDTO.getSeq());
 		boardsReplyDTO.setBoard_type(boardsDTO.getBoard_type());
 		this.setBoardNameByBoardType(boardsReplyDTO);
+		System.out.println(boardsReplyDTO);
 		return communityDAO.selectReply(boardsReplyDTO);
 	}
 
@@ -317,6 +318,7 @@ public class CommunityService {
 		boardsReplyDTO.setParent_board(boardsDTO.getSeq());
 		boardsReplyDTO.setBoard_type(boardsDTO.getBoard_type());
 		this.setBoardNameByBoardType(boardsReplyDTO);
+		System.out.println(boardsReplyDTO);
 		return communityDAO.selectReReply(boardsReplyDTO);
 	}
 

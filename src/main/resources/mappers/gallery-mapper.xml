@@ -44,7 +44,8 @@
                 </if>
                 and (title like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%' or writer like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%')
             </if>
-            and (writer = #{writer, jdbcType=NUMERIC} or yn = 'Y')
+            and yn = 'Y')
+<!--            and (writer = #{writer, jdbcType=NUMERIC} or yn = 'Y')-->
         </trim>
         ) where rn between #{start} and #{end}
     </select>

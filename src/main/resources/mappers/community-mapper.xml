@@ -115,7 +115,7 @@
 		SELECT r.seq, r.reply_type, r.parent_board, r.parent_reply, m.nickname as writer, r.txt, r.write_date
 		FROM ${board_name}_REPLYS r
 		JOIN members m ON r.writer = m.code
-		WHERE r.reply_type = 1001
+		WHERE r.reply_type = 1001 and r.parent_board = #{parent_board}
 		ORDER BY r.write_date ASC
 	</select>
 	
@@ -123,7 +123,7 @@
 		SELECT r.seq, r.reply_type, r.parent_board, r.parent_reply, m.nickname as writer, r.txt, r.write_date
 		FROM ${board_name}_REPLYS r
 		JOIN members m ON r.writer = m.code
-		WHERE r.reply_type = 1002
+		WHERE r.reply_type = 1002 and r.parent_board = #{parent_board}
 		ORDER BY r.write_date ASC
 	</select>
 
