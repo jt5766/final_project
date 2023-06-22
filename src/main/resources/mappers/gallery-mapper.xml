@@ -58,7 +58,7 @@
 
     <select id="selectAllContents" resultType="kh.final_project.dto.GalleryContent">
         select *
-        from (select gallery_contents.*, row_number() over(order by write_date desc nulls last) rn from gallery_contents where gallery_cards = ${cardSeq})
+        from (select gallery_contents.*, row_number() over(order by write_date desc nulls last) rn from gallery_contents where gallery_cards = ${cardSeq} and yn = 'Y')
         where rn between #{start} and #{end}
     </select>
 
@@ -91,8 +91,7 @@
                 genre_type2 = null,
             </otherwise>
         </choose>
-        ai = #{ai}, title = #{title}, catchphrase = #{catchphrase}, synopsis = #{synopsis}, thumbnail_url =
-        #{thumbnail_url}, yn = #{yn} where seq = ${seq}
+        ai = #{ai}, title = #{title}, catchphrase = #{catchphrase}, synopsis = #{synopsis}, thumbnail_url = #{thumbnail_url}, yn = #{yn} where seq = ${seq}
     </update>
     <update id="updateContent">
         update gallery_contents set title = #{title},

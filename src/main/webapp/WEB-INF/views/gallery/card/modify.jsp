@@ -16,26 +16,34 @@
     </div>
 </div>
 <div class="container-xl">
-    <form action="/gallery/${card.seq}/modify" method="post">
+    <form action="/gallery/${card.seq}/modify" method="post" id="card-form" enctype="multipart/form-data">
         <div class="row">
             <div class="con-md-12">
+                <input type="hidden" name="seq" value="${card.seq}">
                 <p>AI 생성 그림인가요?</p>
-                <input type="radio" name="ai" id="input_ai_y" value="Y">
+                <input type="radio" name="ai" id="input_ai_y" value="Y"
+                <c:if test="${card.ai == 'Y'}">
+                    checked
+                </c:if>
+                >
                 <label for="input_ai_y">네</label>
-                <input type="radio" name="ai" id="input_ai_n" value="N">
+                <input type="radio" name="ai" id="input_ai_n" value="N"
+                <c:if test="${card.ai == 'N'}">
+                       checked
+                </c:if>
+                >
                 <label for="input_ai_n">아니오</label>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <input type="hidden" name="seq" value="${card.seq}">
-                <input type="hidden" name="category_type" value="${card.category_type}">
-                <input type="hidden" name="writer" value="${card.writer}">
+                <input type="hidden" name="category_type" value="${categoryType}">
+                <input type="hidden" name="writer" value="${sessionScope.code}">
                 <label for="input_title">제목</label>
                 <input type="text" name="title" id="input_title" value="${card.title}" placeholder="대,소문자 / 숫자 / 한글 : 최대 30자">
             </div>
         </div>
-        <c:if test="${card.category_type<=1002}">
+        <c:if test="${categoryType<=1002}">
             <div class="row">
                 <div class="col-md-12">
                     <div class="genre">
@@ -75,24 +83,18 @@
         <div class="row">
             <div class="col-md-12">
                 <label for="input_thumbnail_url">썸네일</label>
-                <input type="url" name="thumbnail_url" id="input_thumbnail_url" value="${card.thumbnail_url}" placeholder="http://...">
+                <input type="file" name="thumbnail_image" id="input_thumbnail_url" onchange="readURL(this)" formenctype="multipart/form-data">
+                <input type="hidden" name="thumbnail_url" value="${card.thumbnail_url}">
+                <img src="${card.thumbnail_url}" alt="${card.thumbnail_url}" id="img">
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-check form-switch">
-                    <input type="hidden" name="yn" id="hidden_allow" value="N">
-                    <input class="form-check-input" type="checkbox" role="switch" id="input_allow_show" value="Y">
-                    <label class="form-check-label" for="input_allow_show">공개 여부</label>
-                </div>
-            </div>
-        </div>
+        <input type="hidden" name="yn" value="${card.yn}">
         <div class="row">
             <div class="col-md-6">
                 <button type="submit">수정</button>
             </div>
             <div class="col-md-6">
-                <a href="/gallery/${card.seq}">
+                <a href="/gallery">
                     <button type="button">돌아가기</button>
                 </a>
             </div>
@@ -100,8 +102,8 @@
     </form>
 </div>
 <script>
-    $("input[name='genreType']").on("click", function() {
-       const count = $("input:checked[name='genreType']").length;
+    $("input[name='genreType']").on("click", function () {
+        const count = $("input:checked[name='genreType']").length;
         if (count > 2) {
             $(this).prop('checked', false);
             alert('장르는 최대 2개까지만 선택 가능합니다.');
@@ -116,6 +118,42 @@
             hiddenAllow.val('N');
         }
     });
+    $('#card-form').on('submit', (e) => {
+        if ($('#input_title').val().trim() === '') {
+            e.preventDefault();
+            alert("제목을 입력해주세요.");
+            return false;
+        }
+        if ((${categoryType <= 1002}) && ($("input:checked[name='genreType']").length === 0)) {
+            e.preventDefault();
+            alert("장르를 체크해주세요.");
+            return false;
+        }
+        if ($('#input_catchphrase').val().trim() === '') {
+            e.preventDefault();
+            alert("한 줄 요약을 입력해주세요.");
+            return false;
+        }
+        if ($('#input_synopsis').val().trim() === '') {
+            e.preventDefault();
+            alert("줄거리를 입력해주세요.");
+            return false;
+        }
+    });
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            const blob = new Blob([input.files[0]]);
+            reader.onload = function () {
+                $('#img').attr('src', URL.createObjectURL(blob));
+                $('input[name="thumbnail_url"]').val(input.files[0].name);
+            };
+            reader.readAsDataURL(blob);
+        } else {
+            $('#img').attr('src', "");
+            $('input[name="thumbnail_url"]').val("");
+        }
+    }
 </script>
 </body>
 </html>

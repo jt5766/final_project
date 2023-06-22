@@ -88,7 +88,16 @@ public class GalleryService {
         galleryDAO.insertContent(content);
     }
 
-    public void updateCard(GalleryCard card) {
+    public void updateCard(GalleryCard card, MultipartFile multipartFile, String realPath) throws IOException {
+        card.setThumbnail_url(
+                new StringBuilder()
+                        .append("/gallery/card/thumbnails/")
+                        .append(UUID.randomUUID())
+                        .append("_")
+                        .append(card.getThumbnail_url())
+                        .toString()
+        );
+        transferFile(realPath + card.getThumbnail_url(), multipartFile);
         galleryDAO.updateCard(card);
     }
 

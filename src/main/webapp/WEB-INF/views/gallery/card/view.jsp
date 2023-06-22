@@ -195,7 +195,7 @@
                             <input type="hidden" name="cardSeq" value="${card.seq}">
                             <button class="common-button" type="submit">삭제</button>
                         </form>
-                        <button class="common-button" onclick="location.href='/gallery/${card.seq}/modify'">수정</button>
+                        <button class="common-button" onclick="location.href='/gallery/${card.seq}/modify/${card.category_type}'">수정</button>
                     </c:if>
                 </div>
                 <div class="return-button">

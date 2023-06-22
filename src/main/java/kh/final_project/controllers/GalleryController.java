@@ -88,8 +88,8 @@ public class GalleryController {
         return "gallery/contents/insert";
     }
 
-    @GetMapping("/{cardSeq}/modify")
-    public String toCardModify(@PathVariable Long cardSeq, Model model) {
+    @GetMapping("/{cardSeq}/modify/{categoryType}")
+    public String toCardModify(@PathVariable Long cardSeq, @ModelAttribute("categoryType") @PathVariable Integer categoryType, Model model) {
         GalleryCardView card = galleryService.selectOneCard(cardSeq);
         model.addAttribute("card", card);
         return "/gallery/card/modify";
@@ -127,8 +127,9 @@ public class GalleryController {
     }
 
     @PostMapping("/{cardSeq}/modify")
-    public String modifyCard(GalleryCard card, @PathVariable Long cardSeq) {
-        galleryService.updateCard(card);
+    public String modifyCard(GalleryCard card, @PathVariable Long cardSeq, @RequestPart(value = "thumbnail_image", required = false) MultipartFile multipartFile) throws IOException {
+        String realPath = session.getServletContext().getRealPath("resources");
+        galleryService.updateCard(card, multipartFile, realPath);
         return "redirect:/gallery/{cardSeq}";
     }
 
