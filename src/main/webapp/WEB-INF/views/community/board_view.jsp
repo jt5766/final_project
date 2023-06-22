@@ -53,10 +53,10 @@
 				<textarea name="txt" id="textarea_contents" cols="30" rows="10" readonly>${info.txt}</textarea>
 			</div>
 			<div>
-				<%-- 				<c:if test=""> --%>
-				<input type="submit" value="수정하기">
-				<input type="button" value="삭제하기" onclick="location.href = '/community/deleteBoard?board_type=${info.board_type}&seq=${info.seq}'">
-				<%-- 								</c:if> --%>
+				<c:if test="${info.writer == sessionScope.nickName}">
+					<input type="submit" value="수정하기">
+					<input type="button" value="삭제하기" onclick="location.href = '/community/deleteBoard?board_type=${info.board_type}&seq=${info.seq}'">
+				</c:if>
 				<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${info.board_type}&currentPage=1'">
 			</div>
 		</form>
