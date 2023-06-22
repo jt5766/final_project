@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -118,11 +120,15 @@ public class GalleryService {
         galleryDAO.updateContent(content);
     }
 
-    public void deleteCard(Long cardSeq) {
+    public void deleteCard(Long cardSeq, String realPath) {
+        GalleryCardView card = galleryDAO.selectOneCard(cardSeq);
+        removeFile(card.getThumbnail_url(), realPath);
         galleryDAO.deleteCard(cardSeq);
     }
 
-    public void deleteContent(Long cardSeq, Long contentSeq) {
+    public void deleteContent(Long cardSeq, Long contentSeq, String realPath) {
+        GalleryContent content = galleryDAO.selectOneContent(cardSeq, contentSeq);
+        removeFile(content.getFile_url(), realPath);
         galleryDAO.deleteContent(cardSeq, contentSeq);
     }
 
@@ -204,5 +210,13 @@ public class GalleryService {
 
     public void updateContentDisclosure(Long contentSeq, String value) {
         galleryDAO.updateContentDisclosure(contentSeq, value);
+    }
+
+    private void removeFile(String fileName, String realPath){
+        String srcFileName = URLDecoder.decode(fileName, StandardCharsets.UTF_8);
+        File file = new File(realPath + srcFileName);
+        if (file.exists()) {
+            boolean delete = file.delete();
+        }
     }
 }

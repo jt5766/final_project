@@ -144,13 +144,15 @@ public class GalleryController {
 
     @PostMapping("/{cardSeq}/delete")
     public String deleteCard(@PathVariable Long cardSeq) {
-        galleryService.deleteCard(cardSeq);
+        String realPath = session.getServletContext().getRealPath("resources");
+        galleryService.deleteCard(cardSeq, realPath);
         return "redirect:/gallery";
     }
 
     @PostMapping("/{cardSeq}/contents/{contentSeq}/delete")
     public String deleteContents(@PathVariable Long cardSeq, @PathVariable Long contentSeq) {
-        galleryService.deleteContent(cardSeq, contentSeq);
+        String realPath = session.getServletContext().getRealPath("resources");
+        galleryService.deleteContent(cardSeq, contentSeq, realPath);
         return "redirect:/gallery/{cardSeq}";
     }
 
