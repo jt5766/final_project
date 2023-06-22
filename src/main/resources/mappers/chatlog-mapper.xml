@@ -9,7 +9,7 @@
 	</select>
 	
 	<insert id="insert">
-		insert into chat_logs values (#{chat_rooms},#{writer},#{txt},default)
+		insert into chat_logs values (#{chat_rooms},#{writer},#{txt},#{write_date})
 	</insert>
 	
 	<select id="maxdata" resultType="int">

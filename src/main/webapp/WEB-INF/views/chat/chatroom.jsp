@@ -25,6 +25,9 @@
 </head>
 <body>
 	<script>
+		let year = null;
+		let month = null;
+		let date = null;
 		$(function(){
 			const socket = new WebSocket("ws://192.168.50.203/chat");
 			const stompClient = Stomp.over(socket);
@@ -36,6 +39,8 @@
 					console.log(body);
 					const linediv = $("<div>");
 					linediv.addClass("linebox");
+					const datediv = $("<div>");
+					datediv.addClass("datebox");
 					const textdiv = $("<div>");
 					if(body.writer == ${code}){
 						textdiv.addClass("mytext");
@@ -48,6 +53,9 @@
 						textdiv.addClass("othertext");
 						textdiv.append(body.txt);
 					}
+					var logtimer = new Date(body.write_date);
+					datediv.append(logtimer.getHours()+" : "+logtimer.getMinutes());
+					linediv.append(datediv);
 					linediv.append(textdiv);
 					$("#div_contents").append(linediv);
 					let chatbox = document.querySelector('#div_contents');
@@ -69,7 +77,7 @@
 					}else{
 						const destination = "/app/message";
 						const header = {};
-						const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html()});
+						const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html() , write_date : new Date()});
 						stompClient.send(destination,header,body);
 						$("#div_text").html("");
 						$("#div_text").focus();
@@ -83,7 +91,7 @@
 				}else{
 					const destination = "/app/message";
 					const header = {};
-					const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html()});
+					const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html() , write_date : new Date()});
 					stompClient.send(destination,header,body);
 					$("#div_text").html("");
 					$("#div_text").focus();
@@ -107,7 +115,7 @@
 				console.log("최대높이"+contents_height);
 				console.log("커런트+최대높이"+now_height);
 				if(currentScroll < lastScroll){
-					if(currentScroll < 200){
+					if(currentScroll < 500){
 						
 						dragFlag = true;
 						
@@ -125,6 +133,8 @@
 							for(var i = resp.length-1;i >= 0;i--){
 								const datalinediv = $("<div>");
 								datalinediv.addClass("linebox");
+								const datadatediv = $("<div>");
+								datadatediv.addClass("datebox");
 								const datatextdiv = $("<div>");
 								if(resp[i].writer == ${code}){
 									datatextdiv.addClass("mytext");
@@ -137,8 +147,22 @@
 									datatextdiv.addClass("othertext");
 									datatextdiv.append(resp[i].txt);
 								}
+								var logtimer = new Date(resp[i].write_date);
+								var logYear = logtimer.getFullYear();
+				        		var logMonth = logtimer.getMonth();
+				        		var logDate = logtimer.getDate();
+				        		if(year != logYear || month != logMonth || date != logDate){
+				        			var alldatediv = $("<div>");
+				        			alldatediv.append(logYear+"-"+(logMonth+1)+"-"+logDate);
+				        			datalinediv.append(alldatediv);
+				        		}
+								datadatediv.append(logtimer);
+								datalinediv.append(datadatediv);
 								datalinediv.append(datatextdiv);
 								$("#div_contents").prepend(datalinediv);	
+								year = logYear;
+								month = logMonth;
+								date = logDate;
 							}
 							dragFlag = false;
 							let chatbox = document.querySelector('#div_contents');
@@ -148,6 +172,51 @@
 				lastScroll = currentScroll;
 			})
 		})
+		
+		$(function(){
+			<c:forEach var="log" items="${chatlog}">
+				var loglinediv = $("<div>");
+				loglinediv.addClass("linebox");
+				var logdatediv = $("<div>");
+				logdatediv.addClass("datebox");
+				var logtextdiv = $("<div>");
+    			<c:choose>
+    				<c:when test="${log.writer==code}">
+    					logtextdiv.addClass("mytext");
+						logtextdiv.append('${log.txt}');
+    				</c:when>
+    				<c:otherwise>
+    					var logwriterbox = $("<div>");
+						logwriterbox.addClass("writerbox");
+						logwriterbox.append('${log.writer}');
+						loglinediv.append(logwriterbox);
+						logtextdiv.addClass("othertext");
+						logtextdiv.append('${log.txt}');
+    				</c:otherwise>
+        		</c:choose>
+        		var logtimer = new Date('${log.write_date}');
+        		var logYear = logtimer.getFullYear();
+        		var logMonth = logtimer.getMonth();
+        		var logDate = logtimer.getDate();
+        		if(year != logYear || month != logMonth || date != logDate){
+        			var alldatediv = $("<div>");
+        			alldatediv.append(logYear+"-"+(logMonth+1)+"-"+logDate);
+        			loglinediv.append(alldatediv);
+        		}
+        		var alldatediv = $("<div>");
+    			alldatediv.append(logYear+"-"+(logMonth+1)+"-"+logDate);
+    			loglinediv.append(alldatediv);
+        		logdatediv.append(logtimer);
+        		loglinediv.append(logdatediv);
+        		loglinediv.append(logtextdiv);
+				$("#div_contents").append(loglinediv);
+				year = logYear;
+				month = logMonth;
+				date = logDate;
+        	</c:forEach>
+		})
+		
+		
 	</script>
     <div class="container-fluid">
         <div class="row gnb">gnb</div>
@@ -156,23 +225,6 @@
     <div class="container-xl">
         <div class="row">
             <div class="col-md-12" id="div_contents">
-            
-            	<c:forEach var="log" items="${chatlog}">
-            		<c:choose>
-            			<c:when test="${log.writer==code}">
-            				<div class="linebox">
-            					<div class="mytext">${log.txt}</div>
-            				</div>
-            			</c:when>
-            			<c:otherwise>
-            				<div class="linebox">
-            					<div class="writerbox">${log.writer}</div>
-            					<div class="othertext">${log.txt}</div>
-            				</div>
-            			</c:otherwise>
-            		</c:choose>
-            		
-            	</c:forEach>
             </div>
         </div>
         <div class="row">
