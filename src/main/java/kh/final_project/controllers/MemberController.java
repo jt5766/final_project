@@ -3,15 +3,12 @@ package kh.final_project.controllers;
 
 import kh.final_project.dto.EmailTypeDTO;
 import kh.final_project.dto.MemberDTO;
-import kh.final_project.repositories.MemberDAO;
 import kh.final_project.services.EmailcheckService;
 import kh.final_project.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -104,13 +101,6 @@ public class MemberController {
         System.out.println("----------------------------");
 
         if ( dto.getCode()> 10000000 && dto.getCode() < 100000000) {
-            Cookie cookie = new Cookie("cookie",dto.getCode().toString());
-            cookie.setMaxAge(60*60*24); //쿠키 유효 기간: 하루로 설정(60초 * 60분 * 24시간)
-            cookie.setPath("/"); //모든 경로에서 접근 가능하도록 설정
-            res.addCookie(cookie); //response에 Cookie 추가
-
-            System.out.println("쿠키에 네임값 " + cookie.getName());
-            System.out.println("쿠키에 담긴 값 " + cookie.getValue());
 
             session.setAttribute("code",dto.getCode());
             session.setAttribute("nickName",dto.getNickname());
@@ -177,6 +167,7 @@ public class MemberController {
       MemberDTO dto = memberService.selectDTO((int)session.getAttribute("code"));
         String SetEmailType = memberService.getEmailName(dto);
         model.addAttribute("email",dto.getEmail());
+        model.addAttribute("email_type",dto.getEmail_type());
         model.addAttribute("set_email_type",SetEmailType);
         return "/member/myInfoUpdateForm";
     }
@@ -204,6 +195,22 @@ public class MemberController {
         session.setAttribute("nickName",nickname);
 
         return "home";
+    }
+
+    @RequestMapping("memberDelete")
+    public String memberDelete(int code,Model model){
+        System.out.println(code);
+        int result = memberService.memeberDelete(code);
+        model.addAttribute(result);
+        session.invalidate();
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "nickname/duplicate-check", method = RequestMethod.POST)
+    @ResponseBody
+    public int nicknameDuplicateCheck(String nickname) {
+        int i = memberService.nicknameDuplicateCheck(nickname);
+        return i;
     }
 }
 

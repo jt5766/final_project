@@ -56,7 +56,15 @@
     </select>
 
     <update id="update">
-        update members set nickname = #{nickname} , password = #{password} where code = ${code}
+        update members set nickname = #{nickname} where code = ${code}
     </update>
 
+    <delete id="delete">
+        delete from members where code = ${code}
+    </delete>
+
+    <!--닉네임 체크-->
+    <select id="nicknameCheck" resultType="int">
+        select count(*) from members where nickname = #{nickname}
+    </select>
 </mapper>

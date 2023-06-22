@@ -165,4 +165,12 @@ public class MemberService {
     public void update(MemberDTO dto) {
         mdao.update(dto);
     }
+
+    public int memeberDelete(int code) {
+       return mdao.memberDelete(code);
+    }
+
+    public int nicknameDuplicateCheck(String nickname) {
+        return mdao.nicknameDuplicateCheck(nickname);
+    }
 }
