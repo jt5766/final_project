@@ -241,6 +241,10 @@
   </div>
 </div>
 <script>
+    $(function() {
+        $('.preview_audio').oembed();
+    });
+
     const youtube_regex = /https:\/\/youtu\.be\/.*/;
     const cut_youtubeURL = "https://youtu.be/";
     const replace_youtubeURL = "https://youtube.com/embed/";
