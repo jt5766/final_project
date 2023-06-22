@@ -45,7 +45,7 @@
 									<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/member/mypage/" aria-current="true">마이페이지</a>
 								</c:if>
 								<c:if test="${empty sessionScope.code}">
-									<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/member/loginForm/" onclick="alert('로그인을 해주세요.');" aria-current="true">마이페이지</a>
+									<a class="nav-link py-2 px-0 px-lg-2 fs-1" href="/member/loginForm/" onclick="alert('로그인이 필요한 서비스입니다.\n로그인으로 이동합니다.');" aria-current="true">마이페이지</a>
 								</c:if>
 							</c:if>
 						</li>
