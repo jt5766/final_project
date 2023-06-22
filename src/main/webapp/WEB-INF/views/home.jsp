@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="path" value="${pageContext.request.contextPath}" scope="session" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <!-- 공통 script & css -->
-<c:set var="path" value="${pageContext.request.contextPath}" />
 <c:import url="${path}/resources/js/scripts.jsp" />
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
-</head>
+</head>  
 <body>
 	<!-- GNB -->
 	<c:import url="${path}/resources/js/GNB.jsp" />
@@ -18,7 +18,8 @@
 	<div class="container-xl bg-light">
 		<div class="row">
 			<button onclick="location.href='/member/loginForm'">로그인</button>
-			<br> ${nickName}님환영 ${code}
+			<br>
+			${nickName}님환영 ${code}
 		</div>
 		<div class="row">
 			<button onclick="location.href='/member/logOut'">로그아웃</button>
@@ -116,7 +117,6 @@
 		$(document).ready(function() {
 			var container = $('.container-xl');
 			var gnbHeight = $('.fixed-gnb').outerHeight(); // GNB의 높이를 가져옴
-			console.log(gnbHeight)
 
 			container.css('margin-top', gnbHeight + 'px');
 		});
