@@ -129,7 +129,7 @@
 				var hiddenType = $("<input type='hidden' name='board_type' value='${info.board_type}'>");
 				var hiddenParent = $("<input type='hidden' name='parent_board' value='${info.seq}'>");
 				var header = $("<div style='display: flex;'>");
-				var space = $("<div style='flex: 1;'>")
+				var space = $("<div style='flex: 1;'>");
 				var writer = $("<div style='flex: 10; text-align: left;'>");
 				writer.text("${i.writer}");
 				var write_date = $("<div style='flex: 10; text-align: right;'>");
@@ -147,7 +147,7 @@
 				if("${sessionScope.nickName}" == "${i.writer}") {
 				    var submit = $("<input type='button' value='수정' class='updateReply'>");
 				    var del = $("<input type='button' value='삭제'>");
-				    del.on("click", function(){
+				    del.on("click", function() {
 						location.href = "/community/deleteReply?board_type=${info.board_type}&seq=${i.seq}&parent_board=${i.parent_board}";
 				    });
 				    updateDiv.append(submit, del);
