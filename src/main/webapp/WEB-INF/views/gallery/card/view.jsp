@@ -214,9 +214,9 @@
     </c:if>
     <div class="row">
         <div class="col-md-12 hstack gap-2">
-            <a href="#" class="ms-auto">최신</a>
+            <a href="/gallery/${card.seq}?sort=desc" class="ms-auto">최신순</a>
             <div class="vr"></div>
-            <a href="#">1화</a>
+            <a href="/gallery/${card.seq}?sort=asc">오래된순</a>
         </div>
     </div>
     <c:forEach items="${contents}" var="content">

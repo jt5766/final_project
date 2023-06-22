@@ -5,9 +5,11 @@ public class GalleryCardDTO {
     private Integer page;
     private Integer start;
     private Integer end;
+    private String sort;
 
     public GalleryCardDTO() {
-        page = 1;
+        this.page = 1;
+        this.sort = "desc";
     }
 
     public GalleryCardDTO(Long cardSeq, Integer page, Integer start, Integer end) {
@@ -47,5 +49,13 @@ public class GalleryCardDTO {
 
     public void setEnd(Integer end) {
         this.end = end;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
     }
 }
