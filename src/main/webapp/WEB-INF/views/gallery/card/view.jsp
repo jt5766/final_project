@@ -177,7 +177,6 @@
                         <button class="common-button" type="button" id="invite">채팅 초대하기</button>
                     </c:if>
                 </div>
-
                 <div class="disclosure">
                     <c:if test="${sessionScope.code == card.writer}">
                         <div class="form-check form-switch">

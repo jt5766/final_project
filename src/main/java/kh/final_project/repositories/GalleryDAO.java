@@ -83,6 +83,14 @@ public class GalleryDAO {
                 Map.entry("cardSeq", cardSeq),
                 Map.entry("value", value)
         );
-        db.update("Gallery.updateDisclosure", params);
+        db.update("Gallery.updateCardDisclosure", params);
+    }
+
+    public void updateContentDisclosure(Long contentSeq, String value) {
+        Map<String, Object> params = Map.ofEntries(
+                Map.entry("cardSeq", contentSeq),
+                Map.entry("value", value)
+        );
+        db.update("Gallery.updateContentDisclosure", params);
     }
 }

@@ -107,10 +107,12 @@
         </choose>
         txt = #{txt}, yn = #{yn} where seq = ${seq} and gallery_cards = ${gallery_cards}
     </update>
-    <update id="updateDisclosure">
+    <update id="updateCardDisclosure">
         update gallery_cards set yn = #{value} where seq = #{cardSeq}
     </update>
-
+    <update id="updateContentDisclosure">
+        update gallery_contents set yn = #{value} where seq = #{cardSeq}
+    </update>
     <delete id="deleteCard">
         delete from gallery_cards where seq = #{cardSeq}
     </delete>
@@ -131,11 +133,12 @@
                 </if>
                 and (title like '%'||#{searchQuery}||'%' or writer like '%'||#{searchQuery}||'%')
             </if>
+            and yn = 'Y'
         </trim>
     </select>
 
     <select id="totalContents" resultType="java.lang.Integer">
-        select count(*) from gallery_contents where gallery_cards = ${cardSeq}
+        select count(*) from gallery_contents where gallery_cards = ${cardSeq} and yn = 'Y'
     </select>
 
 </mapper>

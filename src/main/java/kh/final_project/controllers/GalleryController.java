@@ -95,8 +95,8 @@ public class GalleryController {
         return "/gallery/card/modify";
     }
 
-    @GetMapping("/{cardSeq}/contents/{contentSeq}/modify")
-    public String toContentModify(@PathVariable Long cardSeq, @PathVariable Long contentSeq, Model model) {
+    @GetMapping("/{cardSeq}/contents/{contentSeq}/modify/{categoryType}")
+    public String toContentModify(@PathVariable Long cardSeq, @PathVariable Long contentSeq, @ModelAttribute("categoryType") @PathVariable Integer categoryType, Model model) {
         GalleryContent content = galleryService.selectOneContent(cardSeq, contentSeq);
         model.addAttribute("content", content);
         return "/gallery/contents/modify";
@@ -122,10 +122,6 @@ public class GalleryController {
         return "redirect:/gallery/{cardSeq}";
     }
 
-    public HttpServletRequest getRequest() {
-        return request;
-    }
-
     @PostMapping("/{cardSeq}/modify")
     public String modifyCard(GalleryCard card, @PathVariable Long cardSeq, @RequestPart(value = "thumbnail_image", required = false) MultipartFile multipartFile) throws IOException {
         String realPath = session.getServletContext().getRealPath("resources");
@@ -137,6 +133,13 @@ public class GalleryController {
     public String modifyContent(GalleryContent content, @PathVariable Long cardSeq, @PathVariable Long contentSeq) {
         galleryService.updateContent(content);
         return "redirect:/gallery/{cardSeq}/contents/{contentSeq}";
+    }
+
+    @PostMapping("/{cardSeq}/contents/{contentSeq}/modify/withFile")
+    public String modifyContent(GalleryContent content, @PathVariable Long cardSeq, @PathVariable Long contentSeq, @RequestPart(value = "file_image", required = false) MultipartFile multipartFile) throws IOException {
+        String realPath = session.getServletContext().getRealPath("resources");
+        galleryService.updateContent(content, multipartFile, realPath);
+        return "redirect:/gallery/{cardSeq}";
     }
 
     @PostMapping("/{cardSeq}/delete")
@@ -155,6 +158,12 @@ public class GalleryController {
     @ResponseBody
     public void updateDisclosure(@PathVariable Long cardSeq, @RequestBody String value) {
         galleryService.updateCardDisclosure(cardSeq, value);
+    }
+
+    @PutMapping(value = "/disclosure/{cardSeq}/contents/{contentSeq}")
+    @ResponseBody
+    public void updateDisclosure(@PathVariable Long cardSeq, @PathVariable Long contentSeq, @RequestBody String value) {
+        galleryService.updateContentDisclosure(contentSeq, value);
     }
 
     private void setConditions(Model model) {
