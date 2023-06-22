@@ -15,9 +15,7 @@ public class SearchCriteria {
     private Integer writer;
 
     public SearchCriteria() {
-        if (page == null) {
-            page = 1;
-        }
+        page = 1;
     }
 
     public Integer getTypeCode() {

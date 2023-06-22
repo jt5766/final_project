@@ -65,50 +65,86 @@
   </style>
 </head>
 <body>
+<form action="/member/update">
 <div id="container">
   <div id="header">gnb</div>
   <div id="navi">
     <div id="navi_left"></div>
     <div id="navi_center">마이페이지<br>
-      <button>갤러리</button>
-      <button>커뮤니티</button>
-      <button>1:1채팅</button>
-      <button>회원 정보 수정</button>
+      <button type="button">갤러리</button>
+      <button type="button">커뮤니티</button>
+      <button type="button">1:1채팅</button>
     </div>
     <div id="navi_right"></div>
   </div>
   <div id="body">
     <div id="body_left"></div>
+
     <div id="body_center"><br>
       <div id="body_top">
-  <form action="/member/passwordCheck">
         비밀번호<br>
-        <input type="text" name= "password" placeholder="내용을입력해주세요"> <button>확인</button>
-        <input type="hidden" name="nickname" value="${nickName}">
-  </form>
+        <input type="password" id="pass" placeholder="내용을입력해주세요"> <button type="button" id="passwordChkBtn">확인</button>
+        <input type="hidden" id="nick"  value="${nickName}">
+
       </div><br>
+
       <div id="body_mid">
         이메일<br>
-        <input type="text" placeholder="내용을입력해주세요"> <br>
-        비밀번호<br>
-        <input type="text" placeholder="내용을입력해주세요"> <br>
+        <input type="text" placeholder="내용을입력해주세요" value="${email}@${set_email_type}" readonly> <br>
+       새로운 비밀번호<br>
+        <input type="password" name= password placeholder="내용을입력해주세요"> <br>
         비밀번호 확인 <br>
-        <input type="text" placeholder="내용을입력해주세요"> <br>
+        <input type="password" placeholder="내용을입력해주세요"> <br>
         닉네임<br>
-        <input type="text" placeholder="내용을입력해주세요"> <br><br>
+        <input type="text" name="nickname" placeholder="내용을입력해주세요" value="${nickName}" > <br><br>
 
       </div><br>
 
       <div id="body_bottom">
         <button>정보수정</button>
-        <button>취소</button> <br><br>
-        <button>탈퇴</button> <br>
+        <button type="button" id="cancleBtn">취소</button> <br><br>
+        <button type="button" id="signOutBtn">탈퇴</button> <br>
       </div>
     </div>
     <div id="body_right"></div>
 
   </div>
+
   <div id="footer">footer</div>
 </div>
+</form>
+<script>
+    $("#passwordChkBtn").click(function (){
+      const pass = $("#pass").val();
+      const nick = $("#nick").val();
+
+      $.ajax({
+          url:"/member/passwordCheck",
+
+        data:{
+            password:pass,
+            nickname:nick
+        },
+        method:"post"
+      }).done(function (resp) {
+        resp = JSON.parse(resp);
+        if(resp){
+          // $("#body_mid").css({display:"block"})
+          $("#body_mid").css("display","block")
+          $("#body_top").css({display:"none"})
+
+        }else{
+
+          alert("비밀번호를 다시입력해주세요");
+        }
+      })
+    })
+
+    $("#cancleBtn").click(function (){
+      location.href="/member/mypage"
+
+    })
+
+</script>
 </body>
 </html>

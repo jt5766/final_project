@@ -33,7 +33,7 @@ public class GalleryController {
     public String toGallery(Model model, SearchCriteria searchCriteria) {
         searchCriteria.setWriter((Integer)session.getAttribute("code"));
         List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
-        setNavi(model, searchCriteria);
+        setNaviOfCards(model, searchCriteria);
         setConditions(model);
         model.addAttribute("cards", cards);
         return "/gallery/gallery";
@@ -43,7 +43,7 @@ public class GalleryController {
     public String searchCards(SearchCriteria searchCriteria, Model model) {
         searchCriteria.setWriter((Integer)session.getAttribute("code"));
         List<GalleryCardView> cards = galleryService.searchCards(searchCriteria);
-        setNavi(model, searchCriteria);
+        setNaviOfCards(model, searchCriteria);
         setConditions(model);
         model.addAttribute("cards", cards);
         model.addAttribute("categoryType", searchCriteria.getTypeCode());
@@ -51,9 +51,10 @@ public class GalleryController {
     }
 
     @GetMapping("/{cardSeq}")
-    public String toCard(@PathVariable Long cardSeq, Model model) {
+    public String toCard(@PathVariable Long cardSeq, GalleryCardDTO galleryCardDTO, Model model) {
         GalleryCardView card = galleryService.selectOneCard(cardSeq);
-        List<GalleryContent> contents = galleryService.selectAllContents(cardSeq);
+        List<GalleryContent> contents = galleryService.selectAllContents(galleryCardDTO);
+        setNaviOfContents(model, galleryCardDTO);
         model.addAttribute("card", card);
         model.addAttribute("contents", contents);
         return "/gallery/card/view";
@@ -64,7 +65,7 @@ public class GalleryController {
         searchCriteria.setTypeCode(categoryType);
         searchCriteria.setWriter((Integer)session.getAttribute("code"));
         List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
-        setNavi(model, searchCriteria);
+        setNaviOfCards(model, searchCriteria);
         setConditions(model);
         model.addAttribute("cards", cards);
         return "/gallery/gallery";
@@ -78,7 +79,8 @@ public class GalleryController {
     }
 
     @GetMapping("/insert/{categoryType}")
-    public String toCardInsert(@ModelAttribute("categoryType") @PathVariable Integer categoryType) {
+    public String toCardInsert(@ModelAttribute("categoryType") @PathVariable Integer categoryType, Model model) {
+        setGenreTypes(model);
         return "/gallery/card/insert";
     }
 
@@ -87,15 +89,16 @@ public class GalleryController {
         return "gallery/contents/insert";
     }
 
-    @GetMapping("/{cardSeq}/modify")
-    public String toCardModify(@PathVariable Long cardSeq, Model model) {
+    @GetMapping("/{cardSeq}/modify/{categoryType}")
+    public String toCardModify(@PathVariable Long cardSeq, @ModelAttribute("categoryType") @PathVariable Integer categoryType, Model model) {
         GalleryCardView card = galleryService.selectOneCard(cardSeq);
         model.addAttribute("card", card);
+        setGenreTypes(model);
         return "/gallery/card/modify";
     }
 
-    @GetMapping("/{cardSeq}/contents/{contentSeq}/modify")
-    public String toContentModify(@PathVariable Long cardSeq, @PathVariable Long contentSeq, Model model) {
+    @GetMapping("/{cardSeq}/contents/{contentSeq}/modify/{categoryType}")
+    public String toContentModify(@PathVariable Long cardSeq, @PathVariable Long contentSeq, @ModelAttribute("categoryType") @PathVariable Integer categoryType, Model model) {
         GalleryContent content = galleryService.selectOneContent(cardSeq, contentSeq);
         model.addAttribute("content", content);
         return "/gallery/contents/modify";
@@ -109,19 +112,22 @@ public class GalleryController {
     }
 
     @PostMapping("/{cardSeq}/contents")
+    public String insertContent(GalleryContent content, @PathVariable Long cardSeq) {
+        galleryService.insertContent(content);
+        return "redirect:/gallery/{cardSeq}";
+    }
+
+    @PostMapping("/{cardSeq}/contents/withFile")
     public String insertContent(GalleryContent content, @PathVariable Long cardSeq, @RequestPart(value = "file_image", required = false) MultipartFile multipartFile) throws IOException {
         String realPath = session.getServletContext().getRealPath("resources");
         galleryService.insertContent(content, multipartFile, realPath);
         return "redirect:/gallery/{cardSeq}";
     }
 
-    public HttpServletRequest getRequest() {
-        return request;
-    }
-
     @PostMapping("/{cardSeq}/modify")
-    public String modifyCard(GalleryCard card, @PathVariable Long cardSeq) {
-        galleryService.updateCard(card);
+    public String modifyCard(GalleryCard card, @PathVariable Long cardSeq, @RequestPart(value = "thumbnail_image", required = false) MultipartFile multipartFile) throws IOException {
+        String realPath = session.getServletContext().getRealPath("resources");
+        galleryService.updateCard(card, multipartFile, realPath);
         return "redirect:/gallery/{cardSeq}";
     }
 
@@ -131,15 +137,24 @@ public class GalleryController {
         return "redirect:/gallery/{cardSeq}/contents/{contentSeq}";
     }
 
+    @PostMapping("/{cardSeq}/contents/{contentSeq}/modify/withFile")
+    public String modifyContent(GalleryContent content, @PathVariable Long cardSeq, @PathVariable Long contentSeq, @RequestPart(value = "file_image", required = false) MultipartFile multipartFile) throws IOException {
+        String realPath = session.getServletContext().getRealPath("resources");
+        galleryService.updateContent(content, multipartFile, realPath);
+        return "redirect:/gallery/{cardSeq}";
+    }
+
     @PostMapping("/{cardSeq}/delete")
     public String deleteCard(@PathVariable Long cardSeq) {
-        galleryService.deleteCard(cardSeq);
+        String realPath = session.getServletContext().getRealPath("resources");
+        galleryService.deleteCard(cardSeq, realPath);
         return "redirect:/gallery";
     }
 
     @PostMapping("/{cardSeq}/contents/{contentSeq}/delete")
     public String deleteContents(@PathVariable Long cardSeq, @PathVariable Long contentSeq) {
-        galleryService.deleteContent(cardSeq, contentSeq);
+        String realPath = session.getServletContext().getRealPath("resources");
+        galleryService.deleteContent(cardSeq, contentSeq, realPath);
         return "redirect:/gallery/{cardSeq}";
     }
 
@@ -147,6 +162,12 @@ public class GalleryController {
     @ResponseBody
     public void updateDisclosure(@PathVariable Long cardSeq, @RequestBody String value) {
         galleryService.updateCardDisclosure(cardSeq, value);
+    }
+
+    @PutMapping(value = "/disclosure/{cardSeq}/contents/{contentSeq}")
+    @ResponseBody
+    public void updateDisclosure(@PathVariable Long cardSeq, @PathVariable Long contentSeq, @RequestBody String value) {
+        galleryService.updateContentDisclosure(contentSeq, value);
     }
 
     private void setConditions(Model model) {
@@ -158,12 +179,21 @@ public class GalleryController {
         String queryString = Optional.ofNullable(request.getQueryString())
                 .map(e -> e.replaceAll("&?page=?[0-9]*", ""))
                 .orElse("");
-        System.out.println("queryString = " + queryString);
         model.addAttribute("queryString", queryString);
     }
 
-    private void setNavi(Model model, SearchCriteria searchCriteria) {
-        List<String> navi = galleryService.getPageNavi(searchCriteria);
+    private void setGenreTypes(Model model) {
+        List<CategoryType> genreTypes = galleryService.getGenreTypes();
+        model.addAttribute("genreTypes", genreTypes);
+    }
+
+    private void setNaviOfCards(Model model, SearchCriteria searchCriteria) {
+        List<String> navi = galleryService.getPageNaviOfCards(searchCriteria);
+        model.addAttribute("navi", navi);
+    }
+
+    private void setNaviOfContents(Model model, GalleryCardDTO galleryCardDTO) {
+        List<String> navi = galleryService.getPageNaviOfContents(galleryCardDTO);
         model.addAttribute("navi", navi);
     }
 }

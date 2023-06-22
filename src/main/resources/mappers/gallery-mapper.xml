@@ -44,16 +44,21 @@
                 </if>
                 and (title like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%' or writer like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%')
             </if>
-            and (writer = #{writer, jdbcType=NUMERIC} or yn = 'Y')
+            and yn = 'Y'
+<!--            and (writer = #{writer, jdbcType=NUMERIC} or yn = 'Y')-->
         </trim>
         ) where rn between #{start} and #{end}
     </select>
     <select id="selectOneCard" resultType="kh.final_project.dto.GalleryCardView">
         select * from view_gallery_cards where seq = #{cardSeq}
     </select>
+
     <select id="selectAllContents" resultType="kh.final_project.dto.GalleryContent">
-        select * from gallery_contents where gallery_cards = ${cardSeq} order by seq desc
+        select *
+        from (select gallery_contents.*, row_number() over(order by write_date ${sort} nulls last) rn from gallery_contents where gallery_cards = ${cardSeq} and yn = 'Y')
+        where rn between #{start} and #{end}
     </select>
+
     <select id="selectOneContent" resultType="kh.final_project.dto.GalleryContent">
         select gallery_contents.*, gallery_cards.category_type, gallery_cards.writer
         from gallery_contents
@@ -83,8 +88,7 @@
                 genre_type2 = null,
             </otherwise>
         </choose>
-        ai = #{ai}, title = #{title}, catchphrase = #{catchphrase}, synopsis = #{synopsis}, thumbnail_url =
-        #{thumbnail_url}, yn = #{yn} where seq = ${seq}
+        ai = #{ai}, title = #{title}, catchphrase = #{catchphrase}, synopsis = #{synopsis}, thumbnail_url = #{thumbnail_url}, yn = #{yn} where seq = ${seq}
     </update>
     <update id="updateContent">
         update gallery_contents set title = #{title},
@@ -100,10 +104,12 @@
         </choose>
         txt = #{txt}, yn = #{yn} where seq = ${seq} and gallery_cards = ${gallery_cards}
     </update>
-    <update id="updateDisclosure">
+    <update id="updateCardDisclosure">
         update gallery_cards set yn = #{value} where seq = #{cardSeq}
     </update>
-
+    <update id="updateContentDisclosure">
+        update gallery_contents set yn = #{value} where seq = #{cardSeq}
+    </update>
     <delete id="deleteCard">
         delete from gallery_cards where seq = #{cardSeq}
     </delete>
@@ -124,7 +130,12 @@
                 </if>
                 and (title like '%'||#{searchQuery}||'%' or writer like '%'||#{searchQuery}||'%')
             </if>
+            and yn = 'Y'
         </trim>
+    </select>
+
+    <select id="totalContents" resultType="java.lang.Integer">
+        select count(*) from gallery_contents where gallery_cards = ${cardSeq} and yn = 'Y'
     </select>
 
 </mapper>

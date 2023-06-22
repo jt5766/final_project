@@ -12,7 +12,7 @@
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
 		<property name="username" value="TEST"></property>
 		<property name="password" value="1234"></property>
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@43.201.51.104:1521:xe"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@3.39.227.39:1521:xe"></property>
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
 	</bean>
 	

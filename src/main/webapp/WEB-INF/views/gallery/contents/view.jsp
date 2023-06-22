@@ -75,7 +75,18 @@
           <input type="hidden" name="contentSeq" value="${content.seq}">
           <button type="submit">삭제하기</button>
         </form>
-        <button onclick="location.href='/gallery/${cardSeq}/contents/${content.seq}/modify'">수정하기</button>
+        <button onclick="location.href='/gallery/${cardSeq}/contents/${content.seq}/modify/${content.category_type}'">수정하기</button>
+        <div class="disclosure">
+          <c:if test="${sessionScope.code == content.writer}">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="chk-disclosure"
+                     <c:if test="${content.yn == 'Y'}">checked value="Y"</c:if>
+                     <c:if test="${content.yn == 'N'}">value="N"</c:if>
+              >
+              <label class="form-check-label" for="chk-disclosure">공개 여부</label>
+            </div>
+          </c:if>
+        </div>
       </c:if>
     </div>
     <div class="col-md-6">
@@ -86,6 +97,21 @@
 <script>
   $(function() {
     $("a.embed").oembed();
+  });
+  $('#chk-disclosure').on('click', function () {
+      const chkDom = $('#chk-disclosure');
+      if (chkDom.val() === 'Y') {
+          chkDom.val('N');
+      } else if (chkDom.val() === 'N') {
+          chkDom.val('Y');
+      }
+      $.ajax({
+          url: "/gallery/disclosure/${cardSeq}/contents/${content.seq}",
+          data: chkDom.val(),
+          contentType: "application/x-www-form-urlencoded",
+          accepts: {plainText: "application/json"},
+          method: "put"
+      });
   });
 </script>
 </body>

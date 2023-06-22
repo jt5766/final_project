@@ -126,7 +126,14 @@
     </div>
 </div>
 <div class="container-xl">
-    <form action="/gallery/${cardSeq}/contents" method="post" enctype="multipart/form-data">
+    <c:choose>
+        <c:when test="${(categoryType < 1005) && (categoryType != 1001)}">
+            <form action="/gallery/${cardSeq}/contents/withFile" method="post" enctype="multipart/form-data">
+        </c:when>
+        <c:otherwise>
+            <form action="/gallery/${cardSeq}/contents" method="post">
+        </c:otherwise>
+    </c:choose>
         <div class="row">
             <div class="col-md-12">
                 <input type="hidden" name="gallery_cards" value="${cardSeq}">

@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +20,8 @@ public class GalleryService {
 
     private final GalleryDAO galleryDAO;
     private final TypeDAO typeDAO;
-    private final Integer postPerPage = 4;
+    private final Integer cardsPerPage = 4;
+    private final Integer contentsPerPage = 10;
     private final Integer naviPerPage = 10;
 
     @Autowired
@@ -41,7 +44,7 @@ public class GalleryService {
     }
 
     public List<GalleryCardView> selectAllCards(SearchCriteria searchCriteria) {
-        setRange(searchCriteria);
+        setRangeOfCards(searchCriteria);
         return galleryDAO.selectAllCards(searchCriteria);
     }
 
@@ -51,7 +54,7 @@ public class GalleryService {
         searchCriteria.setSearchKeyword(galleryCardsSearch.getKeyword());
         searchCriteria.setSortKeyword(galleryCardsSort.getKeyword());
         searchCriteria.setSortVal(galleryCardsSort.getVal());
-        setRange(searchCriteria);
+        setRangeOfCards(searchCriteria);
         return galleryDAO.selectAllCards(searchCriteria);
     }
 
@@ -64,8 +67,14 @@ public class GalleryService {
         return galleryDAO.selectOneContent(cardSeq, contentSeq);
     }
 
-    public List<GalleryContent> selectAllContents(Long cardSeq) {
-        return galleryDAO.selectAllContents(cardSeq);
+    public List<GalleryContent> selectAllContents(GalleryCardDTO galleryCardDTO) {
+        setRangeOfContents(galleryCardDTO);
+        return galleryDAO.selectAllContents(galleryCardDTO);
+    }
+
+
+    public void insertContent(GalleryContent content) {
+        galleryDAO.insertContent(content);
     }
 
     public void insertContent(GalleryContent content, MultipartFile multipartFile, String realPath) throws IOException {
@@ -81,7 +90,16 @@ public class GalleryService {
         galleryDAO.insertContent(content);
     }
 
-    public void updateCard(GalleryCard card) {
+    public void updateCard(GalleryCard card, MultipartFile multipartFile, String realPath) throws IOException {
+        card.setThumbnail_url(
+                new StringBuilder()
+                        .append("/gallery/card/thumbnails/")
+                        .append(UUID.randomUUID())
+                        .append("_")
+                        .append(card.getThumbnail_url())
+                        .toString()
+        );
+        transferFile(realPath + card.getThumbnail_url(), multipartFile);
         galleryDAO.updateCard(card);
     }
 
@@ -89,11 +107,28 @@ public class GalleryService {
         galleryDAO.updateContent(content);
     }
 
-    public void deleteCard(Long cardSeq) {
+    public void updateContent(GalleryContent content, MultipartFile multipartFile, String realPath) throws IOException {
+        content.setFile_url(
+                new StringBuilder()
+                        .append("/gallery/content/files/")
+                        .append(UUID.randomUUID())
+                        .append("_")
+                        .append(content.getFile_url())
+                        .toString()
+        );
+        transferFile(realPath + content.getFile_url(), multipartFile);
+        galleryDAO.updateContent(content);
+    }
+
+    public void deleteCard(Long cardSeq, String realPath) {
+        GalleryCardView card = galleryDAO.selectOneCard(cardSeq);
+        removeFile(card.getThumbnail_url(), realPath);
         galleryDAO.deleteCard(cardSeq);
     }
 
-    public void deleteContent(Long cardSeq, Long contentSeq) {
+    public void deleteContent(Long cardSeq, Long contentSeq, String realPath) {
+        GalleryContent content = galleryDAO.selectOneContent(cardSeq, contentSeq);
+        removeFile(content.getFile_url(), realPath);
         galleryDAO.deleteContent(cardSeq, contentSeq);
     }
 
@@ -105,14 +140,24 @@ public class GalleryService {
         return result;
     }
 
-    public List<String> getPageNavi(SearchCriteria searchCriteria) {
+    public List<String> getPageNaviOfCards(SearchCriteria searchCriteria) {
         Integer currentPage = searchCriteria.getPage();
         Integer totalCount = galleryDAO.getTotalCards(searchCriteria);
+        return getNaviList(currentPage, totalCount, cardsPerPage);
+    }
+
+    public List<String> getPageNaviOfContents(GalleryCardDTO galleryCardDTO) {
+        Integer currentPage = galleryCardDTO.getPage();
+        Integer totalCount = galleryDAO.getTotalContents(galleryCardDTO);
+        return getNaviList(currentPage, totalCount, contentsPerPage);
+    }
+
+    private List<String> getNaviList(Integer currentPage, Integer totalCount, Integer typePerPage) {
         Integer totalPage;
-        if (totalCount % postPerPage > 0) {
-            totalPage = totalCount / postPerPage + 1;
+        if (totalCount % typePerPage > 0) {
+            totalPage = totalCount / typePerPage + 1;
         } else {
-            totalPage = totalCount / postPerPage;
+            totalPage = totalCount / typePerPage;
         }
         Integer startNavi = (currentPage - 1) / naviPerPage * naviPerPage + 1;
         Integer endNavi = startNavi + (naviPerPage - 1);
@@ -124,14 +169,8 @@ public class GalleryService {
         if (endNavi > totalPage) {
             endNavi = totalPage;
         }
-        boolean needPrev = false;
-        if (currentPage > naviPerPage) {
-            needPrev = true;
-        }
-        boolean needNext = false;
-        if (endNavi < totalPage) {
-            needNext = true;
-        }
+        boolean needPrev = currentPage > naviPerPage;
+        boolean needNext = endNavi < totalPage;
         List<String> pageNavi = new ArrayList<>();
         if (needPrev) {
             pageNavi.add("Prev");
@@ -145,9 +184,14 @@ public class GalleryService {
         return pageNavi;
     }
 
-    private void setRange(SearchCriteria searchCriteria) {
-        searchCriteria.setStart((searchCriteria.getPage() * postPerPage) - (postPerPage - 1));
-        searchCriteria.setEnd((searchCriteria.getPage() * postPerPage));
+    private void setRangeOfCards(SearchCriteria searchCriteria) {
+        searchCriteria.setStart((searchCriteria.getPage() * cardsPerPage) - (cardsPerPage - 1));
+        searchCriteria.setEnd((searchCriteria.getPage() * cardsPerPage));
+    }
+
+    private void setRangeOfContents(GalleryCardDTO galleryCardDTO) {
+        galleryCardDTO.setStart((galleryCardDTO.getPage() * contentsPerPage) - (contentsPerPage - 1));
+        galleryCardDTO.setEnd((galleryCardDTO.getPage() * contentsPerPage));
     }
 
     private void transferFile(String fileName, MultipartFile multipartFile) throws IOException {
@@ -162,5 +206,21 @@ public class GalleryService {
 
     public void updateCardDisclosure(Long cardSeq, String value) {
         galleryDAO.updateCardDisclosure(cardSeq, value);
+    }
+
+    public void updateContentDisclosure(Long contentSeq, String value) {
+        galleryDAO.updateContentDisclosure(contentSeq, value);
+    }
+
+    private void removeFile(String fileName, String realPath){
+        String srcFileName = URLDecoder.decode(fileName, StandardCharsets.UTF_8);
+        File file = new File(realPath + srcFileName);
+        if (file.exists()) {
+            boolean delete = file.delete();
+        }
+    }
+
+    public List<CategoryType> getGenreTypes() {
+        return typeDAO.selectByGenreType();
     }
 }

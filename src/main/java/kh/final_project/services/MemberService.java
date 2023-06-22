@@ -30,13 +30,12 @@ public class MemberService {
     private JavaMailSender javaMailSender;
 
 
-
-    public List<EmailTypeDTO> emailType(){
+    public List<EmailTypeDTO> emailType() {
         return mdao.emailType();
     }
 
 
-    public String getEmailName(MemberDTO dto){
+    public String getEmailName(MemberDTO dto) {
         return mdao.getEmailName(dto);
     }
 
@@ -53,21 +52,27 @@ public class MemberService {
                 "<h1>Kreate-Hub 메일인증</h1>" +
                         "<br>Kreate-Hub 오신것을 환영합니다!" +
                         "<br>아래 [이메일 인증 확인]을 눌러주세요." +
-                        "<br><a href='http://localhost:8080/member/register?member_type="+dto.getMember_type()+
-                        "&email=" +dto.getEmail()+
-                        "&email_type="+dto.getEmail_type()+
-                        "&random_key="+dto.getRandom_key()+
+                        "<br><a href='http://localhost:8080/member/register?member_type=" + dto.getMember_type() +
+                        "&email=" + dto.getEmail() +
+                        "&email_type=" + dto.getEmail_type() +
+                        "&random_key=" + dto.getRandom_key() +
                         "'>이메일 인증 확인</a>");
         sendMail.setFrom("rkqudwns@gmail.com", "강병준");
-        System.out.println(dto.getEmail()+"@"+dto.getSet_email_type()+" / "+dto.getMember_type());
-        sendMail.setTo(dto.getEmail()+"@"+dto.getSet_email_type());
+        System.out.println(dto.getEmail() + "@" + dto.getSet_email_type() + " / " + dto.getMember_type());
+        sendMail.setTo(dto.getEmail() + "@" + dto.getSet_email_type());
         sendMail.send();
 
 
     }
-    public void findPassword(MemberDTO dto) throws MessagingException, UnsupportedEncodingException{
+
+    public void findPassword(MemberDTO dto) throws MessagingException, UnsupportedEncodingException {
         System.out.println("2" + dto);
         this.emailTypeChange(dto);
+
+        String emailName = this.getEmailName(dto);
+        dto.setSet_email_type(emailName);
+
+
         System.out.println("3" + dto);
         UUID uuid = UUID.randomUUID();
         dto.setRandom_key(String.valueOf(uuid));
@@ -78,20 +83,19 @@ public class MemberService {
                 "<h1>Kreate-Hub 비밀번호 찾기</h1>" +
 
                         "<br>아래 [비밀번호 찾기를 눌러주세요]" +
-                        "<br><a href='http://localhost:8080/member/findPassword" +
-                        "?email="+dto.getEmail()+
-                        "&email_type="+dto.getEmail_type()+
-                        "&random_key="+dto.getRandom_key()+
+                        "<br><a href='http://localhost:8080/member/tofindPassword" +
+                        "?email=" + dto.getEmail() +
+                        "&email_type=" + dto.getEmail_type() +
+                        "&random_key=" + dto.getRandom_key() +
                         "'>비밀번호 찾기</a>");
         sendMail.setFrom("rkqudwns@gmail.com", "강병준");
-        String emailName = this.getEmailName(dto);
-        dto.setSet_email_type(emailName);
-        sendMail.setTo(dto.getEmail()+"@"+dto.getSet_email_type());
+
+        sendMail.setTo(dto.getEmail() + "@" + dto.getSet_email_type());
         sendMail.send();
     }
 
 
-    public void emailTypeChange(MemberDTO dto){
+    public void emailTypeChange(MemberDTO dto) {
         String email = dto.getEmail();
         String[] mail = email.split("@");
         dto.setEmail(mail[0]);
@@ -111,28 +115,28 @@ public class MemberService {
     }
 
 
-    public void uploadFile(MemberDTO dto , MultipartFile file,String realPath) throws  Exception{
+    public void uploadFile(MemberDTO dto, MultipartFile file, String realPath) throws Exception {
         System.out.println("create");
         String path = "/resources/member";
         System.out.println(realPath);
         File realPathFile = new File(realPath);
-        if(!realPathFile.exists()) realPathFile.mkdirs();
-        if(file != null) {
+        if (!realPathFile.exists()) realPathFile.mkdirs();
+        if (file != null) {
 
             String oriName = file.getOriginalFilename();
             System.out.println(oriName);
             String[] arr = oriName.split("\\.");
             System.out.println(arr.length);
-            String sysname = dto.getEmail()+"_"+dto.getEmail_type()+"."+arr[arr.length-1];
+            String sysname = dto.getEmail() + "_" + dto.getEmail_type() + "." + arr[arr.length - 1];
             System.out.println(sysname);
-            String fileURL = realPath+"/"+sysname;
+            String fileURL = realPath + "/" + sysname;
             System.out.println(fileURL);
-            String url = path+"/"+sysname;
+            String url = path + "/" + sysname;
             file.transferTo(new File(fileURL));
             dto.setFile_url(url);
         }
 
-        System.out.println("createMember로 넘어온 dto :"+dto);
+        System.out.println("createMember로 넘어온 dto :" + dto);
         System.out.println("========================");
         mdao.insert(dto);
     }
@@ -147,5 +151,18 @@ public class MemberService {
 
     public void login(MemberDTO dto) {
         mdao.login(dto);
+    }
+
+    public boolean passwordCheck(MemberDTO dto) {
+        return  mdao.passwordCheck(dto);
+    }
+
+    public MemberDTO selectDTO(int code) {
+
+        return mdao.selectDTO(code);
+    }
+
+    public void update(MemberDTO dto) {
+        mdao.update(dto);
     }
 }

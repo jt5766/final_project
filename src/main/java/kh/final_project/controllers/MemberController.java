@@ -7,18 +7,17 @@ import kh.final_project.repositories.MemberDAO;
 import kh.final_project.services.EmailcheckService;
 import kh.final_project.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.util.List;
-import java.util.UUID;
+
 
 @Controller
 @RequestMapping("/member/")
@@ -33,8 +32,7 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @Autowired
-    private MemberDAO mdao;
+
     @RequestMapping("signup")
     public String signup(Model model){
 
@@ -91,7 +89,8 @@ public class MemberController {
 
     @ResponseBody
     @RequestMapping("login")
-    public String login(MemberDTO dto){
+    public String login(MemberDTO dto, HttpServletResponse res){
+
         System.out.println("ajax로 넘어온 값"+dto);
         /*넘어온 문자열 이메일 형식 이메일 타입과 이메일 로 분리 작업*/
         memberService.emailTypeChange(dto);
@@ -105,6 +104,13 @@ public class MemberController {
         System.out.println("----------------------------");
 
         if ( dto.getCode()> 10000000 && dto.getCode() < 100000000) {
+            Cookie cookie = new Cookie("cookie",dto.getCode().toString());
+            cookie.setMaxAge(60*60*24); //쿠키 유효 기간: 하루로 설정(60초 * 60분 * 24시간)
+            cookie.setPath("/"); //모든 경로에서 접근 가능하도록 설정
+            res.addCookie(cookie); //response에 Cookie 추가
+
+            System.out.println("쿠키에 네임값 " + cookie.getName());
+            System.out.println("쿠키에 담긴 값 " + cookie.getValue());
 
             session.setAttribute("code",dto.getCode());
             session.setAttribute("nickName",dto.getNickname());
@@ -119,19 +125,33 @@ public class MemberController {
 
     public String logOut(MemberDTO dto){
         System.out.println("로그아웃 dto :"+dto);
+
+        if(session.getAttribute("code") == null) {
+            return "redirect:home";
+        }
         dto.setCode((Integer) session.getAttribute("code"));
         memberService.Nupdate(dto);
         session.removeAttribute("code");
         session.removeAttribute("nickName");
         session.removeAttribute("memberType");
-
-        return "redirect:/member/loginForm";
+        return "redirect:/";
     }
     @RequestMapping("findPassword")
-    public String findPassword(MemberDTO dto, Model model) {
+    public String findPassword() {
+
+        return "member/findPasswordForm";
+    }
+
+    @RequestMapping("tofindPassword")
+    public String tofindPassword(MemberDTO dto , Model model){
+        String result = memberService.getEmailName(dto);
+
+        dto.setSet_email_type(result);
         model.addAttribute("email",dto.getEmail());
-        model.addAttribute("email_type",dto.getEmail_type());
-        return "member/findPassword";
+        model.addAttribute("email_type", dto.getEmail_type());
+        model.addAttribute("set_email_type",dto.getSet_email_type());
+
+        return "member/findPasswordForm";
     }
 
     @RequestMapping("passwordChange")
@@ -153,23 +173,37 @@ public class MemberController {
     }
 
     @RequestMapping("myinfo")
-    public String myinfo(){
-
+    public String myinfo(Model model){
+      MemberDTO dto = memberService.selectDTO((int)session.getAttribute("code"));
+        String SetEmailType = memberService.getEmailName(dto);
+        model.addAttribute("email",dto.getEmail());
+        model.addAttribute("set_email_type",SetEmailType);
         return "/member/myInfoUpdateForm";
     }
 
     @RequestMapping("passwordCheck")
+    @ResponseBody
 
     public String passwordCheck(MemberDTO dto){
         System.out.println("닉네임 + 패스워드 값");
-        System.out.println(dto.getPassword()+":"+dto.getNickname());
+        System.out.println(dto.getNickname()+":"+dto.getPassword());
         System.out.println("======================");
-        mdao.passwordCheck(dto);
 
-        if(mdao.passwordCheck(dto)){
-            return "/member/myInfoUpdateForm";
-        }
-        return "";
+      boolean result = memberService.passwordCheck(dto);
+        System.out.println(result);
+
+            return String.valueOf(result);
+    }
+
+    @RequestMapping("update")
+    public String update(MemberDTO dto){
+        Integer code = (Integer) session.getAttribute("code");
+        dto.setCode(code);
+        memberService.update(dto);
+        String nickname = dto.getNickname();
+        session.setAttribute("nickName",nickname);
+
+        return "home";
     }
 }
 

@@ -17,6 +17,8 @@
             <form action="/member/updatePassword">
                 <input type="hidden" name="email" value="${email}">
                 <input type="hidden" name="email_type" value="${email_type}">
+                이메일
+                <input type="text" readonly value="${email}@${set_email_type}">
                 새로운 비밀번호를 입력해주세요
                 <input type="text" name="password">
                 <input type="submit">
