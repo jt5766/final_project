@@ -16,12 +16,13 @@
         div{border: 1px solid black;}
         #div_contents{height: 700px; overflow: auto;background-color:yellow;}
         .linebox{overflow: auto;}
-        .mytext{float:right;max-width:35%;word-break:break-all;padding-right:3px;background-color:red;}
-        .othertext{float:left;max-width:35%;word-break:break-all;padding-right:3px;background-color:orange;}
+        .mytext{float:right;max-width:35%;word-break:break-all;padding-right:2px;background-color:red;}
+        .othertext{float:left;max-width:35%;word-break:break-all;padding-right:2px;background-color:orange;}
         #div_text{height: 100px; overflow: auto;}
         .btn{width: 100%; height: 100%; background-color: gray;color: black;}
         .btn:hover{background-color: black;color:gray;}
-        .datebox{background-color:green;float:left;}
+        .otherdatebox{background-color:green;float:left;padding-right:2px;}
+        .mydatebox{background-color:violet;float:right;padding-right:2px;}
         .alldatebox{overflow: auto;background-color:blue;text-align:center;}
     </style>
 </head>
@@ -45,9 +46,9 @@
 					const linediv = $("<div>");
 					linediv.addClass("linebox");
 					const datediv = $("<div>");
-					datediv.addClass("datebox");
 					const textdiv = $("<div>");
 					if(body.writer == ${code}){
+						datediv.addClass("mydatebox");
 						textdiv.addClass("mytext");
 						textdiv.append(body.txt);
 					}else{
@@ -55,6 +56,7 @@
 						writerbox.addClass("writerbox");
 						writerbox.append(body.writer);
 						linediv.append(writerbox);
+						datediv.addClass("otherdatebox");
 						textdiv.addClass("othertext");
 						textdiv.append(body.txt);
 					}
@@ -69,8 +71,8 @@
         				$("#div_contents").append(plusdatediv);
 					}
 					datediv.append(plustimer.getHours()+" : "+plustimer.getMinutes());
-					linediv.append(datediv);
 					linediv.append(textdiv);
+					linediv.append(datediv);
 					$("#div_contents").append(linediv);
 					addYear = plusYear;
 					addMonth = plusMonth;
@@ -155,9 +157,9 @@
 								const datalinediv = $("<div>");
 								datalinediv.addClass("linebox");
 								const datadatediv = $("<div>");
-								datadatediv.addClass("datebox");
 								const datatextdiv = $("<div>");
 								if(resp[i].writer == ${code}){
+									datadatediv.addClass("mydatebox");
 									datatextdiv.addClass("mytext");
 									datatextdiv.append(resp[i].txt);
 								}else{
@@ -165,6 +167,7 @@
 									datawriterbox.addClass("writerbox");
 									datawriterbox.append(resp[i].writer);
 									datalinediv.append(datawriterbox);
+									datadatediv.addClass("otherdatebox");
 									datatextdiv.addClass("othertext");
 									datatextdiv.append(resp[i].txt);
 								}
@@ -201,9 +204,9 @@
 					        			date = logDate;
 					        		}
 				        		}
-								datadatediv.append(logtimer);
-								datalinediv.append(datadatediv);
+								datadatediv.append(logtimer.getHours()+" : "+logtimer.getMinutes());
 								datalinediv.append(datatextdiv);
+								datalinediv.append(datadatediv);
 								$("#div_contents").prepend(datalinediv);
 							}
 							dragFlag = false;
@@ -224,9 +227,9 @@
 				const datalinediv = $("<div>");
 				datalinediv.addClass("linebox");
 				const datadatediv = $("<div>");
-				datadatediv.addClass("datebox");
 				const datatextdiv = $("<div>");
 				if(chatlog[i].writer == ${code}){
+					datadatediv.addClass("mydatebox");
 					datatextdiv.addClass("mytext");
 					datatextdiv.append(chatlog[i].txt);
 				}else{
@@ -234,6 +237,7 @@
 					datawriterbox.addClass("writerbox");
 					datawriterbox.append(chatlog[i].writer);
 					datalinediv.append(datawriterbox);
+					datadatediv.addClass("otherdatebox");
 					datatextdiv.addClass("othertext");
 					datatextdiv.append(chatlog[i].txt);
 				}
@@ -267,9 +271,9 @@
 	        			date = logDate;
 	        		}
         		}
-				datadatediv.append(logtimer);
-				datalinediv.append(datadatediv);
+				datadatediv.append(logtimer.getHours()+" : "+logtimer.getMinutes());
 				datalinediv.append(datatextdiv);
+				datalinediv.append(datadatediv);
 				$("#div_contents").prepend(datalinediv);
 			}
 		})
