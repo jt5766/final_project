@@ -373,4 +373,24 @@ public class CommunityService {
 		System.out.println("search : " + searchCriteria);
 		return communityDAO.searchComplaint(searchCriteria);
 	}
+
+	public List<BoardsDTO> getMyNotice(int code) {
+		return communityDAO.getMyNotice(code);
+	}
+
+	public List<BoardsDTO> getMyFree(int code) {
+		return communityDAO.getMyFree(code);
+	}
+
+	public List<BoardsDTO> getMyTip(int code) {
+		return communityDAO.getMyTip(code);
+	}
+
+	public List<BoardsDTO> getMyQuestion(int code) {
+		return communityDAO.getMyQuestion(code);
+	}
+
+	public List<BoardsDTO> getMyComplaint(int code) {
+		return communityDAO.getMyComplaint(code);
+	}
 }
