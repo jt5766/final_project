@@ -146,6 +146,10 @@
 							console.log(resp);
 							if(resp.length == 0){
 								lengthsize = true;
+								var alldatediv = $("<div>");
+	        					alldatediv.addClass("alldatebox");
+		        				alldatediv.append(year+"/"+(month+1)+"/"+date);
+		        				$("#div_contents").prepend(alldatediv);
 							}
 							for(var i = 0;i < resp.length;i++){
 								const datalinediv = $("<div>");
