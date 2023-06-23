@@ -21,6 +21,8 @@
         #div_text{height: 100px; overflow: auto;}
         .btn{width: 100%; height: 100%; background-color: gray;color: black;}
         .btn:hover{background-color: black;color:gray;}
+        .datebox{background-color:green;}
+        .alldatebox{overflow: auto;background-color:blue;text-align:center;}
     </style>
 </head>
 <body>
@@ -62,8 +64,9 @@
 					var plusDate = plustimer.getDate();
 					if(plusYear != addYear || plusMonth != addMonth || plusDate != addDate){
 						var plusdatediv = $("<div>");
+						plusdatediv.addClass("alldatebox");
         				plusdatediv.append(plusYear+"-"+(plusMonth+1)+"-"+plusDate);
-        				linediv.append(plusdatediv);
+        				$("#div_contents").prepend(plusdatediv);
 					}
 					datediv.append(plustimer.getHours()+" : "+plustimer.getMinutes());
 					linediv.append(datediv);
@@ -171,8 +174,9 @@
 				        			if(year != null && month != null && date != null){
 				        				if(year != logYear || month != logMonth || date != logDate){
 				        					var alldatediv = $("<div>");
+				        					alldatediv.addClass("alldatebox");
 					        				alldatediv.append(logYear+"/"+(logMonth+1)+"/"+logDate);
-					        				datalinediv.append(alldatediv);
+					        				$("#div_contents").prepend(alldatediv);
 				        				}
 				        			}
 				        		}else if(i>0){
@@ -182,8 +186,9 @@
 					        		var beforeDate = beforetimer.getDate();
 				        			if(beforeYear != logYear || beforeMonth != logMonth || beforeDate != logDate){
 				        				var alldatediv = $("<div>");
+				        				alldatediv.addClass("alldatebox");
 				        				alldatediv.append(beforeYear+"-"+(beforeMonth+1)+"-"+beforeDate);
-				        				datalinediv.append(alldatediv);
+				        				$("#div_contents").prepend(alldatediv);
 				        			}
 				        			if(i == (resp.length-1)){
 					        			console.log("lastYear"+logYear+"/lastMonth"+(logMonth+1)+"/lastDate"+logDate);
@@ -247,8 +252,9 @@
 	        		var beforeDate = beforetimer.getDate();
         			if(beforeYear != logYear || beforeMonth != logMonth || beforeDate != logDate){
         				var alldatediv = $("<div>");
+        				alldatediv.addClass("alldatebox");
         				alldatediv.append(beforeYear+"-"+(beforeMonth+1)+"-"+beforeDate);
-        				datalinediv.append(alldatediv);
+        				$("#div_contents").prepend(alldatediv);
         			}
         			if(i == (chatlog.length-1)){
 	        			console.log("lastYear"+logYear+"/lastMonth"+(logMonth+1)+"/lastDate"+logDate);
