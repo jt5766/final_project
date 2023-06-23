@@ -21,7 +21,7 @@
         #div_text{height: 100px; overflow: auto;}
         .btn{width: 100%; height: 100%; background-color: gray;color: black;}
         .btn:hover{background-color: black;color:gray;}
-        .datebox{background-color:green;}
+        .datebox{background-color:green;float:left;}
         .alldatebox{overflow: auto;background-color:blue;text-align:center;}
     </style>
 </head>
