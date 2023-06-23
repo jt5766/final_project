@@ -66,7 +66,7 @@
 						var plusdatediv = $("<div>");
 						plusdatediv.addClass("alldatebox");
         				plusdatediv.append(plusYear+"-"+(plusMonth+1)+"-"+plusDate);
-        				$("#div_contents").prepend(plusdatediv);
+        				$("#div_contents").append(plusdatediv);
 					}
 					datediv.append(plustimer.getHours()+" : "+plustimer.getMinutes());
 					linediv.append(datediv);
@@ -288,7 +288,7 @@
             </div>
         </div>
         <div class="row">
-        	메모 : 1. 날짜 뜨는 div 위치만 조정
+        	메모 : 1. 시간만 뜨게 하기 let i = new Date(); i.getHours(); i.getMinutes();
         		  2. regex 1300자 제한 해줘야 함 안그럼 DB 에 안들어가서 오류남 ( DB는 4000자 까지 되는데 한글은 3배라 1300자만 )
         </div>
     </div>
