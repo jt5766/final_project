@@ -15,7 +15,7 @@
 			<div class="col-md-12">
 				<table class="table table-light table-bordered border-secondary table-striped">
 					<thead>
-						<tr class="btn_group" role="group" aria-label="Basic radio toggle button group">
+						<tr class="btn_group" role="group">
 							<th width="33%">
 								<input type="radio" class="btn-check" name="radio_type" id="EMAIL_TYPE" autocomplete="off" onclick="selectType(this);">
 								<label class="btn btn-outline-primary btn-sm w-100" for="EMAIL_TYPE">이메일</label>
@@ -29,7 +29,7 @@
 								<label class="btn btn-outline-primary btn-sm w-100" for="EMPTY1">&nbsp;</label>
 							</th>
 						</tr>
-						<tr class="btn_group" role="group" aria-label="Basic radio toggle button group">
+						<tr class="btn_group" role="group">
 							<th width="33%">
 								<input type="radio" class="btn-check" name="radio_type" id="GALLERY_CARDS_SORT" autocomplete="off" onclick="selectType(this);">
 								<label class="btn btn-outline-primary btn-sm w-100" for="GALLERY_CARDS_SORT">정렬(갤러리-카드)</label>
@@ -43,7 +43,7 @@
 								<label class="btn btn-outline-primary btn-sm w-100" for="COMMUNITY_SORT">정렬(커뮤니티)</label>
 							</th>
 						</tr>
-						<tr class="btn_group" role="group" aria-label="Basic radio toggle button group">
+						<tr class="btn_group" role="group">
 							<th width="33%">
 								<input type="radio" class="btn-check" name="radio_type" id="GALLERY_CARDS_SEARCH" autocomplete="off" onclick="selectType(this);">
 								<label class="btn btn-outline-primary btn-sm w-100" for="GALLERY_CARDS_SEARCH">검색(갤러리-카드)</label>

@@ -1,5 +1,26 @@
 @charset "UTF-8";
 
+body {
+	background-color: #939393;
+	-ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
 .logo {
 	max-height: 80px;
+}
+
+/* Bootstrap Custom */
+:root {
+	--bs-white: #fff;
+	--bs-white-rgb: 255, 255, 255;
+	
+	--bs-dark: #212529;
+	--bs-dark-rgb: 33, 37, 41;
+	
+	--bs-secondary: #6c757d;
+	--bs-secondary-rgb: 108, 117, 125;
 }
