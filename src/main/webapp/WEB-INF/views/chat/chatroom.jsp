@@ -13,17 +13,17 @@
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 	<style>
         *{box-sizing: border-box;}
-        div{border: 1px solid black;}
-        #div_contents{height: 700px; overflow: auto;background-color:yellow;}
-        .linebox{overflow: auto;}
-        .mytext{float:right;max-width:35%;word-break:break-all;padding-right:2px;background-color:red;}
-        .othertext{float:left;max-width:35%;word-break:break-all;padding-right:2px;background-color:orange;}
+        #div_contents{height: 700px; overflow: auto;background-color:#B4C8BB;}
+        .mylinebox{overflow: auto;display:flex;justify-content:flex-start;flex-direction:row-reverse;}
+        .otherlinebox{overflow: auto;display:flex;justify-content:flex-start;}
+        .mytext{float:right;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:gray;border: 1px solid black;margin-top:10px;margin-bottom:10px;border-radius:5px;}
+        .othertext{float:left;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:white;border: 1px solid black;margin-top:10px;margin-bottom:10px;border-radius:5px;}
         #div_text{height: 100px; overflow: auto;}
         .btn{width: 100%; height: 100%; background-color: gray;color: black;}
         .btn:hover{background-color: black;color:gray;}
-        .otherdatebox{background-color:green;float:left;padding-right:2px;}
-        .mydatebox{background-color:violet;float:right;padding-right:2px;}
-        .alldatebox{overflow: auto;background-color:blue;text-align:center;}
+        .otherdatebox{float:left;padding-right:2px;align-self:end;margin-bottom:8px;}
+        .mydatebox{float:right;padding-right:2px;align-self:end;margin-bottom:8px;}
+        .alldatebox{overflow: auto;background-color:#778C86;text-align:center;}
     </style>
 </head>
 <body>
@@ -44,10 +44,10 @@
 					console.log(message);
 					console.log(body);
 					const linediv = $("<div>");
-					linediv.addClass("linebox");
 					const datediv = $("<div>");
 					const textdiv = $("<div>");
 					if(body.writer == ${code}){
+						linediv.addClass("mylinebox");
 						datediv.addClass("mydatebox");
 						textdiv.addClass("mytext");
 						textdiv.append(body.txt);
@@ -56,6 +56,7 @@
 						writerbox.addClass("writerbox");
 						writerbox.append(body.writer);
 						linediv.append(writerbox);
+						linediv.addClass("otherlinebox");
 						datediv.addClass("otherdatebox");
 						textdiv.addClass("othertext");
 						textdiv.append(body.txt);
@@ -155,10 +156,10 @@
 							}
 							for(var i = 0;i < resp.length;i++){
 								const datalinediv = $("<div>");
-								datalinediv.addClass("linebox");
 								const datadatediv = $("<div>");
 								const datatextdiv = $("<div>");
 								if(resp[i].writer == ${code}){
+									datalinediv.addClass("mylinebox");
 									datadatediv.addClass("mydatebox");
 									datatextdiv.addClass("mytext");
 									datatextdiv.append(resp[i].txt);
@@ -167,6 +168,7 @@
 									datawriterbox.addClass("writerbox");
 									datawriterbox.append(resp[i].writer);
 									datalinediv.append(datawriterbox);
+									datalinediv.addClass("otherlinebox");
 									datadatediv.addClass("otherdatebox");
 									datatextdiv.addClass("othertext");
 									datatextdiv.append(resp[i].txt);
@@ -225,10 +227,10 @@
 			console.log(chatlog);
 			for(i = 0; i <chatlog.length; i++){
 				const datalinediv = $("<div>");
-				datalinediv.addClass("linebox");
 				const datadatediv = $("<div>");
 				const datatextdiv = $("<div>");
 				if(chatlog[i].writer == ${code}){
+					datalinediv.addClass("mylinebox");
 					datadatediv.addClass("mydatebox");
 					datatextdiv.addClass("mytext");
 					datatextdiv.append(chatlog[i].txt);
@@ -237,6 +239,7 @@
 					datawriterbox.addClass("writerbox");
 					datawriterbox.append(chatlog[i].writer);
 					datalinediv.append(datawriterbox);
+					datalinediv.addClass("otherlinebox");
 					datadatediv.addClass("otherdatebox");
 					datatextdiv.addClass("othertext");
 					datatextdiv.append(chatlog[i].txt);
