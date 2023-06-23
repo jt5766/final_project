@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/gallery")
@@ -168,6 +170,26 @@ public class GalleryController {
     @ResponseBody
     public void updateDisclosure(@PathVariable Long cardSeq, @PathVariable Long contentSeq, @RequestBody String value) {
         galleryService.updateContentDisclosure(contentSeq, value);
+    }
+
+    @GetMapping(value = "/myPage", produces = "application/json", consumes = "text/plain")
+    @ResponseBody
+    public Map<String, List<GalleryCardView>> getMyCards() {
+        List<GalleryCardView> myCard = galleryService.selectMyCards((Integer) session.getAttribute("code"));
+        List<GalleryCardView> cards1001 = myCard.stream().filter(e -> e.getCategory_type() == 1001).collect(Collectors.toList());
+        List<GalleryCardView> cards1002 = myCard.stream().filter(e -> e.getCategory_type() == 1002).collect(Collectors.toList());
+        List<GalleryCardView> cards1003 = myCard.stream().filter(e -> e.getCategory_type() == 1003).collect(Collectors.toList());
+        List<GalleryCardView> cards1004 = myCard.stream().filter(e -> e.getCategory_type() == 1004).collect(Collectors.toList());
+        List<GalleryCardView> cards1005 = myCard.stream().filter(e -> e.getCategory_type() == 1005).collect(Collectors.toList());
+        List<GalleryCardView> cards1006 = myCard.stream().filter(e -> e.getCategory_type() == 1006).collect(Collectors.toList());
+        return Map.ofEntries(
+                Map.entry("1001", cards1001),
+                Map.entry("1002", cards1002),
+                Map.entry("1003", cards1003),
+                Map.entry("1004", cards1004),
+                Map.entry("1005", cards1005),
+                Map.entry("1006", cards1006)
+        );
     }
 
     private void setConditions(Model model) {

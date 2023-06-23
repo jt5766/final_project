@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" scope="session"/>
 <html>
 <head>
   <title>Card Content</title>
@@ -8,15 +9,11 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
   <link rel="stylesheet" type="text/css" href="/resources/oembed/jquery.oembed.css">
   <script src="/resources/oembed/jquery.oembed.js" type="text/javascript"></script>
+  <c:import url="${path}/resources/js/scripts.jsp"/>
+  <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<div class="container-fluid">
-  <div class="row gnb">
-    <div class="col-md-12">
-
-    </div>
-  </div>
-</div>
+<c:import url="${path}/resources/js/GNB.jsp"/>
 <div class="container-xl">
   <div class="row">
     <div class="col-md-12">
@@ -94,6 +91,7 @@
     </div>
   </div>
 </div>
+<c:import url="${path}/resources/js/FOOTER.jsp"/>
 <script>
   $(function() {
     $("a.embed").oembed();

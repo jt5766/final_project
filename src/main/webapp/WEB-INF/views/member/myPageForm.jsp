@@ -1,92 +1,106 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="path" value="${pageContext.request.contextPath}" scope="session"/>
 <!DOCTYPE html>
 <html lang="en">
-
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
-<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
 <head>
-    <style>
-        * {
-            border: 1px solid black;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+  <c:import url="${path}/resources/js/scripts.jsp"/>
+  <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
+  <style>
+      * {
+          border: 1px solid black;
+          box-sizing: border-box;
+      }
 
-        #container {
-            margin: auto;
-            text-align: center;
+      #navi {
+          display: flex;
+      }
 
-        }
+      #navi_left {
+          flex: 0.5;
+      }
 
-        #navi {
-            display: flex;
-        }
+      #navi_center {
+          flex: 1;
+      }
 
-        #navi_left {
-            flex: 0.5;
-        }
-
-        #navi_center {
-            flex: 1;
-        }
-
-        #navi_right {
-            flex: 0.5;
-        }
-
-
-        /* 컨텐츠부분 */
-        #body {
-            display: flex;
-        }
-
-        #body_left {
-            flex: 0.3;
-        }
-
-        #body_center {
-            flex: 1;
-        }
-
-        #body_right {
-            flex: 0.3;
-        }
-
-
-    </style>
+      #navi_right {
+          flex: 0.5;
+      }
+      /* 컨텐츠부분 */
+      #body {
+          display: flex;
+      }
+      .secrete {
+          color: red;
+      }
+  </style>
 </head>
 <body>
-<div id="container">
-    <div id="header">gnb</div>
-    <div id="navi">
-        <div id="navi_left"></div>
-        <div id="navi_center">마이페이지<br>
-            <button>갤러리</button>
-            <button>커뮤니티</button>
-            <button>1:1채팅</button>
-           <a href=/member/myinfo><button>회원 정보 수정</button></a>
-        </div>
-        <div id="navi_right"></div>
+<c:import url="${path}/resources/js/GNB.jsp"/>
+<div id="lnb">
+  <h3 class="text-center">마이페이지</h3>
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-xl justify-content-evenly btn-group">
+      <button class="btn btn-outline-dark read-btn" id="gallery" onclick="read()">갤러리</button>
+      <button class="btn btn-outline-dark read-btn" id="community" onclick="read()">커뮤니티</button>
+      <button class="btn btn-outline-dark" onclick="location.href='/chat/testlink'">1:1 채팅</button>
+      <button class="btn btn-outline-dark" onclick="location.href='/member/myinfo'">회원 정보 수정</button>
     </div>
-    <div id="body">
-        <div id="body_left"></div>
-        <div id="body_center">
-            소설
-            <button>신규등록</button>
-            <br>
-            만화
-            <button>신규등록</button>
-            <br>
-            영상
-            <button>신규등록</button>
-            <br>
-        </div>
-        <div id="body_right"></div>
-
-    </div>
-    <div id="footer">footer</div>
+  </nav>
 </div>
+<div class="container-xl" id="my-content">
+
+</div>
+<c:import url="${path}/resources/js/FOOTER.jsp"/>
+
+<script>
+  const read = () => {
+      $.ajax({
+          url:"/member/my-page",
+          contentType:"text/plain; utf-8",
+          accept:"application/json",
+          data:{tCode:$('.read-btn').attr('id')}
+      }).done(resp => {
+          console.log(resp);
+          $('#my-content').html(makeDom(resp));
+      });
+  }
+  const makeDom = (resp) => {
+      const categoryType = JSON.parse('${categoryType}');
+      const baseContainer = $('<div class="col-me-6">').appendTo($('<div class="row">'));
+      for (let i = 0; i < categoryType.length; i++) {
+          const data = resp[categoryType[i].code];
+          baseContainer.append($('<div class="d-flex justify-content-between">').text(categoryType[i].name)
+              .append(`
+<button onclick="location.href='/gallery/insert/\${categoryType[i].code}'">신규 등록</button>
+`));
+          for (let i = 0; i < data.length; i++) {
+              if (data[i].yn === 'N') {
+                  baseContainer.append(
+                      `
+<div onclick="location.href='/gallery/\${data[i].seq}'" class="secrete">
+    \${data[i].title}
+</div>`);
+              } else {
+                  baseContainer.append(
+                      `
+<div onclick="location.href='/gallery/\${data[i].seq}'">
+    \${data[i].title}
+</div>`);
+              }
+          }
+      }
+      return baseContainer;
+  }
+  const toInsert = (e) => {
+      location.href=`/gallery/toInsert/\${code}`
+  }
+</script>
 </body>
 </html>

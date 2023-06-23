@@ -93,4 +93,8 @@ public class GalleryDAO {
         );
         db.update("Gallery.updateContentDisclosure", params);
     }
+
+    public List<GalleryCardView> selectMyCards(Integer code) {
+        return db.selectList("Gallery.selectMyCards", code);
+    }
 }
