@@ -107,4 +107,24 @@ public class CommunityDAO {
 	public List<ComplaintBoardsDTO> searchComplaint(SearchCriteria searchCriteria) {
 		return sst.selectList("Community.searchComplaint", searchCriteria);
 	}
+
+	public List<BoardsDTO> getMyNotice(int code) {
+		return sst.selectList("Community.getMyNotice", code);
+	}
+
+	public List<BoardsDTO> getMyFree(int code) {
+		return sst.selectList("Community.getMyFree", code);
+	}
+
+	public List<BoardsDTO> getMyTip(int code) {
+		return sst.selectList("Community.getMyTip", code);
+	}
+
+	public List<BoardsDTO> getMyQuestion(int code) {
+		return sst.selectList("Community.getMyQuestion", code);
+	}
+
+	public List<BoardsDTO> getMyComplaint(int code) {
+		return sst.selectList("Community.getMyComplaint", code);
+	}
 }

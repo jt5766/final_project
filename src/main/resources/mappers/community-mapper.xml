@@ -12,13 +12,13 @@
 		insert into ${board_name}_BOARDS values
 		(${board_name}_BOARDS_SEQ.NEXTVAL, #{board_type}, #{title}, #{writer}, #{txt}, default, default)
 	</insert>
-	
+
 	<insert id="insertComplaint">
 		<selectKey keyProperty="board_name" resultType="String" order="BEFORE">
 			select board_name from board_type where code = #{board_type}
 		</selectKey>
 		insert into ${board_name}_BOARDS values
-		(${board_name}_BOARDS_SEQ.NEXTVAL, #{board_type},  
+		(${board_name}_BOARDS_SEQ.NEXTVAL, #{board_type},
 		#{complaint_type}, #{title}, #{writer}, #{txt}, default, null, null, default)
 	</insert>
 
@@ -27,63 +27,63 @@
 		FROM ${name}_BOARDS b
 		JOIN members m ON b.writer = m.code;
 	</select>
-	
+
 	<select id="selectBoardByPage" resultType="kh.final_project.dto.BoardsDTO">
 		SELECT *
 		FROM (
-		  SELECT b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count,
-		         row_number() over (order by b.seq desc) as rn
-		  FROM ${board_name}_BOARDS b
-		  JOIN members m ON b.writer = m.code
+		SELECT b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count,
+		row_number() over (order by b.seq desc) as rn
+		FROM ${board_name}_BOARDS b
+		JOIN members m ON b.writer = m.code
 		)
 		WHERE rn BETWEEN #{startPost} AND #{endPost}
 	</select>
-	
+
 	<select id="selectComplaintByPage" resultType="kh.final_project.dto.ComplaintBoardsDTO">
-	SELECT 
-	    *
-	FROM 
-	    (
-	        SELECT 
-	            b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname AS writer, b.txt, 
-	            b.write_date, b.process, b.process_date, b.total_count, 
-	            row_number() over (order by b.seq desc) as rn
-	        FROM 
-	            complaint_boards b
-	        JOIN 
-	            complaint_type t ON b.complaint_type = t.code
-	        JOIN 
-	            members m ON b.writer = m.code
-	    )
-	WHERE 
-	    rn BETWEEN #{startPost} AND #{endPost}
-	ORDER BY 
-	    seq DESC
+		SELECT
+		*
+		FROM
+		(
+		SELECT
+		b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname AS writer, b.txt,
+		b.write_date, b.process, b.process_date, b.total_count,
+		row_number() over (order by b.seq desc) as rn
+		FROM
+		complaint_boards b
+		JOIN
+		complaint_type t ON b.complaint_type = t.code
+		JOIN
+		members m ON b.writer = m.code
+		)
+		WHERE
+		rn BETWEEN #{startPost} AND #{endPost}
+		ORDER BY
+		seq DESC
 	</select>
-	
+
 	<update id="viewUp">
 		update ${board_name}_BOARDS set total_count = total_count + 1 where seq = #{seq}
 	</update>
-	
+
 	<select id="selectBoardView" resultType="kh.final_project.dto.BoardsDTO">
 		SELECT b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count
 		FROM ${board_name}_BOARDS b
 		JOIN members m ON b.writer = m.code
 		WHERE b.seq = #{seq}
 	</select>
-	
+
 	<select id="selectComplaintView" resultType="kh.final_project.dto.ComplaintBoardsDTO">
-		SELECT 
-			b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname AS writer, 
-			b.txt, b.write_date, b.process, b.process_date, b.total_count
-		FROM 
-			${board_name}_boards b
-		JOIN 
-			members m ON b.writer = m.code
+		SELECT
+		b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname AS writer,
+		b.txt, b.write_date, b.process, b.process_date, b.total_count
+		FROM
+		${board_name}_boards b
 		JOIN
-			complaint_type t ON b.complaint_type = t.code
-		WHERE 
-			b.seq = #{seq}	
+		members m ON b.writer = m.code
+		JOIN
+		complaint_type t ON b.complaint_type = t.code
+		WHERE
+		b.seq = #{seq}
 	</select>
 
 	<update id="insertProcess">
@@ -118,7 +118,7 @@
 		WHERE r.reply_type = 1001 and r.parent_board = #{parent_board}
 		ORDER BY r.write_date ASC
 	</select>
-	
+
 	<select id="selectReReply" resultType="kh.final_project.dto.BoardsReplyDTO">
 		SELECT r.seq, r.reply_type, r.parent_board, r.parent_reply, m.nickname as writer, r.txt, r.write_date
 		FROM ${board_name}_REPLYS r
@@ -138,87 +138,103 @@
 	<select id="getMax" resultType="int">
 		select count(*) from ${value}_BOARDS
 	</select>
-	
+
 	<select id="selectBoardType" resultType="kh.final_project.dto.CategoryType">
 		select code, name from board_type
 	</select>
-	
+
 	<select id="selectAllComplaints" resultType="kh.final_project.dto.BoardsDTO">
 		SELECT
-		b.seq, b.board_type, t.name as complaint_type, b.writer, b.txt, 
+		b.seq, b.board_type, t.name as complaint_type, b.writer, b.txt,
 		b.write_date, b.process, b.process_date, b.total_count
 		FROM complaint_boards b
 		JOIN complaint_type t
 		ON b.complaint_type = t.code
 	</select>
-	
+
 	<select id="search" resultType="kh.final_project.dto.BoardsDTO">
 		SELECT *
 		FROM (
-		  SELECT 
-		    b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count,
-		    row_number() over (order by b.${sortKeyword} ${sortVal}) as rn
-		  FROM ${tableName} b
-		  JOIN members m ON b.writer = m.code
-		  <choose>
-		  	<when test="searchKeyword = 'ALL'">
-		 		WHERE b.title LIKE '%' || #{searchQuery} || '%' OR m.nickname LIKE '%' || #{searchQuery} || '%' 
-		  	</when>
-		  	<when test="searchKeyword = 'TITLE'">
-		  		WHERE b.title LIKE '%' || #{searchQuery} || '%'
-		  	</when>
-		  	<when test="searchKeyword = 'WRITER'">
-		  		WHERE m.nickname LIKE '%' || #{searchQuery} || '%'
-		  	</when>
-		  </choose>
+		SELECT
+		b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count,
+		row_number() over (order by b.${sortKeyword} ${sortVal}) as rn
+		FROM ${tableName} b
+		JOIN members m ON b.writer = m.code
+		<choose>
+			<when test="searchKeyword = 'ALL'">
+				WHERE b.title LIKE '%' || #{searchQuery} || '%' OR m.nickname LIKE '%' || #{searchQuery} || '%'
+			</when>
+			<when test="searchKeyword = 'TITLE'">
+				WHERE b.title LIKE '%' || #{searchQuery} || '%'
+			</when>
+			<when test="searchKeyword = 'WRITER'">
+				WHERE m.nickname LIKE '%' || #{searchQuery} || '%'
+			</when>
+		</choose>
 		)
 		WHERE rn BETWEEN #{start} AND #{end}
 	</select>
-	
+
 	<select id="getSearchMax" resultType="int">
 		SELECT COUNT(*) FROM (
-		  SELECT 
-		    b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count,
-		    row_number() over (order by b.${sortKeyword} ${sortVal}) as rn
-		  FROM ${tableName} b
-		  JOIN members m ON b.writer = m.code
-		  <choose>
-		  	<when test="searchKeyword = 'ALL'">
-		 		WHERE b.title LIKE '%' || #{searchQuery} || '%' OR m.nickname LIKE '%' || #{searchQuery} || '%' 
-		  	</when>
-		  	<when test="searchKeyword = 'TITLE'">
-		  		WHERE b.title LIKE '%' || #{searchQuery} || '%'
-		  	</when>
-		  	<when test="searchKeyword = 'WRITER'">
-		  		WHERE m.nickname LIKE '%' || #{searchQuery} || '%'
-		  	</when>
-		  </choose>
+		SELECT
+		b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count,
+		row_number() over (order by b.${sortKeyword} ${sortVal}) as rn
+		FROM ${tableName} b
+		JOIN members m ON b.writer = m.code
+		<choose>
+			<when test="searchKeyword = 'ALL'">
+				WHERE b.title LIKE '%' || #{searchQuery} || '%' OR m.nickname LIKE '%' || #{searchQuery} || '%'
+			</when>
+			<when test="searchKeyword = 'TITLE'">
+				WHERE b.title LIKE '%' || #{searchQuery} || '%'
+			</when>
+			<when test="searchKeyword = 'WRITER'">
+				WHERE m.nickname LIKE '%' || #{searchQuery} || '%'
+			</when>
+		</choose>
 		)
 	</select>
-	
+
 	<select id="searchComplaint" resultType="kh.final_project.dto.ComplaintBoardsDTO">
 		SELECT *
 		FROM (
-		  SELECT 
-		    b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname as writer, b.txt, 
-		    b.write_date, b.process, b.process_date, b.total_count,
-		    row_number() over (order by b.${sortKeyword} ${sortVal}) as rn
-		  FROM ${tableName} b
-		  JOIN members m ON b.writer = m.code
-		  JOIN complaint_type t ON b.complaint_type = t.code
-		  WHERE 
-		    <choose>
-		      <when test="searchKeyword == 'ALL'">
-		        (b.title LIKE '%' || #{searchQuery} || '%' OR m.nickname LIKE '%' || #{searchQuery} || '%')
-		      </when>
-		      <when test="searchKeyword == 'TITLE'">
-		        b.title LIKE '%' || #{searchQuery} || '%'
-		      </when>
-		      <when test="searchKeyword == 'WRITER'">
-		        m.nickname LIKE '%' || #{searchQuery} || '%'
-		      </when>
-		    </choose>
+		SELECT
+		b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname as writer, b.txt,
+		b.write_date, b.process, b.process_date, b.total_count,
+		row_number() over (order by b.${sortKeyword} ${sortVal}) as rn
+		FROM ${tableName} b
+		JOIN members m ON b.writer = m.code
+		JOIN complaint_type t ON b.complaint_type = t.code
+		WHERE
+		<choose>
+			<when test="searchKeyword == 'ALL'">
+				(b.title LIKE '%' || #{searchQuery} || '%' OR m.nickname LIKE '%' || #{searchQuery} || '%')
+			</when>
+			<when test="searchKeyword == 'TITLE'">
+				b.title LIKE '%' || #{searchQuery} || '%'
+			</when>
+			<when test="searchKeyword == 'WRITER'">
+				m.nickname LIKE '%' || #{searchQuery} || '%'
+			</when>
+		</choose>
 		)
 		WHERE rn BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="getMyNotice" resultType="kh.final_project.dto.BoardsDTO">
+		SELECT * FROM notice_boards WHERE writer = #{value} 
+	</select>
+		<select id="getMyFree" resultType="kh.final_project.dto.BoardsDTO">
+		SELECT * FROM free_boards WHERE writer = #{value} 
+	</select>
+		<select id="getMyTip" resultType="kh.final_project.dto.BoardsDTO">
+		SELECT * FROM tip_boards WHERE writer = #{value} 
+	</select>
+		<select id="getMyQuestion" resultType="kh.final_project.dto.BoardsDTO">
+		SELECT * FROM notice_boards WHERE writer = #{value} 
+	</select>
+		<select id="getMyComplaint" resultType="kh.final_project.dto.BoardsDTO">
+		SELECT * FROM complaint_boards WHERE writer = #{value} 
 	</select>
 </mapper>

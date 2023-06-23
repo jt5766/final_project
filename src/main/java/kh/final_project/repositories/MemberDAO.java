@@ -69,4 +69,12 @@ public class MemberDAO {
     public void update(MemberDTO dto) {
         db.update("Member.update",dto);
     }
+
+    public int memberDelete(int code) {
+       return db.delete("Member.delete", code);
+    }
+
+    public int nicknameDuplicateCheck(String nickname) {
+         return db.selectOne("Member.nicknameCheck", nickname);
+    }
 }

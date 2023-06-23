@@ -9,7 +9,7 @@
 	</select>
 	
 	<insert id="insert">
-		insert into chat_logs values (#{chat_rooms},#{writer},#{txt},default)
+		insert into chat_logs values (#{chat_rooms},#{writer},#{txt},#{write_date})
 	</insert>
 	
 	<select id="maxdata" resultType="int">
@@ -19,7 +19,7 @@
 	<select id="selectscrolllist" resultType="kh.final_project.dto.ChatlogDTO">
 		select * from 
 		(select chat_rooms,writer,txt,write_date, row_number() over(order by write_date asc) ranks from chat_logs) 
-		where chat_rooms = ${seq} and ranks between #{endPost} and #{startPost} order by ranks asc
+		where chat_rooms = ${seq} and ranks between #{endPost} and #{startPost} order by ranks desc
 		
 	</select>
 	

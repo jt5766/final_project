@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import kh.final_project.dto.BoardsDTO;
@@ -207,4 +208,45 @@ public class CommunityController {
 		model.addAttribute("pageNavi", pageNavi);
 		return "community/complaint_board";
 	}
+
+	@ResponseBody
+	@RequestMapping("getMyNotice")
+	public List<BoardsDTO> geyMyNotice() {
+		int code = (int) session.getAttribute("code");
+		List<BoardsDTO> myNotice = communityService.getMyNotice(code);
+		return myNotice;
+	}
+
+	@ResponseBody
+	@RequestMapping("getMyFree")
+	public List<BoardsDTO> geyMyFree() {
+		int code = (int) session.getAttribute("code");
+		List<BoardsDTO> myFree = communityService.getMyFree(code);
+		return myFree;
+	}
+
+	@ResponseBody
+	@RequestMapping("getMyTip")
+	public List<BoardsDTO> geyMyTip() {
+		int code = (int) session.getAttribute("code");
+		List<BoardsDTO> myTip = communityService.getMyTip(code);
+		return myTip;
+	}
+
+	@ResponseBody
+	@RequestMapping("getMyQuestion")
+	public List<BoardsDTO> geyMyQuestion() {
+		int code = (int) session.getAttribute("code");
+		List<BoardsDTO> myQuestion = communityService.getMyQuestion(code);
+		return myQuestion;
+	}
+
+	@ResponseBody
+	@RequestMapping("getMyComplaint")
+	public List<BoardsDTO> geyMyComplaint() {
+		int code = (int) session.getAttribute("code");
+		List<BoardsDTO> myComplaint = communityService.getMyComplaint(code);
+		return myComplaint;
+	}
+
 }

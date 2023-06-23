@@ -174,4 +174,11 @@ public class MemberService {
         List<CategoryType> boardTypes = typeDAO.selectByBoardType();
         return List.of(categoryTypes, boardTypes);
     }
+    public int memeberDelete(int code) {
+       return mdao.memberDelete(code);
+    }
+
+    public int nicknameDuplicateCheck(String nickname) {
+        return mdao.nicknameDuplicateCheck(nickname);
+    }
 }
