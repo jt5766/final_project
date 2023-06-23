@@ -1,6 +1,8 @@
 package kh.final_project.controllers;
 
 
+import com.google.gson.Gson;
+import kh.final_project.dto.CategoryType;
 import kh.final_project.dto.EmailTypeDTO;
 import kh.final_project.dto.MemberDTO;
 import kh.final_project.services.EmailcheckService;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -158,7 +161,14 @@ public class MemberController {
         return "redirect:/member/loginForm";
     }
     @RequestMapping("mypage")
-    public String mypage(){
+    public String mypage(Model model){
+        List<List<CategoryType>> types = memberService.getTypes();
+        Gson gson = new Gson();
+        String categoryType = gson.toJson(types.get(0));
+        String boardType = gson.toJson(types.get(1));
+        model.addAttribute("categoryType", categoryType);
+        model.addAttribute("boardType", boardType);
+        System.out.println("categoryType = " + categoryType);
         return "/member/myPageForm";
     }
 

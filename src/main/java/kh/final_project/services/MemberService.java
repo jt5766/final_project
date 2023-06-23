@@ -1,17 +1,18 @@
 package kh.final_project.services;
 
+import kh.final_project.dto.CategoryType;
 import kh.final_project.dto.EmailTypeDTO;
 import kh.final_project.dto.MemberDTO;
 import kh.final_project.mail.MailHandler;
 import kh.final_project.repositories.EmailcheckDAO;
 import kh.final_project.repositories.MemberDAO;
+import kh.final_project.repositories.TypeDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -28,6 +29,8 @@ public class MemberService {
 
     @Autowired
     private JavaMailSender javaMailSender;
+    @Autowired
+    private TypeDAO typeDAO;
 
 
     public List<EmailTypeDTO> emailType() {
@@ -166,11 +169,18 @@ public class MemberService {
         mdao.update(dto);
     }
 
+<<<<<<< HEAD
     public int memeberDelete(int code) {
        return mdao.memberDelete(code);
     }
 
     public int nicknameDuplicateCheck(String nickname) {
         return mdao.nicknameDuplicateCheck(nickname);
+=======
+    public List<List<CategoryType>> getTypes() {
+        List<CategoryType> categoryTypes = typeDAO.selectByCategoryType();
+        List<CategoryType> boardTypes = typeDAO.selectByBoardType();
+        return List.of(categoryTypes, boardTypes);
+>>>>>>> 0576f41 (장길웅 / mypage 출력 초안)
     }
 }

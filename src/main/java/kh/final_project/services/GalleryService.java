@@ -223,4 +223,8 @@ public class GalleryService {
     public List<CategoryType> getGenreTypes() {
         return typeDAO.selectByGenreType();
     }
+
+    public List<GalleryCardView> selectMyCards(Integer code) {
+        return galleryDAO.selectMyCards(code);
+    }
 }

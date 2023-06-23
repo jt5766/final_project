@@ -66,6 +66,10 @@
         where gallery_contents.gallery_cards = ${cardSeq} and gallery_contents.seq = ${contentSeq}
     </select>
 
+    <select id="selectMyCards" resultType="kh.final_project.dto.GalleryCardView">
+        select * from view_gallery_cards where writer = ${code}
+    </select>
+
     <update id="updateViewCount">
         update gallery_contents set total_count = total_count + 1, day_count = day_count + 1 where seq = ${contentSeq}
     </update>
