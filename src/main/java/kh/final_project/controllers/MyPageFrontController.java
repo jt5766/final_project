@@ -8,9 +8,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/member/my-page")
 public class MyPageFrontController {
-    @GetMapping
-    public String toGalleryController(String tCode, RedirectAttributes attributes) {
-        attributes.addAttribute("table", tCode);
-        return "redirect:/{table}/myPage";
-    }
+	@GetMapping
+	public String toGalleryController(String tCode, RedirectAttributes attributes) {
+		attributes.addAttribute("tCode", tCode);
+		return "redirect:/{tCode}/myPage";
+	}
 }

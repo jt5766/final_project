@@ -45,20 +45,20 @@
 		FROM
 		(
 		SELECT
-		b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname AS writer, b.txt,
-		b.write_date, b.process, b.process_date, b.total_count,
-		row_number() over (order by b.seq desc) as rn
+			b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname AS writer, b.txt,
+			b.write_date, b.process, b.process_date, b.total_count,
+			row_number() over (order by b.seq desc) as rn
 		FROM
-		complaint_boards b
+			complaint_boards b
 		JOIN
-		complaint_type t ON b.complaint_type = t.code
+			complaint_type t ON b.complaint_type = t.code
 		JOIN
-		members m ON b.writer = m.code
+			members m ON b.writer = m.code
 		)
 		WHERE
-		rn BETWEEN #{startPost} AND #{endPost}
+			rn BETWEEN #{startPost} AND #{endPost}
 		ORDER BY
-		seq DESC
+			seq DESC
 	</select>
 
 	<update id="viewUp">
