@@ -21,6 +21,8 @@
         #div_text{height: 100px; overflow: auto;}
         .btn{width: 100%; height: 100%; background-color: gray;color: black;}
         .btn:hover{background-color: black;color:gray;}
+        .datebox{background-color:green;}
+        .alldatebox{overflow: auto;background-color:blue;text-align:center;}
     </style>
 </head>
 <body>
@@ -28,6 +30,9 @@
 		let year = null;
 		let month = null;
 		let date = null;
+		let addYear = null;
+		let addMonth = null;
+		let addDate = null;
 		$(function(){
 			const socket = new WebSocket("ws://192.168.50.203/chat");
 			const stompClient = Stomp.over(socket);
@@ -53,11 +58,23 @@
 						textdiv.addClass("othertext");
 						textdiv.append(body.txt);
 					}
-					var logtimer = new Date(body.write_date);
-					datediv.append(logtimer.getHours()+" : "+logtimer.getMinutes());
+					var plustimer = new Date(body.write_date);
+					var plusYear = plustimer.getFullYear();
+					var plusMonth = plustimer.getMonth();
+					var plusDate = plustimer.getDate();
+					if(plusYear != addYear || plusMonth != addMonth || plusDate != addDate){
+						var plusdatediv = $("<div>");
+						plusdatediv.addClass("alldatebox");
+        				plusdatediv.append(plusYear+"-"+(plusMonth+1)+"-"+plusDate);
+        				$("#div_contents").append(plusdatediv);
+					}
+					datediv.append(plustimer.getHours()+" : "+plustimer.getMinutes());
 					linediv.append(datediv);
 					linediv.append(textdiv);
 					$("#div_contents").append(linediv);
+					addYear = plusYear;
+					addMonth = plusMonth;
+					addDate = plusDate;
 					let chatbox = document.querySelector('#div_contents');
 					chatbox.scrollTop = chatbox.scrollHeight;
 				});
@@ -129,8 +146,12 @@
 							console.log(resp);
 							if(resp.length == 0){
 								lengthsize = true;
+								var alldatediv = $("<div>");
+	        					alldatediv.addClass("alldatebox");
+		        				alldatediv.append(year+"/"+(month+1)+"/"+date);
+		        				$("#div_contents").prepend(alldatediv);
 							}
-							for(var i = resp.length-1;i >= 0;i--){
+							for(var i = 0;i < resp.length;i++){
 								const datalinediv = $("<div>");
 								datalinediv.addClass("linebox");
 								const datadatediv = $("<div>");
@@ -151,18 +172,39 @@
 								var logYear = logtimer.getFullYear();
 				        		var logMonth = logtimer.getMonth();
 				        		var logDate = logtimer.getDate();
-				        		if(year != logYear || month != logMonth || date != logDate){
-				        			var alldatediv = $("<div>");
-				        			alldatediv.append(logYear+"-"+(logMonth+1)+"-"+logDate);
-				        			datalinediv.append(alldatediv);
+				        		if(i == 0){
+				        			console.log("year"+year+"/month"+(month+1)+"/date"+date);
+				        			console.log("logYear"+logYear+"/logMonth"+(logMonth+1)+"/logDate"+logDate);
+				        			if(year != null && month != null && date != null){
+				        				if(year != logYear || month != logMonth || date != logDate){
+				        					var alldatediv = $("<div>");
+				        					alldatediv.addClass("alldatebox");
+					        				alldatediv.append(year+"/"+(month+1)+"/"+date);
+					        				$("#div_contents").prepend(alldatediv);
+				        				}
+				        			}
+				        		}else if(i>0){
+				        			var beforetimer = new Date(resp[i-1].write_date);
+				        			var beforeYear = beforetimer.getFullYear();
+					        		var beforeMonth = beforetimer.getMonth();
+					        		var beforeDate = beforetimer.getDate();
+				        			if(beforeYear != logYear || beforeMonth != logMonth || beforeDate != logDate){
+				        				var alldatediv = $("<div>");
+				        				alldatediv.addClass("alldatebox");
+				        				alldatediv.append(beforeYear+"-"+(beforeMonth+1)+"-"+beforeDate);
+				        				$("#div_contents").prepend(alldatediv);
+				        			}
+				        			if(i == (resp.length-1)){
+					        			console.log("lastYear"+logYear+"/lastMonth"+(logMonth+1)+"/lastDate"+logDate);
+					        			year = logYear;
+					        			month = logMonth;
+					        			date = logDate;
+					        		}
 				        		}
 								datadatediv.append(logtimer);
 								datalinediv.append(datadatediv);
 								datalinediv.append(datatextdiv);
-								$("#div_contents").prepend(datalinediv);	
-								year = logYear;
-								month = logMonth;
-								date = logDate;
+								$("#div_contents").prepend(datalinediv);
 							}
 							dragFlag = false;
 							let chatbox = document.querySelector('#div_contents');
@@ -172,48 +214,64 @@
 				lastScroll = currentScroll;
 			})
 		})
-		
 		$(function(){
+			let chatlog = [];
 			<c:forEach var="log" items="${chatlog}">
-				var loglinediv = $("<div>");
-				loglinediv.addClass("linebox");
-				var logdatediv = $("<div>");
-				logdatediv.addClass("datebox");
-				var logtextdiv = $("<div>");
-    			<c:choose>
-    				<c:when test="${log.writer==code}">
-    					logtextdiv.addClass("mytext");
-						logtextdiv.append('${log.txt}');
-    				</c:when>
-    				<c:otherwise>
-    					var logwriterbox = $("<div>");
-						logwriterbox.addClass("writerbox");
-						logwriterbox.append('${log.writer}');
-						loglinediv.append(logwriterbox);
-						logtextdiv.addClass("othertext");
-						logtextdiv.append('${log.txt}');
-    				</c:otherwise>
-        		</c:choose>
-        		var logtimer = new Date('${log.write_date}');
-        		var logYear = logtimer.getFullYear();
+				chatlog.push({writer:'${log.writer}',txt:'${log.txt}',write_date:'${log.write_date}'});
+			</c:forEach>
+			console.log(chatlog);
+			for(i = 0; i <chatlog.length; i++){
+				const datalinediv = $("<div>");
+				datalinediv.addClass("linebox");
+				const datadatediv = $("<div>");
+				datadatediv.addClass("datebox");
+				const datatextdiv = $("<div>");
+				if(chatlog[i].writer == ${code}){
+					datatextdiv.addClass("mytext");
+					datatextdiv.append(chatlog[i].txt);
+				}else{
+					const datawriterbox = $("<div>");
+					datawriterbox.addClass("writerbox");
+					datawriterbox.append(chatlog[i].writer);
+					datalinediv.append(datawriterbox);
+					datatextdiv.addClass("othertext");
+					datatextdiv.append(chatlog[i].txt);
+				}
+				var logtimer = new Date(chatlog[i].write_date);
+				var logYear = logtimer.getFullYear();
         		var logMonth = logtimer.getMonth();
         		var logDate = logtimer.getDate();
-        		if(year != logYear || month != logMonth || date != logDate){
-        			var alldatediv = $("<div>");
-        			alldatediv.append(logYear+"-"+(logMonth+1)+"-"+logDate);
-        			loglinediv.append(alldatediv);
+        		if(i == 0){
+        			const firsttimer = new Date(chatlog[i].write_date);
+        			var firstYear = firsttimer.getFullYear();
+        			var firstMonth = firsttimer.getMonth();
+        			var firstDate = firsttimer.getDate();
+        			addYear = firstYear;
+        			addMonth = firstMonth;
+        			addDate = firstDate;
+        		}else if(i>0){
+        			var beforetimer = new Date(chatlog[i-1].write_date);
+        			var beforeYear = beforetimer.getFullYear();
+	        		var beforeMonth = beforetimer.getMonth();
+	        		var beforeDate = beforetimer.getDate();
+        			if(beforeYear != logYear || beforeMonth != logMonth || beforeDate != logDate){
+        				var alldatediv = $("<div>");
+        				alldatediv.addClass("alldatebox");
+        				alldatediv.append(beforeYear+"-"+(beforeMonth+1)+"-"+beforeDate);
+        				$("#div_contents").prepend(alldatediv);
+        			}
+        			if(i == (chatlog.length-1)){
+	        			console.log("lastYear"+logYear+"/lastMonth"+(logMonth+1)+"/lastDate"+logDate);
+	        			year = logYear;
+	        			month = logMonth;
+	        			date = logDate;
+	        		}
         		}
-        		var alldatediv = $("<div>");
-    			alldatediv.append(logYear+"-"+(logMonth+1)+"-"+logDate);
-    			loglinediv.append(alldatediv);
-        		logdatediv.append(logtimer);
-        		loglinediv.append(logdatediv);
-        		loglinediv.append(logtextdiv);
-				$("#div_contents").append(loglinediv);
-				year = logYear;
-				month = logMonth;
-				date = logDate;
-        	</c:forEach>
+				datadatediv.append(logtimer);
+				datalinediv.append(datadatediv);
+				datalinediv.append(datatextdiv);
+				$("#div_contents").prepend(datalinediv);
+			}
 		})
 		
 		
@@ -234,7 +292,7 @@
             </div>
         </div>
         <div class="row">
-        	메모 : 1. 시간을 나타내야 함 일단 시/분은 채팅 옆쪽에 출력하고 년 월 일은 모아서 위쪽에 추가 ( 카톡처럼 )
+        	메모 : 1. 시간만 뜨게 하기 let i = new Date(); i.getHours(); i.getMinutes();
         		  2. regex 1300자 제한 해줘야 함 안그럼 DB 에 안들어가서 오류남 ( DB는 4000자 까지 되는데 한글은 3배라 1300자만 )
         </div>
     </div>
