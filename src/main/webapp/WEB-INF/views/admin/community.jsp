@@ -5,12 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin - Community</title>
-<!-- 공통 script -->
-<c:set var="path" value="${pageContext.request.contextPath}" />
+<!-- 공통 script & css -->
 <c:import url="${path}/resources/js/scripts.jsp" />
+<link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-	<div class="container-xl">
+	<!-- GNB & LNB -->
+	<c:import url="${path}/resources/js/GNB.jsp">
+		<c:param name="pageName" value="adminpage" />
+		<c:param name="btnNum" value="${pagecode}" />
+	</c:import>
+	<!-- CONTENTS -->
+	<div class="container-xl bg-secondary position-relative">
 		<div class="row justify-content-md-center">
 			<div class="col-md-12">
 				<form class="hidden_form"></form>
@@ -60,9 +66,11 @@
 			</div>
 		</div>
 	</div>
-	
+	<!-- FOOTER -->
+	<c:import url="${path}/resources/js/FOOTER.jsp" />
+	<!-- script - Contents -->
 	<script type="text/javascript">
-		$("#btn_search").on("click", function() {
+		$("#btn_search").on("click", function ( ) {
 			let type_value = $("#type").val();
 			let search_value = $("#search").val();
 			let keyword_value = $("#keyword").val();
@@ -73,29 +81,28 @@
 					search : search_value,
 					keyword : keyword_value,
 				}
-			}).done(function(data) {
+			}).done(function (data) {
 				createRow(data);
 			});
 		});
 
-		function createRow(data) {
+		function createRow (data) {
 			$("#keyword").val("");
-			
+
 			let tbody = $("#tbody_data");
 			tbody.html("");
 
-			data.forEach(function(element, index) {
-						let tr = $("<tr>");
-						let td_type = $("<td>").text(element.typeName).attr("align", "center");
-						let td_title = $("<td>").text(element.title).attr("align", "center");
-						let td_writer = $("<td>").text(element.nickname).attr("align", "center");
-						let td_btn = $("<td>").append($("<button>").addClass("btn btn-light btn-outline-secondary w-100 btn-sm")
-																   .text("삭제"))
-																   .click(function() {location.href = "/admin/community/delete?type=" + element.type+ "&seq=" + element.seq;})
-																   .attr("align", "center");
+			data.forEach(function (element, index) {
+				let tr = $("<tr>");
+				let td_type = $("<td>").text(element.typeName).attr("align", "center");
+				let td_title = $("<td>").text(element.title).attr("align", "center");
+				let td_writer = $("<td>").text(element.nickname).attr("align", "center");
+				let td_btn = $("<td>").append($("<button>").addClass("btn btn-light btn-outline-secondary w-100 btn-sm").text("삭제")).click(function ( ) {
+					location.href = "/admin/community/delete?type=" + element.type + "&seq=" + element.seq;
+				}).attr("align", "center");
 
-						tbody.append(tr);
-						tr.append(td_type, td_title, td_writer, td_btn);
+				tbody.append(tr);
+				tr.append(td_type, td_title, td_writer, td_btn);
 			});
 		}
 	</script>

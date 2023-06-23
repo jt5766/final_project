@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<header class="navbar navbar-dark bg-dark navbar-expand-lg text-secondary flex-column sticky-top">
+<header class="navbar navbar-dark bg-dark navbar-expand-lg text-secondary flex-column sticky-top mb-2">
 	<!-- GNB -->
 	<nav class="container-fluid bd-guatter border-bottom border-secondary flex-wrap flex-lg-nowrap position-relative">
 		<!-- 브랜드 - 로고 -->
@@ -47,7 +47,7 @@
 					</li>
 					<li class="nav-item col-12 col-lg-auto">
 						<c:if test="${sessionScope.memberType eq 9999}">
-							<a class="nav-link py-2 px-0 px-lg-2 fs-2" href="/admin/" aria-current="true">관리자페이지</a>
+							<a class="nav-link py-2 px-0 px-lg-2 fs-2" href="/admin/home?pagecode=1001" aria-current="true">관리자페이지</a>
 						</c:if>
 						<c:if test="${sessionScope.memberType ne 9999}">
 							<c:if test="${not empty sessionScope.code}">
@@ -128,7 +128,7 @@
 				<!-- Button -->
 				<div class="row mt-2 justify-content-center">
 					<div class="col btn-group" role="group">
-						<c:forEach items="${community}" var="item">
+						<c:forEach items="${mypage}" var="item">
 							<c:choose>
 								<c:when test="${item.code eq param.btnNum}">
 									<input type="radio" class="btn-check" name="btnradio" id="btnradio${item.code}" autocomplete="off" checked>
@@ -137,7 +137,42 @@
 									<input type="radio" class="btn-check" name="btnradio" id="btnradio${item.code}" autocomplete="off">
 								</c:otherwise>
 							</c:choose>
-							<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px">${item.name}</label>
+							<c:choose>
+								<c:when test="${item.code eq 1001}">
+									<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px" onclick="location.href='/'">${item.name}</label>
+								</c:when>
+								<c:when test="${item.code eq 1002}">
+									<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px" onclick="location.href='/'">${item.name}</label>
+								</c:when>
+								<c:when test="${item.code eq 1003}">
+									<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px" onclick="location.href='/chat/testlink'">${item.name}</label>
+								</c:when>
+								<c:when test="${item.code eq 1004}">
+									<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px" onclick="location.href='/member/myinfo'">${item.name}</label>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+					</div>
+				</div>
+			</c:when>
+			<c:when test="${param.pageName eq 'adminpage'}">
+				<!-- Title -->
+				<div class="row justify-content-center">
+					<div class="col mt-3 text-light fs-1 fw-bold">관 리 자 페 이 지</div>
+				</div>
+				<!-- Button -->
+				<div class="row mt-2 justify-content-center">
+					<div class="col btn-group" role="group">
+						<c:forEach items="${adminpage}" var="item">
+							<c:choose>
+								<c:when test="${item.code eq param.btnNum}">
+									<input type="radio" class="btn-check" name="btnradio" id="btnradio${item.code}" autocomplete="off" checked>
+								</c:when>
+								<c:otherwise>
+									<input type="radio" class="btn-check" name="btnradio" id="btnradio${item.code}" autocomplete="off">
+								</c:otherwise>
+							</c:choose>
+							<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px" onclick="location.href='/admin/home?pagecode=${item.code}'">${item.name}</label>
 						</c:forEach>
 					</div>
 				</div>

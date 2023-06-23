@@ -5,12 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin - Member</title>
-<!-- 공통 script -->
-<c:set var="path" value="${pageContext.request.contextPath}" />
+<!-- 공통 script & css -->
 <c:import url="${path}/resources/js/scripts.jsp" />
+<link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-	<div class="container-xl">
+	<!-- GNB & LNB -->
+	<c:import url="${path}/resources/js/GNB.jsp">
+		<c:param name="pageName" value="adminpage" />
+		<c:param name="btnNum" value="${pagecode}" />
+	</c:import>
+	<!-- CONTENTS -->
+	<div class="container-xl bg-secondary position-relative">
 		<div class="row justify-content-md-center">
 			<div class="col-md-12">
 				<form class="hidden_form"></form>
@@ -79,7 +85,9 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- FOOTER -->
+	<c:import url="${path}/resources/js/FOOTER.jsp" />
+	<!-- script - Contents -->
 	<script type="text/javascript">
 		// 검색
 		function search() {
