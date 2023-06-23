@@ -1,6 +1,8 @@
 package kh.final_project.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -210,43 +212,20 @@ public class CommunityController {
 	}
 
 	@ResponseBody
-	@RequestMapping("getMyNotice")
-	public List<BoardsDTO> geyMyNotice() {
+	@RequestMapping("myPage")
+	public Map<String, List<BoardsDTO>> myPage() {
 		int code = (int) session.getAttribute("code");
 		List<BoardsDTO> myNotice = communityService.getMyNotice(code);
-		return myNotice;
-	}
-
-	@ResponseBody
-	@RequestMapping("getMyFree")
-	public List<BoardsDTO> geyMyFree() {
-		int code = (int) session.getAttribute("code");
 		List<BoardsDTO> myFree = communityService.getMyFree(code);
-		return myFree;
-	}
-
-	@ResponseBody
-	@RequestMapping("getMyTip")
-	public List<BoardsDTO> geyMyTip() {
-		int code = (int) session.getAttribute("code");
 		List<BoardsDTO> myTip = communityService.getMyTip(code);
-		return myTip;
-	}
-
-	@ResponseBody
-	@RequestMapping("getMyQuestion")
-	public List<BoardsDTO> geyMyQuestion() {
-		int code = (int) session.getAttribute("code");
 		List<BoardsDTO> myQuestion = communityService.getMyQuestion(code);
-		return myQuestion;
-	}
-
-	@ResponseBody
-	@RequestMapping("getMyComplaint")
-	public List<BoardsDTO> geyMyComplaint() {
-		int code = (int) session.getAttribute("code");
 		List<BoardsDTO> myComplaint = communityService.getMyComplaint(code);
-		return myComplaint;
+		Map<String, List<BoardsDTO>> myBoards = new HashMap<>();
+		myBoards.put("1001", myNotice);
+		myBoards.put("1002", myFree);
+		myBoards.put("1003", myTip);
+		myBoards.put("1004", myQuestion);
+		myBoards.put("1005", myComplaint);
+		return myBoards;
 	}
-
 }
