@@ -33,7 +33,7 @@
 	<!-- script - Contents -->
 	<script type="text/javascript">
 		// Contents 위치 조정.
-		$(document).ready(function() {
+		$(document).ready(function ( ) {
 			var container = $('.container-xl');
 			var gnbHeight = $('.fixed-gnb').outerHeight(); // GNB의 높이를 가져옴
 
@@ -70,11 +70,10 @@
 
 		});
 		// 마커 위에 표시할 인포윈도우를 생성한다
-		var infowindow = new kakao.maps.InfoWindow(
-				{
-					// 인포윈도우에 표시할 내용
-					content : '<div style="width:150px;text-align:center;padding:6px 0;">Kreate-Hub</div>'
-				});
+		var infowindow = new kakao.maps.InfoWindow({
+			// 인포윈도우에 표시할 내용
+			content : '<div style="width:150px;text-align:center;padding:6px 0;">Kreate-Hub</div>'
+		});
 
 		// 인포윈도우를 지도에 표시한다
 		infowindow.open(map, marker);
