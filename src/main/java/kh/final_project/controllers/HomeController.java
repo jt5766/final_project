@@ -25,6 +25,9 @@ public class HomeController {
 		Map<String, List<CategoryType>> result = homeService.init();
 		session.setAttribute("gallery", result.get("gallery"));
 		session.setAttribute("community", result.get("community"));
+		session.setAttribute("mypage", result.get("mypage"));
+		session.setAttribute("adminpage", result.get("adminpage"));
+		
 		return "home";
 	}
 

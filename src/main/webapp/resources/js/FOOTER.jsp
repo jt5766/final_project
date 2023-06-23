@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<footer class="bd-footer text-light bg-dark py-4 mt-5">
+<footer class="bd-footer text-light bg-dark py-4 mt-2 ">
 	<div class="container-fluid py-2 px-4">
 		<div class="row">
 			<!-- 로고 -->
@@ -48,4 +48,17 @@
 		const option = "width=" + option_width + ",height=" + option_height + ",left=" + option_screenX + ",top=" + option_screenY + ",location=" + option_location;
 		return window.open(url, name, option);
 	}
+
+	$(window).on("load resize", function ( ) {
+		var screenHeight = $(window).height();
+		var gbnHeight = $("header").height();
+		var contentsHeight = $(".container-xl").height();
+		
+		console.log(screenHeight);
+		console.log(gbnHeight + contentsHeight);
+		
+		if (screenHeight > (gbnHeight + contentsHeight)) {
+			$(".container-xl").height(screenHeight - gbnHeight);
+		}
+	})
 </script>

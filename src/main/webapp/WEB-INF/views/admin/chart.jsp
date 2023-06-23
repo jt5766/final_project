@@ -5,12 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin - Chart</title>
-<!-- 공통 script -->
-<c:set var="path" value="${pageContext.request.contextPath}" />
+<!-- 공통 script & css -->
 <c:import url="${path}/resources/js/scripts.jsp" />
+<link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-	<div class="container-xl chart-box">
+	<!-- GNB & LNB -->
+	<c:import url="${path}/resources/js/GNB.jsp">
+		<c:param name="pageName" value="adminpage" />
+		<c:param name="btnNum" value="${pagecode}" />
+	</c:import>
+	<!-- CONTENTS -->
+	<div class="container-xl bg-secondary position-relative">
 		<div class="row">
 			<div class="col-9 w-100" id="member_type_chart" style="height: 500px"></div>
 		</div>
@@ -18,6 +24,9 @@
 			<div class="col-12 w-100" id="gallery_type_chart" style="height: 500px"></div>
 		</div>
 	</div>
+	<!-- FOOTER -->
+	<c:import url="${path}/resources/js/FOOTER.jsp" />
+	<!-- script - Contents -->
 	<script type="text/javascript">
 		// 시각화 API & 코어 파트 패키지 로드
 		google.charts.load('current', {

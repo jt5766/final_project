@@ -12,8 +12,8 @@
 <body>
 	<!-- GNB & LNB -->
 	<c:import url="${path}/resources/js/GNB.jsp">
-		<c:param name="pageName" value="gallery" />
-		<c:param name="btnNum" value="1001" />
+		<c:param name="pageName" value="adminpage" />
+		<c:param name="btnNum" value="1" />
 	</c:import>	
 	<!-- CONTENTS -->
 	<div class="container-xl bg-secondary position-relative">

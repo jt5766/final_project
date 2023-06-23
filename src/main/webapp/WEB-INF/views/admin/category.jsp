@@ -5,12 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Admin - Catrgory</title>
-<!-- 공통 script -->
-<c:set var="path" value="${pageContext.request.contextPath}" />
+<!-- 공통 script & css -->
 <c:import url="${path}/resources/js/scripts.jsp" />
+<link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-	<div class="container-xl">
+	<!-- GNB & LNB -->
+	<c:import url="${path}/resources/js/GNB.jsp">
+		<c:param name="pageName" value="adminpage" />
+		<c:param name="btnNum" value="${pagecode}" />
+	</c:import>
+	<!-- CONTENTS -->
+	<div class="container-xl bg-secondary position-relative">
 		<div class="row justify-content-md-center">
 			<div class="col-md-12">
 				<table class="table table-light table-bordered border-secondary table-striped">
@@ -104,7 +110,9 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- FOOTER -->
+	<c:import url="${path}/resources/js/FOOTER.jsp" />
+	<!-- script - Contents -->
 	<script type="text/javascript">
 		// submit용 table Name 히든 tag
 		var hidden_table_name = $("<input>", {
@@ -118,7 +126,7 @@
 		var max_code = 0;
 
 		// 비동기로 데이터 가져오는 함수
-		function selectType(target) {
+		function selectType (target) {
 			// tableName & 히든 tag 값 수전
 			let tableName = $(target).attr("id");
 			$(hidden_table_name).val(tableName);
@@ -136,8 +144,8 @@
 				data : {
 					tableName : tableName
 				}
-			}).done(function(data) {
-				data.forEach(function(el, index) {
+			}).done(function (data) {
+				data.forEach(function (el, index) {
 					// max row 저장
 					if (max_sort < el.sort)
 						max_sort = el.sort;
@@ -150,7 +158,7 @@
 			});
 		}
 		// table row 생성 함수
-		function createRow(sort, code, name, yn) {
+		function createRow (sort, code, name, yn) {
 			let tr = $("<tr>").addClass("ui-sortable-handle");
 			let td = $("<td>");
 			let inp = $("<input>", {
@@ -178,20 +186,16 @@
 			sel_yn.append(op_y, op_n);
 			sel_yn.val(yn).prop("selected", true);
 
-			tr.append($(td.clone()).append(inp_sort), $(td.clone()).append(
-					inp_code), $(td.clone()).append(inp_name), $(td.clone())
-					.append(sel_yn), $(td.clone()));
+			tr.append($(td.clone()).append(inp_sort), $(td.clone()).append(inp_code), $(td.clone()).append(inp_name), $(td.clone()).append(sel_yn), $(td.clone()));
 
 			$("#tbody_data").append(tr);
 		}
 		// row 추가 이벤트 할당
-		$("#btn_addRow").on(
-				"click",
-				function() {
-					createRow(max_sort = max_sort + 1, max_code = max_code + 1, "", "Y");
-				});
+		$("#btn_addRow").on("click", function ( ) {
+			createRow(max_sort = max_sort + 1, max_code = max_code + 1, "", "Y");
+		});
 		// 취소 이벤트
-		$("#btn_cancle").on("click", function() {
+		$("#btn_cancle").on("click", function ( ) {
 			let btns = $(".btn-check");
 
 			// checked된 btn 클릭			
@@ -205,27 +209,27 @@
 		$("#tbody_data").sortable({
 			items : '.ui-sortable-handle',
 			dropOnEmpty : false,
-			start : function(G, ui) {
+			start : function (G, ui) {
 				ui.item.addClass("select");
 			},
-			stop : function(G, ui) {
+			stop : function (G, ui) {
 				ui.item.removeClass("select");
 
-				$(this).find("tr").each(function(GFG) {
+				$(this).find("tr").each(function (GFG) {
 					if (GFG >= 0)
 						$(this).find("input").eq(0).val(GFG + 1);
 				});
 			}
 		}).disableSelection();
 		// btn_group_click 함수
-		function btn_click(btn_name) {
+		function btn_click (btn_name) {
 			$($("#" + btn_name + "")).trigger("click");
 		}
 	</script>
 
 	<script type="text/javascript">
-		$(function() {
-			btn_click($($(".btn-check")[0]).attr("id"));
+		$(function ( ) {
+			btn_click($($(".container-xl .btn-check")[0]).attr("id"));
 		});
 	</script>
 </body>

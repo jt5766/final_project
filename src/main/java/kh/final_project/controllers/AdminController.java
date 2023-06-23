@@ -3,6 +3,8 @@ package kh.final_project.controllers;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,13 +29,28 @@ import kh.final_project.services.AdminService;
 @Controller
 @RequestMapping("/admin/")
 public class AdminController {
+	@Autowired
+	private HttpSession session;
 
 	@Autowired
 	private AdminService adminService;
 
-	@RequestMapping("")
-	public String home() {
-		return "/admin/home";
+	@RequestMapping("home")
+	public String home(int pagecode) {
+		session.setAttribute("pagecode", pagecode);
+		if (pagecode == 1001)
+			return "redirect: /admin/chart";
+		if (pagecode == 1002)
+			return "redirect: /admin/join";
+		if (pagecode == 1003)
+			return "redirect: /admin/member";
+		if (pagecode == 1004)
+			return "redirect: /admin/gallery";
+		if (pagecode == 1005)
+			return "redirect: /admin/community";
+		if (pagecode == 1006)
+			return "redirect: /admin/category";
+		return "redirect: /";
 	}
 
 	/**
