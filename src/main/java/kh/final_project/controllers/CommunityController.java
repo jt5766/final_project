@@ -1,7 +1,12 @@
 package kh.final_project.controllers;
 
-import kh.final_project.dto.*;
-import kh.final_project.services.CommunityService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import kh.final_project.dto.BoardsDTO;
+import kh.final_project.dto.BoardsReplyDTO;
+import kh.final_project.dto.CategoryType;
+import kh.final_project.dto.ComplaintBoardsDTO;
+import kh.final_project.dto.SearchCriteria;
+import kh.final_project.services.CommunityService;
 
 @Controller
 @RequestMapping("/community/")
@@ -207,14 +213,15 @@ public class CommunityController {
 
 	@ResponseBody
 	@RequestMapping("myPage")
-	public Map<String, List<BoardsDTO>> myPage() {
+	public Map<String, Object> myPage() {
 		int code = (int) session.getAttribute("code");
 		List<BoardsDTO> myNotice = communityService.getMyNotice(code);
 		List<BoardsDTO> myFree = communityService.getMyFree(code);
 		List<BoardsDTO> myTip = communityService.getMyTip(code);
 		List<BoardsDTO> myQuestion = communityService.getMyQuestion(code);
 		List<BoardsDTO> myComplaint = communityService.getMyComplaint(code);
-		Map<String, List<BoardsDTO>> myBoards = new HashMap<>();
+		Map<String, Object> myBoards = new HashMap<>();
+		myBoards.put("9999", "community");
 		myBoards.put("1001", myNotice);
 		myBoards.put("1002", myFree);
 		myBoards.put("1003", myTip);

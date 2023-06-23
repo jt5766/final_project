@@ -84,16 +84,16 @@
 				<!-- Button -->
 				<div class="row justify-content-center">
 					<div class="col btn-group" role="group">
-						<c:forEach items="${gallery}" var="item" varStatus="status">
+						<c:forEach items="${gallery}" var="item">
 							<c:choose>
-								<c:when test="${status.first}">
-									<input type="radio" class="btn-check" name="btnradio" id="btnradio${status.index}" autocomplete="off" checked>
+								<c:when test="${item.code eq param.btnNum}">
+									<input type="radio" class="btn-check" name="btnradio" id="btnradio${item.code}" autocomplete="off" checked>
 								</c:when>
 								<c:otherwise>
-									<input type="radio" class="btn-check" name="btnradio" id="btnradio${status.index}" autocomplete="off">
+									<input type="radio" class="btn-check" name="btnradio" id="btnradio${item.code}" autocomplete="off">
 								</c:otherwise>
 							</c:choose>
-							<label class="btn btn-outline-secondary text-center" for="btnradio${status.index}" style="width: 150px">${item.name}</label>
+							<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px" onclick="location.href='/gallery/category/${item.code}?page=1'">${item.name}</label>
 						</c:forEach>
 					</div>
 				</div>
@@ -106,16 +106,38 @@
 				<!-- Button -->
 				<div class="row mt-2 justify-content-center">
 					<div class="col btn-group" role="group">
-						<c:forEach items="${community}" var="item" varStatus="status">
-								<c:choose>
-									<c:when test="${status.first}">
-										<input type="radio" class="btn-check" name="btnradio" id="btnradio${status.index}" autocomplete="off" checked>
-									</c:when>
-									<c:otherwise>
-										<input type="radio" class="btn-check" name="btnradio" id="btnradio${status.index}" autocomplete="off">
-									</c:otherwise>
-								</c:choose>
-								<label class="btn btn-outline-secondary text-center" for="btnradio${status.index}" style="width: 150px">${item.name}</label>
+						<c:forEach items="${community}" var="item">
+							<c:choose>
+								<c:when test="${item.code eq param.btnNum}">
+									<input type="radio" class="btn-check" name="btnradio" id="btnradio${item.code}" autocomplete="off" checked>
+								</c:when>
+								<c:otherwise>
+									<input type="radio" class="btn-check" name="btnradio" id="btnradio${item.code}" autocomplete="off">
+								</c:otherwise>
+							</c:choose>
+							<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px" onclick="location.href='/community/toBoard?code=${item.code}&currentPage=1'">${item.name}</label>
+						</c:forEach>
+					</div>
+				</div>
+			</c:when>
+			<c:when test="${param.pageName eq 'mypage'}">
+				<!-- Title -->
+				<div class="row justify-content-center">
+					<div class="col mt-3 text-light fs-1 fw-bold">마 이 페 이 지</div>
+				</div>
+				<!-- Button -->
+				<div class="row mt-2 justify-content-center">
+					<div class="col btn-group" role="group">
+						<c:forEach items="${community}" var="item">
+							<c:choose>
+								<c:when test="${item.code eq param.btnNum}">
+									<input type="radio" class="btn-check" name="btnradio" id="btnradio${item.code}" autocomplete="off" checked>
+								</c:when>
+								<c:otherwise>
+									<input type="radio" class="btn-check" name="btnradio" id="btnradio${item.code}" autocomplete="off">
+								</c:otherwise>
+							</c:choose>
+							<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px">${item.name}</label>
 						</c:forEach>
 					</div>
 				</div>

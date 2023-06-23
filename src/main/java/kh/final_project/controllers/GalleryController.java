@@ -174,7 +174,7 @@ public class GalleryController {
 
     @GetMapping(value = "/myPage", produces = "application/json", consumes = "text/plain")
     @ResponseBody
-    public Map<String, List<GalleryCardView>> getMyCards() {
+    public Map<String, Object> getMyCards() {
         List<GalleryCardView> myCard = galleryService.selectMyCards((Integer) session.getAttribute("code"));
         List<GalleryCardView> cards1001 = myCard.stream().filter(e -> e.getCategory_type() == 1001).collect(Collectors.toList());
         List<GalleryCardView> cards1002 = myCard.stream().filter(e -> e.getCategory_type() == 1002).collect(Collectors.toList());
@@ -188,7 +188,8 @@ public class GalleryController {
                 Map.entry("1003", cards1003),
                 Map.entry("1004", cards1004),
                 Map.entry("1005", cards1005),
-                Map.entry("1006", cards1006)
+                Map.entry("1006", cards1006),
+                Map.entry("9999", "gallery")
         );
     }
 
