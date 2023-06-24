@@ -43,7 +43,10 @@ public class MemberController {
 
     @RequestMapping("check")  /* 최초 이메일 인증시 이메일 입력후 오는 곳*/
     public String check(MemberDTO dto , Model model)throws  Exception{
+        System.out.println("check 넘어온 member_type : "+dto.getMember_type());
+        System.out.println("check 넘어온 email_type :"+ dto.getEmail_type());
         String emailName = memberService.getEmailName(dto);
+        System.out.println(emailName);
         dto.setSet_email_type(emailName);
         memberService.sendJoinCertificationMail(dto); //인증메일 보내기
         return "home";
@@ -91,10 +94,11 @@ public class MemberController {
     @RequestMapping("login")
     public String login(MemberDTO dto, HttpServletResponse res){
 
-        System.out.println("ajax로 넘어온 값"+dto);
-        /*넘어온 문자열 이메일 형식 이메일 타입과 이메일 로 분리 작업*/
-        memberService.emailTypeChange(dto);
-        memberService.login(dto);
+
+            System.out.println("ajax로 넘어온 값"+dto);
+            /*넘어온 문자열 이메일 형식 이메일 타입과 이메일 로 분리 작업*/
+            memberService.emailTypeChange(dto);
+            memberService.login(dto);
 
 
         System.out.println("넘어온 코드 : "+dto.getCode());

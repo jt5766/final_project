@@ -8,13 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-
+    <c:import url="${path}/resources/js/scripts.jsp"/>
+    <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
 <style>
     * {
         box-sizing: border-box;
-        border: 1px solid black;
-
+    }
+    body{
+        background-color: #fff;
     }
 
     #container {
@@ -51,12 +53,12 @@
     }
 
     #input_id {
-        width: 60%;
+        width: 250px;
         height: 100%;
     }
 
     #input_pw {
-        width: 60%;
+        width: 250px;
         height: 100%;
     }
 
@@ -72,12 +74,12 @@
     }
 
     #login_btn {
-        width: 50%;
+        width: 200px;
         height: 100%;
     }
 
     #signup_btn {
-        width: 50%;
+        width: 200px;
         height: 100%;
     }
 
@@ -97,82 +99,90 @@
 </style>
 <body>
 
-    <div id="container">
-        <div id="header">GNB</div>
-        <div id="body">
-            <div id="body_left"></div>
-            <div id="body_center">
-                <div></div>
-                <div id="id_box">
-                    <div id="id_box_left">아이디</div>
-                    <div id="id_box_right"><input type="checkbox" id="checkId">아이디저장</div>
-                </div>
-                <div><input id="input_id" name="email" type="text" placeholder="내용을 입력해주세요"></div>
-                <div id="password_box">
-                    <div id="password_box_left">비밀번호</div>
-                    <div id="password_box_right"></div>
-                </div>
-                <div><input id="input_pw" name="password" type="password" placeholder="내용을 입력해주세요"></div>
-                <div></div>
-                <div><a href="/member/findPassword">비밀번호 찾기</a></div>
-                <div>
-                    <button type="button" id="login_btn">로그인</button>
-                </div>
-                <div>
-                    <button type="button" id="signup_btn">회원가입</button>
-                </div>
-                <div></div>
-
+<div id="container">
+    <div id="header"><c:import url="${path}/resources/js/GNB.jsp"/></div>
+    <div id="body">
+        <div id="body_left"></div>
+        <div id="body_center">
+            <div></div>
+            <div id="id_box">
+                <div id="id_box_left">아이디</div>
+                <div id="id_box_right"><input type="checkbox" id="checkId">아이디저장</div>
             </div>
-            <div id="body_right"></div>
-        </div>
-        <div id="footer">FOOTER</div>
+            <div><input id="input_id" name="email" type="text" placeholder="내용을 입력해주세요"></div>
+            <div id="password_box">
+                <div id="password_box_left">비밀번호</div>
+                <div id="password_box_right"></div>
+            </div>
+            <div><input id="input_pw" name="password" type="password" placeholder="내용을 입력해주세요"></div>
+            <div></div>
+            <div><a href="/member/findPassword">비밀번호 찾기</a></div>
+            <div>
+                <button type="button" id="login_btn">로그인</button>
+            </div>
+            <div>
+                <button type="button" id="signup_btn">회원가입</button>
+            </div>
+            <div></div>
 
+        </div>
+        <div id="body_right"></div>
     </div>
+    <div id="footer"><c:import url="${path}/resources/js/FOOTER.jsp"/></div>
+
+</div>
 
 </body>
 
 <script>
 
 
-
-    $("#signup_btn").click(function(){
-        location.href="/member/signup";
-    })
-
-
-
-    $("#login_btn").click(function (){
-        const email = $("#input_id").val();
-        const password = $("#input_pw").val();
-        $.ajax({
-            url:"/member/login",
-            data:{
-                "email": email,
-                "password": password
-            },
-            method:"post"
-        }).done(function(resp){
-            if(resp == 11){
-                   alert("등록된 정보가 없습니다.")
-            }else if(resp == 22){
-                alert("가입대기중인 상태입니다")
-            }else  if(resp == 33){
-                alert("이용이 정지된 고객입니다.")
-            }else if(resp ==44){
-                alert("이미 접속중인 이용자입니다")
-            }else{
-                alert("로그인 성공");
-                location.href="/";
-            }
-
-        })
-    })
-
-
     $(document).ready(function () {
+        $("#signup_btn").click(function () {
+            location.href = "/member/signup";
+        })
+
+
+        $("#login_btn").click(function () {
+            const email = $("#input_id").val();
+            const password = $("#input_pw").val();
+            if (email == "" || password == "" || !email.includes("@")) {
+                alert("아이디 또는 비밀번호를 입력해주세요");
+                return;
+            }
+            $.ajax({
+                url: "/member/login",
+                data: {
+                    "email": email,
+                    "password": password
+                },
+                method: "post"
+            }).done(function (resp) {
+                if (resp == 11) {
+                    alert("등록된 정보가 없습니다.")
+                } else if (resp == 22) {
+                    alert("가입대기중인 상태입니다")
+                } else if (resp == 33) {
+                    alert("이용이 정지된 고객입니다.")
+                } else if (resp == 44) {
+                    alert("이미 접속중인 이용자입니다")
+                } else {
+                    if ($("#checkId").is(":checked")) {
+                        console.log("!!!!!!!!");
+                        console.log($("#input_id").val());
+                        setCookie("email", $("#input_id").val(), 30); // 30일 동안 쿠키 보관
+                    }
+                    alert("로그인 성공");
+                    location.href = "/";
+                }
+
+
+            });
+        });
+
         // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
-        var key = getCookie("key");
+        var key = getCookie("email");
+        console.log(key);
         $("#input_id").val(key);
 
         // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
@@ -180,19 +190,11 @@
             $("#checkId").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
         }
 
-        $("#checkId").change(function () { // 체크박스에 변화가 있다면,
-            if ($("#checkId").is(":checked")) { // ID 저장하기 체크했을 때,
-                setCookie("key", $("#input_id").val(), 7); // 7일 동안 쿠키 보관
-            } else { // ID 저장하기 체크 해제 시,
-                deleteCookie("key");
-            }
-        });
-
-        // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
-        $("#input_id").keyup(function () { // ID 입력 칸에 ID를 입력할 때,
-            if ($("#checkId").is(":checked")) { // ID 저장하기를 체크한 상태라면,
-                setCookie("key", $("#input_id").val(), 30); // 7일 동안 쿠키 보관
-            }
+        $("#checkId").on("change", function (){
+           if(!$("#checkId").is(":checked")){
+               console.log("????");
+               deleteCookie("email");
+           }
         });
 
         // 쿠키 저장하기
