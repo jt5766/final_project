@@ -31,7 +31,6 @@ public class ChatlogController {
 	public void message(ChatlogDTO dto, SimpMessageHeaderAccessor smha) {
 		Integer loginID = (Integer)smha.getSessionAttributes().get("loginID");
 		chatlogservice.insertLog(dto, loginID);
-		System.out.println("room"+dto.getChat_rooms());
 		writer.convertAndSend("/topic/"+dto.getChat_rooms(), dto);
 	}
 	

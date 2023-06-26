@@ -30,8 +30,8 @@
     			<c:when test="${chatroom.yn == 'N'}">
     				<div class="row chatbox">
             			<div class="col-md-8 testbox">
-                			멘토:${chatroom.mentor} <br>
-                			멘티:${chatroom.mentee}
+                			멘토:${chatroom.mentorname} <br>
+                			멘티:${chatroom.menteename}
                 			<input type="hidden" value="${chatroom.seq}">
             			</div>
             			<div class="col-md-2 btnbox">
@@ -47,8 +47,8 @@
     			<c:otherwise>
     				<div class="row chatbox">
             			<div class="col-md-8 testbox">
-                			멘토:${chatroom.mentor} <br>
-                			멘티:${chatroom.mentee}
+                			멘토:${chatroom.mentorname} <br>
+                			멘티:${chatroom.menteename}
                 			<input type="hidden" value="${chatroom.seq}">
             			</div>
             			<div class="col-md-2 btnbox">

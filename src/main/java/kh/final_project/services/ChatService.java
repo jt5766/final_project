@@ -17,7 +17,7 @@ public class ChatService {
 	private ChatDAO dao;
 	
 	public int application(int mentor,int mentee) {
-		return dao.application(new ChatlistDTO(null,mentor,mentee,null));
+		return dao.application(new ChatlistDTO(null,mentor,mentee,null,null,null));
 	}
 	
 	public int accept(Long seq) {

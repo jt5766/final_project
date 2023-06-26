@@ -16,7 +16,7 @@
 	</delete>
 	
 	<select id="select" resultType="kh.final_project.dto.ChatlistDTO">
-		select * from chat_list where mentor = #{loginID} or mentee = #{loginID}
+		select chat_list.*,mentor.nickname mentorname,mentee.nickname menteename from chat_list join members mentee on chat_list.mentee = mentee.code join members mentor on chat_list.mentor = mentor.code where mentor = #{loginID} or mentee = #{loginID}
 	</select>
 	
 	<select id="check" resultType="boolean">
