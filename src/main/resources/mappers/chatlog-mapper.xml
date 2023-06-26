@@ -18,7 +18,7 @@
 	
 	<select id="selectscrolllist" resultType="kh.final_project.dto.ChatlogDTO">
 		select * from 
-		(select chat_rooms,writer,txt,write_date, row_number() over(order by write_date asc) ranks from chat_logs where chat_rooms = ${seq}) 
+		(select chat_rooms,writer,txt,write_date, row_number() over(order by write_date asc) ranks,members.nickname writernickname from chat_logs join members on chat_logs.writer = members.code where chat_rooms = ${seq}) 
 		where ranks between #{endPost} and #{startPost} order by ranks desc
 		
 	</select>

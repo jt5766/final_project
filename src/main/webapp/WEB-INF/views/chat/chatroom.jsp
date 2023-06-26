@@ -14,7 +14,7 @@
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 	<style>
         *{box-sizing: border-box;}
-        #div_contents{height: 650px; overflow: auto;background-color:#B4C8BB;}
+        #div_contents{height: 650px; overflow: auto;background-color:#f5f5f5;}
         .mylinebox{overflow: auto;display:flex;justify-content:flex-start;flex-direction:row-reverse;}
         .otherlinebox{overflow: auto;display:flex;justify-content:flex-start;}
         .mytext{float:right;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:gray;border: 1px solid black;margin-top:10px;margin-bottom:10px;border-radius:5px;}
@@ -59,7 +59,7 @@
 					}else{
 						const writerbox = $("<div>");
 						writerbox.addClass("writerbox");
-						writerbox.append(body.writer);
+						writerbox.append(body.writernickname);
 						linediv.append(writerbox);
 						linediv.addClass("otherlinebox");
 						datediv.addClass("otherdatebox");
@@ -109,7 +109,7 @@
 						const updateText = backslash.replace(regexSinglequotation,"\\'");
 						const destination = "/app/message";
 						const header = {};
-						const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : updateText , write_date : new Date()});
+						const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : updateText , write_date : new Date() , writernickname : "${nickName}"});
 						stompClient.send(destination,header,body);
 						$("#div_text").html("");
 						$("#div_text").focus();
@@ -130,7 +130,7 @@
 					const updateText = backslash.replace(regexSinglequotation,"\\'");
 					const destination = "/app/message";
 					const header = {};
-					const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : updateText , write_date : new Date()});
+					const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : updateText , write_date : new Date() , writernickname : "${nickName}"});
 					stompClient.send(destination,header,body);
 					$("#div_text").html("");
 					$("#div_text").focus();
@@ -185,7 +185,7 @@
 								}else{
 									const datawriterbox = $("<div>");
 									datawriterbox.addClass("writerbox");
-									datawriterbox.append(resp[i].writer);
+									datawriterbox.append(resp[i].writernickname);
 									datalinediv.append(datawriterbox);
 									datalinediv.addClass("otherlinebox");
 									datadatediv.addClass("otherdatebox");
@@ -241,7 +241,7 @@
 		$(function(){
 			let chatlog = [];
 			<c:forEach var="log" items="${chatlog}">
-				chatlog.push({writer:'${log.writer}',txt:'${log.txt}',write_date:'${log.write_date}'});
+				chatlog.push({writer:'${log.writer}',txt:'${log.txt}',write_date:'${log.write_date}',writernickname:'${log.writernickname}'});
 			</c:forEach>
 			console.log(chatlog);
 			for(i = 0; i <chatlog.length; i++){
@@ -256,7 +256,7 @@
 				}else{
 					const datawriterbox = $("<div>");
 					datawriterbox.addClass("writerbox");
-					datawriterbox.append(chatlog[i].writer);
+					datawriterbox.append(chatlog[i].writernickname);
 					datalinediv.append(datawriterbox);
 					datalinediv.addClass("otherlinebox");
 					datadatediv.addClass("otherdatebox");
