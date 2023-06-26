@@ -18,6 +18,9 @@
 	width: 80%;
 }
 
+.list_tr:hover {
+	background-color: gray;
+}
 </style>
 </head>
 <body>
@@ -27,10 +30,10 @@
 		<c:param name="btnNum" value="${categoryType.code}" />
 	</c:import>
 	<!-- CONTENTS -->
-	<div class="container-xl bg-secondary position-relative">
+	<div class="container-xl bg-secondary position-relative p-0">
 		<div class="row">
 			<div class="col">
-				<form action="/community/search">
+				<form action="/community/search" method="post">
 					<input type="hidden" name="typeCode" value="${categoryType.code}">
 					<select name="searchCode">
 						<c:forEach var="i" items="${search}">
@@ -56,7 +59,7 @@
 						<th>조회수</th>
 					</tr>
 					<c:forEach var="i" items="${boardList}">
-						<tr onclick="location.href = '/community/toBoardView?seq=${i.seq}&board_type=${categoryType.code}'">
+						<tr class="list_tr" onclick="location.href = '/community/toBoardView?seq=${i.seq}&board_type=${categoryType.code}'">
 							<td>${i.seq}</td>
 							<td>${i.title}</td>
 							<td>${i.writer}</td>
@@ -67,19 +70,23 @@
 					<tr>
 						<td></td>
 						<td colspan="3">
-							<c:forEach var="i" items="${pageNavi}" varStatus="status">
-								<c:choose>
-									<c:when test="${i == '<'}">
-										<a href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index+1]-1}">${i}</a>
-									</c:when>
-									<c:when test="${i == '>'}">
-										<a href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index-1]+1}">${i}</a>
-									</c:when>
-									<c:otherwise>
-										<a href="/community/toBoard?code=${categoryType.code}&currentPage=${i}">${i}</a>
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
+							<nav>
+								<ul class="pagination justify-content-center">
+									<c:forEach items="${pageNavi}" var="i" varStatus="status">
+										<c:choose>
+											<c:when test="${i == '<'}">
+												<li class="page-items"><a class="page-link" href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index+1]-1}">${i}</a></li>
+											</c:when>
+											<c:when test="${i == '>'}">
+												<li class="page-items"><a class="page-link" href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index-1]+1}">${i}</a></li>
+											</c:when>
+											<c:otherwise>
+												<li class="page-items"><a class="page-link" href="/community/toBoard?code=${categoryType.code}&currentPage=${i}">${i}</a></li>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</ul>
+							</nav>
 						</td>
 						<td>
 							<input type="button" value="등록" onclick="location.href = '/community/toWriteForm?code=${categoryType.code}'">

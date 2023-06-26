@@ -51,7 +51,7 @@
 						</c:if>
 						<c:if test="${sessionScope.memberType ne 9999}">
 							<c:if test="${not empty sessionScope.code}">
-								<a class="nav-link py-2 px-0 px-lg-2 fs-2" href="/member/mypage/" aria-current="true">마이페이지</a>
+								<a class="nav-link py-2 px-0 px-lg-2 fs-2" href="/member/my-page/gallery" aria-current="true">마이페이지</a>
 							</c:if>
 							<c:if test="${empty sessionScope.code}">
 								<a class="nav-link py-2 px-0 px-lg-2 fs-2" href="/member/loginForm/" onclick="alert('로그인이 필요한 서비스입니다.\n로그인으로 이동합니다.');" aria-current="true">마이페이지</a>
@@ -139,10 +139,10 @@
 							</c:choose>
 							<c:choose>
 								<c:when test="${item.code eq 1001}">
-									<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px" onclick="location.href='/'">${item.name}</label>
+									<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px" onclick="location.href='/member/my-page/gallery'">${item.name}</label>
 								</c:when>
 								<c:when test="${item.code eq 1002}">
-									<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px" onclick="location.href='/'">${item.name}</label>
+									<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px" onclick="location.href='/member/my-page/community'">${item.name}</label>
 								</c:when>
 								<c:when test="${item.code eq 1003}">
 									<label class="btn btn-outline-secondary text-center" for="btnradio${item.code}" style="width: 150px" onclick="location.href='/chat/testlink'">${item.name}</label>

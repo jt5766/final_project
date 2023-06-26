@@ -1,8 +1,6 @@
 package kh.final_project.controllers;
 
 
-import com.google.gson.Gson;
-import kh.final_project.dto.CategoryType;
 import kh.final_project.dto.EmailTypeDTO;
 import kh.final_project.dto.MemberDTO;
 import kh.final_project.services.EmailcheckService;
@@ -10,10 +8,12 @@ import kh.final_project.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -164,17 +164,17 @@ public class MemberController {
         memberService.updatePassword(dto);
         return "redirect:/member/loginForm";
     }
-    @RequestMapping("mypage")
-    public String mypage(Model model){
-        List<List<CategoryType>> types = memberService.getTypes();
-        Gson gson = new Gson();
-        String categoryType = gson.toJson(types.get(0));
-        String boardType = gson.toJson(types.get(1));
-        model.addAttribute("categoryType", categoryType);
-        model.addAttribute("boardType", boardType);
-        System.out.println("categoryType = " + categoryType);
-        return "/member/myPageForm";
-    }
+//    @RequestMapping("mypage")
+//    public String mypage(Model model){
+//        List<List<CategoryType>> types = memberService.getTypes();
+//        Gson gson = new Gson();
+//        String categoryType = gson.toJson(types.get(0));
+//        String boardType = gson.toJson(types.get(1));
+//        model.addAttribute("categoryType", categoryType);
+//        model.addAttribute("boardType", boardType);
+//        System.out.println("categoryType = " + categoryType);
+//        return "/member/myPageForm";
+//    }
 
     @RequestMapping("myinfo")
     public String myinfo(Model model){

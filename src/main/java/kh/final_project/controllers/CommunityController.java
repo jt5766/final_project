@@ -50,7 +50,7 @@ public class CommunityController {
 		model.addAttribute("search", search);
 		model.addAttribute("sort", sort);
 		if (categoryType.getCode() == 1005) { // 민원 게시판으로
-			if ((Integer) session.getAttribute("code") == 9999) { // 관리자
+			if ((Integer) session.getAttribute("memberType") == 9999) { // 관리자
 				List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
 				List<CategoryType> boardType = communityService.selectBoardType();
 				List<ComplaintBoardsDTO> boardList = communityService.selectComplaintByPage(categoryType, currentPage);
@@ -172,7 +172,7 @@ public class CommunityController {
 	@RequestMapping("insertProcess")
 	public String insertProcess(ComplaintBoardsDTO complaintBoardsDTO) {
 		communityService.insertProcess(complaintBoardsDTO);
-		return "redirect:/community/toBoardView?seq=" + complaintBoardsDTO.getSeq() + "&board_type=1005";
+		return "redirect:/community/toComplaintView?seq=" + complaintBoardsDTO.getSeq();
 	}
 
 	@RequestMapping("search")
