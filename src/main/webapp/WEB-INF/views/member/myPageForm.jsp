@@ -48,8 +48,8 @@
 		<h3 class="text-center">마이페이지</h3>
 		<nav class="navbar navbar-expand-lg bg-light">
 			<div class="container-xl justify-content-evenly btn-group">
-				<button class="btn btn-outline-dark read-btn" id="gallery">갤러리</button>
-				<button class="btn btn-outline-dark read-btn" id="community">커뮤니티</button>
+				<button class="btn btn-outline-dark read-btn" onclick="location.href='/member/my-page/gallery'">갤러리</button>
+				<button class="btn btn-outline-dark read-btn" onclick="location.href='/member/my-page/community'">커뮤니티</button>
 				<button class="btn btn-outline-dark" onclick="location.href='/chat/testlink'">1:1 채팅</button>
 				<button class="btn btn-outline-dark" onclick="location.href='/member/myinfo'">회원 정보 수정</button>
 			</div>
@@ -58,6 +58,16 @@
 	<div class="container-xl" id="my-content"></div>
 	<c:import url="${path}/resources/js/FOOTER.jsp" />
 	<script>
+		$(function() {
+
+		})
+		window.onpageshow = function(event) {
+			if ( event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+				// Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+				// 이벤트 추가하는 곳
+				location.reload();
+			}
+		}
 	$('.read-btn').on('click', function() {
 	    $.ajax({
 	          url:"/member/my-page",
