@@ -9,14 +9,14 @@
 <c:import url="${path}/resources/js/scripts.jsp" />
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
-<body>
+<body class="h-100">
 	<!-- GNB & LNB -->
 	<c:import url="${path}/resources/js/GNB.jsp">
-		<c:param name="pageName" value="adminpage" />
+		<c:param name="pageName" value="home" />
 		<c:param name="btnNum" value="1" />
 	</c:import>	
 	<!-- CONTENTS -->
-	<div class="container-xl bg-secondary position-relative">
+	<div class="container-xl bg-secondary position-relative p-0">
 	</div>
 	<!-- FOOTER -->
 	<c:import url="${path}/resources/js/FOOTER.jsp" />

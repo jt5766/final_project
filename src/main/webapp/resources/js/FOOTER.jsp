@@ -50,15 +50,9 @@
 	}
 
 	$(window).on("load resize", function ( ) {
-		var screenHeight = $(window).height();
-		var gbnHeight = $("header").height();
-		var contentsHeight = $(".container-xl").height();
-		
-		console.log(screenHeight);
-		console.log(gbnHeight + contentsHeight);
-		
-		if (screenHeight > (gbnHeight + contentsHeight)) {
-			$(".container-xl").height(screenHeight - gbnHeight);
-		}
+		var screenHeight = $(window).outerHeight();
+		var gbnHeight = $("header").outerHeight();
+
+		$(".container-xl").css("min-height", screenHeight - gbnHeight);
 	})
 </script>
