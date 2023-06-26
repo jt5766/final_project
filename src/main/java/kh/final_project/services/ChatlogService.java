@@ -41,8 +41,9 @@ public class ChatlogService {
 		if(endPost<0) {
 			endPost = 0;
 		}
-		System.out.println(startPost);
-		System.out.println(endPost);
+		System.out.println("시작포인트"+startPost);
+		System.out.println("끝포인트"+endPost);
+		System.out.println("chatroom"+seq);
 		Map<String, Object> scrollList = new HashMap<>();
 		scrollList.put("seq", seq);
 		scrollList.put("startPost", startPost);

@@ -11,7 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 	<style>
         *{box-sizing: border-box;}
-        .chatbox{border: 1px solid black;margin:0px;}
+        .chatbox{background-color:#f5f5f5;margin:0px;}
         .testbox{border: 0px;height: 100px;}
         .btnbox{padding: 1%; padding-left: 0%;border: 0px;}
         .btn{width: 100%; height: 100%;background-color: gray; color: black;}

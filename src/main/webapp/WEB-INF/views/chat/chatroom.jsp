@@ -14,7 +14,7 @@
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 	<style>
         *{box-sizing: border-box;}
-        #div_contents{height: 600px; overflow: auto;background-color:#B4C8BB;}
+        #div_contents{height: 650px; overflow: auto;background-color:#B4C8BB;}
         .mylinebox{overflow: auto;display:flex;justify-content:flex-start;flex-direction:row-reverse;}
         .otherlinebox{overflow: auto;display:flex;justify-content:flex-start;}
         .mytext{float:right;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:gray;border: 1px solid black;margin-top:10px;margin-bottom:10px;border-radius:5px;}
