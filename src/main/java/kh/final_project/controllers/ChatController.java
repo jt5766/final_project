@@ -58,7 +58,6 @@ public class ChatController {
 		if(result) {
 			chatlogservice.maxScroll(seq);
 			List<ChatlogDTO> loglist = chatlogservice.selectChatLog(seq);
-			System.out.println(loglist.get(0).getWriter());
 			model.addAttribute("chatseq",seq);
 			model.addAttribute("chatlog", loglist);
 			return "chat/chatroom";

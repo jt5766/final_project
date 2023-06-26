@@ -33,7 +33,6 @@ public class GalleryController {
 
     @GetMapping
     public String toGallery(Model model, SearchCriteria searchCriteria) {
-        searchCriteria.setWriter((Integer)session.getAttribute("code"));
         List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
         setNaviOfCards(model, searchCriteria);
         setConditions(model);
@@ -43,7 +42,6 @@ public class GalleryController {
 
     @GetMapping("/search")
     public String searchCards(SearchCriteria searchCriteria, Model model) {
-        searchCriteria.setWriter((Integer)session.getAttribute("code"));
         List<GalleryCardView> cards = galleryService.searchCards(searchCriteria);
         setNaviOfCards(model, searchCriteria);
         setConditions(model);
@@ -65,7 +63,6 @@ public class GalleryController {
     @GetMapping("/category/{categoryType}")
     public String filterCard(@ModelAttribute("categoryType") @PathVariable Integer categoryType, SearchCriteria searchCriteria, Model model) {
         searchCriteria.setTypeCode(categoryType);
-        searchCriteria.setWriter((Integer)session.getAttribute("code"));
         List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
         setNaviOfCards(model, searchCriteria);
         setConditions(model);

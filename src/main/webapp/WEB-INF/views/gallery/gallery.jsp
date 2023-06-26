@@ -97,13 +97,10 @@
   </style>
 </head>
 <body>
-<c:import url="${path}/resources/js/GNB.jsp"/>
-<div class="lnb position-sticky hstack gap-5">
-  <c:forEach items="${categoryTypes}" var="category">
-    <button class="category-btn" onclick="location.href='/gallery/category/${category.code}?page=1'">${category.name}</button>
-  </c:forEach>
-  <button class="category-btn" onclick="location.href='/gallery'">전체</button>
-</div>
+<c:import url="${path}/resources/js/GNB.jsp">
+  <c:param name="pageName" value="gallery" />
+  <c:param name="btnNum" value="${categoryType}" />
+</c:import>
 <div class="container-xl">
   <form action="/gallery/search">
     <input type="hidden" name="tableName" value="VIEW_GALLEY_CARDS">
@@ -216,7 +213,17 @@
     });
     $('#to-home').on('click', function () {
         location.href = '/';
-    })
+    });
+
+    // window.addEventListener('popstate', function(event) {
+    //     if (event.state) {
+    //         // 이전에 저장한 상태 정보가 있는 경우
+    //         console.log('뒤로가기 버튼 클릭 - 이전 상태:', event.state);
+    //     } else {
+    //         // 이전에 저장한 상태 정보가 없는 경우 (일반적으로 브라우저 초기 진입 시 발생)
+    //         console.log('뒤로가기 버튼 클릭 - 이전 상태 없음');
+    //     }
+    // });
 </script>
 </body>
 </html>
