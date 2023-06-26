@@ -87,7 +87,7 @@
 	</select>
 
 	<update id="insertProcess">
-		UPDATE complaint_boards set process = #{process} process_date = default where seq = #{seq}
+		UPDATE complaint_boards set process = #{process}, process_date = default where seq = #{seq}
 	</update>
 
 	<update id="updateBoard">
@@ -225,16 +225,20 @@
 	<select id="getMyNotice" resultType="kh.final_project.dto.BoardsDTO">
 		SELECT * FROM notice_boards WHERE writer = #{value} 
 	</select>
-		<select id="getMyFree" resultType="kh.final_project.dto.BoardsDTO">
+	
+	<select id="getMyFree" resultType="kh.final_project.dto.BoardsDTO">
 		SELECT * FROM free_boards WHERE writer = #{value} 
 	</select>
-		<select id="getMyTip" resultType="kh.final_project.dto.BoardsDTO">
+	
+	<select id="getMyTip" resultType="kh.final_project.dto.BoardsDTO">
 		SELECT * FROM tip_boards WHERE writer = #{value} 
 	</select>
-		<select id="getMyQuestion" resultType="kh.final_project.dto.BoardsDTO">
-		SELECT * FROM notice_boards WHERE writer = #{value} 
+	
+	<select id="getMyQuestion" resultType="kh.final_project.dto.BoardsDTO">
+		SELECT * FROM question_boards WHERE writer = #{value} 
 	</select>
-		<select id="getMyComplaint" resultType="kh.final_project.dto.BoardsDTO">
+	
+	<select id="getMyComplaint" resultType="kh.final_project.dto.BoardsDTO">
 		SELECT * FROM complaint_boards WHERE writer = #{value} 
 	</select>
 </mapper>

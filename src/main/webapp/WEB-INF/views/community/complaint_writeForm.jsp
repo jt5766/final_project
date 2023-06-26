@@ -6,68 +6,86 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>커뮤니티 글 작성</title>
-<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<title>민원 등록</title>
+<!-- 공통 script & css -->
+<c:import url="${path}/resources/js/scripts.jsp" />
+<link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <style>
-* {
-	box-sizing: border-box;
-	border: 0px solid black;
-	text-align: center;
-}
-
 #inputTitle {
 	width: 100%;
+}
+
+.note-editable {
+	text-align: left;
+	background-color: ghostwhite;
 }
 </style>
 </head>
 
 <body>
+	<!-- GNB & LNB -->
+	<c:import url="${path}/resources/js/GNB.jsp">
+		<c:param name="pageName" value="community" />
+		<c:param name="btnNum" value="${boardCode}" />
+	</c:import>
+	<!-- CONTENTS -->
 	<div>
-		<div>GNB</div>
-		<form action="/community/insertComplaint" method="post" id="boardForm">
-			<div>
-				<select>
-					<c:forEach var="i" items="${selectTag}">
-						<c:choose>
-							<c:when test="${i.code == boardCode}">
-								<option checked>${i.name}</option>
-							</c:when>
-							<c:otherwise>
-								<option disabled>${i.name}</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</select> 
-				<label>문의
-					<input type="radio" name="complaint_type" value="1001">
-				</label>
-				<label>건의
-					<input type="radio" name="complaint_type" value="1002">
-				</label>
-				<label>신고
-					<input type="radio" name="complaint_type" value="1003">
-				</label>
+		<div class="container-xl bg-secondary position-relative p-0">
+			<div class="row">
+				<div class="col">
+					<form action="/community/insertComplaint" method="post" id="boardForm">
+						<div style="display: flex;">
+							<div style="flex: 4;">
+								<input type="hidden" name="writer" value="${sessionScope.code}">
+								<input type="hidden" name="board_type" value="${boardCode}">
+								<input type="text" name="title" placeholder="제목을 입력해주세요" id="inputTitle">
+							</div>
+							<div style="flex: 1; text-align: center;">
+								<label>
+									문의
+									<input type="radio" name="complaint_type" value="1001" checked>
+								</label>
+								<label>
+									건의
+									<input type="radio" name="complaint_type" value="1002">
+								</label>
+								<label>
+									신고
+									<input type="radio" name="complaint_type" value="1003">
+								</label>
+							</div>
+							<div style="flex: 1;">
+								<select style="width: 100%; height: 100%;">
+									<c:forEach var="i" items="${selectTag}">
+										<c:choose>
+											<c:when test="${i.code == boardCode}">
+												<option checked>${i.name}</option>
+											</c:when>
+											<c:otherwise>
+												<option disabled>${i.name}</option>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</select>
+							</div>
+						</div>
+						<div>
+							<textarea name="txt" id="textarea_contents" cols="30" rows="10"></textarea>
+						</div>
+						<div style="text-align: right;">
+							<input type="button" id="formSubmit" value="등록하기">
+							<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${boardCode}&currentPage=1'">
+						</div>
+					</form>
+				</div>
 			</div>
-			<div>
-				<input type="hidden" name="writer" value="${sessionScope.code}">
-				<input type="hidden" name="board_type" value="${boardCode}">
-				<input type="text" name="title" placeholder="제목을 입력해주세요" id="inputTitle">
-			</div>
-			<div>
-				<textarea name="txt" id="textarea_contents" cols="30" rows="10"></textarea>
-			</div>
-			<div>
-				<input type="button" id="formSubmit" value="등록하기">
-				<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${boardCode}'">
-			</div>
-		</form>
-		<div>FOOTER</div>
+		</div>
 	</div>
-
+	<!-- FOOTER -->
+	<c:import url="${path}/resources/js/FOOTER.jsp" />
+	<!-- script - Contents -->
 	<script>
 	$("#textarea_contents").summernote({
 	    height : 500, // 에디터 높이
@@ -76,7 +94,7 @@
 		focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 		lang : "ko-KR", // 한글 설정
 		codeviewIframeFilter: true,
-		placeholder : '허위 신고는 제재 대상입니다.', //placeholder 설정
+		placeholder : '허위 신고는 제재 대상입니다', //placeholder 설정
 		disableDragAndDrop : true,
 		toolbar : [ [ 'style', [ 'style' ] ],
 				[ 'font', [ 'bold', 'underline', 'clear' ] ],
