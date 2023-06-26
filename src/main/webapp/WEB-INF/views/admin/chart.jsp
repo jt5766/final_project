@@ -18,12 +18,12 @@
 		<c:param name="btnNum" value="${pagecode}" />
 	</c:import>
 	<!-- CONTENTS -->
-	<div class="container-xl bg-secondary position-relative p-0">
-		<div class="row">
-			<div class="col-9 w-100" id="member_type_chart" style="height: 500px"></div>
+	<div class="container-xl position-relative p-0">
+		<div class="row m-0 p-0">
+			<div class="col-9 w-100 m-0 p-0" id="member_type_chart" style="height: 500px"></div>
 		</div>
-		<div class="row">
-			<div class="col-12 w-100" id="gallery_type_chart" style="height: 500px"></div>
+		<div class="row m-0 p-0">
+			<div class="col-12 w-100 m-0 p-0" id="gallery_type_chart" style="height: 500px"></div>
 		</div>
 	</div>
 	<!-- FOOTER -->
@@ -44,7 +44,8 @@
 		function drawChart(target, chart_type, title, data) {
 			// 차트 옵션 설정
 			var options = {
-				'title' : title
+				'title' : title,
+				'backgroundColor': '#F3F3F3'  // 원하는 배경색으로 수정
 			};
 
 			// 차트 그리기
