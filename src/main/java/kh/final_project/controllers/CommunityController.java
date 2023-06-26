@@ -50,25 +50,14 @@ public class CommunityController {
 		model.addAttribute("search", search);
 		model.addAttribute("sort", sort);
 		if (categoryType.getCode() == 1005) { // 민원 게시판으로
-			if ((Integer) session.getAttribute("memberType") == 9999) { // 관리자
-				List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
-				List<CategoryType> boardType = communityService.selectBoardType();
-				List<ComplaintBoardsDTO> boardList = communityService.selectComplaintByPage(categoryType, currentPage);
-				model.addAttribute("categoryType", categoryType);
-				model.addAttribute("boardType", boardType);
-				model.addAttribute("boardList", boardList);
-				model.addAttribute("pageNavi", pageNavi);
-				return "community/complaint_board";
-			} else {
-				List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
-				List<CategoryType> boardType = communityService.selectBoardType();
-				List<ComplaintBoardsDTO> boardList = communityService.selectComplaintByPage(categoryType, currentPage);
-				model.addAttribute("categoryType", categoryType);
-				model.addAttribute("boardType", boardType);
-				model.addAttribute("boardList", boardList);
-				model.addAttribute("pageNavi", pageNavi);
-				return "community/complaint_board";
-			}
+			List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
+			List<CategoryType> boardType = communityService.selectBoardType();
+			List<ComplaintBoardsDTO> boardList = communityService.selectComplaintByPage(categoryType, currentPage);
+			model.addAttribute("categoryType", categoryType);
+			model.addAttribute("boardType", boardType);
+			model.addAttribute("boardList", boardList);
+			model.addAttribute("pageNavi", pageNavi);
+			return "community/complaint_board";
 		} else { // 그 외 게시판으로
 			List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
 			List<BoardsDTO> boardList = communityService.selectBoardByPage(categoryType, currentPage);

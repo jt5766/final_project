@@ -19,7 +19,8 @@
 }
 
 .list_tr:hover {
-	background-color: gray;
+	background-color: #ca9372;
+	color: white;
 }
 </style>
 </head>
@@ -67,11 +68,11 @@
 							<td>${i.total_count}</td>
 						</tr>
 					</c:forEach>
-					<tr>
+					<tr style="margin: 10px;">
 						<td></td>
-						<td colspan="3">
+						<td colspan="3" style="padding: 15px;">
 							<nav>
-								<ul class="pagination justify-content-center">
+								<ul class="pagination justify-content-center m-0">
 									<c:forEach items="${pageNavi}" var="i" varStatus="status">
 										<c:choose>
 											<c:when test="${i == '<'}">
