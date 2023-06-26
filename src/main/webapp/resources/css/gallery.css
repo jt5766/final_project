@@ -1,0 +1,243 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.gallery-card {
+    display: flex;
+    height: 300px;
+    border-radius: 15px;
+    background-size: 120%;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 0 1px #5d5d5d;
+    transition-duration: 500ms;
+    margin: 3px 2px;
+}
+
+.thumbnail {
+    width: 200px;
+    height: 100%;
+    border: none;
+    outline: none;
+    flex: 1;
+}
+
+.card-body {
+    margin-left: 5px;
+    margin-right: 5px;
+    min-width: 300px;
+    flex-flow: column nowrap;
+    flex: 2 0 0;
+    display: flex;
+}
+
+.card-body > div {
+    flex: 1 0 0;
+    border-bottom: 1px solid #c2bdb5;
+}
+
+.info {
+    flex: 10px 0 0;
+    display: flex;
+}
+
+.info > div {
+    min-width: 2rem;
+    padding: 1px 5px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin: 3px 3px 0 0;
+    text-align: center;
+}
+
+.category {
+    background-color: #FBDDBA;
+}
+
+.genre-name {
+    background-color: #e7ada7;
+}
+
+.title {
+    flex: 3;
+    font-size: 16pt;
+    color: #4D4D4D;
+}
+
+.card-hover {
+    background-color: #ca937230;
+}
+
+.writer {
+    flex: 2;
+}
+
+.catchphrase {
+    flex: 1;
+}
+
+.synopsis {
+    flex: 2;
+}
+
+.card-body > .totalCount {
+    flex: 1;
+    border-bottom: none;
+}
+
+.category-btn {
+    border: none;
+    background-color: #242424;
+    color: white;
+    cursor: pointer;
+    padding: 3px 5px;
+}
+
+.category-btn:hover {
+    background-color: black;
+    color: aliceblue;
+}
+
+.gallery-content > div {
+    padding: 2px;
+}
+
+.page-link {
+    background-color: #F5EFE7;
+    color: #4D4D4D;
+    outline: none;
+    border: none;
+}
+
+.page-link:hover {
+    background-color: #ebe5dd;
+    color: #483507;
+}
+
+.page-link:focus {
+    box-shadow: 0 0 0 0.3rem #ca937250;
+}
+
+.card-info {
+    display: flex;
+    min-height: 180px;
+    background-color: #36454f15;
+}
+
+.thumbnail_url {
+    flex: 200px 0 0;
+}
+
+.card-body > .info {
+    display: flex;
+    justify-content: left;
+    justify-self: flex-start;
+    flex: 0;
+}
+
+.ai {
+    background-color: #ad76d7;
+    color: white;
+}
+
+.card-body > .title {
+    flex: 2 0 0;
+}
+
+.card-body > .synopsis {
+    border-bottom: none;
+}
+
+.side-menu {
+    flex: 1 0 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-menu > div {
+    flex: 1;
+    display: flex;
+    justify-content: end;
+    min-height: 20px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.common-button {
+    display: inline-block;
+    min-width: 5rem;
+    background-color: #ca9372;
+    color: white;
+    border-radius: 5px;
+    margin: 5px;
+    max-height: 35px;
+}
+
+#delete-form {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100%;
+}
+
+#insert-button {
+    display: block;
+    width: 100%;
+    padding: 6px;
+    text-align: center;
+    border-radius: 10px;
+    background-color: #ca9372;
+    color: white;
+    max-height: 35px;
+}
+
+.disclosure > div {
+    margin: 0;
+    padding: 0;
+}
+
+.content-link {
+    padding: 5px 15px;
+    margin: 3px 0;
+    background-color: #a9957d;
+    cursor: pointer;
+    transition-duration: 500ms;
+    border-radius: 10px;
+}
+
+.content-link:hover {
+    background-color: #c2bdb5;
+    color: white;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+}
+
+.search-box>* {
+    margin-left: 5px;
+}
+
+select[name=searchCode] {
+    flex: 0 0 0;
+}
+input[name=searchQuery] {
+    flex: 1 0 0;
+}
+input[name=sordCode] {
+    flex: 0 0 0;
+}
+.sortLabel {
+    flex: 4rem 0 0;
+}
+.vr {
+    flex: 0 0 0;
+}
+
+#currentPage {
+    background-color: #ca9372;
+    color: #FFFFFF;
+}
