@@ -8,21 +8,23 @@
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 	<style>
         *{box-sizing: border-box;}
-        div{border: 1px solid black;}
+        .chatbox{border: 1px solid black;margin:0px;}
         .testbox{border: 0px;height: 100px;}
         .btnbox{padding: 1%; padding-left: 0%;border: 0px;}
         .btn{width: 100%; height: 100%;background-color: gray; color: black;}
         .btn:hover{background-color: black; color: gray;}
     </style>
+    <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-	<div class="container-fluid">
-        <div class="row gnb">gnb</div>
-	    <div class="row lnb">lnb</div>
-    </div>
-    <div class="container-xl">
+	<c:import url="${path}/resources/js/GNB.jsp">
+		<c:param name="pageName" value="mypage" />
+		<c:param name="btnNum" value="1003" />
+	</c:import>
+	<div class="container-xl bg-secondary position-relative p-0">
     	<c:forEach var="chatroom" items="${chatlist}">
     		<c:choose>
     			<c:when test="${chatroom.yn == 'N'}">
@@ -59,33 +61,7 @@
     			</c:otherwise>
     		</c:choose>
 		</c:forEach>
-		<div class="row chatbox">
-            <div class="col-md-8 testbox">
-                멘토:abc <br>
-                멘티:123
-            </div>
-            <div class="col-md-2 btnbox">
-                <button class="btn">승인</button>
-            </div>
-            <div class="col-md-2 btnbox">
-                <button class="btn">거절</button>
-            </div>
-		</div>
-        <div class="row chatbox">
-            <div class="col-md-8 testbox">
-                멘토:abc <br>
-                멘티:123
-            </div>
-            <div class="col-md-2 btnbox">
-                <button class="btn">승인</button>
-            </div>
-            <div class="col-md-2 btnbox">
-                <button class="btn">거절</button>
-            </div>
-		</div>
-		<div class="row footer">
-		
-		</div>
 	</div>
+	<c:import url="${path}/resources/js/FOOTER.jsp" />
 </body>
 </html>

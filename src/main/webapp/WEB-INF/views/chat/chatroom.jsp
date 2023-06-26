@@ -11,9 +11,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+<link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 	<style>
         *{box-sizing: border-box;}
-        #div_contents{height: 700px; overflow: auto;background-color:#B4C8BB;}
+        #div_contents{height: 600px; overflow: auto;background-color:#B4C8BB;}
         .mylinebox{overflow: auto;display:flex;justify-content:flex-start;flex-direction:row-reverse;}
         .otherlinebox{overflow: auto;display:flex;justify-content:flex-start;}
         .mytext{float:right;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:gray;border: 1px solid black;margin-top:10px;margin-bottom:10px;border-radius:5px;}
@@ -28,6 +29,8 @@
 </head>
 <body>
 	<script>
+		let regexSize = /^.{0,500}$/s;
+		let regexSinglequotation = /\'/g;
 		let year = null;
 		let month = null;
 		let date = null;
@@ -46,11 +49,13 @@
 					const linediv = $("<div>");
 					const datediv = $("<div>");
 					const textdiv = $("<div>");
+					const replbackslash = body.txt.replace(/\\\\/g,"\\");
+					const realTimeText = replbackslash.replace(/\\'/g,"\'");
 					if(body.writer == ${code}){
 						linediv.addClass("mylinebox");
 						datediv.addClass("mydatebox");
 						textdiv.addClass("mytext");
-						textdiv.append(body.txt);
+						textdiv.append(realTimeText);
 					}else{
 						const writerbox = $("<div>");
 						writerbox.addClass("writerbox");
@@ -59,7 +64,7 @@
 						linediv.addClass("otherlinebox");
 						datediv.addClass("otherdatebox");
 						textdiv.addClass("othertext");
-						textdiv.append(body.txt);
+						textdiv.append(realTimeText);
 					}
 					var plustimer = new Date(body.write_date);
 					var plusYear = plustimer.getFullYear();
@@ -95,9 +100,16 @@
 					if($("#div_text").text().trim() == ""){
 						return false;
 					}else{
+						const regexText = $("#div_text").html();
+						if(!regexSize.test(regexText)){
+							alert("500자 이하로 작성해주세요.");
+							return false;
+						}
+						const backslash = $("#div_text").html().replace(/\\/g,"\\\\");
+						const updateText = backslash.replace(regexSinglequotation,"\\'");
 						const destination = "/app/message";
 						const header = {};
-						const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html() , write_date : new Date()});
+						const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : updateText , write_date : new Date()});
 						stompClient.send(destination,header,body);
 						$("#div_text").html("");
 						$("#div_text").focus();
@@ -109,9 +121,16 @@
 				if($("#div_text").text().trim() == ""){
 					return false;
 				}else{
+					const regexText = $("#div_text").html();
+					if(!regexSize.test(regexText)){
+						alert("500자 이하로 작성해주세요.");
+						return false;
+					}
+					const backslash = $("#div_text").html().replace(/\\/g,"\\\\");
+					const updateText = backslash.replace(regexSinglequotation,"\\'");
 					const destination = "/app/message";
 					const header = {};
-					const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : $("#div_text").html() , write_date : new Date()});
+					const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : updateText , write_date : new Date()});
 					stompClient.send(destination,header,body);
 					$("#div_text").html("");
 					$("#div_text").focus();
@@ -151,7 +170,7 @@
 								lengthsize = true;
 								var alldatediv = $("<div>");
 	        					alldatediv.addClass("alldatebox");
-		        				alldatediv.append(year+"/"+(month+1)+"/"+date);
+		        				alldatediv.append(year+"-"+(month+1)+"-"+date);
 		        				$("#div_contents").prepend(alldatediv);
 							}
 							for(var i = 0;i < resp.length;i++){
@@ -280,28 +299,23 @@
 				$("#div_contents").prepend(datalinediv);
 			}
 		})
-		
-		
 	</script>
-    <div class="container-fluid">
-        <div class="row gnb">gnb</div>
-	    <div class="row lnb">lnb</div>
-    </div>
-    <div class="container-xl">
-        <div class="row">
+	<c:import url="${path}/resources/js/GNB.jsp">
+		<c:param name="pageName" value="mypage" />
+		<c:param name="btnNum" value="1003" />
+	</c:import>	
+	<div class="container-xl bg-secondary position-relative p-0">
+        <div class="row m-0">
             <div class="col-md-12" id="div_contents">
             </div>
         </div>
-        <div class="row">
+        <div class="row m-0">
                 <div class="col-md-10" contenteditable="true" id="div_text"></div>
             <div class="col-md-2 p-0">
                 <button class="btn" id="button_send">작성</button>
             </div>
         </div>
-        <div class="row">
-        	메모 : 1. 시간만 뜨게 하기 let i = new Date(); i.getHours(); i.getMinutes();
-        		  2. regex 1300자 제한 해줘야 함 안그럼 DB 에 안들어가서 오류남 ( DB는 4000자 까지 되는데 한글은 3배라 1300자만 )
-        </div>
     </div>
+    <c:import url="${path}/resources/js/FOOTER.jsp" />
 </body>
 </html>
