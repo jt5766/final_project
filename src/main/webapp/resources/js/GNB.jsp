@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <header class="navbar navbar-dark bg-dark navbar-expand-lg text-secondary flex-column sticky-top mb-2">
 	<!-- GNB -->
 	<nav class="container-fluid bd-guatter border-bottom border-secondary flex-wrap flex-lg-nowrap position-relative">
@@ -177,6 +177,13 @@
 					</div>
 				</div>
 			</c:when>
+			<c:otherwise>
+				<!-- Title -->
+				<div class="row justify-content-center">
+					<div class="col mt-3 text-light fs-1 fw-bold">K H에 오신것을 환영합니다.</div>
+				</div>
+				<!-- Button -->
+			</c:otherwise>
 		</c:choose>
 	</nav>
 </header>

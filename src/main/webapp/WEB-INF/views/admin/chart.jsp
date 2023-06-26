@@ -8,6 +8,8 @@
 <!-- 공통 script & css -->
 <c:import url="${path}/resources/js/scripts.jsp" />
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
+<!-- Google Charts -->
+<script src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
 	<!-- GNB & LNB -->
@@ -16,7 +18,7 @@
 		<c:param name="btnNum" value="${pagecode}" />
 	</c:import>
 	<!-- CONTENTS -->
-	<div class="container-xl bg-secondary position-relative">
+	<div class="container-xl bg-secondary position-relative p-0">
 		<div class="row">
 			<div class="col-9 w-100" id="member_type_chart" style="height: 500px"></div>
 		</div>

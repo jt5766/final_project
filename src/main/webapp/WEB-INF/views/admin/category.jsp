@@ -16,10 +16,10 @@
 		<c:param name="btnNum" value="${pagecode}" />
 	</c:import>
 	<!-- CONTENTS -->
-	<div class="container-xl bg-secondary position-relative">
+	<div class="container-xl bg-secondary position-relative p-0">
 		<div class="row justify-content-md-center">
 			<div class="col-md-12">
-				<table class="table table-light table-bordered border-secondary table-striped">
+				<table class="table table-light table-bordered border-secondary table-striped m-0">
 					<thead>
 						<tr class="btn_group" role="group">
 							<th width="33%">
