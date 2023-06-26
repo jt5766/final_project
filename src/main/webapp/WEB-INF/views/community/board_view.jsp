@@ -38,7 +38,7 @@
 	<div class="container-xl bg-secondary position-relative p-0">
 		<div class="row">
 			<div class="col">
-				<form action="/community/toUpdate" method="post">
+				<form action="/community/toUpdate" method="post" style="padding: 15px;">
 					<div>${info.board_name}</div>
 					<div id="div_info" style="font-size: xx-large;">
 						<input type="hidden" name="seq" value="${info.seq}">
@@ -61,7 +61,7 @@
 							<input type="submit" value="수정하기">
 							<input type="button" value="삭제하기" onclick="location.href = '/community/deleteBoard?board_type=${info.board_type}&seq=${info.seq}'">
 						</c:if>
-						<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${info.board_type}&currentPage=1'">
+						<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${info.board_type}&currentPage=1'" style="margin: 15px;">
 					</div>
 				</form>
 			</div>
@@ -79,7 +79,7 @@
 						</div>
 						<div>
 							<div style="display: flex; align-items: center;">
-								<div style="flex: 6;">
+								<div style="flex: 6; padding: 15px;">
 									<textarea name="txt" style="text-align: left; width: 100%; resize: none;" placeholder="댓글을 입력해주세요"></textarea>
 								</div>
 								<div style="flex: 1;" class="replySubmit">

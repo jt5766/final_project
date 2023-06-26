@@ -22,12 +22,20 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public String home() {
-		Map<String, List<CategoryType>> result = homeService.init();
-		session.setAttribute("gallery", result.get("gallery"));
-		session.setAttribute("community", result.get("community"));
-		session.setAttribute("mypage", result.get("mypage"));
-		session.setAttribute("adminpage", result.get("adminpage"));
-		
+		// 하나라도 없으면 세션 가져오기
+		if (session.getAttribute("gallery") == null || session.getAttribute("community") == null || session.getAttribute("mypage") == null || session.getAttribute("adminpage") == null) {
+			// 세션 비우기
+			session.removeAttribute("gallery");
+			session.removeAttribute("community");
+			session.removeAttribute("mypage");
+			session.removeAttribute("adminpage");
+			// 세션 채우기
+			Map<String, List<CategoryType>> result = homeService.init();
+			session.setAttribute("gallery", result.get("gallery"));
+			session.setAttribute("community", result.get("community"));
+			session.setAttribute("mypage", result.get("mypage"));
+			session.setAttribute("adminpage", result.get("adminpage"));
+		}
 		return "home";
 	}
 
