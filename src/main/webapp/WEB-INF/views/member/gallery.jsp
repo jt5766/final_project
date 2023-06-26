@@ -13,46 +13,72 @@
   <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
   <style>
       * {
-          border: 1px solid black;
           box-sizing: border-box;
       }
 
       .secrete {
-          color: red;
+          color: salmon;
+      }
+
+      .content-link {
+          padding: 5px 15px;
+          margin: 3px 0;
+          background-color: #44444490;
+          cursor: pointer;
+          transition-duration: 500ms;
+          border-radius: 10px;
+      }
+
+      .content-link:hover {
+          background-color: #444444;
+          color: white;
+      }
+
+      .common-button {
+          display: inline-block;
+          min-width: 5rem;
+          background-color: #36454f;
+          color: white;
+          border-radius: 10px;
+          margin: 5px;
       }
   </style>
 </head>
 <body>
-<c:import url="${path}/resources/js/GNB.jsp"/>
-<div id="lnb">
-  <h3 class="text-center">마이페이지</h3>
-  <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-xl justify-content-evenly btn-group">
-      <button class="btn btn-outline-dark" onclick="location.href='/member/my-page/gallery'">갤러리</button>
-      <button class="btn btn-outline-dark" onclick="location.href='/member/my-page/community'">커뮤니티</button>
-      <button class="btn btn-outline-dark" onclick="location.href='/chat/testlink'">1:1 채팅</button>
-      <button class="btn btn-outline-dark" onclick="location.href='/member/myinfo'">회원 정보 수정</button>
-    </div>
-  </nav>
-</div>
-<div class="container-xl" id="my-content">
+<c:import url="${path}/resources/js/GNB.jsp">
+  <c:param name="pageName" value="mypage"/>
+  <c:param name="btnNum" value="${sessionScope.mypageCode}"/>
+</c:import>
+<div class="container-xl p-0" id="my-content">
   <c:forEach items="${cards}" var="entry" varStatus="status">
     <div class="row">
       <c:forEach items="${gallery}" var="category">
         <c:if test="${category.code eq entry.key}">
-          <div class="col-12">
+          <div class="col-12 d-flex justify-content-between">
             <b>${category.name}</b>
+            <button type="button" class="common-button" onclick="location.href='/gallery/insert/${category.code}'">새로
+              입력
+            </button>
           </div>
         </c:if>
       </c:forEach>
-      <c:forEach items="${entry.value}" var="card">
-        <div class="col-12 d-flex justify-content-around">
-          <div class="category">
-              ${card.title}
-          </div>
-        </div>
-      </c:forEach>
     </div>
+    <c:forEach items="${entry.value}" var="card">
+      <div class="row">
+        <div class="col-md-12">
+          <c:if test="${card.yn eq 'N'}">
+            <div onclick="location.href='/gallery/${card.seq}'" class="content-link secrete">
+                ${card.title} - 비공개 카드입니다.
+            </div>
+          </c:if>
+          <c:if test="${card.yn ne 'N'}">
+            <div onclick="location.href='/gallery/${card.seq}'" class="content-link">
+                ${card.title}
+            </div>
+          </c:if>
+        </div>
+      </div>
+    </c:forEach>
   </c:forEach>
 </div>
 <c:import url="${path}/resources/js/FOOTER.jsp"/>

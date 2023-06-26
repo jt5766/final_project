@@ -13,29 +13,39 @@
   <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
   <style>
       * {
-          border: 1px solid black;
           box-sizing: border-box;
       }
 
-      .secrete {
-          color: red;
+      .content-link {
+          padding: 5px 15px;
+          margin: 3px 0;
+          background-color: #44444490;
+          cursor: pointer;
+          transition-duration: 500ms;
+          border-radius: 10px;
+      }
+
+      .content-link:hover {
+          background-color: #444444;
+          color: white;
+      }
+
+      .common-button {
+          display: inline-block;
+          min-width: 5rem;
+          background-color: #36454f;
+          color: white;
+          border-radius: 10px;
+          margin: 5px;
       }
   </style>
 </head>
 <body>
-<c:import url="${path}/resources/js/GNB.jsp"/>
-<div id="lnb">
-  <h3 class="text-center">마이페이지</h3>
-  <nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-xl justify-content-evenly btn-group">
-      <button class="btn btn-outline-dark" onclick="location.href='/member/my-page/gallery'">갤러리</button>
-      <button class="btn btn-outline-dark" onclick="location.href='/member/my-page/community'">커뮤니티</button>
-      <button class="btn btn-outline-dark" onclick="location.href='/chat/testlink'">1:1 채팅</button>
-      <button class="btn btn-outline-dark" onclick="location.href='/member/myinfo'">회원 정보 수정</button>
-    </div>
-  </nav>
-</div>
-<div class="container-xl" id="my-content">
+<c:import url="${path}/resources/js/GNB.jsp">
+  <c:param name="pageName" value="mypage" />
+  <c:param name="btnNum" value="${sessionScope.mypageCode}" />
+</c:import>
+<div class="container-xl p-0" id="my-content">
   <c:forEach items="${communities}" var="entry" varStatus="status">
     <div class="row">
       <c:forEach items="${community}" var="category">
@@ -47,9 +57,18 @@
       </c:forEach>
       <c:forEach items="${entry.value}" var="community_">
         <div class="col-12 d-flex justify-content-around">
-          <div class="category">
-              ${community_.title}
-          </div>
+          <c:choose>
+            <c:when test="${community_.board_type == 1005}">
+              <div onclick="location.href='/community/toComplaintView?seq=${community_.seq}'" class="content-link">
+                  ${community_.title}
+              </div>
+            </c:when>
+            <c:otherwise>
+              <div onclick="location.href='/community/toBoardView?seq=${community_.seq}&board_type=${community_.board_type}'" class="content-link">
+                ${community_.title}
+              </div>
+            </c:otherwise>
+          </c:choose>
         </div>
       </c:forEach>
     </div>

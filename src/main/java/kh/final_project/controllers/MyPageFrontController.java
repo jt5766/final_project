@@ -1,6 +1,5 @@
 package kh.final_project.controllers;
 
-import kh.final_project.dto.BoardsDTO;
 import kh.final_project.dto.GalleryCardView;
 import kh.final_project.services.CommunityService;
 import kh.final_project.services.GalleryService;
@@ -32,6 +31,7 @@ public class MyPageFrontController {
 
 	@GetMapping("/gallery")
 	public String myGallery(Model model) {
+		session.setAttribute("mypageCode", 1001);
 		List<GalleryCardView> card = galleryService.selectMyCards((Integer) session.getAttribute("code"));
 		Map<String, List<GalleryCardView>> cards = new LinkedHashMap<>();
 		cards.put("1001", card.stream().filter(e -> e.getCategory_type()==1001).collect(Collectors.toList()));
@@ -46,8 +46,9 @@ public class MyPageFrontController {
 
 	@GetMapping("/community")
 	public String myCommunity(Model model) {
+		session.setAttribute("mypageCode", 1002);
 		int code = (int)session.getAttribute("code");
-		Map<String, List<BoardsDTO>> communities = new LinkedHashMap<>();
+		Map<String, Object> communities = new LinkedHashMap<>();
 		communities.put("1001", communityService.getMyNotice(code));
 		communities.put("1002", communityService.getMyFree(code));
 		communities.put("1003", communityService.getMyTip(code));
