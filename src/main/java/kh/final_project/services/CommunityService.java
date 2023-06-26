@@ -390,7 +390,7 @@ public class CommunityService {
 		return communityDAO.getMyQuestion(code);
 	}
 
-	public List<BoardsDTO> getMyComplaint(int code) {
+	public List<ComplaintBoardsDTO> getMyComplaint(int code) {
 		return communityDAO.getMyComplaint(code);
 	}
 }

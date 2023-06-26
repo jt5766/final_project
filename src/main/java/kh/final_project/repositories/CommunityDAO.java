@@ -124,7 +124,7 @@ public class CommunityDAO {
 		return sst.selectList("Community.getMyQuestion", code);
 	}
 
-	public List<BoardsDTO> getMyComplaint(int code) {
+	public List<ComplaintBoardsDTO> getMyComplaint(int code) {
 		return sst.selectList("Community.getMyComplaint", code);
 	}
 }

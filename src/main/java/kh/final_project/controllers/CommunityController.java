@@ -219,7 +219,7 @@ public class CommunityController {
 		List<BoardsDTO> myFree = communityService.getMyFree(code);
 		List<BoardsDTO> myTip = communityService.getMyTip(code);
 		List<BoardsDTO> myQuestion = communityService.getMyQuestion(code);
-		List<BoardsDTO> myComplaint = communityService.getMyComplaint(code);
+		List<ComplaintBoardsDTO> myComplaint = communityService.getMyComplaint(code);
 		Map<String, Object> myBoards = new HashMap<>();
 		myBoards.put("9999", "community");
 		myBoards.put("1001", myNotice);
