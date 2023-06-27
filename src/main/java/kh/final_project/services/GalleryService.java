@@ -20,7 +20,7 @@ public class GalleryService {
 
     private final GalleryDAO galleryDAO;
     private final TypeDAO typeDAO;
-    private final Integer cardsPerPage = 4;
+    private final Integer cardsPerPage = 8;
     private final Integer contentsPerPage = 10;
     private final Integer naviPerPage = 10;
 

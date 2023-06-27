@@ -33,13 +33,13 @@ public class MyPageFrontController {
 	public String myGallery(Model model) {
 		session.setAttribute("mypageCode", 1001);
 		List<GalleryCardView> card = galleryService.selectMyCards((Integer) session.getAttribute("code"));
-		Map<String, List<GalleryCardView>> cards = new LinkedHashMap<>();
-		cards.put("1001", card.stream().filter(e -> e.getCategory_type()==1001).collect(Collectors.toList()));
-		cards.put("1002", card.stream().filter(e -> e.getCategory_type()==1002).collect(Collectors.toList()));
-		cards.put("1003", card.stream().filter(e -> e.getCategory_type()==1003).collect(Collectors.toList()));
-		cards.put("1004", card.stream().filter(e -> e.getCategory_type()==1004).collect(Collectors.toList()));
-		cards.put("1005", card.stream().filter(e -> e.getCategory_type()==1005).collect(Collectors.toList()));
-		cards.put("1006", card.stream().filter(e -> e.getCategory_type()==1006).collect(Collectors.toList()));
+		Map<Integer, List<GalleryCardView>> cards = new LinkedHashMap<>();
+		cards.put(1001, card.stream().filter(e -> e.getCategory_type()==1001).collect(Collectors.toList()));
+		cards.put(1002, card.stream().filter(e -> e.getCategory_type()==1002).collect(Collectors.toList()));
+		cards.put(1003, card.stream().filter(e -> e.getCategory_type()==1003).collect(Collectors.toList()));
+		cards.put(1004, card.stream().filter(e -> e.getCategory_type()==1004).collect(Collectors.toList()));
+		cards.put(1005, card.stream().filter(e -> e.getCategory_type()==1005).collect(Collectors.toList()));
+		cards.put(1006, card.stream().filter(e -> e.getCategory_type()==1006).collect(Collectors.toList()));
 		model.addAttribute("cards", cards);
 		return "/member/gallery";
 	}
@@ -48,12 +48,12 @@ public class MyPageFrontController {
 	public String myCommunity(Model model) {
 		session.setAttribute("mypageCode", 1002);
 		int code = (int)session.getAttribute("code");
-		Map<String, Object> communities = new LinkedHashMap<>();
-		communities.put("1001", communityService.getMyNotice(code));
-		communities.put("1002", communityService.getMyFree(code));
-		communities.put("1003", communityService.getMyTip(code));
-		communities.put("1004", communityService.getMyQuestion(code));
-		communities.put("1005", communityService.getMyComplaint(code));
+		Map<Integer, Object> communities = new LinkedHashMap<>();
+		communities.put(1001, communityService.getMyNotice(code));
+		communities.put(1002, communityService.getMyFree(code));
+		communities.put(1003, communityService.getMyTip(code));
+		communities.put(1004, communityService.getMyQuestion(code));
+		communities.put(1005, communityService.getMyComplaint(code));
 		model.addAttribute("communities", communities);
 		return "/member/community";
 	}

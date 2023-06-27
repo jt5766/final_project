@@ -5,6 +5,9 @@ import kh.final_project.services.GalleryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +40,7 @@ public class GalleryController {
         setNaviOfCards(model, searchCriteria);
         setConditions(model);
         model.addAttribute("cards", cards);
+        model.addAttribute("page", searchCriteria.getPage());
         return "/gallery/gallery";
     }
 
@@ -47,6 +51,7 @@ public class GalleryController {
         setConditions(model);
         model.addAttribute("cards", cards);
         model.addAttribute("categoryType", searchCriteria.getTypeCode());
+        model.addAttribute("page", searchCriteria.getPage());
         return "gallery/gallery";
     }
 
@@ -57,6 +62,7 @@ public class GalleryController {
         setNaviOfContents(model, galleryCardDTO);
         model.addAttribute("card", card);
         model.addAttribute("contents", contents);
+        model.addAttribute("page", galleryCardDTO.getPage());
         return "/gallery/card/view";
     }
 
@@ -67,6 +73,7 @@ public class GalleryController {
         setNaviOfCards(model, searchCriteria);
         setConditions(model);
         model.addAttribute("cards", cards);
+        model.addAttribute("page", searchCriteria.getPage());
         return "/gallery/gallery";
     }
 
@@ -104,7 +111,18 @@ public class GalleryController {
     }
 
     @PostMapping("/insert")
-    public String insertCard(GalleryCard card, @RequestPart(value = "thumbnail_image", required = false) MultipartFile multipartFile) throws IOException {
+    public String insertCard(@ModelAttribute GalleryCard card, BindingResult bindingResult, @RequestPart(value = "thumbnail_image", required = false) MultipartFile multipartFile, Model model) throws IOException {
+        if (!StringUtils.hasText(card.getTitle())) {
+            bindingResult.addError(new FieldError("card", "title", "제목을 입력해주세요."));
+        }
+        if (card.getTitle().length() > 30) {
+            bindingResult.addError(new FieldError("card", "title", card.getTitle(), false, null, null, "제목은 30자를 넘을 수 없습니다."));
+        }
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("bindingResult", bindingResult);
+            model.addAttribute("categoryType", card.getCategory_type());
+            return "/gallery/card/insert";
+        }
         String realPath = session.getServletContext().getRealPath("resources");
         galleryService.insertCard(card, multipartFile, realPath);
         return "redirect:/gallery";

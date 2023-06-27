@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- JQuery -->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <!-- JQuery UI -->
@@ -9,4 +10,3 @@
 <!-- Bootstrap Icon -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
-
