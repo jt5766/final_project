@@ -1,20 +1,22 @@
 package kh.final_project.services;
 
+import kh.final_project.dto.CategoryType;
+import kh.final_project.repositories.GalleryDAO;
+import kh.final_project.repositories.TypeDAO;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import kh.final_project.dto.CategoryType;
-import kh.final_project.repositories.TypeDAO;
-
 @Service
 public class HomeService {
 	@Autowired
 	private TypeDAO typeDAO;
+	@Autowired
+	GalleryDAO galleryDAO;
 
 	public Map<String, List<CategoryType>> init() {
 		Map<String, List<CategoryType>> result = new HashMap<String, List<CategoryType>>();
@@ -41,4 +43,7 @@ public class HomeService {
 		return result;
 	}
 
+//	public List<GalleryCardView> getDailyPopCards() {
+//		return galleryDAO.getDailyPopCards();
+//	}
 }

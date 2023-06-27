@@ -38,6 +38,15 @@
           border-radius: 10px;
           margin: 5px;
       }
+
+      .category-head {
+          background-color: #D4D4D4;
+          margin-top: 10px;
+          margin-bottom: 10px;
+      }
+      .category-head>div {
+          min-height: 45px;
+      }
   </style>
 </head>
 <body>
@@ -50,13 +59,15 @@
     <div class="row">
       <c:forEach items="${community}" var="category">
         <c:if test="${category.code eq entry.key}">
-          <div class="col-12">
+        <div class="col-12 category-head">
+          <div class="d-flex justify-content-between align-items-center">
             <b>${category.name}</b>
           </div>
+        </div>
         </c:if>
       </c:forEach>
       <c:forEach items="${entry.value}" var="community_">
-        <div class="col-12 d-flex justify-content-around">
+        <div class="col-12">
           <c:choose>
             <c:when test="${community_.board_type == 1005}">
               <div onclick="location.href='/community/toComplaintView?seq=${community_.seq}'" class="content-link">

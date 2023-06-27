@@ -1,16 +1,14 @@
 package kh.final_project.controllers;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-
+import kh.final_project.dto.CategoryType;
+import kh.final_project.services.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kh.final_project.dto.CategoryType;
-import kh.final_project.services.HomeService;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HomeController {
@@ -36,7 +34,12 @@ public class HomeController {
 			session.setAttribute("mypage", result.get("mypage"));
 			session.setAttribute("adminpage", result.get("adminpage"));
 		}
+//		List<GalleryCardView> cards = setDailyPopCards();
 		return "home";
 	}
+
+//	private List<GalleryCardView> setDailyPopCards() {
+//		return homeService.getDailyPopCards();
+//	}
 
 }

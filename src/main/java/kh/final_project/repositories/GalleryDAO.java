@@ -97,4 +97,8 @@ public class GalleryDAO {
     public List<GalleryCardView> selectMyCards(Integer code) {
         return db.selectList("Gallery.selectMyCards", code);
     }
+
+//    public List<GalleryCardView> getDailyPopCards() {
+//        return
+//    }
 }
