@@ -7,19 +7,22 @@
 
 	<insert id="insertBoard">
 		<selectKey keyProperty="board_name" resultType="String" order="BEFORE">
-			select board_name from board_type where code = #{board_type}
+			select board_name from board_type where code = #{board_type, jdbcType=NUMERIC}
 		</selectKey>
-		insert into ${board_name}_BOARDS values
-		(${board_name}_BOARDS_SEQ.NEXTVAL, #{board_type}, #{title}, #{writer}, #{txt}, default, default)
+		insert into ${board_name}_BOARDS
+		(SEQ, BOARD_TYPE, TITLE, WRITE, TXT)
+		values
+		(${board_name}_BOARDS_SEQ.NEXTVAL, #{board_type, jdbcType=NUMERIC}, #{title, jdbcType=VARCHAR}, #{writer, jdbcType=NUMERIC}, #{txt, jdbcType=VARCHAR})
 	</insert>
 
 	<insert id="insertComplaint">
 		<selectKey keyProperty="board_name" resultType="String" order="BEFORE">
-			select board_name from board_type where code = #{board_type}
+			select board_name from board_type where code = #{board_type, jdbcType=NUMERIC}
 		</selectKey>
-		insert into ${board_name}_BOARDS values
-		(${board_name}_BOARDS_SEQ.NEXTVAL, #{board_type},
-		#{complaint_type}, #{title}, #{writer}, #{txt}, default, null, null, default)
+		insert into ${board_name}_BOARDS
+		(SEQ, BOARD_TYPE, COMPLAINT_TYPE, TITLE, WRITER, TXT)
+		values
+		(${board_name}_BOARDS_SEQ.NEXTVAL, #{board_type, jdbcType=NUMERIC}, #{complaint_type, jdbcType=NUMERIC}, #{title, jdbcType=VARCHAR}, #{writer, jdbcType=NUMERIC}, #{txt, jdbcType=VARCHAR})
 	</insert>
 
 	<select id="selectBoard" resultType="kh.final_project.dto.BoardsDTO">
@@ -36,7 +39,7 @@
 		FROM ${board_name}_BOARDS b
 		JOIN members m ON b.writer = m.code
 		)
-		WHERE rn BETWEEN #{startPost} AND #{endPost}
+		WHERE rn BETWEEN #{startPost, jdbcType=NUMERIC} AND #{endPost, jdbcType=NUMERIC}
 	</select>
 
 	<select id="selectComplaintByPage" resultType="kh.final_project.dto.ComplaintBoardsDTO">
@@ -45,31 +48,31 @@
 		FROM
 		(
 		SELECT
-			b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname AS writer, b.txt,
-			b.write_date, b.process, b.process_date, b.total_count,
-			row_number() over (order by b.seq desc) as rn
+		b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname AS writer, b.txt,
+		b.write_date, b.process, b.process_date, b.total_count,
+		row_number() over (order by b.seq desc) as rn
 		FROM
-			complaint_boards b
+		complaint_boards b
 		JOIN
-			complaint_type t ON b.complaint_type = t.code
+		complaint_type t ON b.complaint_type = t.code
 		JOIN
-			members m ON b.writer = m.code
+		members m ON b.writer = m.code
 		)
 		WHERE
-			rn BETWEEN #{startPost} AND #{endPost}
+		rn BETWEEN #{startPost, jdbcType=NUMERIC} AND #{endPost, jdbcType=NUMERIC}
 		ORDER BY
-			seq DESC
+		seq DESC
 	</select>
 
 	<update id="viewUp">
-		update ${board_name}_BOARDS set total_count = total_count + 1 where seq = #{seq}
+		update ${board_name}_BOARDS set total_count = total_count + 1 where seq = #{seq, jdbcType=NUMERIC}
 	</update>
 
 	<select id="selectBoardView" resultType="kh.final_project.dto.BoardsDTO">
 		SELECT b.seq, b.board_type, b.title, m.nickname as writer, b.txt, b.write_date, b.total_count
 		FROM ${board_name}_BOARDS b
 		JOIN members m ON b.writer = m.code
-		WHERE b.seq = #{seq}
+		WHERE b.seq = #{seq, jdbcType=NUMERIC}
 	</select>
 
 	<select id="selectComplaintView" resultType="kh.final_project.dto.ComplaintBoardsDTO">
@@ -83,39 +86,33 @@
 		JOIN
 		complaint_type t ON b.complaint_type = t.code
 		WHERE
-		b.seq = #{seq}
+		b.seq = #{seq, jdbcType=NUMERIC}
 	</select>
 
 	<update id="insertProcess">
-		UPDATE complaint_boards set process = #{process}, process_date = default where seq = #{seq}
+		UPDATE complaint_boards set process = #{process}, process_date = default where seq = #{seq, jdbcType=NUMERIC}
 	</update>
 
 	<update id="updateBoard">
-		update ${board_name}_BOARDS set title = #{title}, txt = #{txt}, write_date = default where seq = #{seq}
+		update ${board_name}_BOARDS set title = #{title}, txt = #{txt}, write_date = default where seq = #{seq, jdbcType=NUMERIC}
 	</update>
 
 	<delete id="deleteBoard">
-		delete from ${board_name}_BOARDS where seq = ${seq}
+		delete from ${board_name}_BOARDS where seq = #{seq, jdbcType=NUMERIC}
 	</delete>
 
 	<insert id="insertReply">
-		<choose>
-			<when test="parent_reply == null">
-				insert into ${board_name}_REPLYS values
-				(${board_name}_REPLYS_SEQ.NEXTVAL, #{reply_type}, #{parent_board}, null, #{writer}, #{txt}, default)
-			</when>
-			<otherwise>
-				insert into ${board_name}_REPLYS values
-				(${board_name}_REPLYS_SEQ.NEXTVAL, #{reply_type}, #{parent_board}, #{parent_reply}, #{writer}, #{txt}, default)
-			</otherwise>
-		</choose>
+		insert into ${board_name}_REPLYS
+		(SEQ, REPLY_TYPE, PARENT_BOARD, PARENT_REPLY, WRITER, TXT)
+		values
+		(${board_name}_REPLYS_SEQ.NEXTVAL, #{reply_type, jdbcType=NUMERIC}, #{parent_board, jdbcType=NUMERIC}, #{parent_reply, jdbcType=NUMERIC}, #{writer, jdbcType=NUMERIC}, #{txt, jdbcType=VARCHAR})
 	</insert>
 
 	<select id="selectReply" resultType="kh.final_project.dto.BoardsReplyDTO">
 		SELECT r.seq, r.reply_type, r.parent_board, r.parent_reply, m.nickname as writer, r.txt, r.write_date
 		FROM ${board_name}_REPLYS r
 		JOIN members m ON r.writer = m.code
-		WHERE r.reply_type = 1001 and r.parent_board = #{parent_board}
+		WHERE r.reply_type = 1001 and r.parent_board = #{parent_board, jdbcType=NUMERIC}
 		ORDER BY r.write_date ASC
 	</select>
 
@@ -123,16 +120,16 @@
 		SELECT r.seq, r.reply_type, r.parent_board, r.parent_reply, m.nickname as writer, r.txt, r.write_date
 		FROM ${board_name}_REPLYS r
 		JOIN members m ON r.writer = m.code
-		WHERE r.reply_type = 1002 and r.parent_board = #{parent_board}
+		WHERE r.reply_type = 1002 and r.parent_board = #{parent_board, jdbcType=NUMERIC}
 		ORDER BY r.write_date ASC
 	</select>
 
 	<delete id="deleteReply">
-		delete from ${board_name}_REPLYS where seq = #{seq}
+		delete from ${board_name}_REPLYS where seq = #{seq, jdbcType=NUMERIC}
 	</delete>
 
 	<update id="updateReply">
-		update ${board_name}_REPLYS set txt = #{txt}, write_date = default where seq = #{seq}
+		update ${board_name}_REPLYS set txt = #{txt, jdbcType=VARCHAR}, write_date = default where seq = #{seq, jdbcType=NUMERIC}
 	</update>
 
 	<select id="getMax" resultType="int">
@@ -162,17 +159,17 @@
 		JOIN members m ON b.writer = m.code
 		<choose>
 			<when test="searchKeyword = 'ALL'">
-				WHERE b.title LIKE '%' || #{searchQuery} || '%' OR m.nickname LIKE '%' || #{searchQuery} || '%'
+				WHERE b.title LIKE '%' || #{searchQuery, jdbcType=VARCHAR} || '%' OR m.nickname LIKE '%' || #{searchQuery, jdbcType=VARCHAR} || '%'
 			</when>
 			<when test="searchKeyword = 'TITLE'">
-				WHERE b.title LIKE '%' || #{searchQuery} || '%'
+				WHERE b.title LIKE '%' || #{searchQuery, jdbcType=VARCHAR} || '%'
 			</when>
 			<when test="searchKeyword = 'WRITER'">
-				WHERE m.nickname LIKE '%' || #{searchQuery} || '%'
+				WHERE m.nickname LIKE '%' || #{searchQuery, jdbcType=VARCHAR} || '%'
 			</when>
 		</choose>
 		)
-		WHERE rn BETWEEN #{start} AND #{end}
+		WHERE rn BETWEEN #{start, jdbcType=NUMERIC} AND #{end, jdbcType=NUMERIC}
 	</select>
 
 	<select id="getSearchMax" resultType="int">
@@ -184,13 +181,13 @@
 		JOIN members m ON b.writer = m.code
 		<choose>
 			<when test="searchKeyword = 'ALL'">
-				WHERE b.title LIKE '%' || #{searchQuery} || '%' OR m.nickname LIKE '%' || #{searchQuery} || '%'
+				WHERE b.title LIKE '%' || #{searchQuery, jdbcType=VARCHAR} || '%' OR m.nickname LIKE '%' || #{searchQuery, jdbcType=VARCHAR} || '%'
 			</when>
 			<when test="searchKeyword = 'TITLE'">
-				WHERE b.title LIKE '%' || #{searchQuery} || '%'
+				WHERE b.title LIKE '%' || #{searchQuery, jdbcType=VARCHAR} || '%'
 			</when>
 			<when test="searchKeyword = 'WRITER'">
-				WHERE m.nickname LIKE '%' || #{searchQuery} || '%'
+				WHERE m.nickname LIKE '%' || #{searchQuery, jdbcType=VARCHAR} || '%'
 			</when>
 		</choose>
 		)
@@ -209,36 +206,36 @@
 		WHERE
 		<choose>
 			<when test="searchKeyword == 'ALL'">
-				(b.title LIKE '%' || #{searchQuery} || '%' OR m.nickname LIKE '%' || #{searchQuery} || '%')
+				(b.title LIKE '%' || #{searchQuery, jdbcType=VARCHAR} || '%' OR m.nickname LIKE '%' || #{searchQuery, jdbcType=VARCHAR} || '%')
 			</when>
 			<when test="searchKeyword == 'TITLE'">
-				b.title LIKE '%' || #{searchQuery} || '%'
+				b.title LIKE '%' || #{searchQuery, jdbcType=VARCHAR} || '%'
 			</when>
 			<when test="searchKeyword == 'WRITER'">
-				m.nickname LIKE '%' || #{searchQuery} || '%'
+				m.nickname LIKE '%' || #{searchQuery, jdbcType=VARCHAR} || '%'
 			</when>
 		</choose>
 		)
-		WHERE rn BETWEEN #{start} AND #{end}
+		WHERE rn BETWEEN #{start, jdbcType=NUMERIC} AND #{end, jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="getMyNotice" resultType="kh.final_project.dto.BoardsDTO">
-		SELECT * FROM notice_boards WHERE writer = #{value} 
+		SELECT * FROM notice_boards WHERE writer = #{value, jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="getMyFree" resultType="kh.final_project.dto.BoardsDTO">
-		SELECT * FROM free_boards WHERE writer = #{value} 
+		SELECT * FROM free_boards WHERE writer = #{value, jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="getMyTip" resultType="kh.final_project.dto.BoardsDTO">
-		SELECT * FROM tip_boards WHERE writer = #{value} 
+		SELECT * FROM tip_boards WHERE writer = #{value, jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="getMyQuestion" resultType="kh.final_project.dto.BoardsDTO">
-		SELECT * FROM question_boards WHERE writer = #{value} 
+		SELECT * FROM question_boards WHERE writer = #{value, jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="getMyComplaint" resultType="kh.final_project.dto.BoardsDTO">
-		SELECT * FROM complaint_boards WHERE writer = #{value} 
+		SELECT * FROM complaint_boards WHERE writer = #{value, jdbcType=NUMERIC}
 	</select>
 </mapper>
