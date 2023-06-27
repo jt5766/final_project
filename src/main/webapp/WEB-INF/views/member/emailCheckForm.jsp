@@ -16,9 +16,7 @@
 
 
 <style>
-    body{
-        background-color: #fff;
-    }
+
     .form_radio_btn {
         width: 47%;
         height: 45px;

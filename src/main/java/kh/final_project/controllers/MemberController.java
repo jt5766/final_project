@@ -78,9 +78,11 @@ public class MemberController {
     }
 
     @PostMapping("createMember")    /*회원가입할시 오는 곳 인서트 후 로그인폼으로*/
-    public String createMember(MemberDTO dto, MultipartFile file) throws Exception{
+    public String createMember(MemberDTO dto, MultipartFile file,Model model) throws Exception{
         String realPath = session.getServletContext().getRealPath("/resources/member");
-        memberService.uploadFile(dto, file, realPath);
+      int result =  memberService.insertMember(dto, file, realPath);
+        System.out.println(result);
+      model.addAttribute("result",result);
         return "/member/loginForm";
     }
 
@@ -208,7 +210,7 @@ public class MemberController {
         String nickname = dto.getNickname();
         session.setAttribute("nickName",nickname);
 
-        return "home";
+        return "redirect:/member/my-page/gallery";
     }
 
     @RequestMapping("memberDelete")

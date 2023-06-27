@@ -36,18 +36,19 @@
     align-items: center;
     justify-content: center;
     width: 400px;
-    height: 500px;
+    height: 600px;
     gap: 10px;
   }
 
   h3 {
     font-size: 20px;
     font-weight: 200;
-    color: rgb(80, 80, 160);
+    color: #ca9372;
   }
 
   #fileTitle {
     font-size: 10px;
+    color: red;
   }
 
   input {
@@ -59,7 +60,7 @@
   }
 
   input:focus {
-    border-bottom: 1px solid rgb(136, 188, 230);;
+    border-bottom: 1px solid #ca9372;
   }
 
   input::placeholder {
@@ -141,7 +142,7 @@
         <input type="text" name="nickname" placeholder="닉네임을 입력해주세요">
       </div>
       <div>
-        <h3 id="fileTitle">사업자 등록증명서 혹은 재직증명서 를 입력해주세요.</h3>
+        <h3 id="fileTitle">*사업자 등록증명서 혹은 재직증명서 를 입력해주세요.</h3>
         <div class="filebox">
           <input class="upload-name" value="첨부파일" placeholder="첨부파일">
           <label for="file" >파일찾기</label>
@@ -168,7 +169,8 @@
     if(!confirm("정말 가입을 취소하시겠습니까?")){
       return;
     }else {
-      location.href="/";
+      window.close()
+      // window.open('','_self').close();
     }
   }
 </script>
