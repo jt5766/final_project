@@ -9,6 +9,7 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
   <c:import url="${path}/resources/js/scripts.jsp"/>
   <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
+  <link href="${path}/resources/css/gallery.css" type="text/css" rel="stylesheet">
 </head>
 <body class="gallery-body">
 <c:import url="${path}/resources/js/GNB.jsp">
@@ -16,27 +17,30 @@
   <c:param name="btnNum" value="${categoryType}"/>
 </c:import>
 <div class="container-xl">
-  <c:if test="${bindingResult.hasErrors()}">
-    <c:forEach items="${bindingResult.allErrors}" var="error">
-      <div class="error-messages">${error.defaultMessage}</div>
-    </c:forEach>
-  </c:if>
   <form action="/gallery/insert" method="post" id="card-form" enctype="multipart/form-data">
-    <div class="row">
-      <div class="con-md-12">
-        <p>AI 생성 그림인가요?</p>
-        <input type="radio" name="ai" id="input_ai_y" value="Y">
-        <label for="input_ai_y">네</label>
-        <input type="radio" name="ai" id="input_ai_n" value="N" checked>
-        <label for="input_ai_n">아니오</label>
+    <div class="row input-box">
+      <div class="col-6 d-flex justify-content-start align-items-center">
+        <p class="m-0">AI 생성 그림인가요?</p>
+      </div>
+      <div class="col-6 d-flex justify-content-end">
+        <div class="btn-group" role="group" aria-label="ai radio button group">
+          <input type="radio" class="btn-check" name="ai" id="input_ai_y" autocomplete="off" value="Y">
+          <label class="btn common-button" for="input_ai_y">네</label>
+          <input type="radio" class="btn-check" name="ai" id="input_ai_n" autocomplete="off" value="N" checked>
+          <label class="btn common-button" for="input_ai_n">아니오</label>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
+    <div class="row input-box">
+      <div class="con-md-4 col-6">
         <input type="hidden" name="category_type" value="${categoryType}">
         <input type="hidden" name="writer" value="${sessionScope.code}">
         <label for="input_title">제목</label>
         <input type="text" name="title" id="input_title" placeholder="대,소문자 / 숫자 / 한글 : 최대 30자">
+      </div>
+      <div class="col-md-4"></div>
+      <div class="col-md-4 col-6">
+
       </div>
     </div>
     <c:if test="${categoryType<=1002}">
