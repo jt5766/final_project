@@ -11,11 +11,11 @@
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 	<style>
         *{box-sizing: border-box;}
-        .chatbox{background-color:#f5f5f5;margin:0px;}
-        .testbox{border: 0px;height: 100px;}
+        .chatbox{background-color: #C7B299;margin:0px;margin-bottom:15px;}
+        .testbox{border: 0px;height: 100px;background-color: #C7B299;}
         .btnbox{padding: 1%; padding-left: 0%;border: 0px;}
-        .btn{width: 100%; height: 100%;background-color: gray; color: black;}
-        .btn:hover{background-color: black; color: gray;}
+        .listbtn{width: 100%; height: 100%;background-color: #ca9372; color: white;}
+        .listbtn:hover{background-color: black; color: gray;}
     </style>
     <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
@@ -24,7 +24,7 @@
 		<c:param name="pageName" value="mypage" />
 		<c:param name="btnNum" value="1003" />
 	</c:import>
-	<div class="container-xl bg-secondary position-relative p-0">
+	<div class="container-xl position-relative p-0">
     	<c:forEach var="chatroom" items="${chatlist}">
     		<c:choose>
     			<c:when test="${chatroom.yn == 'N'}">
@@ -36,11 +36,11 @@
             			</div>
             			<div class="col-md-2 btnbox">
             				<c:if test="${chatroom.mentee==code}">
-            					<a href="/chat/accept?seq=${chatroom.seq}"><button class="btn">승인</button></a>
+            					<a href="/chat/accept?seq=${chatroom.seq}"><button class="listbtn btn">승인</button></a>
             				</c:if>
             			</div>
             			<div class="col-md-2 btnbox">
-                			<a href="/chat/refuse?seq=${chatroom.seq}"><button class="btn">거절</button></a>
+                			<a href="/chat/refuse?seq=${chatroom.seq}"><button class="listbtn btn">거절</button></a>
             			</div>
 					</div>
     			</c:when>
@@ -49,13 +49,13 @@
             			<div class="col-md-8 testbox">
                 			멘토:${chatroom.mentorname} <br>
                 			멘티:${chatroom.menteename}
-                			<input type="hidden" value="${chatroom.seq}">
+                			<input type="hidden" value="${chatroom.seq}">	
             			</div>
             			<div class="col-md-2 btnbox">
-                			<a href="/chat/entrance?seq=${chatroom.seq}"><button class="btn">입장</button></a>
+                			<a href="/chat/entrance?seq=${chatroom.seq}"><button class="listbtn btn">입장</button></a>
             			</div>
             			<div class="col-md-2 btnbox">
-                			<a href="/chat/refuse?seq=${chatroom.seq}"><button class="btn">나가기</button></a>
+                			<a href="/chat/refuse?seq=${chatroom.seq}"><button class="listbtn btn">나가기</button></a>
             			</div>
 					</div>
     			</c:otherwise>

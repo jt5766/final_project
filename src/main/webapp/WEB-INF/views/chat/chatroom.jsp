@@ -14,17 +14,19 @@
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 	<style>
         *{box-sizing: border-box;}
-        #div_contents{height: 650px; overflow: auto;background-color:#f5f5f5;}
+        #div_contents{height: 650px; overflow: auto;background-color:white;}
+        #div_contents::-webkit-scrollbar{display:none;}
         .mylinebox{overflow: auto;display:flex;justify-content:flex-start;flex-direction:row-reverse;}
         .otherlinebox{overflow: auto;display:flex;justify-content:flex-start;}
-        .mytext{float:right;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:gray;border: 1px solid black;margin-top:10px;margin-bottom:10px;border-radius:5px;}
-        .othertext{float:left;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:white;border: 1px solid black;margin-top:10px;margin-bottom:10px;border-radius:5px;}
-        #div_text{height: 100px; overflow: auto;}
-        .btn{width: 100%; height: 100%; background-color: gray;color: black;}
-        .btn:hover{background-color: black;color:gray;}
+        .mytext{float:right;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:#ca9372;border: 1px solid black;margin-top:10px;margin-bottom:10px;border-radius:5px;}
+        .othertext{float:left;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:#ca937250;border: 1px solid black;margin-top:10px;margin-bottom:10px;border-radius:5px;}
+        #div_text{height: 100px; overflow: auto;background-color:white;border:1px solid gray;}
+        #div_text::-webkit-scrollbar{display:none;}
+        #button_send{width: 100%; height: 100%; background-color: #212529;color: white;}
+        #button_send:hover{background-color: #6c757d;color:white;}
         .otherdatebox{float:left;padding-right:2px;align-self:end;margin-bottom:8px;}
         .mydatebox{float:right;padding-right:2px;align-self:end;margin-bottom:8px;}
-        .alldatebox{overflow: auto;background-color:#778C86;text-align:center;}
+        .alldatebox{overflow: auto;background-color:#c7b299;text-align:center;}
     </style>
 </head>
 <body>
@@ -38,7 +40,7 @@
 		let addMonth = null;
 		let addDate = null;
 		$(function(){
-			const socket = new WebSocket("ws://3.39.227.39/chat");
+			const socket = new WebSocket("ws://192.168.50.203/chat");
 			const stompClient = Stomp.over(socket);
 			
 			stompClient.connect({},function(){
@@ -76,7 +78,11 @@
         				plusdatediv.append(plusYear+"-"+(plusMonth+1)+"-"+plusDate);
         				$("#div_contents").append(plusdatediv);
 					}
-					datediv.append(plustimer.getHours()+" : "+plustimer.getMinutes());
+					var timeminute = plustimer.getMinutes();
+	        		if(timeminute < 10){
+	        			timeminute = "0"+timeminute;
+	        		}
+					datediv.append(plustimer.getHours()+" : "+timeminute);
 					linediv.append(textdiv);
 					linediv.append(datediv);
 					$("#div_contents").append(linediv);
@@ -225,7 +231,11 @@
 					        			date = logDate;
 					        		}
 				        		}
-								datadatediv.append(logtimer.getHours()+" : "+logtimer.getMinutes());
+				        		var timeminute = logtimer.getMinutes();
+				        		if(timeminute < 10){
+				        			timeminute = "0"+timeminute;
+				        		}
+								datadatediv.append(logtimer.getHours()+" : "+timeminute);
 								datalinediv.append(datatextdiv);
 								datalinediv.append(datadatediv);
 								$("#div_contents").prepend(datalinediv);
@@ -293,7 +303,11 @@
 	        			date = logDate;
 	        		}
         		}
-				datadatediv.append(logtimer.getHours()+" : "+logtimer.getMinutes());
+        		var timeminute = logtimer.getMinutes();
+        		if(timeminute < 10){
+        			timeminute = "0"+timeminute;
+        		}
+				datadatediv.append(logtimer.getHours()+" : "+timeminute);
 				datalinediv.append(datatextdiv);
 				datalinediv.append(datadatediv);
 				$("#div_contents").prepend(datalinediv);
