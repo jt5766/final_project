@@ -4,9 +4,8 @@
 }
 
 .gallery-card {
-    display: flex;
     height: 300px;
-    border-radius: 15px;
+    border-radius: 8px;
     background-size: 120%;
     background-color: #FFFFFF;
     box-shadow: 0 0 0 1px #5d5d5d;
@@ -15,30 +14,22 @@
 }
 
 .thumbnail {
-    width: 200px;
-    height: 100%;
+    width: 150px;
+    height: 225px;
     border: none;
-    outline: none;
-    flex: 1;
+    flex: 150px 0 0;
+}
+
+.side-info {
+    flex: 1 0 0;
+    display: flex;
+    flex-flow: column nowrap;
+    border-bottom: 1px solid #797979;
 }
 
 .card-body {
-    margin-left: 5px;
-    margin-right: 5px;
-    min-width: 300px;
-    flex-flow: column nowrap;
-    flex: 2 0 0;
     display: flex;
-}
-
-.card-body > div {
-    flex: 1 0 0;
-    border-bottom: 1px solid #c2bdb5;
-}
-
-.info {
-    flex: 10px 0 0;
-    display: flex;
+    flex-flow: row nowrap;
 }
 
 .info > div {
@@ -46,7 +37,7 @@
     padding: 1px 5px;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
-    margin: 3px 3px 0 0;
+    margin: 0 3px 0 0;
     text-align: center;
 }
 
@@ -59,9 +50,12 @@
 }
 
 .title {
-    flex: 3;
-    font-size: 16pt;
+    flex: 4;
+    font-size: 20pt;
     color: #4D4D4D;
+    border-bottom: 1px solid #797979;
+    display: flex;
+    align-items: center;
 }
 
 .card-hover {
@@ -69,20 +63,13 @@
 }
 
 .writer {
-    flex: 2;
+    display: flex;
+    align-items: center;
+    flex: 1;
 }
 
 .catchphrase {
-    flex: 1;
-}
-
-.synopsis {
-    flex: 2;
-}
-
-.card-body > .totalCount {
-    flex: 1;
-    border-bottom: none;
+    text-align: center;
 }
 
 .category-btn {
@@ -125,14 +112,16 @@
 }
 
 .thumbnail_url {
-    flex: 200px 0 0;
+    display: flex;
+    flex: 150px 0 0;
+    border-bottom: 1px solid #797979;
 }
 
-.card-body > .info {
+.info {
     display: flex;
     justify-content: left;
     justify-self: flex-start;
-    flex: 0;
+    border-bottom: 1px solid #797979;
 }
 
 .ai {
@@ -140,13 +129,6 @@
     color: white;
 }
 
-.card-body > .title {
-    flex: 2 0 0;
-}
-
-.card-body > .synopsis {
-    border-bottom: none;
-}
 
 .side-menu {
     flex: 1 0 0;
@@ -201,14 +183,14 @@ button {
 .content-link {
     padding: 5px 15px;
     margin: 3px 0;
-    background-color: #a9957d;
+    background-color: #ca937250;
     cursor: pointer;
     transition-duration: 500ms;
     border-radius: 10px;
 }
 
 .content-link:hover {
-    background-color: #c2bdb5;
+    background-color: #ca9372;
     color: white;
 }
 
@@ -217,22 +199,26 @@ button {
     align-items: center;
 }
 
-.search-box>* {
+.search-box > * {
     margin-left: 5px;
 }
 
 select[name=searchCode] {
     flex: 0 0 0;
 }
+
 input[name=searchQuery] {
     flex: 1 0 0;
 }
+
 input[name=sordCode] {
     flex: 0 0 0;
 }
+
 .sortLabel {
     flex: 4rem 0 0;
 }
+
 .vr {
     flex: 0 0 0;
 }
@@ -240,4 +226,105 @@ input[name=sordCode] {
 #currentPage {
     background-color: #ca9372;
     color: #FFFFFF;
+}
+
+/*Card View*/
+
+.view-card-info {
+    display: flex;
+    min-height: 180px;
+    background-color: #36454f15;
+}
+
+.view-thumbnail_url {
+    display: flex;
+    flex: 150px 0 0;
+}
+
+.view-thumbnail {
+    width: 150px;
+    height: 225px;
+    border: none;
+    flex: 150px 0 0;
+}
+
+.view-card-body {
+    padding-left: 5px;
+    padding-right: 5px;
+    flex-flow: column nowrap;
+    flex: 2 0 0;
+    display: flex;
+}
+
+.view-card-body > div {
+    flex: 1 0 0;
+    border-bottom: 1px solid #c2bdb5;
+}
+
+.view-card-body > .view-info {
+    flex: 10px 0 0;
+    display: flex;
+}
+
+.view-info > div {
+    min-width: 2rem;
+    padding: 1px 5px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin: 3px 3px 0 0;
+    text-align: center;
+}
+
+.view-title {
+    flex: 2 0 0;
+    font-size: 20pt;
+    color: #4D4D4D;
+}
+
+.view-writer {
+    flex: 2;
+}
+
+.view-catchphrase {
+    flex: 1;
+}
+
+.view-synopsis {
+    flex: 2;
+}
+
+.view-side-menu {
+    flex: 1 0 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.view-side-menu > div {
+    flex: 1;
+    display: flex;
+    justify-content: end;
+    min-height: 20px;
+}
+
+.disclosure > div {
+    margin: 0;
+    padding: 0;
+}
+
+/* MyPage */
+
+.secrete {
+    color: #797979;
+}
+
+.accordion-head {
+    background-color: #C7B299;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.category-head {
+    font-size: 18pt;
+    font-weight: bold;
 }
