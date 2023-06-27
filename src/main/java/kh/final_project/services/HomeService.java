@@ -43,8 +43,7 @@ public class HomeService {
 		result.put("adminpage", adminpageList);
 		return result;
 	}
-
-	public List<GalleryCardView> getDailyPopCards() {
-		return galleryDAO.getDailyPopCards();
+	public List<List<GalleryCardView>> getDailyPopCards(List<CategoryType> categoryTypes) {
+		return galleryDAO.getDailyPopCards(categoryTypes);
 	}
 }

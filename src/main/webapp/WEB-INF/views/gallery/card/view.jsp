@@ -53,7 +53,14 @@
       <div class="view-side-menu">
         <div class="chat-button">
           <c:if test="${sessionScope.memberType == '2000'}">
-            <button class="common-button" type="button" id="invite">채팅 초대하기</button>
+            <c:choose>
+              <c:when test="${isDuple}">
+                <button class="common-button" type="button" id="duple" disabled>채팅 초대하기</button>
+              </c:when>
+              <c:otherwise>
+                <button class="common-button" type="button" id="invite">채팅 초대하기</button>
+              </c:otherwise>
+            </c:choose>
           </c:if>
         </div>
         <div class="disclosure">
