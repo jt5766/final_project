@@ -2,25 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Gallery">
     <insert id="insertCard">
-        insert into gallery_cards values(GALLERY_CARDS_SEQ.NEXTVAL, #{category_type},
-        #{genre_type1, jdbcType=NUMERIC}, #{ai}, #{title}, #{writer}, #{catchphrase}, #{synopsis}, #{thumbnail_url},
-        #{yn}, default, #{genre_type2, jdbcType=NUMERIC})
+        insert into gallery_cards
+        (SEQ, CATEGORY_TYPE, GENRE_TYPE1, GENRE_TYPE2, AI, TITLE, WRITER, CATCHPHRASE, SYNOPSIS, THUMBNAIL_URL, YN)
+        values
+        (GALLERY_CARDS_SEQ.NEXTVAL, #{category_type}, #{genre_type1, jdbcType=NUMERIC}, #{genre_type2, jdbcType=NUMERIC}, #{ai}, #{title}, #{writer}, #{catchphrase}, #{synopsis}, #{thumbnail_url}, #{yn})
     </insert>
     <insert id="insertContent">
-        insert into gallery_contents values(#{gallery_cards}, GALLERY_CONTENTS_SEQ.NEXTVAL, #{title},
-        <choose>
-            <when test="file_url != null">
-                #{file_url}, null,
-            </when>
-            <when test="video_url != null">
-                null, #{video_url},
-            </when>
-            <otherwise>
-                null, null,
-            </otherwise>
-        </choose>
-        #{txt}, #{yn}, default, default, default)
+        insert into gallery_contents
+        (GALLERY_CARDS, SEQ, TITLE, FILE_URL, VIDEO_URL, TXT, YN)
+        values
+        (#{gallery_cards}, GALLERY_CONTENTS_SEQ.NEXTVAL, #{title}, #{file_url, jdbcType=VARCHAR}, #{video_url, jdbcType=VARCHAR}, #{txt}, #{yn})
     </insert>
+<!--    <insert id="insertContent">-->
+<!--        insert into gallery_contents-->
+<!--        (GALLERY_CARDS, SEQ, TITLE, FILE_URL, VIDEO_URL, TXT, YN)-->
+<!--        values(#{gallery_cards}, GALLERY_CONTENTS_SEQ.NEXTVAL, #{title},-->
+<!--        <choose>-->
+<!--            <when test="file_url != null">-->
+<!--                #{file_url, jdbcType=VARCHAR}, #{video_url, jdbcType=VARCHAR},-->
+<!--            </when>-->
+<!--            <when test="video_url != null">-->
+<!--                null,-->
+<!--            </when>-->
+<!--            <otherwise>-->
+<!--                null, null,-->
+<!--            </otherwise>-->
+<!--        </choose>-->
+<!--        #{txt}, #{yn}, default, default, default)-->
+<!--    </insert>-->
 
     <select id="selectAllCards" resultType="kh.final_project.dto.GalleryCardView">
         select * from (
@@ -141,5 +150,13 @@
     <select id="totalContents" resultType="java.lang.Integer">
         select count(*) from gallery_contents where gallery_cards = ${cardSeq} and yn = 'Y'
     </select>
-
+    <select id="selectDailyPopCards" resultType="kh.final_project.dto.GalleryCardView">
+        select *
+        from
+        (   select view_gallery_cards.*, row_number() over(order by day_count desc) rn
+            from view_gallery_cards
+            where day_count is not null and category_type = #{categoryType}
+        )
+        where rn between 0 and 10
+    </select>
 </mapper>
