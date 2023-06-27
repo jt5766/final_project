@@ -1,26 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Chatlog">
 
 	<select id="select" resultType="kh.final_project.dto.ChatlogDTO">
-		select * from chat_logs where chat_rooms = ${seq}
+		select * from chat_logs where chat_rooms = #{seq, jdbcType=NUMERIC}
 	</select>
-	
+
 	<insert id="insert">
-		insert into chat_logs values (#{chat_rooms},#{writer},#{txt},#{write_date})
+		insert into chat_logs (CHAT_ROOMS, WRITER, TXT, WRITE_DATE) values (#{chat_rooms, jdbcType=NUMERIC},#{writer, jdbcType=NUMERIC},#{txt, jdbcType=VARCHAR},#{write_date, jdbcType=BINARY})
 	</insert>
-	
+
 	<select id="maxdata" resultType="int">
-		select count(*) from chat_logs where chat_rooms = ${seq}
+		select count(*) from chat_logs where chat_rooms = #{seq, jdbcType=NUMERIC}
 	</select>
-	
+
 	<select id="selectscrolllist" resultType="kh.final_project.dto.ChatlogDTO">
-		select * from 
-		(select chat_rooms,writer,txt,write_date, row_number() over(order by write_date asc) ranks,members.nickname writernickname from chat_logs join members on chat_logs.writer = members.code where chat_rooms = ${seq}) 
-		where ranks between #{endPost} and #{startPost} order by ranks desc
-		
+		select * from
+		(select chat_rooms,writer,txt,write_date, row_number() over(order by write_date asc) ranks,members.nickname writernickname from chat_logs join members on chat_logs.writer = members.code where chat_rooms = #{seq, jdbcType=NUMERIC})
+		where ranks between #{endPost, jdbcType=NUMERIC} and #{startPost, jdbcType=NUMERIC} order by ranks desc
+
 	</select>
-	
+
 </mapper>
