@@ -1,6 +1,7 @@
 package kh.final_project.services;
 
 import kh.final_project.dto.CategoryType;
+import kh.final_project.dto.GalleryCardView;
 import kh.final_project.repositories.GalleryDAO;
 import kh.final_project.repositories.TypeDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class HomeService {
 		return result;
 	}
 
-//	public List<GalleryCardView> getDailyPopCards() {
-//		return galleryDAO.getDailyPopCards();
-//	}
+	public List<GalleryCardView> getDailyPopCards() {
+		return galleryDAO.getDailyPopCards();
+	}
 }

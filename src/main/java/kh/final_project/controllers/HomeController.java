@@ -1,12 +1,15 @@
 package kh.final_project.controllers;
 
 import kh.final_project.dto.CategoryType;
+import kh.final_project.dto.GalleryCardView;
 import kh.final_project.services.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +22,7 @@ public class HomeController {
 	private HomeService homeService;
 
 	@RequestMapping("/")
-	public String home() {
+	public String home(Model model) {
 		// 하나라도 없으면 세션 가져오기
 		if (session.getAttribute("gallery") == null || session.getAttribute("community") == null || session.getAttribute("mypage") == null || session.getAttribute("adminpage") == null) {
 			// 세션 비우기
@@ -34,12 +37,19 @@ public class HomeController {
 			session.setAttribute("mypage", result.get("mypage"));
 			session.setAttribute("adminpage", result.get("adminpage"));
 		}
-//		List<GalleryCardView> cards = setDailyPopCards();
+
+		List<CategoryType> categoryTypes = (List<CategoryType>) session.getAttribute("gallery");
+		setDailyPopCards(categoryTypes, model);
 		return "home";
 	}
 
-//	private List<GalleryCardView> setDailyPopCards() {
-//		return homeService.getDailyPopCards();
-//	}
+	private void setDailyPopCards(List<CategoryType> categoryTypes, Model model) {
+		List<List<GalleryCardView>> dailyPopCards = homeService.getDailyPopCards(categoryTypes);
+		Map<Integer, List<GalleryCardView>> cards = new LinkedHashMap<>();
+		for (int i = 0; i < categoryTypes.size(); i++) {
+			cards.put(categoryTypes.get(i).getCode(), dailyPopCards.get(i));
+		}
+		model.addAttribute("cards", cards);
+	}
 
 }

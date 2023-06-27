@@ -98,7 +98,8 @@ public class GalleryDAO {
         return db.selectList("Gallery.selectMyCards", code);
     }
 
-//    public List<GalleryCardView> getDailyPopCards() {
-//        return
-//    }
+    public List<GalleryCardView> getDailyPopCards() {
+        db.selectList("Gallery.selectDailyPopCards");
+        return 
+    }
 }
