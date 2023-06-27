@@ -40,7 +40,7 @@
 		let addMonth = null;
 		let addDate = null;
 		$(function(){
-			const socket = new WebSocket("ws://192.168.50.203/chat");
+			const socket = new WebSocket("ws://3.39.227.39/chat");
 			const stompClient = Stomp.over(socket);
 			
 			stompClient.connect({},function(){
