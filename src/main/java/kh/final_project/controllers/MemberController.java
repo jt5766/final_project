@@ -45,11 +45,21 @@ public class MemberController {
     public String check(MemberDTO dto , Model model)throws  Exception{
         System.out.println("check 넘어온 member_type : "+dto.getMember_type());
         System.out.println("check 넘어온 email_type :"+ dto.getEmail_type());
+        System.out.println("check 넘어온 email :" + dto.getEmail());
+        boolean result = memberService.duplicationEmail(dto);
+        if(result){
+
+            model.addAttribute("emailCheck", result);
+            return "/member/loginForm";
+        } else if (!result) {
+            model.addAttribute("emailCheck",result);
+            return "/member/emailCheckForm";
+        }
         String emailName = memberService.getEmailName(dto);
         System.out.println(emailName);
         dto.setSet_email_type(emailName);
         memberService.sendJoinCertificationMail(dto); //인증메일 보내기
-        return "home";
+        return "/member/loginForm";
     }
     @RequestMapping("register")
     public String register(Model model , MemberDTO dto) {

@@ -17,4 +17,6 @@ public class EmailcheckDAO {
     public boolean checkingEmail(MemberDTO dto){
         return db.selectOne("Email.select",dto);
     }
+
+
 }

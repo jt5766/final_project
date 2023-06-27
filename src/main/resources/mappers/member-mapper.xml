@@ -67,4 +67,9 @@
     <select id="nicknameCheck" resultType="int">
         select count(*) from members where nickname = #{nickname}
     </select>
+
+<!-- 중복 이메일 체크   -->
+    <select id="check" resultType="boolean">
+        select count(*) from members where email = #{email} and email_type=${email_type}
+    </select>
 </mapper>

@@ -198,6 +198,8 @@
 </body>
 
 <script>
+
+
     $(document).ready(function () {
         if("${result}" > 0){
             alert("회원가입을  축하드립니다");
@@ -210,6 +212,8 @@
             window.onpopstate = function (event) {
                 history.go(1);
             }
+        }else if(${emailCheck == true}) {
+            alert("가입되어있는 이메일입니다")
         }
 
         $("#signup_btn").click(function () {

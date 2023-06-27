@@ -182,4 +182,9 @@ public class MemberService {
     public int nicknameDuplicateCheck(String nickname) {
         return mdao.nicknameDuplicateCheck(nickname);
     }
+
+    public boolean duplicationEmail(MemberDTO dto) {
+        return mdao.duplicationEmail(dto);
+    }
 }
+

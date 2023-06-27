@@ -169,8 +169,7 @@
     if(!confirm("정말 가입을 취소하시겠습니까?")){
       return;
     }else {
-      window.close()
-      // window.open('','_self').close();
+      location.href="/member/loginForm?status=cancel";
     }
   }
 </script>

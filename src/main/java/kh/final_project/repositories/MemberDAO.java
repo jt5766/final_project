@@ -77,4 +77,8 @@ public class MemberDAO {
     public int nicknameDuplicateCheck(String nickname) {
          return db.selectOne("Member.nicknameCheck", nickname);
     }
+
+    public boolean duplicationEmail(MemberDTO dto) {
+        return db.selectOne("Member.check",dto);
+    }
 }

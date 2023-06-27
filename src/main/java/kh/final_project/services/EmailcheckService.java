@@ -13,4 +13,6 @@ public class EmailcheckService {
     public boolean checkingEmail(MemberDTO dto){
         return edao.checkingEmail(dto);
     }
+
+
 }
