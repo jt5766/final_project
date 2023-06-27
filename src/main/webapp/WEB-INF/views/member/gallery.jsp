@@ -11,76 +11,37 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
   <c:import url="${path}/resources/js/scripts.jsp"/>
   <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
-  <style>
-      * {
-          box-sizing: border-box;
-      }
-
-      .secrete {
-          color: salmon;
-      }
-
-      .content-link {
-          padding: 5px 15px;
-          margin: 3px 0;
-          background-color: #44444490;
-          cursor: pointer;
-          transition-duration: 500ms;
-          border-radius: 10px;
-      }
-
-      .content-link:hover {
-          background-color: #444444;
-          color: white;
-      }
-
-      .common-button {
-          display: inline-block;
-          min-width: 5rem;
-          background-color: #36454f;
-          color: white;
-          border-radius: 10px;
-          margin: 5px;
-      }
-  </style>
+  <link href="${path}/resources/css/gallery.css" type="text/css" rel="stylesheet">
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
 </head>
 <body>
 <c:import url="${path}/resources/js/GNB.jsp">
   <c:param name="pageName" value="mypage"/>
   <c:param name="btnNum" value="${sessionScope.mypageCode}"/>
 </c:import>
-<div class="container-xl p-0" id="my-content">
-  <c:forEach items="${cards}" var="entry" varStatus="status">
-    <div class="row">
-      <c:forEach items="${gallery}" var="category">
-        <c:if test="${category.code eq entry.key}">
-          <div class="col-12 d-flex justify-content-between">
-            <b>${category.name}</b>
-            <button type="button" class="common-button" onclick="location.href='/gallery/insert/${category.code}'">새로
-              입력
-            </button>
-          </div>
-        </c:if>
+<div class="container-xl p-0">
+  <div id="accordion">
+    <c:forEach items="${gallery}" var="category">
+      <section class="d-flex justify-content-between align-items-center accordion-head">
+        <h4 class="category-head m-0">${category.name}</h4>
+        <button type="button" class="common-button" onclick="location.href='/gallery/insert/${category.code}'">신규 등록</button>
+      </section>
+      <div>
+      <c:forEach items="${cards[category.code]}" var="card">
+        <p class="content-link">${card.title}</p>
       </c:forEach>
-    </div>
-    <c:forEach items="${entry.value}" var="card">
-      <div class="row">
-        <div class="col-md-12">
-          <c:if test="${card.yn eq 'N'}">
-            <div onclick="location.href='/gallery/${card.seq}'" class="content-link secrete">
-                ${card.title} - 비공개 카드입니다.
-            </div>
-          </c:if>
-          <c:if test="${card.yn ne 'N'}">
-            <div onclick="location.href='/gallery/${card.seq}'" class="content-link">
-                ${card.title}
-            </div>
-          </c:if>
-        </div>
       </div>
     </c:forEach>
-  </c:forEach>
+  </div>
 </div>
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
+<script>
+    $( "#accordion" ).accordion({
+        collapsible: true,
+        heightStyle: "content",
+        header: "section",
+        active: [0, 1]
+    });
+</script>
 </body>
 </html>
