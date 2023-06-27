@@ -19,8 +19,8 @@
 }
 
 .list_tr {
-	border-top: 0.3px solid black;
-	border-bottom: 0.3px solid black;
+	border-top: 0.1px solid gray;
+	border-bottom: 0.1px solid gray;
 }
 
 #currentPage {
@@ -70,6 +70,28 @@ input[name=sordCode] {
 .a_title:hover {
 	text-decoration: underline;
 }
+
+td {
+	padding: 5px;
+}
+
+.title_td {
+	text-align: left;
+}
+
+.title_td, .th_title {
+	width: 70%;
+}
+
+th {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	padding: 10px;
+}
+
+.list_tr:hover {
+	background-color: #ffffff;
+}
 </style>
 </head>
 <body>
@@ -103,22 +125,22 @@ input[name=sordCode] {
 		<div class="row">
 			<div class="col">
 				<table id="table_list">
-					<tr>
-						<th>글 번호</th>
-						<th>제목</th>
-						<th>작성자</th>
-						<th>작성일</th>
-						<th>조회수</th>
+					<tr id="info_tr">
+						<th class="th_other">글 번호</th>
+						<th class="th_title">제목</th>
+						<th class="th_other">조회수</th>
+						<th class="th_other">작성자</th>
+						<th class="th_other">작성일</th>
 					</tr>
 					<c:forEach var="i" items="${boardList}">
 						<tr class="list_tr">
 							<td>${i.seq}</td>
-							<td>
+							<td class="title_td">
 								<a href="/community/toBoardView?seq=${i.seq}&board_type=${categoryType.code}" class="a_title"> ${i.title} </a>
 							</td>
+							<td>${i.total_count}</td>
 							<td>${i.writer}</td>
 							<td>${i.formed_date}</td>
-							<td>${i.total_count}</td>
 						</tr>
 					</c:forEach>
 					<tr style="margin: 10px;">
@@ -155,5 +177,13 @@ input[name=sordCode] {
 	<!-- FOOTER -->
 	<c:import url="${path}/resources/js/FOOTER.jsp" />
 	<!-- script - Contents -->
+	<script>
+		$(".title_td").mouseover((e)=> {
+		    $(e.target).find(".a_title").eq(0).css("text-decoration", "underline");
+		});
+		$(".title_td").mouseout((e)=> {
+		    $(e.target).find(".a_title").eq(0).css("text-decoration", "");
+		});
+	</script>
 </body>
 </html>

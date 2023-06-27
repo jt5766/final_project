@@ -17,11 +17,6 @@
 	display: flex;
 }
 
-#div_info>div {
-	flex: 1;
-	text-align: center;
-}
-
 .replySubmit, .replyControll {
 	text-align: center;
 }
@@ -43,25 +38,33 @@
 					<div id="div_info" style="font-size: xx-large;">
 						<input type="hidden" name="seq" value="${info.seq}">
 						<input type="hidden" name="board_type" value="${info.board_type}">
-						<div>${info.seq}<input type="hidden" name="seq" value="${info.seq}">
-						</div>
-						<div>${info.title}<input type="hidden" name="title" value="${info.title}">
-						</div>
-						<div>${info.writer}<input type="hidden" name="writer" value="${info.writer}">
-						</div>
-						<div>${info.formed_date}<input type="hidden" name="write_date" value="${info.write_date}">
-						</div>
-						<div>${info.total_count}</div>
+						<input type="hidden" name="seq" value="${info.seq}">
+						<input type="hidden" name="title" value="${info.title}">
+						<input type="hidden" name="writer" value="${info.writer}">
+						<input type="hidden" name="write_date" value="${info.write_date}">
+						<div style="margin-bottom: 25px;">${info.title}</div>
 					</div>
 					<div>
 						<textarea name="txt" id="textarea_contents" cols="30" rows="10" readonly>${info.txt}</textarea>
 					</div>
-					<div style="text-align: right;">
-						<c:if test="${info.writer == sessionScope.nickName}">
-							<input type="submit" value="수정하기">
-							<input type="button" value="삭제하기" onclick="location.href = '/community/deleteBoard?board_type=${info.board_type}&seq=${info.seq}'">
-						</c:if>
-						<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${info.board_type}&currentPage=1'" style="margin: 15px;">
+					<div style="text-align: right; margin-top: 10px;">
+						<div>
+							작성자: ${info.writer}
+						</div>
+						<div style="font-size: small;">
+							${info.full_date}
+						</div>
+					</div>
+					<div style="display: flex; align-items: center;">
+						<div style="text-align: left; flex: 1;">
+							<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${info.board_type}&currentPage=1'">
+						</div>
+						<div style="text-align: right; flex: 1;">
+							<c:if test="${info.writer == sessionScope.nickName}">
+								<input type="submit" value="수정하기">
+								<input type="button" value="삭제하기" onclick="location.href = '/community/deleteBoard?board_type=${info.board_type}&seq=${info.seq}'">
+							</c:if>
+						</div>
 					</div>
 				</form>
 			</div>
@@ -79,7 +82,7 @@
 						</div>
 						<div>
 							<div style="display: flex; align-items: center;">
-								<div style="flex: 6; padding: 15px;">
+								<div style="flex: 9; padding: 15px;">
 									<textarea name="txt" style="text-align: left; width: 100%; resize: none;" placeholder="댓글을 입력해주세요"></textarea>
 								</div>
 								<div style="flex: 1;" class="replySubmit">
@@ -102,7 +105,7 @@
 					<input type="hidden" name="parent_board" value="${info.seq}">
 					<div style="display: flex;">
 						<div style="text-align: left; flex: 1;">${i.writer}</div>
-						<div style="text-align: right; flex: 1;">${i.write_date}</div>
+						<div style="text-align: right; flex: 1;">${i.full_date}</div>
 					</div>
 					<div style="display: flex; align-items: center;">
 						<div style="flex: 6;">
@@ -136,7 +139,7 @@
 				var writer = $("<div style='flex: 10; text-align: left;'>");
 				writer.text("${i.writer}");
 				var write_date = $("<div style='flex: 10; text-align: right;'>");
-				write_date.text("${i.write_date}");
+				write_date.text("${i.full_date}");
 				var headerSpace = space.clone().html("<i class='bi bi-arrow-90deg-up'></i>");
 				header.append(headerSpace, writer, write_date);
 				var txt = $("<textarea name='txt' style='text-align: left; width: 100%; resize: none;' readonly>");
@@ -228,6 +231,7 @@
 	   	container.append(header, body);
 	   	reReplyForm.append(container);
 	   	$(this).closest($("form")).after(reReplyForm);
+	   	$(this).hide();
 	});
     </script>
 </body>

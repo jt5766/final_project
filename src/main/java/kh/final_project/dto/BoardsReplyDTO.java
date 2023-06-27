@@ -1,6 +1,8 @@
 package kh.final_project.dto;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class BoardsReplyDTO {
 	private Integer seq;
@@ -100,6 +102,25 @@ public class BoardsReplyDTO {
 
 	public void setBoard_name(String board_name) {
 		this.board_name = board_name;
+	}
+
+	public String getFormed_date() {
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		Date currentDate = new Date(System.currentTimeMillis());
+		Date date = new Date(this.getWrite_date().getTime());
+		long diff = currentDate.getTime() - date.getTime();
+		long oneDay = 24 * 60 * 60 * 1000;
+		if (diff >= oneDay) {
+			sdf.applyPattern("yyyy-MM-dd");
+		} else {
+			sdf.applyPattern("HH:mm:ss");
+		}
+		return sdf.format(date);
+	}
+
+	public String getFull_date() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(this.write_date);
 	}
 
 	@Override

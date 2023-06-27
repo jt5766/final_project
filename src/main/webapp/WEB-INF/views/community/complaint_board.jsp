@@ -23,8 +23,8 @@
 }
 
 .list_tr {
-	border-top: 0.5px solid black;
-	border-bottom: 0.5px solid black;
+	border-top: 0.1px solid gray;
+	border-bottom: 0.1px solid gray;
 }
 
 .page-link {
@@ -69,6 +69,29 @@ input[name=sordCode] {
 .a_title:hover {
 	text-decoration: underline;
 }
+
+td {
+	padding: 5px;
+}
+
+.td_title {
+	text-align: left;
+}
+
+.th_title,
+.td_title {
+	width: 70%;
+}
+
+th {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	padding: 10px;
+}
+
+.list_tr:hover {
+	background-color: #ffffff; 
+}
 </style>
 </head>
 <body>
@@ -104,20 +127,20 @@ input[name=sordCode] {
 				<table id="table_list">
 					<tr>
 						<th>글 번호</th>
-						<th>제목</th>
+						<th class="th_title">제목</th>
+						<th>구분</th>
 						<th>작성자</th>
 						<th>작성일</th>
-						<th>구분</th>
 					</tr>
 					<c:forEach var="i" items="${boardList}">
 						<tr class="list_tr">
 							<td>${i.seq}</td>
-							<td>
+							<td class="td_title">
 								<a href="/community/toComplaintView?seq=${i.seq}&board_type=${categoryType.code}" class="a_title"> ${i.title} </a>
 							</td>
-							<td>${i.writer}</td>
-							<td>${i.write_date}</td>
 							<td>${i.complaint_type}</td>
+							<td>${i.writer}</td>
+							<td>${i.formed_date}</td>
 						</tr>
 					</c:forEach>
 					<tr>
