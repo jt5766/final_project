@@ -9,6 +9,3 @@
 		select count(*) from emailcheck where email = #{email, jdbcType=VARCHAR} and email_type=#{email_type, jdbcType=NUMERIC} and random_key=#{random_key, jdbcType=VARCHAR}
 	</select>
 </mapper>
-
-
-
