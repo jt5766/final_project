@@ -67,7 +67,6 @@
     }
 
 
-
     #email-Btn {
         display: flex;
         justify-content: center;
@@ -132,16 +131,16 @@
             <div>
                 <h3>이메일</h3>
                 <div>
-                    <input type="text" id="email" name="email" placeholder="Email"> <span>@</span> <select id="sel"
-                                                                                                           name="email_type">
-                    <c:forEach var="i" items="${list}">
-                        <option value="${i.code}">${i.name}</option>
-                    </c:forEach>
-                </select>
+                    <input type="text" id="email" name="email" placeholder="Email"> <span>@</span>
+                    <select id="sel" name="email_type">
+                        <c:forEach var="i" items="${list}">
+                            <option value="${i.code}">${i.name}</option>
+                        </c:forEach>
+                    </select>
                 </div>
 
                 <div id="email-Btn">
-                    <button id="signup-btn">이메일 인증</button>
+                    <button id="signup-btn" type="button">이메일 인증</button>
                 </div>
 
             </div>
@@ -165,10 +164,32 @@
     //         return;
     //     }})
 
-    $("#email_certification").on("submit", function () {
-        alert("메일이 발송되었습니다.");
-    })
+    $("#signup-btn").on("click", function (e) {
+        e.preventDefault();
+        var email = $("#email").val();
+        var email_type = $("#sel").val();
+        console.log(email);
+        console.log(email_type);
+        $.ajax({
+            url: "/member/mailDupCheck",
+            data: {
+                email: email,
+                email_type: email_type
+            },
+            method: "post"
+        }).done((resp)=>{
+            console.log(resp);
+            resp = JSON.parse(resp);
+            console.log(resp);
+            if(resp){
+                alert("중복된 이메일입니다.");
+            }else{
+                alert("이메일이 발송되었습니다.");
+                $("#email_certification").submit();
 
+            }
+        })
+    })
 </script>
 
 </html>
