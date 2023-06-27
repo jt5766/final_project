@@ -5,13 +5,13 @@
 	<div class="container-fluid py-2 px-4">
 		<div class="row">
 			<!-- 로고 -->
-			<div class="col-3 d-flex">
+			<div class="col-4 d-none d-lg-flex">
 				<a class="p-0 m-auto" href="/">
 					<img class="logo" src="${path}/resources/img/kh_logo.png">
 				</a>
 			</div>
 			<!-- 내용 -->
-			<div class="col-9">
+			<div class="col-8">
 				<div class="row mt-1">
 					<div class="col-auto">
 						<a class="link-light" href="javascript:void(0)" onclick="popup()">개인정보처리방침</a>
@@ -20,14 +20,26 @@
 						<a class="link-light" href="${path}/resources/js/way_to_come.jsp">오시는길</a>
 					</div>
 				</div>
-				<div class="row mt-1">
-					<address class="text-secondary m-0">
-						<span>회사명.</span> ㈜배신자들 <span class="ms-3">대표이사.</span> 강병준 <span class="ms-3">사업자등록번호.</span> XXX-XX-XXXXX <span class="ms-3">E.</span>
+				<div class="row text-secondary mt-1">
+					<div class="col-auto">
+						<span>회사명. </span>㈜배신자들
+					</div>
+					<div class="col-auto">
+						<span>대표이사. </span>강병준
+					</div>
+					<div class="col-auto">
+						<span>사업자등록번호. </span>XXX-XX-XXXXX
+					</div>
+					<div class="col-auto">
+						<span>E. </span>
 						<a class="link-secondary" href="javascript:void(0)">rkqudwns@naver.com</a>
-						<span class="ms-3">T.</span> 010-3011-1687
-						<br>
-						<span>주소.</span> 서울특별시 중구 남대문로 120 그레이츠 청계 (구 대일빌딩) 3F, E class
-					</address>
+					</div>
+					<div class="col-auto">
+						<span>T. </span>010-3011-1687
+					</div>
+					<div class="col-12">
+						<span>주소. </span>서울특별시 중구 남대문로 120 그레이츠 청계 (구 대일빌딩) 3F, E class
+					</div>
 				</div>
 				<div class="row mt-1">
 					<div>[Kreate Hub] All rights reserved.</div>
