@@ -63,7 +63,7 @@
 								</div>
 							</div>
 							<div style='display: flex;'>
-								<textarea style="flex: 6; resize: none;" placeholder="처리내용 작성" name="process"></textarea>
+								<textarea style="flex: 6; resize: none;" placeholder="처리내용 작성" name="process" required></textarea>
 								<input type="submit" value="처리 등록" style="flex: 1;">
 							</div>
 						</form>

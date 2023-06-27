@@ -83,7 +83,7 @@
 						<div>
 							<div style="display: flex; align-items: center;">
 								<div style="flex: 9; padding: 15px;">
-									<textarea name="txt" style="text-align: left; width: 100%; resize: none;" placeholder="댓글을 입력해주세요"></textarea>
+									<textarea name="txt" style="text-align: left; width: 100%; resize: none;" placeholder="댓글을 입력해주세요" required></textarea>
 								</div>
 								<div style="flex: 1;" class="replySubmit">
 									<input type="submit" value="댓글 달기">

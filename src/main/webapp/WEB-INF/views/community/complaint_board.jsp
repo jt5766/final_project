@@ -78,8 +78,7 @@ td {
 	text-align: left;
 }
 
-.th_title,
-.td_title {
+.th_title, .td_title {
 	width: 70%;
 }
 
@@ -90,7 +89,11 @@ th {
 }
 
 .list_tr:hover {
-	background-color: #ffffff; 
+	background-color: #ffffff;
+}
+
+.td_title:hover {
+	cursor: pointer;
 }
 </style>
 </head>
@@ -135,7 +138,7 @@ th {
 					<c:forEach var="i" items="${boardList}">
 						<tr class="list_tr">
 							<td>${i.seq}</td>
-							<td class="td_title">
+							<td class="td_title" onclick="location.href = '/community/toComplaintView?seq=${i.seq}&board_type=${categoryType.code}'">
 								<a href="/community/toComplaintView?seq=${i.seq}&board_type=${categoryType.code}" class="a_title"> ${i.title} </a>
 							</td>
 							<td>${i.complaint_type}</td>
@@ -177,5 +180,13 @@ th {
 	<!-- FOOTER -->
 	<c:import url="${path}/resources/js/FOOTER.jsp" />
 	<!-- script - Contents -->
+	<script>
+		$(".td_title").mouseover((e)=> {
+		    $(e.target).find(".a_title").eq(0).css("text-decoration", "underline");
+		});
+		$(".td_title").mouseout((e)=> {
+		    $(e.target).find(".a_title").eq(0).css("text-decoration", "");
+		});
+	</script>
 </body>
 </html>

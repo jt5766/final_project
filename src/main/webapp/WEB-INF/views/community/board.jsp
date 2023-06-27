@@ -92,6 +92,10 @@ th {
 .list_tr:hover {
 	background-color: #ffffff;
 }
+
+.title_td:hover {
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -135,7 +139,7 @@ th {
 					<c:forEach var="i" items="${boardList}">
 						<tr class="list_tr">
 							<td>${i.seq}</td>
-							<td class="title_td">
+							<td class="title_td" onclick="location.href = '/community/toBoardView?seq=${i.seq}&board_type=${categoryType.code}'">
 								<a href="/community/toBoardView?seq=${i.seq}&board_type=${categoryType.code}" class="a_title"> ${i.title} </a>
 							</td>
 							<td>${i.total_count}</td>

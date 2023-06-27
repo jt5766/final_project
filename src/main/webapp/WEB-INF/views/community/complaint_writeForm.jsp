@@ -32,30 +32,13 @@
 	</c:import>
 	<!-- CONTENTS -->
 	<div>
-		<div class="container-xl bg-secondary position-relative p-0">
+		<div class="container-xl position-relative p-0">
 			<div class="row">
 				<div class="col">
 					<form action="/community/insertComplaint" method="post" id="boardForm">
+						<input type="hidden" name="writer" value="${sessionScope.code}">
+						<input type="hidden" name="board_type" value="${boardCode}">
 						<div style="display: flex;">
-							<div style="flex: 4;">
-								<input type="hidden" name="writer" value="${sessionScope.code}">
-								<input type="hidden" name="board_type" value="${boardCode}">
-								<input type="text" name="title" placeholder="제목을 입력해주세요" id="inputTitle">
-							</div>
-							<div style="flex: 1; text-align: center;">
-								<label>
-									문의
-									<input type="radio" name="complaint_type" value="1001" checked>
-								</label>
-								<label>
-									건의
-									<input type="radio" name="complaint_type" value="1002">
-								</label>
-								<label>
-									신고
-									<input type="radio" name="complaint_type" value="1003">
-								</label>
-							</div>
 							<div style="flex: 1;">
 								<select style="width: 100%; height: 100%;">
 									<c:forEach var="i" items="${selectTag}">
@@ -69,6 +52,23 @@
 										</c:choose>
 									</c:forEach>
 								</select>
+							</div>
+							<div style="flex: 1; text-align: center;">
+								<label>
+									<input type="radio" name="complaint_type" value="1001" checked>
+									문의
+								</label>
+								<label>
+									<input type="radio" name="complaint_type" value="1002">
+									건의
+								</label>
+								<label>
+									<input type="radio" name="complaint_type" value="1003">
+									신고
+								</label>
+							</div>
+							<div style="flex: 4;">
+								<input type="text" name="title" placeholder="제목을 입력해주세요" id="inputTitle">
 							</div>
 						</div>
 						<div>
@@ -102,8 +102,7 @@
 				[ 'color', [ 'color' ] ],
 				[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
 				[ 'table', [ 'table' ] ],
-				[ 'insert', [ 'picture' ] ],
-				[ 'view', [ 'fullscreen', 'codeview', 'help' ] ] ],
+				[ 'insert', [ 'picture' ] ] ],
 		callbacks : { //여기 부분이 이미지를 첨부하는 부분
 			onImageUpload : function(files) {
 				for (let i = 0; i < files.length; i++) {
