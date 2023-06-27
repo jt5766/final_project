@@ -19,14 +19,16 @@ import java.util.UUID;
 public class GalleryService {
 
     private final GalleryDAO galleryDAO;
+    private final ChatService chatService;
     private final TypeDAO typeDAO;
     private final Integer cardsPerPage = 8;
     private final Integer contentsPerPage = 10;
     private final Integer naviPerPage = 10;
 
     @Autowired
-    public GalleryService(GalleryDAO galleryDAO, TypeDAO typeDAO) {
+    public GalleryService(GalleryDAO galleryDAO, ChatService chatService, TypeDAO typeDAO) {
         this.galleryDAO = galleryDAO;
+        this.chatService = chatService;
         this.typeDAO = typeDAO;
     }
 
@@ -226,5 +228,9 @@ public class GalleryService {
 
     public List<GalleryCardView> selectMyCards(Integer code) {
         return galleryDAO.selectMyCards(code);
+    }
+
+    public Boolean dupleInviteCheck(Integer myCode, Integer menteeCode) {
+        return chatService.doublecheck(myCode, menteeCode);
     }
 }
