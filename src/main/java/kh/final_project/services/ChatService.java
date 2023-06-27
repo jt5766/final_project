@@ -39,4 +39,11 @@ public class ChatService {
 		return dao.checkUser(param);
 	}
 	
+	public boolean doublecheck( int mentor, int mentee) {
+		Map<String, Integer> param = new HashMap<>();
+		param.put("mentor", mentor);
+		param.put("mentee", mentee);
+		return dao.doublecheck(param);
+	}
+	
 }

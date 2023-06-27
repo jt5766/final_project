@@ -23,4 +23,8 @@
 		select count(*) from chat_list where seq = ${seq} and ( mentor = ${code} or mentee = ${code} )
 	</select>
 	
+	<select id="doublecheck" resultType="boolean">
+		select * from chat_list where mentor = ${mentor} and mentee = ${mentee}
+	</select>
+	
 </mapper>

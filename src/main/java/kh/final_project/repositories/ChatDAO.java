@@ -35,4 +35,8 @@ public class ChatDAO {
 		return db.selectOne("Chat.check",param);
 	}
 	
+	public boolean doublecheck(Map<String, Integer> param) {
+		return db.selectOne("Chat.doublecheck",param);
+	}
+	
 }
