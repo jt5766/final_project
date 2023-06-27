@@ -49,6 +49,7 @@ public class CommunityController {
 		List<CategoryType> sort = communityService.getCommunitySort();
 		model.addAttribute("search", search);
 		model.addAttribute("sort", sort);
+		model.addAttribute("cp", currentPage);
 		if (categoryType.getCode() == 1005) { // 민원 게시판으로
 			List<String> pageNavi = communityService.returnPageNavi(categoryType, currentPage);
 			List<CategoryType> boardType = communityService.selectBoardType();

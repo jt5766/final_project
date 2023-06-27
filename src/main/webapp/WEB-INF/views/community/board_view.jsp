@@ -35,7 +35,7 @@
 		<c:param name="btnNum" value="${boardCode}" />
 	</c:import>
 	<!-- CONTENTS -->
-	<div class="container-xl bg-secondary position-relative p-0">
+	<div class="container-xl position-relative p-0">
 		<div class="row">
 			<div class="col">
 				<form action="/community/toUpdate" method="post" style="padding: 15px;">

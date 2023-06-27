@@ -14,11 +14,60 @@
 
 #table_list {
 	margin: auto;
-	width: 80%;
+	width: 100%;
 }
 
-.list_tr:hover {
-	background-color: gray;
+#currentPage {
+	background-color: #ca9372;
+	color: white;
+}
+
+.list_tr {
+	border-top: 0.5px solid black;
+	border-bottom: 0.5px solid black;
+}
+
+.page-link {
+	background-color: #F5EFE7;
+	color: #4D4D4D;
+}
+
+.page-link:focus {
+	box-shadow: 0 0 0 0.3rem #ca9372;
+}
+
+#search-box {
+	display: flex;
+	align-items: center;
+}
+
+#search-box>* {
+	margin-left: 5px;
+}
+
+select[name=searchCode] {
+	flex: 0 0 0;
+}
+
+input[name=searchQuery] {
+	flex: 1 0 0;
+}
+
+input[name=sordCode] {
+	flex: 0 0 0;
+}
+
+.sortLabel {
+	flex: 4rem 0 0;
+}
+
+.a_title {
+	text-decoration: none;
+	color: #000;
+}
+
+.a_title:hover {
+	text-decoration: underline;
 }
 </style>
 </head>
@@ -29,21 +78,24 @@
 		<c:param name="btnNum" value="${categoryType.code}" />
 	</c:import>
 	<!-- CONTENTS -->
-	<div class="container-xl bg-secondary position-relative p-0">
+	<div class="container-xl position-relative p-0">
 		<div class="row">
 			<div class="col">
-				<form action="/community/searchComplaint">
+				<form action="/community/search" method="post" style="padding: 20px; text-align: right;" id="search-box">
 					<input type="hidden" name="typeCode" value="${categoryType.code}">
 					<select name="searchCode">
 						<c:forEach var="i" items="${search}">
 							<option value="${i.code}">${i.name}</option>
 						</c:forEach>
 					</select>
-					<input type="submit" value="검색">
-					<input type="text" name="searchQuery" required>
+					<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요">
 					<c:forEach var="i" items="${sort}" varStatus="status">
-					${i.name} <input type="radio" name="sortCode" value="${i.code}" <c:if test ="${status.index == 0}">checked</c:if>>
+						<input type="radio" name="sortCode" value="${i.code}" <c:if test ="${status.index == 0}">checked</c:if>>
+						${i.name}
 					</c:forEach>
+					<button style="border-style: none;">
+						<i class="bi bi-search"></i>
+					</button>
 				</form>
 			</div>
 		</div>
@@ -58,9 +110,11 @@
 						<th>구분</th>
 					</tr>
 					<c:forEach var="i" items="${boardList}">
-						<tr class="list_tr" onclick="location.href = '/community/toComplaintView?seq=${i.seq}&board_type=${categoryType.code}'">
+						<tr class="list_tr">
 							<td>${i.seq}</td>
-							<td>${i.title}</td>
+							<td>
+								<a href="/community/toComplaintView?seq=${i.seq}&board_type=${categoryType.code}" class="a_title"> ${i.title} </a>
+							</td>
 							<td>${i.writer}</td>
 							<td>${i.write_date}</td>
 							<td>${i.complaint_type}</td>
@@ -80,7 +134,9 @@
 												<li class="page-items"><a class="page-link" href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index-1]+1}">${i}</a></li>
 											</c:when>
 											<c:otherwise>
-												<li class="page-items"><a class="page-link" href="/community/toBoard?code=${categoryType.code}&currentPage=${i}">${i}</a></li>
+												<li class="page-items"><a class="page-link" href="/community/toBoard?code=${categoryType.code}&currentPage=${i}" <c:if test="${cp == i}">
+														id="currentPage"
+													</c:if>>${i}</a></li>
 											</c:otherwise>
 										</c:choose>
 									</c:forEach>
