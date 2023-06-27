@@ -20,7 +20,7 @@
 	</delete>
 	<!-- 회원 관리 -->
 	<select id="selectMember" resultType="kh.final_project.dto.MemberDTO">
-		SELECT * FROM VIEW_MEMBER
+		SELECT * FROM VIEW_ADMIN_MEMBER
 	</select>
 	<update id="banMember">
 		UPDATE MEMBERS SET STOP_DATE = #{stop_date, jdbcType=BINARY} WHERE CODE = #{code}
