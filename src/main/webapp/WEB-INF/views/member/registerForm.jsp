@@ -85,7 +85,7 @@
                     <input type="hidden" name="email_type" value="${emailType}">
                     <input type="hidden" name="email" value="${email}">
                     <input type="hidden" name="member_type" value="${memberType}">
-                <input type="text" placeholder="Email" value="${email}@${setEmailType}">
+                <input type="text" placeholder="Email" value="${email}@${setEmailType}" readonly>
             </div>
             <div>
                 <h3>Password</h3>
@@ -100,7 +100,7 @@
                 <input type="text" name="nickname" placeholder="닉네임을 입력해주세요.">
             </div>
             <div id="btnBox">
-                <button id="cBtn" type="button" onclick="cancle()">취소</button>
+                <button id="cBtn" type="button" onclick="cancel()">취소</button>
                 <button id="sBtn">가입하기</button>
             </div>
         </div>
@@ -109,11 +109,11 @@
 
 </form>
 <script>
-    function cancle(){
+    function cancel(){
         if(!confirm("정말 가입을 취소하시겠습니까?")){
             return;
         }else {
-            window.close();
+            location.href="/member/loginForm?status=cancel";
         }
     }
 

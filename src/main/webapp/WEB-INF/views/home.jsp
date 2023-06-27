@@ -17,6 +17,7 @@
 	</c:import>	
 	<!-- CONTENTS -->
 	<div class="container-xl bg-secondary position-relative p-0">
+
 	</div>
 	<!-- FOOTER -->
 	<c:import url="${path}/resources/js/FOOTER.jsp" />

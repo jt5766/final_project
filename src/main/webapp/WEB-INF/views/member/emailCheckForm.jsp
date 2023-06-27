@@ -61,35 +61,21 @@
         gap: 10px;
     }
 
-    #wrap {
-        display: flex;
-        justify-content: center;
-        border: 1px solid black;
-        flex-direction: column;
-        align-items: center;
-        width: 100vw;
-    }
 
     #wrap > div {
         /*border: 1px solid black;*/
     }
 
-    #header {
-        width: 100%;
-    }
 
-    #footer {
-        width: 100%;
-    }
 
-    #email-Btn{
+    #email-Btn {
         display: flex;
         justify-content: center;
         margin-top: 10px;
         width: 100%;
     }
 
-    #email-Btn > button{
+    #email-Btn > button {
         width: 100%;
     }
 
@@ -101,14 +87,17 @@
         gap: 10px;
         height: 60vh;
     }
+
     #body h3 {
         font-size: 14px;
     }
-    input{
+
+    input {
         outline: none;
     }
-    #signup-btn{
-        background-color:#5d5d5d;
+
+    #signup-btn {
+        background-color: #5d5d5d;
         border-radius: 3px;
         color: white;
 
@@ -116,46 +105,96 @@
 
 </style>
 <body>
+
+<!-- GNB & LNB -->
+<c:import url="${path}/resources/js/GNB.jsp">
+    <c:param name="pageName" value="home"/>
+    <c:param name="btnNum" value="1"/>
+</c:import>
+<!-- CONTENTS -->
 <form action="/member/check" id="email_certification">
-<div id="wrap">
-    <div id="header"><c:import url="${path}/resources/js/GNB.jsp"/></div>
-    <div id="body">
-        <div class="mb-3">
-            <div class="form_toggle row-vh d-flex flex-row justify-content-between">
-                <div class="form_radio_btn radio_male">
-                    <input type="radio" name="member_type" value="1000" id="btn1" checked>
-                    <label for="btn1">일반인</label>
-                </div>
+    <div class="container-xl position-relative p-0">
+        <div id="body">
+            <div class="mb-3">
+                <div class="form_toggle row-vh d-flex flex-row justify-content-between">
+                    <div class="form_radio_btn radio_male">
+                        <input type="radio" name="member_type" value="1000" id="btn1" checked>
+                        <label for="btn1">일반인</label>
+                    </div>
 
-                <div class="form_radio_btn">
-                    <input type="radio" name="member_type" value="2000" id="btn2">
-                    <label for="btn2">전문가</label>
+                    <div class="form_radio_btn">
+                        <input type="radio" name="member_type" value="2000" id="btn2">
+                        <label for="btn2">전문가</label>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div>
-            <h3>이메일</h3>
             <div>
-                <input type="text" id="email" name="email" placeholder="Email"> <span>@</span> <select id="sel" name="email_type">
-                <c:forEach var="i" items="${list}">
-                    <option value="${i.code}">${i.name}</option>
-                </c:forEach>
-            </select>
-            </div>
+                <h3>이메일</h3>
+                <div>
+                    <input type="text" id="email" name="email" placeholder="Email"> <span>@</span> <select id="sel"
+                                                                                                           name="email_type">
+                    <c:forEach var="i" items="${list}">
+                        <option value="${i.code}">${i.name}</option>
+                    </c:forEach>
+                </select>
+                </div>
 
-            <div id="email-Btn">
-                <button  id="signup-btn">이메일 인증</button>
+                <div id="email-Btn">
+                    <button id="signup-btn">이메일 인증</button>
+                </div>
+
             </div>
+            <div></div>
+
 
         </div>
-        <div></div>
-
-
     </div>
-    <div id="footer"><c:import url="${path}/resources/js/FOOTER.jsp"/></div>
-</div>
 </form>
+<!-- FOOTER -->
+<c:import url="${path}/resources/js/FOOTER.jsp"/>
+<!-- script - Contents -->
+
+<%--<form action="/member/check" id="email_certification">--%>
+<%--<div id="wrap">--%>
+<%--    <div id="header"><c:import url="${path}/resources/js/GNB.jsp"/></div>--%>
+<%--    <div id="body">--%>
+<%--        <div class="mb-3">--%>
+<%--            <div class="form_toggle row-vh d-flex flex-row justify-content-between">--%>
+<%--                <div class="form_radio_btn radio_male">--%>
+<%--                    <input type="radio" name="member_type" value="1000" id="btn1" checked>--%>
+<%--                    <label for="btn1">일반인</label>--%>
+<%--                </div>--%>
+
+<%--                <div class="form_radio_btn">--%>
+<%--                    <input type="radio" name="member_type" value="2000" id="btn2">--%>
+<%--                    <label for="btn2">전문가</label>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+
+<%--        <div>--%>
+<%--            <h3>이메일</h3>--%>
+<%--            <div>--%>
+<%--                <input type="text" id="email" name="email" placeholder="Email"> <span>@</span> <select id="sel" name="email_type">--%>
+<%--                <c:forEach var="i" items="${list}">--%>
+<%--                    <option value="${i.code}">${i.name}</option>--%>
+<%--                </c:forEach>--%>
+<%--            </select>--%>
+<%--            </div>--%>
+
+<%--            <div id="email-Btn">--%>
+<%--                <button  id="signup-btn">이메일 인증</button>--%>
+<%--            </div>--%>
+
+<%--        </div>--%>
+<%--        <div></div>--%>
+
+
+<%--    </div>--%>
+<%--    <div id="footer"><c:import url="${path}/resources/js/FOOTER.jsp"/></div>--%>
+<%--</div>--%>
+<%--</form>--%>
 </body>
 <script>
     // $("#signup_btn").click(function () {
@@ -166,9 +205,9 @@
     //         return;
     //     }})
 
-    $("#email_certification").on("submit",function(){
-            alert("메일이 발송되었습니다.");
-        })
+    $("#email_certification").on("submit", function () {
+        alert("메일이 발송되었습니다.");
+    })
 
 </script>
 <%--<style>--%>

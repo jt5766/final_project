@@ -14,10 +14,11 @@
 <body>
 <style>
 
-    *{
-         /*border: 1px solid black;*/
+    * {
+        /*border: 1px solid black;*/
     }
-    #wrap{
+
+    #wrap {
         display: flex;
         justify-content: center;
         border: 1px solid black;
@@ -26,13 +27,13 @@
         width: 100vw;
     }
 
-    #header , #footer{
+    #header, #footer {
         width: 100%;
 
     }
 
 
-    #body{
+    #body {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -40,50 +41,52 @@
         gap: 25px;
         width: 30vw;
         height: 60vh;
+        margin: auto;
     }
 
 
-    #idCheck_box{
+    #idCheck_box {
         display: flex;
-        justify-content:space-between;
+        justify-content: space-between;
         width: 100%;
         font-size: 12px;
         margin-bottom: 5px;
     }
 
-    #login_box{
-        width: 100%;
-    }
-    #login_box2{
+    #login_box {
         width: 100%;
     }
 
-    #input_email_box{
+    #login_box2 {
+        width: 100%;
+    }
+
+    #input_email_box {
 
         height: 30px;
     }
 
-    #input_email{
+    #input_email {
         width: 100%;
         height: 100%;
     }
 
-    #password_box{
+    #password_box {
         width: 100%;
         font-size: 12px;
 
     }
 
-    #password_font{
+    #password_font {
         margin-bottom: 5px;
     }
 
-    #input_password{
+    #input_password {
         width: 100%;
         height: 30px;
     }
 
-    input{
+    input {
 
         font-size: 13px;
         border: 0px;
@@ -91,13 +94,16 @@
         transition-duration: .4s;
         outline: none;
     }
-    input:focus{
+
+    input:focus {
         border-bottom: 1px solid #ca9372;
     }
-    #find_password{
+
+    #find_password {
         width: 100%;
     }
-    #btns{
+
+    #btns {
         display: flex;
         flex-direction: column;
         width: 80%;
@@ -105,75 +111,110 @@
         gap: 10px;
     }
 
-    #btns >button {
+    #btns > button {
         height: 30px;
     }
-    a{
+
+    a {
         text-decoration-line: none;
         color: rgb(93, 93, 93);
     }
 
-
+    #checkId {
+        accent-color: #ca9372;
+    }
 
 
 </style>
-<div id="wrap">
-    <div id="header"><c:import url="${path}/resources/js/GNB.jsp"/></div>
+<!-- GNB & LNB -->
+<c:import url="${path}/resources/js/GNB.jsp">
+    <c:param name="pageName" value="home" />
+    <c:param name="btnNum" value="1" />
+</c:import>
+<!-- CONTENTS -->
+<div class="container-xl  position-relative p-0">
     <div id="body">
-    <div id="login_box">
-        <div id="idCheck_box">
-            <div id="id_font">아이디</div>
-            <div><input type="checkbox" id="checkId"> 아이디 저장 </div>
-        </div>
-        <div id="input_email_box">
-            <input type="text"  id="input_email" name="email" placeholder="email">
-        </div>
-    </div>
-        <div id="login_box2">
-        <div id="password_box">
-            <div id="password_font">비밀번호</div>
-            <input type="password" id="input_password" name= "password"placeholder="password">
-        </div>
-        </div>
-        <div id="find_password">
-            <a href="/member/findPassword">비밀번호 찾기</a>
-        </div>
-        <div id="btns">
-            <button type="button" id="login_btn">로그인</button>
-            <button type="button" id="signup_btn">회원가입</button>
-        </div>
+                <div id="login_box">
+                    <div id="idCheck_box">
+                        <div id="id_font">아이디</div>
+                        <div><input type="checkbox" id="checkId"> 아이디 저장</div>
+                    </div>
+                    <div id="input_email_box">
+                        <input type="text" id="input_email" name="email" placeholder="email">
+                    </div>
+                </div>
+                <div id="login_box2">
+                    <div id="password_box">
+                        <div id="password_font">비밀번호</div>
+                        <input type="password" id="input_password" name="password" placeholder="password">
+                    </div>
+                </div>
+                <div id="find_password">
+                    <a href="/member/findPassword">비밀번호 찾기</a>
+                </div>
+                <div id="btns">
+                    <button type="button" id="login_btn">로그인</button>
+                    <button type="button" id="signup_btn">회원가입</button>
+                </div>
 
-    </div>
-<div id="footer"><c:import url="${path}/resources/js/FOOTER.jsp"/></div>
-
+            </div>
 </div>
+<!-- FOOTER -->
+<c:import url="${path}/resources/js/FOOTER.jsp" />
+<!-- script - Contents -->
 
+<%--<div id="wrap">--%>
+<%--    <div id="header"><c:import url="${path}/resources/js/GNB.jsp"/></div>--%>
+<%--    <div id="body">--%>
+<%--        <div id="login_box">--%>
+<%--            <div id="idCheck_box">--%>
+<%--                <div id="id_font">아이디</div>--%>
+<%--                <div><input type="checkbox" id="checkId"> 아이디 저장</div>--%>
+<%--            </div>--%>
+<%--            <div id="input_email_box">--%>
+<%--                <input type="text" id="input_email" name="email" placeholder="email">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div id="login_box2">--%>
+<%--            <div id="password_box">--%>
+<%--                <div id="password_font">비밀번호</div>--%>
+<%--                <input type="password" id="input_password" name="password" placeholder="password">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div id="find_password">--%>
+<%--            <a href="/member/findPassword">비밀번호 찾기</a>--%>
+<%--        </div>--%>
+<%--        <div id="btns">--%>
+<%--            <button type="button" id="login_btn">로그인</button>--%>
+<%--            <button type="button" id="signup_btn">회원가입</button>--%>
+<%--        </div>--%>
 
+<%--    </div>--%>
+<%--    <div id="footer"><c:import url="${path}/resources/js/FOOTER.jsp"/></div>--%>
 
+<%--</div>--%>
 
 
 </body>
 
 <script>
-
-    <c:choose>
-        <c:when test="${result > 0}">
-        alert("회원가입을  축하드립니다")
-
-    history.pushState(null, null, "http://localhost:8080/member/createMember");
-
-    window.onpopstate = function(event) {
-        history.go(1);
-
-    };
-
-    </c:when>
-    </c:choose>
-
     $(document).ready(function () {
+        if("${result}" > 0){
+            alert("회원가입을  축하드립니다");
+            history.pushState(null, null, "http://localhost:8080/member/createMember");
+            window.onpopstate = function (event) {
+                history.go(1);
+            };
+        }else if(${status == 'cancel'}) {
+            history.pushState(null, null, "http://localhost:8080/member/loginForm");
+            window.onpopstate = function (event) {
+                history.go(1);
+            }
+        }
+
         $("#signup_btn").click(function () {
             location.href = "/member/signup";
-        })
+        });
 
 
         $("#login_btn").click(function () {
@@ -223,11 +264,12 @@
             $("#checkId").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
         }
 
-        $("#checkId").on("change", function (){
-           if(!$("#checkId").is(":checked")){
-               console.log("????");
-               deleteCookie("email");
-           }
+        $("#checkId").on("change", function () {
+            if (!$("#checkId").is(":checked")) {
+                console.log("????");
+                deleteCookie("email");
+            }
+
         });
 
         // 쿠키 저장하기
