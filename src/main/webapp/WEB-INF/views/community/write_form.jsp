@@ -31,16 +31,13 @@
 		<c:param name="btnNum" value="${boardCode}" />
 	</c:import>
 	<!-- CONTENTS -->
-	<div class="container-xl bg-secondary position-relative p-0">
+	<div class="container-xl position-relative p-0">
 		<div class="row">
 			<div class="col">
 				<form action="/community/insertBoard" method="post" id="boardForm">
+					<input type="hidden" name="writer" value="${sessionScope.code}">
+					<input type="hidden" name="board_type" value="${boardCode}">
 					<div style="display: flex;">
-						<div style="flex: 5;">
-							<input type="hidden" name="writer" value="${sessionScope.code}">
-							<input type="hidden" name="board_type" value="${boardCode}">
-							<input type="text" name="title" placeholder="제목을 입력해주세요" id="inputTitle" required>
-						</div>
 						<div style="flex: 1;">
 							<select style="width: 100%; height: 100%;">
 								<c:forEach var="i" items="${selectTag}">
@@ -54,6 +51,9 @@
 									</c:choose>
 								</c:forEach>
 							</select>
+						</div>
+						<div style="flex: 5;">
+							<input type="text" name="title" placeholder="제목을 입력해주세요" id="inputTitle" required>
 						</div>
 					</div>
 					<div>
@@ -87,8 +87,7 @@
 				[ 'color', [ 'color' ] ],
 				[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
 				[ 'table', [ 'table' ] ],
-				[ 'insert', [ 'picture' ] ],
-				[ 'view', [ 'fullscreen', 'codeview', 'help' ] ] ],
+				[ 'insert', [ 'picture' ] ] ],
 		callbacks : { //여기 부분이 이미지를 첨부하는 부분
 			onImageUpload : function(files) {
 				for (let i = 0; i < files.length; i++) {

@@ -13,15 +13,6 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <style>
-#div_info {
-	display: flex;
-}
-
-#div_info>div {
-	flex: 1;
-	text-align: center;
-	font-size: xx-large;
-}
 </style>
 </head>
 
@@ -32,40 +23,29 @@
 		<c:param name="btnNum" value="${boardCode}" />
 	</c:import>
 	<!-- CONTENTS -->
-	<div class="container-xl bg-secondary position-relative p-0">
+	<div class="container-xl position-relative p-0">
 		<div class="row">
 			<div class="col">
 				<form action="/community/toUpdate" method="post">
-					<div>${info.board_name}</div>
-					<div id="div_info">
-						<input type="hidden" name="seq" value="${info.seq}">
-						<input type="hidden" name="board_type" value="${info.board_type}">
-						<div>
-							${info.seq}
-							<input type="hidden" name="seq" value="${info.seq}">
-						</div>
-						<div>
-							${info.title}
-							<input type="hidden" name="title" value="${info.title}">
-						</div>
-						<div>
-							${info.writer}
-							<input type="hidden" name="writer" value="${info.writer}">
-						</div>
-						<div>
-							${info.write_date}
-							<input type="hidden" name="write_date" value="${info.write_date}">
-						</div>
-						<div>
-							${info.complaint_type}
-							<input type="hidden" name="write_date" value="${info.complaint_type}">
-						</div>
-						<div>${info.total_count}</div>
+					<input type="hidden" name="seq" value="${info.seq}">
+					<input type="hidden" name="board_type" value="${info.board_type}">
+					<input type="hidden" name="seq" value="${info.seq}">
+					<input type="hidden" name="title" value="${info.title}">
+					<input type="hidden" name="writer" value="${info.writer}">
+					<input type="hidden" name="write_date" value="${info.write_date}">
+					<input type="hidden" name="write_date" value="${info.complaint_type}">
+					<div style="display: flex; font-size: xx-large; margin-bottom: 25px;">
+						<div style="flex:1;">${info.title}</div>
+						<div style="flex: 1; text-align: right;">${info.complaint_type}</div>
 					</div>
 					<div>
 						<textarea name="txt" id="textarea_contents" cols="30" rows="10" readonly>${info.txt}</textarea>
 					</div>
-					<div style="text-align: right;">
+					<div style="text-align: right; margin-top: 25px;">
+						<div>작성자: ${info.writer}</div>
+						<div style="font-size: small;">${info.full_date}</div>
+					</div>
+					<div style="text-align: left;">
 						<input type="button" value="돌아가기" onclick="location.href = '/community/toBoard?code=${info.board_type}&currentPage=1'">
 					</div>
 				</form>
@@ -75,7 +55,7 @@
 			<div class="col">
 				<c:choose>
 					<c:when test="${sessionScope.memberType == 9999}">
-						<form action="/community/insertProcess">
+						<form action="/community/insertProcess" style="padding: 25px;">
 							<div style="display: flex;">
 								<div style="flex: 6;">${sessionScope.nickName}</div>
 								<div style="flex: 1;">
@@ -83,7 +63,7 @@
 								</div>
 							</div>
 							<div style='display: flex;'>
-								<textarea style="flex: 6; resize: none;" placeholder="처리내용 작성" name="process"></textarea>
+								<textarea style="flex: 6; resize: none;" placeholder="처리내용 작성" name="process" required></textarea>
 								<input type="submit" value="처리 등록" style="flex: 1;">
 							</div>
 						</form>
@@ -96,7 +76,7 @@
 					</c:when>
 					<c:otherwise>
 						<div>
-							<div style="background-color: ghostwhite; font-size: xx-large;">${info.process}</div>
+							<div style="font-size: xx-large;">관리자: ${info.process}</div>
 						</div>
 					</c:otherwise>
 				</c:choose>

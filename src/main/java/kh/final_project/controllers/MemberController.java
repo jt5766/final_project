@@ -45,12 +45,22 @@ public class MemberController {
     public String check(MemberDTO dto , Model model)throws  Exception{
         System.out.println("check 넘어온 member_type : "+dto.getMember_type());
         System.out.println("check 넘어온 email_type :"+ dto.getEmail_type());
-        String emailName = memberService.getEmailName(dto);
-        System.out.println(emailName);
-        dto.setSet_email_type(emailName);
-        memberService.sendJoinCertificationMail(dto); //인증메일 보내기
-        return "home";
+        System.out.println("check 넘어온 email :" + dto.getEmail());
+            String emailName = memberService.getEmailName(dto);
+            System.out.println(emailName);
+            dto.setSet_email_type(emailName);
+            memberService.sendJoinCertificationMail(dto); //인증메일 보내기
+            return "/member/loginForm";
+
     }
+    @RequestMapping("mailDupCheck")
+    @ResponseBody
+    public String mailDupCheck(MemberDTO dto) {
+        boolean result = memberService.duplicationEmail(dto);
+        System.out.println(result);
+        return String.valueOf(result);
+    }
+
     @RequestMapping("register")
     public String register(Model model , MemberDTO dto) {
         System.out.println("register로 넘어온 dto :"+dto);
@@ -78,15 +88,19 @@ public class MemberController {
     }
 
     @PostMapping("createMember")    /*회원가입할시 오는 곳 인서트 후 로그인폼으로*/
-    public String createMember(MemberDTO dto, MultipartFile file) throws Exception{
+    public String createMember(MemberDTO dto, MultipartFile file,Model model) throws Exception{
         String realPath = session.getServletContext().getRealPath("/resources/member");
-        memberService.uploadFile(dto, file, realPath);
+      int result =  memberService.insertMember(dto, file, realPath);
+        System.out.println(result);
+      model.addAttribute("result",result);
         return "/member/loginForm";
     }
 
     @RequestMapping("loginForm")
-    public String loginForm(){
-
+    public String loginForm(String status, Model model){
+        if(status != null) {
+            model.addAttribute("status", status);
+        }
         return "/member/loginForm";
     }
 
@@ -208,7 +222,7 @@ public class MemberController {
         String nickname = dto.getNickname();
         session.setAttribute("nickName",nickname);
 
-        return "home";
+        return "redirect:/member/my-page/gallery";
     }
 
     @RequestMapping("memberDelete")

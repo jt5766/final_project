@@ -118,7 +118,7 @@ public class MemberService {
     }
 
 
-    public void uploadFile(MemberDTO dto, MultipartFile file, String realPath) throws Exception {
+    public int insertMember(MemberDTO dto, MultipartFile file, String realPath) throws Exception {
         System.out.println("create");
         String path = "/resources/member";
         System.out.println(realPath);
@@ -141,7 +141,8 @@ public class MemberService {
 
         System.out.println("createMember로 넘어온 dto :" + dto);
         System.out.println("========================");
-        mdao.insert(dto);
+       return mdao.insert(dto);
+
     }
 
     public void Nupdate(MemberDTO dto) {
@@ -181,4 +182,9 @@ public class MemberService {
     public int nicknameDuplicateCheck(String nickname) {
         return mdao.nicknameDuplicateCheck(nickname);
     }
+
+    public boolean duplicationEmail(MemberDTO dto) {
+        return mdao.duplicationEmail(dto);
+    }
 }
+

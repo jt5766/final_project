@@ -3,27 +3,27 @@
 <mapper namespace="Admin">
 	<!-- 그래프 -->
 	<select id="selectMemberCount" resultType="kh.final_project.dto.CountDTO">
-		SELECT * FROM VIEW_MEMBER_COUNT
+		SELECT * FROM VIEW_ADMIN_MEMBER_COUNT
 	</select>
 	<select id="selectGalleryCount" resultType="kh.final_project.dto.CountDTO">
-		SELECT * FROM VIEW_GALLERY_COUNT
+		SELECT * FROM VIEW_ADMIN_GALLERY_COUNT
 	</select>
 	<!-- 회원가입 관리 -->
 	<select id="selectMember2000" resultType="kh.final_project.dto.MemberDTO">
-		SELECT * FROM VIEW_MEMBER_TYPE2000
+		SELECT * FROM VIEW_ADMIN_MEMBER_TYPE2000
 	</select>
 	<update id="approveMember">
-		UPDATE MEMBERS SET NAME = #{name, jdbcType=VARCHAR}, TEL = #{tel, jdbcType=VARCHAR} WHERE CODE = #{code}
+		UPDATE MEMBERS SET NAME = #{name, jdbcType=VARCHAR}, TEL = #{tel, jdbcType=VARCHAR} WHERE CODE = #{code, jdbcType=NUMERIC}
 	</update>
 	<delete id="rejectMember">
-		DELETE FROM MEMBERS WHERE CODE = #{code}
+		DELETE FROM MEMBERS WHERE CODE = #{code, jdbcType=NUMERIC}
 	</delete>
 	<!-- 회원 관리 -->
 	<select id="selectMember" resultType="kh.final_project.dto.MemberDTO">
-		SELECT * FROM VIEW_MEMBER
+		SELECT * FROM VIEW_ADMIN_MEMBER
 	</select>
 	<update id="banMember">
-		UPDATE MEMBERS SET STOP_DATE = #{stop_date, jdbcType=BINARY} WHERE CODE = #{code}
+		UPDATE MEMBERS SET STOP_DATE = #{stop_date, jdbcType=BINARY} WHERE CODE = #{code, jdbcType=NUMERIC}
 	</update>
 	<!-- 갤러리 -->
 	<select id="searchGallery" parameterType="java.util.Map" resultType="kh.final_project.dto.AdminGalleryDTO">

@@ -13,6 +13,10 @@
     margin: 3px 2px;
 }
 
+.gallery-card:hover {
+    cursor: pointer;
+}
+
 .thumbnail {
     width: 150px;
     height: 225px;
@@ -318,13 +322,62 @@ input[name=sordCode] {
 }
 
 .accordion-head {
+    position: relative;
     background-color: #C7B299;
     padding: 5px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .category-head {
     font-size: 18pt;
     font-weight: bold;
+}
+
+.btn-position-right {
+    position: absolute;
+    right: 1%;
+}
+
+.carousel-item-next, .carousel-item-prev, .carousel-item-next {
+    display:flex!important;
+}
+
+.carousel-event{
+    animation: carousel-slide 600ms linear;
+}
+
+@keyframes carousel-slide {
+    0% {
+        opacity: 1;
+    }
+
+    25% {
+        opacity: 0.75;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    75% {
+        opacity: 0.75;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+#duple{
+    background-color: #945d39;
+    color: #797979;
+}
+
+/* card insert */
+
+.input-box {
+    margin: 0;
+    padding-left: 15%;
+    padding-right: 15%;
 }

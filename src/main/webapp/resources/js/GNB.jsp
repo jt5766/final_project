@@ -79,10 +79,10 @@
 			<c:when test="${param.pageName eq 'gallery'}">
 				<!-- Title -->
 				<div class="row justify-content-center">
-					<div class="col my-3 text-light fs-1 fw-bold">갤 러 리</div>
+					<div class="col mt-3 text-light fs-1 fw-bold">갤 러 리</div>
 				</div>
 				<!-- Button -->
-				<div class="row justify-content-center">
+				<div class="row mt-2 justify-content-center">
 					<div class="col btn-group" role="group">
 						<c:forEach items="${gallery}" var="item">
 							<c:choose>

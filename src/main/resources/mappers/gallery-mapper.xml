@@ -1,145 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Gallery">
-    <insert id="insertCard">
-        insert into gallery_cards values(GALLERY_CARDS_SEQ.NEXTVAL, #{category_type},
-        #{genre_type1, jdbcType=NUMERIC}, #{ai}, #{title}, #{writer}, #{catchphrase}, #{synopsis}, #{thumbnail_url},
-        #{yn}, default, #{genre_type2, jdbcType=NUMERIC})
-    </insert>
-    <insert id="insertContent">
-        insert into gallery_contents values(#{gallery_cards}, GALLERY_CONTENTS_SEQ.NEXTVAL, #{title},
-        <choose>
-            <when test="file_url != null">
-                #{file_url}, null,
-            </when>
-            <when test="video_url != null">
-                null, #{video_url},
-            </when>
-            <otherwise>
-                null, null,
-            </otherwise>
-        </choose>
-        #{txt}, #{yn}, default, default, default)
-    </insert>
+	<insert id="insertCard">
+		INSERT INTO GALLERY_CARDS
+		(SEQ, CATEGORY_TYPE, ENRE_TYPE1, GENRE_TYPE2, AI, TITLE, WRITER, CATCHPHRASE, SYNOPSIS, THUMBNAIL_URL, YN )
+		VALUES
+		(GALLERY_CARDS_SEQ.NEXTVAL, #{category_type, jdbcType=NUMERIC}, #{genre_type1, jdbcType=NUMERIC}, #{genre_type2, jdbcType=NUMERIC}, #{ai, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{writer, jdbcType=NUMERIC}, #{catchphrase, jdbcType=VARCHAR}, #{synopsis, jdbcType=VARCHAR}, #{thumbnail_url, jdbcType=VARCHAR}, #{yn, jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertContent">
+		INSERT INTO GALLERY_CONTENTS
+		(GALLERY_CARDS, SEQ, TITLE, FILE_URL, VIDEO_URL, TXT, YN)
+		VALUES
+		(#{gallery_cards, jdbcType=NUMERIC}, GALLERY_CONTENTS_SEQ.NEXTVAL, #{title, jdbcType=VARCHAR}, #{file_url, jdbcType=VARCHAR}, #{video_url, jdbcType=VARCHAR}, #{txt, jdbcType=VARCHAR}, #{yn, jdbcType=VARCHAR})
+	</insert>
+	<!-- <insert id="insertContent"> -->
+	<!-- insert into gallery_contents -->
+	<!-- (GALLERY_CARDS, SEQ, TITLE, FILE_URL, VIDEO_URL, TXT, YN) -->
+	<!-- values(#{gallery_cards}, GALLERY_CONTENTS_SEQ.NEXTVAL, #{title}, -->
+	<!-- <choose> -->
+	<!-- <when test="file_url != null"> -->
+	<!-- #{file_url, jdbcType=VARCHAR}, #{video_url, jdbcType=VARCHAR}, -->
+	<!-- </when> -->
+	<!-- <when test="video_url != null"> -->
+	<!-- null, -->
+	<!-- </when> -->
+	<!-- <otherwise> -->
+	<!-- null, null, -->
+	<!-- </otherwise> -->
+	<!-- </choose> -->
+	<!-- #{txt}, #{yn}, default, default, default) -->
+	<!-- </insert> -->
 
-    <select id="selectAllCards" resultType="kh.final_project.dto.GalleryCardView">
-        select * from (
-        select view_gallery_cards.*, row_number() over(order by
-        <choose>
-            <when test="sortCode != null">
-                ${sortKeyword} ${sortVal} nulls last
-            </when>
-            <otherwise>
-                write_date desc nulls last
-            </otherwise>
-        </choose>
-        ) rn from view_gallery_cards
-        <trim prefix="where" prefixOverrides="and |or ">
-            <if test="typeCode != null">
-                category_type = #{typeCode}
-            </if>
-            <if test="searchQuery != null">
-                <if test="searchCode != 1001">
-                    and ${searchKeyword} like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%'
-                </if>
-                and (title like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%' or writer like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%')
-            </if>
-            and yn = 'Y'
-<!--            and (writer = #{writer, jdbcType=NUMERIC} or yn = 'Y')-->
-        </trim>
-        ) where rn between #{start} and #{end}
-    </select>
-    <select id="selectOneCard" resultType="kh.final_project.dto.GalleryCardView">
-        select * from view_gallery_cards where seq = #{cardSeq}
-    </select>
+	<select id="selectAllCards" resultType="kh.final_project.dto.GalleryCardView">
+		select * from (
+		select view_gallery_cards.*, row_number() over(order by
+		<choose>
+			<when test="sortCode != null">
+				${sortKeyword} ${sortVal} nulls last
+			</when>
+			<otherwise>
+				write_date desc nulls last
+			</otherwise>
+		</choose>
+		) rn from view_gallery_cards
+		<trim prefix="where" prefixOverrides="and |or ">
+			<if test="typeCode != null">
+				category_type = #{typeCode, jdbcType=NUMERIC}
+			</if>
+			<if test="searchQuery != null">
+				<if test="searchCode != 1001">
+					and ${searchKeyword} like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%'
+				</if>
+				and (title like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%' or writer like '%'||nvl(#{searchQuery, jdbcType=VARCHAR}, '')||'%')
+			</if>
+			and yn = 'Y'
+			<!-- and (writer = #{writer, jdbcType=NUMERIC} or yn = 'Y') -->
+		</trim>
+		) where rn between #{start, jdbcType=NUMERIC} and #{end, jdbcType=NUMERIC}
+	</select>
+	<select id="selectOneCard" resultType="kh.final_project.dto.GalleryCardView">
+		select * from view_gallery_cards where seq = #{cardSeq, jdbcType=NUMERIC}
+	</select>
 
-    <select id="selectAllContents" resultType="kh.final_project.dto.GalleryContent">
-        select *
-        from (select gallery_contents.*, row_number() over(order by write_date ${sort} nulls last) rn from gallery_contents where gallery_cards = ${cardSeq} and yn = 'Y')
-        where rn between #{start} and #{end}
-    </select>
+	<select id="selectAllContents" resultType="kh.final_project.dto.GalleryContent">
+		select *
+		from (select gallery_contents.*, row_number() over(order by write_date ${sort} nulls last) rn from gallery_contents where gallery_cards = ${cardSeq} and yn = 'Y')
+		where rn between #{start, jdbcType=NUMERIC} and #{end, jdbcType=NUMERIC}
+	</select>
 
-    <select id="selectOneContent" resultType="kh.final_project.dto.GalleryContent">
-        select gallery_contents.*, gallery_cards.category_type, gallery_cards.writer
-        from gallery_contents
-        left outer join gallery_cards on gallery_contents.gallery_cards = gallery_cards.seq
-        where gallery_contents.gallery_cards = ${cardSeq} and gallery_contents.seq = ${contentSeq}
-    </select>
+	<select id="selectOneContent" resultType="kh.final_project.dto.GalleryContent">
+		select gallery_contents.*, gallery_cards.category_type, gallery_cards.writer
+		from gallery_contents
+		left outer join gallery_cards on gallery_contents.gallery_cards = gallery_cards.seq
+		where gallery_contents.gallery_cards = #{cardSeq, jdbcType=NUMERIC} and gallery_contents.seq = #{contentSeq, jdbcType=NUMERIC}
+	</select>
 
-    <select id="selectMyCards" resultType="kh.final_project.dto.GalleryCardView">
-        select * from view_gallery_cards where writer = ${code}
-    </select>
+	<select id="selectMyCards" resultType="kh.final_project.dto.GalleryCardView">
+		select * from view_gallery_cards where writer = ${code, jdbcType=NUMERIC}
+	</select>
 
-    <update id="updateViewCount">
-        update gallery_contents set total_count = total_count + 1, day_count = day_count + 1 where seq = ${contentSeq}
-    </update>
+	<update id="updateViewCount">
+		update gallery_contents set total_count = total_count + 1, day_count = day_count + 1 where seq = #{contentSeq, jdbcType=NUMERIC}
+	</update>
 
-    <update id="updateCard">
-        update gallery_cards set
-        <choose>
-            <when test="genre_type1 != null">
-                genre_type1 = ${genre_type1},
-            </when>
-            <otherwise>
-                genre_type1 = null,
-            </otherwise>
-        </choose>
-        <choose>
-            <when test="genre_type2 != null">
-                genre_type2 = ${genre_type2},
-            </when>
-            <otherwise>
-                genre_type2 = null,
-            </otherwise>
-        </choose>
-        ai = #{ai}, title = #{title}, catchphrase = #{catchphrase}, synopsis = #{synopsis}, thumbnail_url = #{thumbnail_url}, yn = #{yn} where seq = ${seq}
-    </update>
-    <update id="updateContent">
-        update gallery_contents set title = #{title},
-        <choose>
-            <when test="file_url != null">
-                file_url = #{file_url},
-            </when>
-            <when test="video_url != null">
-                video_url = #{video_url},
-            </when>
-            <otherwise>
-            </otherwise>
-        </choose>
-        txt = #{txt}, yn = #{yn} where seq = ${seq} and gallery_cards = ${gallery_cards}
-    </update>
-    <update id="updateCardDisclosure">
-        update gallery_cards set yn = #{value} where seq = #{cardSeq}
-    </update>
-    <update id="updateContentDisclosure">
-        update gallery_contents set yn = #{value} where seq = #{cardSeq}
-    </update>
-    <delete id="deleteCard">
-        delete from gallery_cards where seq = #{cardSeq}
-    </delete>
-    <delete id="deleteContent">
-        delete from gallery_contents where seq = ${contentSeq} and gallery_cards = ${cardSeq}
-    </delete>
+	<update id="updateCard">
+		update gallery_cards set
+		<choose>
+			<when test="genre_type1 != null">
+				genre_type1 = #{genre_type1, jdbcType=NUMERIC},
+			</when>
+			<otherwise>
+				genre_type1 = null,
+			</otherwise>
+		</choose>
+		<choose>
+			<when test="genre_type2 != null">
+				genre_type2 = #{genre_type2, jdbcType=NUMERIC},
+			</when>
+			<otherwise>
+				genre_type2 = null,
+			</otherwise>
+		</choose>
+		ai = #{ai, jdbcType=VARCHAR}, title = #{title, jdbcType=VARCHAR}, catchphrase = #{catchphrase, jdbcType=VARCHAR}, synopsis = #{synopsis, jdbcType=VARCHAR}, thumbnail_url = #{thumbnail_url, jdbcType=VARCHAR}, yn = #{yn, jdbcType=VARCHAR} where seq = #{seq, jdbcType=NUMERIC}
+	</update>
+	<update id="updateContent">
+		update gallery_contents set title = #{title, jdbcType=VARCHAR},
+		<choose>
+			<when test="file_url != null">
+				file_url = #{file_url, jdbcType=VARCHAR},
+			</when>
+			<when test="video_url != null">
+				video_url = #{video_url, jdbcType=VARCHAR},
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+		txt = #{txt, jdbcType=VARCHAR}, yn = #{yn, jdbcType=VARCHAR} where seq = #{seq, jdbcType=NUMERIC} and gallery_cards = #{gallery_cards, jdbcType=NUMERIC}
+	</update>
+	<update id="updateCardDisclosure">
+		update gallery_cards set yn = #{value, jdbcType=VARCHAR} where seq = #{cardSeq, jdbcType=NUMERIC}
+	</update>
+	<update id="updateContentDisclosure">
+		update gallery_contents set yn = #{value, jdbcType=VARCHAR} where seq = #{cardSeq, jdbcType=NUMERIC}
+	</update>
+	<delete id="deleteCard">
+		delete from gallery_cards where seq = #{cardSeq, jdbcType=NUMERIC}
+	</delete>
+	<delete id="deleteContent">
+		delete from gallery_contents where seq = #{contentSeq, jdbcType=NUMERIC} and gallery_cards = #{cardSeq, jdbcType=NUMERIC}
+	</delete>
 
-    <!--페이징-->
-    <select id="totalCards" resultType="java.lang.Integer">
-        select count(*) from view_gallery_cards
-        <trim prefix="where" prefixOverrides="and |or ">
-            <if test="typeCode != null">
-                category_type = ${typeCode}
-            </if>
-            <if test="searchQuery != null">
-                <if test="searchCode != 1001">
-                    and ${searchKeyword} like '%'||#{searchQuery}||'%'
-                </if>
-                and (title like '%'||#{searchQuery}||'%' or writer like '%'||#{searchQuery}||'%')
-            </if>
-            and yn = 'Y'
-        </trim>
-    </select>
+	<!--페이징 -->
+	<select id="totalCards" resultType="java.lang.Integer">
+		select count(*) from view_gallery_cards
+		<trim prefix="where" prefixOverrides="and |or ">
+			<if test="typeCode != null">
+				category_type = #{typeCode, jdbcType=NUMERIC}
+			</if>
+			<if test="searchQuery != null">
+				<if test="searchCode != 1001">
+					and ${searchKeyword} like '%'||#{searchQuery, jdbcType=VARCHAR}||'%'
+				</if>
+				and (title like '%'||#{searchQuery, jdbcType=VARCHAR}||'%' or writer like '%'||#{searchQuery, jdbcType=VARCHAR}||'%')
+			</if>
+			and yn = 'Y'
+		</trim>
+	</select>
 
-    <select id="totalContents" resultType="java.lang.Integer">
-        select count(*) from gallery_contents where gallery_cards = ${cardSeq} and yn = 'Y'
-    </select>
-
+	<select id="totalContents" resultType="java.lang.Integer">
+		select count(*) from gallery_contents where gallery_cards = #{cardSeq, jdbcType=NUMERIC} and yn = 'Y'
+	</select>
+	<select id="selectDailyPopCards" resultType="kh.final_project.dto.GalleryCardView">
+		select *
+		from
+		( select view_gallery_cards.*, row_number() over(order by day_count desc) rn
+		from view_gallery_cards
+		where day_count is not null and category_type = #{categoryType, jdbcType=NUMERIC}
+		)
+		where rn between 0 and 10
+	</select>
 </mapper>

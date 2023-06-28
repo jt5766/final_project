@@ -1,70 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Member">
-    <select id="PROC_CHK_MEMBER" statementType="CALLABLE" resultType="kh.final_project.dto.MemberDTO">
-        {
-            call PROC_CHK_MEMBER(
-                #{email, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
-                #{email_type, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer},
-                #{password, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
-                #{code, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer},
-                #{member_type, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer},
-                #{nickname, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
-            )
-        }
-    </select>
+	<select id="PROC_CHK_MEMBER" statementType="CALLABLE" resultType="kh.final_project.dto.MemberDTO">
+		{
+		call PROC_CHK_MEMBER(
+		#{email, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
+		#{email_type, mode=IN, jdbcType=NUMERIC, javaType=java.lang.Integer},
+		#{password, mode=IN, jdbcType=VARCHAR, javaType=java.lang.String},
+		#{code, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer},
+		#{member_type, mode=OUT, jdbcType=NUMERIC, javaType=java.lang.Integer},
+		#{nickname, mode=OUT, jdbcType=VARCHAR, javaType=java.lang.String}
+		)
+		}
+	</select>
 
-    <update id="Yupdate">
-        update members set yn = 'Y' where email = #{email} and email_type = #{email_type}
-    </update>
+	<update id="Yupdate">
+		update members set yn = 'Y' where email = #{email, jdbcType=VARCHAR} and email_type = #{email_type, jdbcType=NUMERIC}
+	</update>
 
-    <update id="Nupdate">
-        update members set yn ='N' where code = #{code}
-    </update>
+	<update id="Nupdate">
+		update members set yn ='N' where code = #{code, jdbcType=NUMERIC}
+	</update>
 
-    <update id="updatePassword">
-        update members set password = #{password} where email = #{email} and email_type = #{email_type}
-    </update>
+	<update id="updatePassword">
+		update members set password = #{password, jdbcType=VARCHAR} where email = #{email, jdbcType=VARCHAR} and email_type = #{email_type, jdbcType=NUMERIC}
+	</update>
 
-    <select id="passwordCheck" resultType="boolean">
-        select count(*) from members where password = #{password} and nickname=#{nickname}
-    </select>
+	<select id="passwordCheck" resultType="boolean">
+		select count(*) from members where password = #{password, jdbcType=VARCHAR} and nickname=#{nickname, jdbcType=VARCHAR}
+	</select>
 
-    <insert id="insert">
-        insert into members
-        (code, member_type, email, email_type, password, nickname, file_url)
-        values
-        (member_code_seq.nextval,#{member_type},#{email},#{email_type},#{password},#{nickname}, #{file_url ,jdbcType=VARCHAR} )
-    </insert>
+	<insert id="insert">
+		insert into members
+		(code, member_type, email, email_type, password, nickname, file_url)
+		values
+		(member_code_seq.nextval,#{member_type, jdbcType=NUMERIC},#{email, jdbcType=VARCHAR},#{email_type, jdbcType=NUMERIC},#{password, jdbcType=VARCHAR},#{nickname, jdbcType=VARCHAR}, #{file_url ,jdbcType=VARCHAR} )
+	</insert>
 
-    <!--이메일 인증 -->
-    <select id="selectEmail" resultType="kh.final_project.dto.EmailTypeDTO">
-        select * from email_type where yn = 'Y'
-    </select>
-    <select id="getEmailName" resultType="String">
-        select name from email_type where code = #{email_type}
-    </select>
+	<!--이메일 인증 -->
+	<select id="selectEmail" resultType="kh.final_project.dto.EmailTypeDTO">
+		select * from email_type where yn = 'Y'
+	</select>
+	<select id="getEmailName" resultType="String">
+		select name from email_type where code = #{email_type, jdbcType=NUMERIC}
+	</select>
 
-    <select id="getEmailCode" resultType="Integer">
-        select code from email_type where name= #{value}
-    </select>
+	<select id="getEmailCode" resultType="Integer">
+		select code from email_type where name= #{value, jdbcType=VARCHAR}
+	</select>
 
-    <select id="selectDTO" resultType="kh.final_project.dto.MemberDTO">
-        select * from members where code = ${code}
-    </select>
+	<select id="selectDTO" resultType="kh.final_project.dto.MemberDTO">
+		select * from members where code = ${code, jdbcType=NUMERIC}
+	</select>
 
-    <update id="update">
-        update members set nickname = #{nickname} where code = ${code}
-    </update>
+	<update id="update">
+		update members set nickname = #{nickname, jdbcType=VARCHAR} where code = ${code, jdbcType=NUMERIC}
+	</update>
 
-    <delete id="delete">
-        delete from members where code = ${code}
-    </delete>
+	<delete id="delete">
+		delete from members where code = ${code, jdbcType=NUMERIC}
+	</delete>
 
-    <!--닉네임 체크-->
-    <select id="nicknameCheck" resultType="int">
-        select count(*) from members where nickname = #{nickname}
-    </select>
+	<!--닉네임 체크 -->
+	<select id="nicknameCheck" resultType="int">
+		select count(*) from members where nickname = #{nickname, jdbcType=VARCHAR}
+	</select>
+
+	<!-- 중복 이메일 체크 -->
+	<select id="check" resultType="boolean">
+		select count(*) from members where email = #{email, jdbcType=VARCHAR} and email_type=${email_type, jdbcType=NUMERIC}
+	</select>
 </mapper>

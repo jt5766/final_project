@@ -95,9 +95,21 @@ public class BoardsDTO {
 	}
 
 	public String getFormed_date() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy\nMM-dd");
-		long wd = this.write_date.getTime();
-		Date date = new Date(wd);
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		Date currentDate = new Date(System.currentTimeMillis());
+		Date date = new Date(this.getWrite_date().getTime());
+		long diff = currentDate.getTime() - date.getTime();
+		long oneDay = 24 * 60 * 60 * 1000;
+		if (diff >= oneDay) {
+			sdf.applyPattern("yyyy-MM-dd");
+		} else {
+			sdf.applyPattern("HH:mm:ss");
+		}
 		return sdf.format(date);
+	}
+
+	public String getFull_date() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(this.write_date);
 	}
 }

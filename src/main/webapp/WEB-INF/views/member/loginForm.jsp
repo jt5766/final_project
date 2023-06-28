@@ -11,126 +11,189 @@
     <c:import url="${path}/resources/js/scripts.jsp"/>
     <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
+<body>
 <style>
+
     * {
-        box-sizing: border-box;
-    }
-    body{
-        background-color: #fff;
+        /*border: 1px solid black;*/
     }
 
-    #container {
-        margin: auto;
-        text-align: center;
-        height: 100vh;
+    #wrap {
+        display: flex;
+        justify-content: center;
+        border: 1px solid black;
+        flex-direction: column;
+        align-items: center;
+        width: 100vw;
     }
 
-    #header {
-        height: 20%;
+    #header, #footer {
+        width: 100%;
+
     }
+
 
     #body {
-        height: 60%;
-        overflow: hidden;
-    }
-
-    #footer {
-        height: 20%;
-    }
-
-    #body > div {
-        float: left;
-        height: 100%;
-    }
-
-    #body_left {
-        width: 30%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        width: 30vw;
+        height: 60vh;
+        margin: auto;
     }
 
 
-    #body_center {
-        width: 40%;
-    }
-
-    #input_id {
-        width: 250px;
-        height: 100%;
-    }
-
-    #input_pw {
-        width: 250px;
-        height: 100%;
-    }
-
-    #body_center > div {
+    #idCheck_box {
+        display: flex;
+        justify-content: space-between;
         width: 100%;
-        height: 10%;
+        font-size: 12px;
+        margin-bottom: 5px;
     }
 
-    #id_box > div {
-        float: left;
+    #login_box {
+        width: 100%;
+    }
+
+    #login_box2 {
+        width: 100%;
+    }
+
+    #input_email_box {
+
+        height: 30px;
+    }
+
+    #input_email {
+        width: 100%;
         height: 100%;
-        width: 50%;
     }
 
-    #login_btn {
-        width: 200px;
-        height: 100%;
+    #password_box {
+        width: 100%;
+        font-size: 12px;
+
     }
 
-    #signup_btn {
-        width: 200px;
-        height: 100%;
+    #password_font {
+        margin-bottom: 5px;
     }
 
-
-    #body_right {
-        width: 30%;
+    #input_password {
+        width: 100%;
+        height: 30px;
     }
 
+    input {
 
-    #password_box > div {
-        float: left;
-        height: 100%;
-        width: 50%;
+        font-size: 13px;
+        border: 0px;
+        border-bottom: 1px solid #ddd;
+        transition-duration: .4s;
+        outline: none;
+    }
+
+    input:focus {
+        border-bottom: 1px solid #ca9372;
+    }
+
+    #find_password {
+        width: 100%;
+    }
+
+    #btns {
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+
+        gap: 10px;
+    }
+
+    #btns > button {
+        height: 30px;
+    }
+
+    a {
+        text-decoration-line: none;
+        color: rgb(93, 93, 93);
+    }
+
+    #checkId {
+        accent-color: #ca9372;
     }
 
 
 </style>
-<body>
-
-<div id="container">
-    <div id="header"><c:import url="${path}/resources/js/GNB.jsp"/></div>
+<!-- GNB & LNB -->
+<c:import url="${path}/resources/js/GNB.jsp">
+    <c:param name="pageName" value="home" />
+    <c:param name="btnNum" value="1" />
+</c:import>
+<!-- CONTENTS -->
+<div class="container-xl  position-relative p-0">
     <div id="body">
-        <div id="body_left"></div>
-        <div id="body_center">
-            <div></div>
-            <div id="id_box">
-                <div id="id_box_left">아이디</div>
-                <div id="id_box_right"><input type="checkbox" id="checkId">아이디저장</div>
-            </div>
-            <div><input id="input_id" name="email" type="text" placeholder="내용을 입력해주세요"></div>
-            <div id="password_box">
-                <div id="password_box_left">비밀번호</div>
-                <div id="password_box_right"></div>
-            </div>
-            <div><input id="input_pw" name="password" type="password" placeholder="내용을 입력해주세요"></div>
-            <div></div>
-            <div><a href="/member/findPassword">비밀번호 찾기</a></div>
-            <div>
-                <button type="button" id="login_btn">로그인</button>
-            </div>
-            <div>
-                <button type="button" id="signup_btn">회원가입</button>
-            </div>
-            <div></div>
+                <div id="login_box">
+                    <div id="idCheck_box">
+                        <div id="id_font">아이디</div>
+                        <div><input type="checkbox" id="checkId"> 아이디 저장</div>
+                    </div>
+                    <div id="input_email_box">
+                        <input type="text" id="input_email" name="email" placeholder="email">
+                    </div>
+                </div>
+                <div id="login_box2">
+                    <div id="password_box">
+                        <div id="password_font">비밀번호</div>
+                        <input type="password" id="input_password" name="password" placeholder="password">
+                    </div>
+                </div>
+                <div id="find_password">
+                    <a href="/member/findPassword">비밀번호 찾기</a>
+                </div>
+                <div id="btns">
+                    <button type="button" id="login_btn">로그인</button>
+                    <button type="button" id="signup_btn">회원가입</button>
+                </div>
 
-        </div>
-        <div id="body_right"></div>
-    </div>
-    <div id="footer"><c:import url="${path}/resources/js/FOOTER.jsp"/></div>
-
+            </div>
 </div>
+<!-- FOOTER -->
+<c:import url="${path}/resources/js/FOOTER.jsp" />
+<!-- script - Contents -->
+
+<%--<div id="wrap">--%>
+<%--    <div id="header"><c:import url="${path}/resources/js/GNB.jsp"/></div>--%>
+<%--    <div id="body">--%>
+<%--        <div id="login_box">--%>
+<%--            <div id="idCheck_box">--%>
+<%--                <div id="id_font">아이디</div>--%>
+<%--                <div><input type="checkbox" id="checkId"> 아이디 저장</div>--%>
+<%--            </div>--%>
+<%--            <div id="input_email_box">--%>
+<%--                <input type="text" id="input_email" name="email" placeholder="email">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div id="login_box2">--%>
+<%--            <div id="password_box">--%>
+<%--                <div id="password_font">비밀번호</div>--%>
+<%--                <input type="password" id="input_password" name="password" placeholder="password">--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--        <div id="find_password">--%>
+<%--            <a href="/member/findPassword">비밀번호 찾기</a>--%>
+<%--        </div>--%>
+<%--        <div id="btns">--%>
+<%--            <button type="button" id="login_btn">로그인</button>--%>
+<%--            <button type="button" id="signup_btn">회원가입</button>--%>
+<%--        </div>--%>
+
+<%--    </div>--%>
+<%--    <div id="footer"><c:import url="${path}/resources/js/FOOTER.jsp"/></div>--%>
+
+<%--</div>--%>
+
 
 </body>
 
@@ -138,14 +201,29 @@
 
 
     $(document).ready(function () {
+        if("${result}" > 0){
+            alert("회원가입을  축하드립니다");
+            history.pushState(null, null, "http://localhost:8080/member/createMember");
+            window.onpopstate = function (event) {
+                history.go(1);
+            };
+        }else if(${status == 'cancel'}) {
+            history.pushState(null, null, "http://localhost:8080/member/loginForm");
+            window.onpopstate = function (event) {
+                history.go(1);
+            }
+        }else if(${emailCheck == true}) {
+            alert("가입되어있는 이메일입니다")
+        }
+
         $("#signup_btn").click(function () {
             location.href = "/member/signup";
-        })
+        });
 
 
         $("#login_btn").click(function () {
-            const email = $("#input_id").val();
-            const password = $("#input_pw").val();
+            const email = $("#input_email").val();
+            const password = $("#input_password").val();
             if (email == "" || password == "" || !email.includes("@")) {
                 alert("아이디 또는 비밀번호를 입력해주세요");
                 return;
@@ -169,8 +247,8 @@
                 } else {
                     if ($("#checkId").is(":checked")) {
                         console.log("!!!!!!!!");
-                        console.log($("#input_id").val());
-                        setCookie("email", $("#input_id").val(), 30); // 30일 동안 쿠키 보관
+                        console.log($("#input_email").val());
+                        setCookie("email", $("#input_email").val(), 30); // 30일 동안 쿠키 보관
                     }
                     alert("로그인 성공");
                     location.href = "/";
@@ -183,18 +261,19 @@
         // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
         var key = getCookie("email");
         console.log(key);
-        $("#input_id").val(key);
+        $("#input_email").val(key);
 
         // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
-        if ($("#input_id").val() != "") {
+        if ($("#input_email").val() != "") {
             $("#checkId").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
         }
 
-        $("#checkId").on("change", function (){
-           if(!$("#checkId").is(":checked")){
-               console.log("????");
-               deleteCookie("email");
-           }
+        $("#checkId").on("change", function () {
+            if (!$("#checkId").is(":checked")) {
+                console.log("????");
+                deleteCookie("email");
+            }
+
         });
 
         // 쿠키 저장하기
@@ -231,6 +310,8 @@
             }
             return unescape(cookieValue);
         }
+
+
     });
 
 

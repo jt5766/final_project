@@ -19,6 +19,7 @@ public class GalleryCardView {
     private String synopsis;
     private LocalDateTime write_date;
     private Integer total_count;
+    private Integer day_count;
     private String yn;
 
     public Long getSeq() {
@@ -155,5 +156,37 @@ public class GalleryCardView {
 
     public void setYn(String yn) {
         this.yn = yn;
+    }
+
+    public Integer getDay_count() {
+        return day_count;
+    }
+
+    public void setDay_count(Integer day_count) {
+        this.day_count = day_count;
+    }
+
+    @Override
+    public String toString() {
+        return "GalleryCardView{" +
+                "\nseq=" + seq +
+                "\nthumbnail_url='" + thumbnail_url + '\'' +
+                "\ncategory_type=" + category_type +
+                "\ncategory_name='" + category_name + '\'' +
+                "\ngenre_type1=" + genre_type1 +
+                "\ngenre_name1='" + genre_name1 + '\'' +
+                "\ngenre_type2=" + genre_type2 +
+                "\ngenre_name2='" + genre_name2 + '\'' +
+                "\nai='" + ai + '\'' +
+                "\ntitle='" + title + '\'' +
+                "\nwriter=" + writer +
+                "\nmember_name='" + member_name + '\'' +
+                "\ncatchphrase='" + catchphrase + '\'' +
+                "\nsynopsis='" + synopsis + '\'' +
+                "\nwrite_date=" + write_date +
+                "\ntotal_count=" + total_count +
+                "\nday_count=" + day_count +
+                "\nyn='" + yn + '\'' +
+                '}';
     }
 }
