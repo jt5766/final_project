@@ -3,6 +3,7 @@ package kh.final_project.controllers;
 
 import kh.final_project.dto.EmailTypeDTO;
 import kh.final_project.dto.MemberDTO;
+import kh.final_project.listener.SessionListener;
 import kh.final_project.services.EmailcheckService;
 import kh.final_project.services.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,18 +134,18 @@ public class MemberController {
     }
 
     @RequestMapping("logOut")
-
     public String logOut(MemberDTO dto){
         System.out.println("로그아웃 dto :"+dto);
-
-        if(session.getAttribute("code") == null) {
-            return "redirect:home";
-        }
-        dto.setCode((Integer) session.getAttribute("code"));
-        memberService.Nupdate(dto);
-        session.removeAttribute("code");
-        session.removeAttribute("nickName");
-        session.removeAttribute("memberType");
+        
+        SessionListener.logout(session);
+//        if(session.getAttribute("code") == null) {
+//            return "redirect:home";
+//        }
+//        dto.setCode((Integer) session.getAttribute("code"));
+//        memberService.Nupdate(dto);
+//        session.removeAttribute("code");
+//        session.removeAttribute("nickName");
+//        session.removeAttribute("memberType");
         return "redirect:/";
     }
     @RequestMapping("findPassword")
