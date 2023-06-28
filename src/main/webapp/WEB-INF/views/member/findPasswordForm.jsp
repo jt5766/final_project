@@ -119,16 +119,16 @@
         <c:import url="${path}/resources/js/FOOTER.jsp"/>
 
 
-<%--            <input type="hidden" name="email" value="${email}">--%>
-<%--            <input type="hidden" name="email_type" value="${email_type}">--%>
-<%--            이메일--%>
-<%--            <input type="text" readonly value="${email}@${set_email_type}"> <br>--%>
-<%--            새로운 비밀번호를 입력해주세요--%>
-<%--            <input type="password" name="password"> <br>--%>
+        <%--            <input type="hidden" name="email" value="${email}">--%>
+        <%--            <input type="hidden" name="email_type" value="${email_type}">--%>
+        <%--            이메일--%>
+        <%--            <input type="text" readonly value="${email}@${set_email_type}"> <br>--%>
+        <%--            새로운 비밀번호를 입력해주세요--%>
+        <%--            <input type="password" name="password"> <br>--%>
 
-<%--            비밀번호를 확인해주세요--%>
-<%--            <input type="password"> <br>--%>
-<%--            <input type="submit">--%>
+        <%--            비밀번호를 확인해주세요--%>
+        <%--            <input type="password"> <br>--%>
+        <%--            <input type="submit">--%>
 
     </c:otherwise>
 </c:choose>
