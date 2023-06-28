@@ -38,11 +38,6 @@ public class CommunityController {
 		return "redirect:/error";
 	}
 
-	@RequestMapping("toHome")
-	public String toHome() {
-		return "community/community_home";
-	}
-
 	@RequestMapping("toBoard")
 	public String toBoard(CategoryType categoryType, Model model, int currentPage) {
 		List<CategoryType> search = communityService.getCommunitySearch();

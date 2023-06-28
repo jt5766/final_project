@@ -83,10 +83,10 @@
 						<div>
 							<div style="display: flex; align-items: center;">
 								<div style="flex: 9; padding: 15px;">
-									<textarea name="txt" style="text-align: left; width: 100%; resize: none;" placeholder="댓글을 입력해주세요" required></textarea>
+									<textarea name="txt" id="inputReply" style="text-align: left; width: 100%; resize: none;" placeholder="댓글을 입력해주세요" required></textarea>
 								</div>
 								<div style="flex: 1;" class="replySubmit">
-									<input type="submit" value="댓글 달기">
+									<input type="submit" value="댓글 달기" id="submitReply">
 								</div>
 							</div>
 						</div>
@@ -171,68 +171,74 @@
 	<c:import url="${path}/resources/js/FOOTER.jsp" />
 	<!-- script - Contents -->
 	<script>
-	$("#textarea_contents").summernote({
-	    height : 400,
-	    toolbar : [],
-	    disableDragAndDrop : true,
-	    shortcuts : false,
-	    tabDisable : true
-	});
-	$('.note-statusbar').hide();
-	$("#textarea_contents").summernote("disable");
-	
-	$(".updateReply").on("click", function() {
-	    let submit = $("<input type='submit'>");
-	    submit.val("수정");
-	    let cancel = $("<input type='button'>");
-	    cancel.val("취소");
-	    cancel.on("click", function() {
-			location.reload();
-	    });
-	    $(this).parent().parent().prev().find("textarea").removeAttr("readonly");
-	    $(this).parent().parent().prev().find("textarea").focus();
-	    $(this).parent().append(submit, cancel);
-	    $(this).next().hide();
-		$(this).hide();
-	});
-	
-	$(".reReplyBtn").on("click", function () {
-	    const reply = $(this).closest($("#reply"));
-	    const writer = "${sessionScope.nickName}";
-	    const reReplyForm = $("<form action='/community/insertReply'>");
-	    const container = $("<div id='reReply'>");
-	    const header = $("<div style='display: flex;'>");
-	    const headerSpace = $("<div style='flex: 1; text-align: center;'>")
-	    const headerContent = $("<div style='text-align: left; flex: 20;'>");
-	    header.append(headerSpace, headerContent);
-	    headerSpace.html("<i class='bi bi-arrow-90deg-up'></i>");
-	    const body = $("<div style='display: flex; align-items: center;'>");
-	    const bodySpace = $("<div style='flex: 1;'>");
-	    const bodyContent = $("<div style='flex: 12;'>");
-	    const bodyButton = $("<div style='flex: 2; text-align: center;'>");
-	    body.append(bodySpace, bodyContent, bodyButton);
-	    const textarea = $("<textarea style='text-align: left; width: 100%; resize: none;' name='txt' placeholder='대댓글을 입력해주세요'>");
-	   	const submit = $("<input type='submit' value='대댓글 달기' style='flex: 1'>");
-	   	const parent_reply = $(this).closest($(".reply")).find($(".replySeq")).val();
-	   	const hiddenParentReply = $("<input type='hidden' name='parent_reply'>");
-	   	hiddenParentReply.val(parent_reply);
-	   	const hiddenBoardType = $("<input type='hidden' name='board_type'>");
-	   	hiddenBoardType.val(${info.board_type});
-	   	const hiddenReplyType = $("<input type='hidden' name='reply_type'>");
-		hiddenReplyType.val(1002);
-		const hiddenParentBoard = $("<input type='hidden' name='parent_board'>");
-		hiddenParentBoard.val(${info.seq});
-		const hiddenWriter = $("<input type='hidden' name='writer'>");
-		hiddenWriter.val("${sessionScope.code}");
-	   	headerContent.html(writer);
-	   	headerSpace.append(hiddenParentReply, hiddenBoardType, hiddenReplyType, hiddenParentBoard, hiddenWriter);
-	   	bodyContent.append(textarea);
-	   	bodyButton.append(submit);
-	   	container.append(header, body);
-	   	reReplyForm.append(container);
-	   	$(this).closest($("form")).after(reReplyForm);
-	   	$(this).hide();
-	});
+		if("${sessionScope.code}" == "") {
+		    $('#inputReply').attr("placeholder", "로그인 시 이용 가능한 서비스입니다.");
+		    $('#inputReply').attr("readonly", "readonly");
+		    $("#submitReply").attr("disabled", "disabled");
+		    $(".reReplyBtn").hide();
+		}
+		$("#textarea_contents").summernote({
+		    height : 400,
+		    toolbar : [],
+		    disableDragAndDrop : true,
+		    shortcuts : false,
+		    tabDisable : true
+		});
+		$('.note-statusbar').hide();
+		$("#textarea_contents").summernote("disable");
+		
+		$(".updateReply").on("click", function() {
+		    let submit = $("<input type='submit'>");
+		    submit.val("수정");
+		    let cancel = $("<input type='button'>");
+		    cancel.val("취소");
+		    cancel.on("click", function() {
+				location.reload();
+		    });
+		    $(this).parent().parent().prev().find("textarea").removeAttr("readonly");
+		    $(this).parent().parent().prev().find("textarea").focus();
+		    $(this).parent().append(submit, cancel);
+		    $(this).next().hide();
+			$(this).hide();
+		});
+		
+		$(".reReplyBtn").on("click", function () {
+		    const reply = $(this).closest($("#reply"));
+		    const writer = "${sessionScope.nickName}";
+		    const reReplyForm = $("<form action='/community/insertReply'>");
+		    const container = $("<div id='reReply'>");
+		    const header = $("<div style='display: flex;'>");
+		    const headerSpace = $("<div style='flex: 1; text-align: center;'>")
+		    const headerContent = $("<div style='text-align: left; flex: 20;'>");
+		    header.append(headerSpace, headerContent);
+		    headerSpace.html("<i class='bi bi-arrow-90deg-up'></i>");
+		    const body = $("<div style='display: flex; align-items: center;'>");
+		    const bodySpace = $("<div style='flex: 1;'>");
+		    const bodyContent = $("<div style='flex: 12;'>");
+		    const bodyButton = $("<div style='flex: 2; text-align: center;'>");
+		    body.append(bodySpace, bodyContent, bodyButton);
+		    const textarea = $("<textarea style='text-align: left; width: 100%; resize: none;' name='txt' placeholder='대댓글을 입력해주세요'>");
+		   	const submit = $("<input type='submit' value='대댓글 달기' style='flex: 1'>");
+		   	const parent_reply = $(this).closest($(".reply")).find($(".replySeq")).val();
+		   	const hiddenParentReply = $("<input type='hidden' name='parent_reply'>");
+		   	hiddenParentReply.val(parent_reply);
+		   	const hiddenBoardType = $("<input type='hidden' name='board_type'>");
+		   	hiddenBoardType.val(${info.board_type});
+		   	const hiddenReplyType = $("<input type='hidden' name='reply_type'>");
+			hiddenReplyType.val(1002);
+			const hiddenParentBoard = $("<input type='hidden' name='parent_board'>");
+			hiddenParentBoard.val(${info.seq});
+			const hiddenWriter = $("<input type='hidden' name='writer'>");
+			hiddenWriter.val("${sessionScope.code}");
+		   	headerContent.html(writer);
+		   	headerSpace.append(hiddenParentReply, hiddenBoardType, hiddenReplyType, hiddenParentBoard, hiddenWriter);
+		   	bodyContent.append(textarea);
+		   	bodyButton.append(submit);
+		   	container.append(header, body);
+		   	reReplyForm.append(container);
+		   	$(this).closest($("form")).after(reReplyForm);
+		   	$(this).hide();
+		});
     </script>
 </body>
 
