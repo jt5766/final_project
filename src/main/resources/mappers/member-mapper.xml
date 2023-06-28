@@ -68,6 +68,6 @@
 
 	<!-- 중복 이메일 체크 -->
 	<select id="check" resultType="boolean">
-		select count(*) from members where email = #{email, jdbcType=VARCHAR} and email_type=${email_type, jdbcType=NUMERIC}
+		select count(*) from members where email = #{email, jdbcType=VARCHAR} and email_type=#{email_type, jdbcType=NUMERIC}
 	</select>
 </mapper>

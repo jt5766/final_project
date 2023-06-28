@@ -5,9 +5,7 @@ import kh.final_project.services.GalleryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -59,6 +57,15 @@ public class GalleryController {
     public String toCard(@PathVariable Long cardSeq, GalleryCardDTO galleryCardDTO, Model model) {
         GalleryCardView card = galleryService.selectOneCard(cardSeq);
         List<GalleryContent> contents = galleryService.selectAllContents(galleryCardDTO);
+        if (session.getAttribute("memberType") != null){
+            if ((Integer) session.getAttribute("memberType") == 2000) {
+                Integer myCode = (Integer) session.getAttribute("code");
+                Integer menteeCode = card.getWriter();
+                Boolean isDuple = galleryService.dupleInviteCheck(myCode, menteeCode);
+                model.addAttribute("isDuple", isDuple);
+                System.out.println("isDuple = " + isDuple);
+            }
+        }
         setNaviOfContents(model, galleryCardDTO);
         model.addAttribute("card", card);
         model.addAttribute("contents", contents);
@@ -112,17 +119,18 @@ public class GalleryController {
 
     @PostMapping("/insert")
     public String insertCard(@ModelAttribute GalleryCard card, BindingResult bindingResult, @RequestPart(value = "thumbnail_image", required = false) MultipartFile multipartFile, Model model) throws IOException {
-        if (!StringUtils.hasText(card.getTitle())) {
-            bindingResult.addError(new FieldError("card", "title", "제목을 입력해주세요."));
-        }
-        if (card.getTitle().length() > 30) {
-            bindingResult.addError(new FieldError("card", "title", card.getTitle(), false, null, null, "제목은 30자를 넘을 수 없습니다."));
-        }
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("bindingResult", bindingResult);
-            model.addAttribute("categoryType", card.getCategory_type());
-            return "/gallery/card/insert";
-        }
+//        if (!StringUtils.hasText(card.getTitle())) {
+//            bindingResult.addError(new FieldError("card", "title", "제목을 입력해주세요."));
+//        }
+//        if (card.getTitle().length() > 30) {
+//            bindingResult.addError(new FieldError("card", "title", card.getTitle(), false, null, null, "제목은 30자를 넘을 수 없습니다."));
+//        }
+//        if (bindingResult.hasErrors()) {
+//            model.addAttribute("bindingResult", bindingResult);
+//            model.addAttribute("categoryType", card.getCategory_type());
+//            return "/gallery/card/insert";
+//        }
+        // TODO: 서버 측 파라미터 2차 검증 로직
         String realPath = session.getServletContext().getRealPath("resources");
         galleryService.insertCard(card, multipartFile, realPath);
         return "redirect:/gallery";
@@ -143,6 +151,9 @@ public class GalleryController {
 
     @PostMapping("/{cardSeq}/modify")
     public String modifyCard(GalleryCard card, @PathVariable Long cardSeq, @RequestPart(value = "thumbnail_image", required = false) MultipartFile multipartFile) throws IOException {
+        if (card.getWriter() != (Integer) session.getAttribute("code")) {
+            return "redirect:/gallery/category/1001";
+        }
         String realPath = session.getServletContext().getRealPath("resources");
         galleryService.updateCard(card, multipartFile, realPath);
         return "redirect:/gallery/{cardSeq}";

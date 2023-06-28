@@ -202,19 +202,19 @@ public class AdminService {
 	public List<CategoryType> selectCategory(String tableName) {
 		List<CategoryType> result = null;
 		if (tableName.equals("EMAIL_TYPE")) {
-			result = typeDAO.selectByEmailType();
+			result = typeDAO.selectByEmailType("admin");
 		} else if (tableName.equals("GENRE_TYPE")) {
-			result = typeDAO.selectByGenreType();
+			result = typeDAO.selectByGenreType("admin");
 		} else if (tableName.equals("GALLERY_CARDS_SORT")) {
-			result = typeDAO.selectByGallery_Cards_Sort();
+			result = typeDAO.selectByGallery_Cards_Sort("admin");
 		} else if (tableName.equals("GALLERY_CARDS_SEARCH")) {
-			result = typeDAO.selectByGallery_Cards_Search();
+			result = typeDAO.selectByGallery_Cards_Search("admin");
 		} else if (tableName.equals("GALLERY_CONTENTS_SORT")) {
-			result = typeDAO.selectByGallery_Contents_Sort();
+			result = typeDAO.selectByGallery_Contents_Sort("admin");
 		} else if (tableName.equals("COMMUNITY_SORT")) {
-			result = typeDAO.selectByCommunity_Sort();
+			result = typeDAO.selectByCommunity_Sort("admin");
 		} else if (tableName.equals("COMMUNITY_SEARCH")) {
-			result = typeDAO.selectByCommunity_Search();
+			result = typeDAO.selectByCommunity_Search("admin");
 		}
 
 		return result;

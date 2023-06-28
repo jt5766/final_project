@@ -5,6 +5,9 @@
 		SELECT * FROM ${value} ORDER BY CODE ASC
 	</select>
 	<select id="SelectType2" resultType="kh.final_project.dto.CategoryType">
+		SELECT * FROM ${value} WHERE YN = 'Y' ORDER BY YN DESC, SORT ASC
+	</select>
+	<select id="SelectType2_" resultType="kh.final_project.dto.CategoryType">
 		SELECT * FROM ${value} ORDER BY YN DESC, SORT ASC
 	</select>
 	<select id="SelectType2ByCode" resultType="kh.final_project.dto.CategoryType">

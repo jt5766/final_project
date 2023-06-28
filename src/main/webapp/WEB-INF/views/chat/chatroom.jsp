@@ -32,7 +32,6 @@
 <body>
 	<script>
 		let regexSize = /^.{0,500}$/s;
-		let regexSinglequotation = /\'/g;
 		let year = null;
 		let month = null;
 		let date = null;
@@ -40,7 +39,7 @@
 		let addMonth = null;
 		let addDate = null;
 		$(function(){
-			const socket = new WebSocket("ws://3.39.227.39/chat");
+			const socket = new WebSocket("ws://192.168.50.203/chat");
 			const stompClient = Stomp.over(socket);
 			
 			stompClient.connect({},function(){
@@ -100,7 +99,7 @@
 			
 			$("#div_text").on("keydown",function(e){
 				if(e.key == "Enter" && e.shiftKey){
-						
+				
 				}else if(e.key == "Enter"){
 					e.preventDefault();
 					if($("#div_text").text().trim() == ""){
@@ -112,7 +111,7 @@
 							return false;
 						}
 						const backslash = $("#div_text").html().replace(/\\/g,"\\\\");
-						const updateText = backslash.replace(regexSinglequotation,"\\'");
+						const updateText = backslash.replace(/\'/g,"\\'");
 						const destination = "/app/message";
 						const header = {};
 						const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : updateText , write_date : new Date() , writernickname : "${nickName}"});

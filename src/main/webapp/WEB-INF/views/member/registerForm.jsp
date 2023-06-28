@@ -7,37 +7,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <c:set var="path" value="${pageContext.request.contextPath}"/>
     <c:import url="${path}/resources/js/scripts.jsp"/>
+    <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 
-<body>
+
 
 <style>
 
-    #wrap {
+    /*#wrap {*/
 
-        display: flex;
-        width: calc(100vw - (100vw - 100%));
-        height: 98vh;
-        justify-content: center;
-        align-items: center;
-        background-color: rgb(217, 223, 228);
-    }
-
-    #loginBox {
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 0 5px #c1bdbd;
-        padding: 20px 10px;
-
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 400px;
-        height: 600px;
-
-    }
+    /*    display: flex;*/
+    /*    width: calc(100vw - (100vw - 100%));*/
+    /*    height: 98vh;*/
+    /*    justify-content: center;*/
+    /*    align-items: center;*/
+    /*    background-color: rgb(217, 223, 228);*/
+    /*}*/
 
     h3 {
         font-size: 20px;
@@ -73,13 +58,37 @@
         padding: 5px 10px;
     }
 
+    #loginBox {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 5px #c1bdbd;
+        padding: 20px 10px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 400px;
+        height: 600px;
+
+    }
+
 
 </style>
+
+
+<body>
+
+<!-- GNB & LNB -->
+<c:import url="${path}/resources/js/GNB.jsp">
+    <c:param name="pageName" value="home" />
+    <c:param name="btnNum" value="1" />
+</c:import>
+<!-- CONTENTS -->
+<div class="container-xl  position-relative p-0">
 <form action="/member/createMember" method="post">
-    <div id="wrap">
 
         <div id="loginBox">
-
             <div>
                 <h3>Email</h3>
                     <input type="hidden" name="email_type" value="${emailType}">
@@ -105,19 +114,21 @@
             </div>
         </div>
 
-    </div>
-
 </form>
-<script>
-    function cancel(){
-        if(!confirm("정말 가입을 취소하시겠습니까?")){
-            return;
-        }else {
-            location.href="/member/loginForm?status=cancel";
-        }
-    }
+    <c:import url="${path}/resources/js/FOOTER.jsp"/>
 
-</script>
+    <script>
+        function cancel(){
+            if(!confirm("정말 가입을 취소하시겠습니까?")){
+                return;
+            }else {
+                location.href="/member/loginForm?status=cancel";
+            }
+        }
+
+    </script>
 </body>
+
+
 </html>
 

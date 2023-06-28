@@ -5,6 +5,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -98,7 +99,11 @@ public class GalleryDAO {
         return db.selectList("Gallery.selectMyCards", code);
     }
 
-//    public List<GalleryCardView> getDailyPopCards() {
-//        return
-//    }
+    public List<List<GalleryCardView>> getDailyPopCards(List<CategoryType> categoryTypes) {
+        List<List<GalleryCardView>> cardList = new ArrayList<>();
+        for (CategoryType categoryType : categoryTypes) {
+            cardList.add(db.selectList("Gallery.selectDailyPopCards", categoryType.getCode()));
+        }
+        return cardList;
+    }
 }

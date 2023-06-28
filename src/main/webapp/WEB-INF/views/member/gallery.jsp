@@ -22,13 +22,18 @@
 <div class="container-xl p-0">
   <div id="accordion">
     <c:forEach items="${gallery}" var="category">
-      <section class="d-flex justify-content-between align-items-center accordion-head">
+      <section class="d-flex justify-content-center align-items-center accordion-head">
         <h4 class="category-head m-0">${category.name}</h4>
-        <button type="button" class="common-button" onclick="location.href='/gallery/insert/${category.code}'">신규 등록</button>
+        <button type="button" class="common-button btn-position-right insert-button" id="${category.code}">신규 등록</button>
       </section>
       <div>
       <c:forEach items="${cards[category.code]}" var="card">
-        <p class="content-link">${card.title}</p>
+        <c:if test="${card.yn eq 'N'}">
+          <p class="content-link secrete" onclick="location.href='/gallery/card/${card.seq}'">${card.title}  -  비밀글 입니다.</p>
+        </c:if>
+        <c:if test="${card.yn ne 'N'}">
+          <p class="content-link" onclick="location.href='/gallery/card/${card.seq}'">${card.title}</p>
+        </c:if>
       </c:forEach>
       </div>
     </c:forEach>
@@ -41,6 +46,11 @@
         heightStyle: "content",
         header: "section",
         active: [0, 1]
+    });
+    $('.insert-button').on('click', function(e) {
+        e.preventDefault();
+        const seq = e.target.id;
+        location.href=`/gallery/insert/\${seq}`;
     });
 </script>
 </body>
