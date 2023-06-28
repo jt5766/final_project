@@ -108,7 +108,9 @@
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
 <script>
     $(function () {
-        $(".embed").oembed();
+        if (${categoryType==1006}) {
+            $('.preview_audio').oembed();
+        }
     });
     $('#chk-disclosure').on('click', function () {
         const chkDom = $('#chk-disclosure');

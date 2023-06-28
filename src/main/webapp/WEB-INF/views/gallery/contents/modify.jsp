@@ -140,7 +140,9 @@
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
 <script>
     $(function () {
-        $('.preview_audio').oembed();
+        if (${categoryType==1006}) {
+          $('.preview_audio').oembed();
+        }
     });
 
     const youtube_regex = /https:\/\/youtu\.be\/.*/;
@@ -169,7 +171,7 @@
     });
 
     $(function() {
-        $('.note-editable').text(`${content.txt}`);
+        $('.note-editable').html(`${content.txt}`);
     });
 
     const title = $('#input_title');
@@ -200,7 +202,8 @@
             alert("내용을 입력해주세요.");
             return false;
         }
-        txt.val($('.note-editable').text());
+        $('.note-editable').html().re
+        txt.val($('.note-editable').html());
     });
 
     $(allowVal).on('change', function () {
