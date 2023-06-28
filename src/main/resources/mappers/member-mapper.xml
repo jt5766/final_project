@@ -70,4 +70,9 @@
 	<select id="check" resultType="boolean">
 		select count(*) from members where email = #{email, jdbcType=VARCHAR} and email_type=#{email_type, jdbcType=NUMERIC}
 	</select>
+	
+	<!-- 로그아웃 값 변경 -->
+	<update id="logout">
+		UPDATE MEMBERS SET YN = 'N' WHERE CODE = #{code, jdbcType=NUMERIC}
+	</update>
 </mapper>
