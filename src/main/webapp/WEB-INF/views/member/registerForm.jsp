@@ -14,16 +14,6 @@
 
 <style>
 
-    /*#wrap {*/
-
-    /*    display: flex;*/
-    /*    width: calc(100vw - (100vw - 100%));*/
-    /*    height: 98vh;*/
-    /*    justify-content: center;*/
-    /*    align-items: center;*/
-    /*    background-color: rgb(217, 223, 228);*/
-    /*}*/
-
     h3 {
         font-size: 20px;
         font-weight: 200;
@@ -50,11 +40,11 @@
     #btnBox {
         display: flex;
         gap: 20px;
-
+        margin-top: 30px;
     }
 
     #cBtn, #sBtn {
-        margin-top: 10px;
+
         padding: 5px 10px;
     }
 
@@ -64,12 +54,14 @@
         box-shadow: 0 0 5px #c1bdbd;
         padding: 20px 10px;
         margin: auto;
+        margin-top: 100px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         width: 400px;
-        height: 600px;
+        height: 500px;
+        gap: 10px;
 
     }
 
@@ -115,6 +107,7 @@
         </div>
 
 </form>
+</div>
     <c:import url="${path}/resources/js/FOOTER.jsp"/>
 
     <script>
@@ -122,7 +115,7 @@
             if(!confirm("정말 가입을 취소하시겠습니까?")){
                 return;
             }else {
-                location.href="/member/loginForm?status=cancel";
+                location.replace("/member/loginForm");
             }
         }
 
