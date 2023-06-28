@@ -93,7 +93,12 @@ public class GalleryService {
         galleryDAO.insertContent(content);
     }
 
+    public void updateCard(GalleryCard card) {
+        galleryDAO.updateCard(card);
+    }
+
     public void updateCard(GalleryCard card, MultipartFile multipartFile, String realPath) throws IOException {
+        removeFile(card.getThumbnail_url(), realPath);
         card.setThumbnail_url(
                 new StringBuilder()
                         .append("/gallery/card/thumbnails/")
@@ -111,6 +116,7 @@ public class GalleryService {
     }
 
     public void updateContent(GalleryContent content, MultipartFile multipartFile, String realPath) throws IOException {
+        removeFile(content.getFile_url(), realPath);
         content.setFile_url(
                 new StringBuilder()
                         .append("/gallery/content/files/")
