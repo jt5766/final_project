@@ -110,7 +110,11 @@
   <c:forEach items="${contents}" var="content">
     <div class="row">
       <div class="col-md-12">
-        <div onclick="location.href='/gallery/${card.seq}/contents/${content.seq}'" class="content-link">
+        <div onclick="location.href='/gallery/${card.seq}/contents/${content.seq}'" class="content-link
+        <c:if test="${content.yn eq 'N'}">
+          secrete
+        </c:if>
+        ">
             ${content.title}
         </div>
           <%--                <a href="/gallery/${card.seq}/contents/${content.seq}">${content.title}</a>--%>

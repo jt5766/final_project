@@ -7,42 +7,65 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="/resources/oembed/jquery.oembed.css">
-  <script src="/resources/oembed/jquery.oembed.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="${path}/resources/oembed/jquery.oembed.css">
+  <script src="${path}/resources/oembed/jquery.oembed.js"></script>
   <c:import url="${path}/resources/js/scripts.jsp"/>
   <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
+  <link href="${path}/resources/css/gallery.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-<c:import url="${path}/resources/js/GNB.jsp"/>
-<div class="container-xl">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="title">
+<c:import url="${path}/resources/js/GNB.jsp">
+  <c:param name="pageName" value="gallery"/>
+  <c:param name="btnNum" value="${categoryType}"/>
+</c:import>
+<div class="container-xl content-body">
+  <div class="row content-title">
+    <div class="col-10 d-flex justify-content-start align-items-center">
+      <div>
         ${content.title}
       </div>
+    </div>
+    <div class="col-2 d-flex justify-content-end align-items-center">
+      <c:if test="${sessionScope.code == content.writer}">
+        <div class="content-disclosure">
+          <c:if test="${sessionScope.code == content.writer}">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="chk-disclosure"
+                     <c:if test="${content.yn == 'Y'}">checked value="Y"</c:if>
+                     <c:if test="${content.yn == 'N'}">value="N"</c:if>
+              >
+              <label class="form-check-label" for="chk-disclosure">공개 여부</label>
+            </div>
+          </c:if>
+        </div>
+      </c:if>
     </div>
   </div>
   <c:choose>
     <c:when test="${content.category_type == 1005}">
       <div class="row">
         <div class="col-md-12">
-          <iframe width="560" height="315" src="${content.video_url}"
-                  title="video player" frameborder="0"
-                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowfullscreen>
-          </iframe>
+          <div class="content-video">
+            <iframe width="560" height="315" src="${content.video_url}"
+                    title="video player" frameborder="0"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+            </iframe>
+          </div>
         </div>
       </div>
     </c:when>
     <c:when test="${content.category_type == 1001}"></c:when>
     <c:when test="${content.category_type == 1006}">
-      <a href="${content.file_url}" class="embed"></a>
+      <div class="content-audio">
+        <a href="${content.file_url}" class="embed"></a>
+      </div>
     </c:when>
     <c:otherwise>
       <div class="row">
         <div class="col-md-12">
-          <div class="file">
-            <img class="file" src="/resources${content.file_url}" alt="${content.file_url}">
+          <div class="content-file">
+            <img class="img-file" src="/resources${content.file_url}" alt="${content.file_url}">
           </div>
         </div>
       </div>
@@ -50,7 +73,7 @@
   </c:choose>
   <div class="row">
     <div class="col-md-12">
-      <div class="text">
+      <div class="content-txt">
         ${content.txt}
       </div>
     </div>
@@ -65,52 +88,43 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-6 d-flex justify-content-start align-items-center">
       <c:if test="${sessionScope.code == content.writer}">
         <form action="/gallery/${cardSeq}/contents/${content.seq}/delete" method="post">
           <input type="hidden" name="cardSeq" value="${cardSeq}">
           <input type="hidden" name="contentSeq" value="${content.seq}">
-          <button type="submit">삭제하기</button>
+          <button type="submit" class="common-button">삭제하기</button>
         </form>
-        <button onclick="location.href='/gallery/${cardSeq}/contents/${content.seq}/modify/${content.category_type}'">수정하기</button>
-        <div class="disclosure">
-          <c:if test="${sessionScope.code == content.writer}">
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="chk-disclosure"
-                     <c:if test="${content.yn == 'Y'}">checked value="Y"</c:if>
-                     <c:if test="${content.yn == 'N'}">value="N"</c:if>
-              >
-              <label class="form-check-label" for="chk-disclosure">공개 여부</label>
-            </div>
-          </c:if>
-        </div>
+        <button class="common-button" onclick="location.href='/gallery/${cardSeq}/contents/${content.seq}/modify/${content.category_type}'">
+          수정하기
+        </button>
       </c:if>
     </div>
-    <div class="col-md-6">
-      <button onclick="location.href='/gallery/${cardSeq}'">돌아가기</button>
+    <div class="col-6 d-flex justify-content-end align-items-center">
+      <button class="common-button" onclick="location.href='/gallery/${cardSeq}'">돌아가기</button>
     </div>
   </div>
 </div>
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
 <script>
-  $(function() {
-    $("a.embed").oembed();
-  });
-  $('#chk-disclosure').on('click', function () {
-      const chkDom = $('#chk-disclosure');
-      if (chkDom.val() === 'Y') {
-          chkDom.val('N');
-      } else if (chkDom.val() === 'N') {
-          chkDom.val('Y');
-      }
-      $.ajax({
-          url: "/gallery/disclosure/${cardSeq}/contents/${content.seq}",
-          data: chkDom.val(),
-          contentType: "application/x-www-form-urlencoded",
-          accepts: {plainText: "application/json"},
-          method: "put"
-      });
-  });
+    $(function () {
+        $(".embed").oembed();
+    });
+    $('#chk-disclosure').on('click', function () {
+        const chkDom = $('#chk-disclosure');
+        if (chkDom.val() === 'Y') {
+            chkDom.val('N');
+        } else if (chkDom.val() === 'N') {
+            chkDom.val('Y');
+        }
+        $.ajax({
+            url: "/gallery/disclosure/${cardSeq}/contents/${content.seq}",
+            data: chkDom.val(),
+            contentType: "application/x-www-form-urlencoded",
+            accepts: {plainText: "application/json"},
+            method: "put"
+        });
+    });
 </script>
 </body>
 </html>

@@ -421,3 +421,147 @@ input[name=sordCode] {
     background-color: #ffffff00;
     transition-duration: 500ms;
 }
+
+/* content insert */
+
+.btn-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    margin: 30px auto;
+}
+
+.modal_link {
+    width: 150px;
+    height: 50px;
+    padding: 10px 5px;
+    border-radius: 15px;
+    border: none;
+    background-color: #19197050;
+    cursor: pointer;
+}
+
+.modal_link:hover {
+    background-color: #19197080;
+}
+
+.modal_link:active {
+    background-color: #19197097;
+}
+
+.modal-wrap {
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: fadeInModal 500ms linear;
+}
+
+.my-modal-content {
+    height: 450px;
+}
+
+.modal-body {
+    width: 600px;
+    height: 450px;
+    padding: 30px 30px;
+    border: 1px solid #777;
+    background-color: #fff;
+}
+
+.modal_input_box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.third_party_link {
+    width: 100%;
+    padding: 5px 10px 5px 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    outline: none;
+    border: none;
+    background-color: #80808020;
+}
+
+.confirm_video_link {
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+    margin-top: 20px;
+    background-color: #19197050;
+}
+
+.close-btn {
+    float: right;
+    font-weight: bold;
+    color: #777;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none!important;
+}
+
+.pop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes fadeInModal {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.preview {
+    display: flex;
+    justify-content: center;
+}
+
+.content-body {
+    padding: 2rem 0 0 0;
+}
+
+.content-title {
+    border-radius: 8px;
+    font-size: xx-large;
+    background-color: white;
+    margin: 0 0 25px 0;
+    padding: 10px;
+}
+
+.content-video, .content-audio, .content-file {
+    border-radius: 8px;
+    padding: 10px;
+    background-color: hsla(0,0%,50.2%,.11);
+    margin-bottom: 25px;
+}
+
+.content-txt {
+    border-radius: 8px;
+    padding: 10px;
+    background-color: hsla(0,0%,50.2%,.11);
+    min-height: 125px;
+}
+
+.content-disclosure {
+    font-size: 12pt;
+}
+
+.img-file {
+    max-width: 65vw;
+}
