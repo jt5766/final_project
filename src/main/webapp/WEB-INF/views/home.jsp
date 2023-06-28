@@ -10,6 +10,7 @@
   <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
   <link href="${path}/resources/css/gallery.css" type="text/css" rel="stylesheet">
 </head>
+<<<<<<< Updated upstream
 <body class="h-100">
 <!-- GNB & LNB -->
 <c:import url="${path}/resources/js/GNB.jsp">
@@ -176,5 +177,23 @@
         $(this).removeClass('carousel-event');
     });
 </script>
+=======
+<body>
+	<button onclick="location.href='/member/loginForm'">로그인</button><br>
+	${nickName}님환영
+	<hr>
+	<button onclick="location.href='/member/logOut'">로그아웃</button>
+	<hr>
+	<button onclick="location.href='/member/mypage'">마이페이지</button>
+	<hr>
+	<button onclick="location.href='/gallery/'">갤러리</button>
+	<hr>
+	<button onclick="location.href='/community/toNotice'">커뮤니티-공지게시판으로</button>
+	<hr>
+	<button onclick="location.href='/chat/testlink'">채팅</button>
+	<hr>
+	<button onclick="location.href='/admin/'">관리자 페이지</button>
+	<hr>
+>>>>>>> Stashed changes
 </body>
 </html>

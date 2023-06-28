@@ -151,8 +151,16 @@ accent-color: #ca9372;
                         <input type="password" id="input_password" name="password" placeholder="password">
                     </div>
                 </div>
+<<<<<<< Updated upstream
                 <div id="find_password">
                     <a href="/member/findPassword">비밀번호 찾기</a>
+=======
+                <div><input id="input_pw" name="password" type="password" placeholder="내용을 입력해주세요"></div>
+                <div></div>
+                <div><a href="#">비밀번호 찾기</a></div>
+                <div>
+                    <button id="login_btn">로그인</button>
+>>>>>>> Stashed changes
                 </div>
                 <div id="btns">
                     <button type="button" id="login_btn">로그인</button>
