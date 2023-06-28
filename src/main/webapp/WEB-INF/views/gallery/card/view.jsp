@@ -86,7 +86,7 @@
           </c:if>
         </div>
         <div class="return-button">
-          <button class="common-button" type="button" onclick="location.href='/gallery'">돌아가기</button>
+          <button class="common-button" type="button" onclick="location.href='/gallery/category/${card.category_type}'">돌아가기</button>
         </div>
       </div>
     </div>
