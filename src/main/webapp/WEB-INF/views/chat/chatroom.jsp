@@ -27,6 +27,7 @@
         .otherdatebox{float:left;padding-right:2px;align-self:end;margin-bottom:8px;}
         .mydatebox{float:right;padding-right:2px;align-self:end;margin-bottom:8px;}
         .alldatebox{overflow: auto;background-color:#c7b299;text-align:center;}
+        .frontdatebox{overflow: auto;background-color:#c7b299;text-align:center;}
     </style>
 </head>
 <body>
@@ -38,6 +39,12 @@
 		let addYear = null;
 		let addMonth = null;
 		let addDate = null;
+		let beforeHours = null;
+		let beforeMinutes = null;
+		let beforewriter = null;
+		let lastHours = null;
+		let lastMinutes = null;
+		let lastwriter = null;
 		$(function(){
 			const socket = new WebSocket("ws://192.168.50.203/chat");
 			const stompClient = Stomp.over(socket);
@@ -45,8 +52,6 @@
 			stompClient.connect({},function(){
 				const subscription = stompClient.subscribe("/topic/${chatseq}", function(message){
 					body = JSON.parse(message.body);
-					console.log(message);
-					console.log(body);
 					const linediv = $("<div>");
 					const datediv = $("<div>");
 					const textdiv = $("<div>");
@@ -77,17 +82,26 @@
         				plusdatediv.append(plusYear+"-"+(plusMonth+1)+"-"+plusDate);
         				$("#div_contents").append(plusdatediv);
 					}
+					if(plustimer.getHours() == lastHours && plustimer.getMinutes() == lastMinutes && body.writer == lastwriter){
+						$(".lastdatebox").remove();
+						$("#lastchatdate").remove();
+					}
+					$("#lastchatdate").removeAttr('id');
 					var timeminute = plustimer.getMinutes();
 	        		if(timeminute < 10){
 	        			timeminute = "0"+timeminute;
 	        		}
 					datediv.append(plustimer.getHours()+" : "+timeminute);
+					datediv.attr('id','lastchatdate');
 					linediv.append(textdiv);
 					linediv.append(datediv);
 					$("#div_contents").append(linediv);
 					addYear = plusYear;
 					addMonth = plusMonth;
 					addDate = plusDate;
+					lastHours = plustimer.getHours();
+					lastMinutes = plustimer.getMinutes();
+					lastwriter = body.writer;
 					let chatbox = document.querySelector('#div_contents');
 					chatbox.scrollTop = chatbox.scrollHeight;
 				});
@@ -132,7 +146,7 @@
 						return false;
 					}
 					const backslash = $("#div_text").html().replace(/\\/g,"\\\\");
-					const updateText = backslash.replace(regexSinglequotation,"\\'");
+					const updateText = backslash.replace(/\'/g,"\\'");
 					const destination = "/app/message";
 					const header = {};
 					const body = JSON.stringify({chat_rooms : "${chatseq}" , writer : "${code}" , txt : updateText , write_date : new Date() , writernickname : "${nickName}"});
@@ -154,10 +168,6 @@
 				let contents_height = $("#div_contents").height();
 				
 				let now_height = $(this).scrollTop()+$("#div_contents").height();
-				console.log("라스트 스크롤"+lastScroll)
-				console.log("커런트 스크롤"+currentScroll);
-				console.log("최대높이"+contents_height);
-				console.log("커런트+최대높이"+now_height);
 				if(currentScroll < lastScroll){
 					if(currentScroll < 500){
 						
@@ -170,13 +180,13 @@
 								seq:"${chatseq}"
 							}
 						}).done(function(resp){
-							console.log(resp);
 							if(resp.length == 0){
 								lengthsize = true;
 								var alldatediv = $("<div>");
 	        					alldatediv.addClass("alldatebox");
 		        				alldatediv.append(year+"-"+(month+1)+"-"+date);
 		        				$("#div_contents").prepend(alldatediv);
+		        				$(".frontdatebox").remove();
 							}
 							for(var i = 0;i < resp.length;i++){
 								const datalinediv = $("<div>");
@@ -202,8 +212,6 @@
 				        		var logMonth = logtimer.getMonth();
 				        		var logDate = logtimer.getDate();
 				        		if(i == 0){
-				        			console.log("year"+year+"/month"+(month+1)+"/date"+date);
-				        			console.log("logYear"+logYear+"/logMonth"+(logMonth+1)+"/logDate"+logDate);
 				        			if(year != null && month != null && date != null){
 				        				if(year != logYear || month != logMonth || date != logDate){
 				        					var alldatediv = $("<div>");
@@ -211,6 +219,13 @@
 					        				alldatediv.append(year+"/"+(month+1)+"/"+date);
 					        				$("#div_contents").prepend(alldatediv);
 				        				}
+				        			}
+				        			if(beforeHours != logtimer.getHours() || beforeMinutes != logtimer.getMinutes() || beforewriter != resp[i].writer){
+				        				var timeminute = logtimer.getMinutes();
+					        			if(timeminute < 10){
+					        				timeminute = "0"+timeminute;
+					        			}
+				        				datadatediv.append(logtimer.getHours()+" : "+timeminute);
 				        			}
 				        		}else if(i>0){
 				        			var beforetimer = new Date(resp[i-1].write_date);
@@ -224,17 +239,21 @@
 				        				$("#div_contents").prepend(alldatediv);
 				        			}
 				        			if(i == (resp.length-1)){
-					        			console.log("lastYear"+logYear+"/lastMonth"+(logMonth+1)+"/lastDate"+logDate);
 					        			year = logYear;
 					        			month = logMonth;
 					        			date = logDate;
+					        			beforewriter = resp[i].writer;
 					        		}
+				        			if(logtimer.getHours() != beforetimer.getHours() || logtimer.getMinutes() != beforetimer.getMinutes() || resp[i].writer != resp[i-1].writer){
+				        				beforeHours = logtimer.getHours();
+				        				beforeMinutes = logtimer.getMinutes();
+				        				var timeminute = logtimer.getMinutes();
+						        		if(timeminute < 10){
+						        			timeminute = "0"+timeminute;
+						        		}
+				        				datadatediv.append(logtimer.getHours()+" : "+timeminute);
+				        			}
 				        		}
-				        		var timeminute = logtimer.getMinutes();
-				        		if(timeminute < 10){
-				        			timeminute = "0"+timeminute;
-				        		}
-								datadatediv.append(logtimer.getHours()+" : "+timeminute);
 								datalinediv.append(datatextdiv);
 								datalinediv.append(datadatediv);
 								$("#div_contents").prepend(datalinediv);
@@ -252,7 +271,6 @@
 			<c:forEach var="log" items="${chatlog}">
 				chatlog.push({writer:'${log.writer}',txt:'${log.txt}',write_date:'${log.write_date}',writernickname:'${log.writernickname}'});
 			</c:forEach>
-			console.log(chatlog);
 			for(i = 0; i <chatlog.length; i++){
 				const datalinediv = $("<div>");
 				const datadatediv = $("<div>");
@@ -281,6 +299,15 @@
         			var firstYear = firsttimer.getFullYear();
         			var firstMonth = firsttimer.getMonth();
         			var firstDate = firsttimer.getDate();
+        			var timeminute = logtimer.getMinutes();
+            		if(timeminute < 10){
+            			timeminute = "0"+timeminute;
+            		}
+    				datadatediv.append(logtimer.getHours()+" : "+timeminute);
+    				datadatediv.addClass("lastdatebox");
+    				lastHours = logtimer.getHours();
+    				lastMinutes = logtimer.getMinutes();
+    				lastwriter = chatlog[i].writer;
         			addYear = firstYear;
         			addMonth = firstMonth;
         			addDate = firstDate;
@@ -296,20 +323,37 @@
         				$("#div_contents").prepend(alldatediv);
         			}
         			if(i == (chatlog.length-1)){
-	        			console.log("lastYear"+logYear+"/lastMonth"+(logMonth+1)+"/lastDate"+logDate);
 	        			year = logYear;
 	        			month = logMonth;
 	        			date = logDate;
+	        			beforeHours = logtimer.getHours();
+	        			beforeMinutes = logtimer.getMinutes();
+	        			beforewriter = chatlog[i].writer;
 	        		}
+        			if(logtimer.getHours() != beforetimer.getHours() || logtimer.getMinutes() != beforetimer.getMinutes() || chatlog[i].writer != chatlog[i-1].writer){
+        				var timeminute = logtimer.getMinutes();
+                		if(timeminute < 10){
+                			timeminute = "0"+timeminute;
+                		}
+        				datadatediv.append(logtimer.getHours()+" : "+timeminute);
+        			}
         		}
-        		var timeminute = logtimer.getMinutes();
+        		/*var timeminute = logtimer.getMinutes();
         		if(timeminute < 10){
         			timeminute = "0"+timeminute;
         		}
-				datadatediv.append(logtimer.getHours()+" : "+timeminute);
+				datadatediv.append(logtimer.getHours()+" : "+timeminute);*/
 				datalinediv.append(datatextdiv);
 				datalinediv.append(datadatediv);
 				$("#div_contents").prepend(datalinediv);
+				if(i == (chatlog.length-1)){
+    				if(${maxdata}<=30){
+    					var alldatediv = $("<div>");
+        				alldatediv.addClass("frontdatebox");
+        				alldatediv.append(logYear+"-"+(beforeMonth+1)+"-"+beforeDate);
+        				$("#div_contents").prepend(alldatediv);
+    				}
+				}
 			}
 		})
 	</script>

@@ -55,8 +55,9 @@ public class ChatController {
 	public String entrance(Long seq,Model model) {
 		boolean result = chatservice.checkUser((Integer)session.getAttribute("code"),seq);
 		if(result) {
-			chatlogservice.maxScroll(seq);
+			int maxdata = chatlogservice.maxData(seq);
 			List<ChatlogDTO> loglist = chatlogservice.selectChatLog(seq);
+			model.addAttribute("maxdata",maxdata);
 			model.addAttribute("chatseq",seq);
 			model.addAttribute("chatlog", loglist);
 			return "chat/chatroom";

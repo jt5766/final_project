@@ -27,7 +27,7 @@ public class ChatlogService {
 		return dao.selectLog(seq);
 	}
 	
-	public int maxScroll(Long seq) {
+	public int maxData(Long seq) {
 		startPost = dao.maxData(seq);
 		return startPost;
 	}
