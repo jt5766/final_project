@@ -32,8 +32,9 @@ public class GalleryController {
         this.session = session;
     }
 
-    @GetMapping
-    public String toGallery(Model model, SearchCriteria searchCriteria) {
+    @GetMapping("/category/{categoryType}")
+    public String toGallery(@ModelAttribute("categoryType") @PathVariable Integer categoryType, SearchCriteria searchCriteria, Model model) {
+        searchCriteria.setTypeCode(categoryType);
         List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
         setNaviOfCards(model, searchCriteria);
         setConditions(model);
@@ -55,6 +56,10 @@ public class GalleryController {
 
     @GetMapping("/{cardSeq}")
     public String toCard(@PathVariable Long cardSeq, GalleryCardDTO galleryCardDTO, Model model) {
+        Integer code = (Integer) session.getAttribute("code");
+        if (code != null) {
+            galleryCardDTO.setCode(code);
+        }
         GalleryCardView card = galleryService.selectOneCard(cardSeq);
         List<GalleryContent> contents = galleryService.selectAllContents(galleryCardDTO);
         if (session.getAttribute("memberType") != null){
@@ -71,17 +76,6 @@ public class GalleryController {
         model.addAttribute("contents", contents);
         model.addAttribute("page", galleryCardDTO.getPage());
         return "/gallery/card/view";
-    }
-
-    @GetMapping("/category/{categoryType}")
-    public String filterCard(@ModelAttribute("categoryType") @PathVariable Integer categoryType, SearchCriteria searchCriteria, Model model) {
-        searchCriteria.setTypeCode(categoryType);
-        List<GalleryCardView> cards = galleryService.selectAllCards(searchCriteria);
-        setNaviOfCards(model, searchCriteria);
-        setConditions(model);
-        model.addAttribute("cards", cards);
-        model.addAttribute("page", searchCriteria.getPage());
-        return "/gallery/gallery";
     }
 
     @GetMapping("/{cardSeq}/contents/{contentSeq}")
@@ -151,11 +145,12 @@ public class GalleryController {
 
     @PostMapping("/{cardSeq}/modify")
     public String modifyCard(GalleryCard card, @PathVariable Long cardSeq, @RequestPart(value = "thumbnail_image", required = false) MultipartFile multipartFile) throws IOException {
-        if (card.getWriter() != (Integer) session.getAttribute("code")) {
-            return "redirect:/gallery/category/1001";
+        if (!galleryService.selectOneCard(cardSeq).getThumbnail_url().equals(card.getThumbnail_url())) {
+            String realPath = session.getServletContext().getRealPath("resources");
+            galleryService.updateCard(card, multipartFile, realPath);
+            return "redirect:/gallery/{cardSeq}";
         }
-        String realPath = session.getServletContext().getRealPath("resources");
-        galleryService.updateCard(card, multipartFile, realPath);
+        galleryService.updateCard(card);
         return "redirect:/gallery/{cardSeq}";
     }
 
@@ -167,9 +162,13 @@ public class GalleryController {
 
     @PostMapping("/{cardSeq}/contents/{contentSeq}/modify/withFile")
     public String modifyContent(GalleryContent content, @PathVariable Long cardSeq, @PathVariable Long contentSeq, @RequestPart(value = "file_image", required = false) MultipartFile multipartFile) throws IOException {
-        String realPath = session.getServletContext().getRealPath("resources");
-        galleryService.updateContent(content, multipartFile, realPath);
-        return "redirect:/gallery/{cardSeq}";
+        if (!galleryService.selectOneContent(cardSeq, contentSeq).getFile_url().equals(content.getFile_url())) {
+            String realPath = session.getServletContext().getRealPath("resources");
+            galleryService.updateContent(content, multipartFile, realPath);
+            return "redirect:/gallery/{cardSeq}/contents/{contentSeq}";
+        }
+        galleryService.updateContent(content);
+        return "redirect:/gallery/{cardSeq}/contents/{contentSeq}";
     }
 
     @PostMapping("/{cardSeq}/delete")

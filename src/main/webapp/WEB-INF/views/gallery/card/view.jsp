@@ -94,7 +94,7 @@
   <c:if test="${sessionScope.code == card.writer}">
     <div class="row">
       <div class="col-md-12 my-2">
-        <button id="insert-button" type="button"
+        <button class="insert-button" type="button"
                 onclick="location.href='/gallery/${card.seq}/contents/insert/${card.category_type}'">등록하기
         </button>
       </div>
@@ -110,7 +110,11 @@
   <c:forEach items="${contents}" var="content">
     <div class="row">
       <div class="col-md-12">
-        <div onclick="location.href='/gallery/${card.seq}/contents/${content.seq}'" class="content-link">
+        <div onclick="location.href='/gallery/${card.seq}/contents/${content.seq}'" class="content-link
+        <c:if test="${content.yn eq 'N'}">
+          secrete
+        </c:if>
+        ">
             ${content.title}
         </div>
           <%--                <a href="/gallery/${card.seq}/contents/${content.seq}">${content.title}</a>--%>
