@@ -93,6 +93,10 @@ public class TypeDAO {
 		return mybatis.selectList("Type.SelectType2", "EMAIL_TYPE");
 	}
 
+	public List<CategoryType> selectByEmailType(String admin) {
+		return mybatis.selectList("Type.SelectType2_", "EMAIL_TYPE");
+	}
+
 	/**
 	 * GENRE_TYPE 테이블 조회
 	 * 
@@ -101,6 +105,10 @@ public class TypeDAO {
 	 */
 	public List<CategoryType> selectByGenreType() {
 		return mybatis.selectList("Type.SelectType2", "GENRE_TYPE");
+	}
+
+	public List<CategoryType> selectByGenreType(String admin) {
+		return mybatis.selectList("Type.SelectType2_", "GENRE_TYPE");
 	}
 
 	// --------------------------------------------------
@@ -114,6 +122,10 @@ public class TypeDAO {
 		return mybatis.selectList("Type.SelectType2", "GALLERY_CARDS_SORT");
 	}
 
+	public List<CategoryType> selectByGallery_Cards_Sort(String admin) {
+		return mybatis.selectList("Type.SelectType2_", "GALLERY_CARDS_SORT");
+	}
+
 	/**
 	 * GALLERY_SEARCH 테이블 조회
 	 * 
@@ -122,6 +134,10 @@ public class TypeDAO {
 	 */
 	public List<CategoryType> selectByGallery_Cards_Search() {
 		return mybatis.selectList("Type.SelectType2", "GALLERY_CARDS_SEARCH");
+	}
+
+	public List<CategoryType> selectByGallery_Cards_Search(String admin) {
+		return mybatis.selectList("Type.SelectType2_", "GALLERY_CARDS_SEARCH");
 	}
 
 	/**
@@ -134,6 +150,10 @@ public class TypeDAO {
 		return mybatis.selectList("Type.SelectType2", "GALLERY_CONTENTS_SORT");
 	}
 
+	public List<CategoryType> selectByGallery_Contents_Sort(String admin) {
+		return mybatis.selectList("Type.SelectType2_", "GALLERY_CONTENTS_SORT");
+	}
+
 	/**
 	 * COMMUNITY_SORT 테이블 조회
 	 * 
@@ -144,6 +164,10 @@ public class TypeDAO {
 		return mybatis.selectList("Type.SelectType2", "COMMUNITY_SORT");
 	}
 
+	public List<CategoryType> selectByCommunity_Sort(String admin) {
+		return mybatis.selectList("Type.SelectType2_", "COMMUNITY_SORT");
+	}
+
 	/**
 	 * COMMUNITY_SEARCH 테이블 조회
 	 * 
@@ -152,6 +176,10 @@ public class TypeDAO {
 	 */
 	public List<CategoryType> selectByCommunity_Search() {
 		return mybatis.selectList("Type.SelectType2", "COMMUNITY_SEARCH");
+	}
+
+	public List<CategoryType> selectByCommunity_Search(String admin) {
+		return mybatis.selectList("Type.SelectType2_", "COMMUNITY_SEARCH");
 	}
 
 	/**
