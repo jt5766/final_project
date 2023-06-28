@@ -95,9 +95,10 @@ public class CommunityController {
 		return "redirect:/community/toBoard?code=" + complaintBoardsDTO.getBoard_type() + "&currentPage=1";
 	}
 
-	@RequestMapping("uploadFile")
-	public void uploadFile(MultipartFile[] files, HttpServletResponse response) throws Exception {
-		communityService.uploadFile(files, session, response);
+	@ResponseBody
+	@RequestMapping(value = "uploadFile", produces = "text/plain; charset=UTF-8")
+	public String uploadFile(MultipartFile[] files, HttpServletResponse response) throws Exception {
+		return communityService.uploadFile(files, session, response);
 	}
 
 	@RequestMapping("toBoardView")

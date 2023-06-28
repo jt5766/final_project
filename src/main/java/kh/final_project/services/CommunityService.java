@@ -205,35 +205,34 @@ public class CommunityService {
 		return communityDAO.insertComplaint(complaintBoardsDTO);
 	}
 
-	public void uploadFile(MultipartFile[] files, HttpSession session, HttpServletResponse response) throws Exception {
+	public String uploadFile(MultipartFile[] files, HttpSession session, HttpServletResponse response)
+			throws Exception {
 		String targetPath = session.getServletContext().getRealPath("/resources/community");
 		File targetDir = new File(targetPath);
 		if (!targetDir.exists()) {
 			targetDir.mkdir();
 		}
-		if (files != null) {
-			for (MultipartFile file : files) {
-				if (file.isEmpty()) {
-					System.out.println("file is empty!");
-					continue;
-				}
-				String oriName = file.getOriginalFilename();
-				System.out.println(oriName);
-				String sysName = UUID.randomUUID() + "_" + oriName;
-				System.out.println(sysName);
-				String uploadPath = targetPath + "/" + sysName;
-				file.transferTo(new File(uploadPath));
-				System.out.println("complete");
-				String imgSrc = "/resources/community/" + sysName;
-				JsonArray jsonArray = new JsonArray();
-				JsonObject jsonObject = new JsonObject();
-				jsonObject.addProperty("imgSrc", imgSrc);
-				jsonObject.addProperty("oriName", oriName);
-				jsonArray.add(jsonObject);
-				System.out.println(jsonArray.toString());
-				response.getWriter().append(jsonArray.toString());
+		JsonArray jsonArray = new JsonArray();
+		for (MultipartFile file : files) {
+			if (file.isEmpty()) {
+				System.out.println("file is empty!");
+				continue;
 			}
+			String oriName = file.getOriginalFilename();
+			System.out.println(oriName);
+			String sysName = UUID.randomUUID() + "_" + oriName;
+			System.out.println(sysName);
+			String uploadPath = targetPath + "/" + sysName;
+			file.transferTo(new File(uploadPath));
+			System.out.println("complete");
+			String imgSrc = "/resources/community/" + sysName;
+			JsonObject jsonObject = new JsonObject();
+			jsonObject.addProperty("imgSrc", imgSrc);
+			jsonObject.addProperty("oriName", oriName);
+			jsonArray.add(jsonObject);
+			System.out.println(jsonArray.toString());
 		}
+		return jsonArray.toString();
 	}
 
 	public List<BoardsDTO> selectBoard(CategoryType categoryType) {

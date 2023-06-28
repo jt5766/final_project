@@ -10,7 +10,7 @@
 			select board_name from board_type where code = #{board_type, jdbcType=NUMERIC}
 		</selectKey>
 		insert into ${board_name}_BOARDS
-		(SEQ, BOARD_TYPE, TITLE, WRITE, TXT)
+		(SEQ, BOARD_TYPE, TITLE, WRITER, TXT)
 		values
 		(${board_name}_BOARDS_SEQ.NEXTVAL, #{board_type, jdbcType=NUMERIC}, #{title, jdbcType=VARCHAR}, #{writer, jdbcType=NUMERIC}, #{txt, jdbcType=VARCHAR})
 	</insert>

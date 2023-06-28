@@ -53,7 +53,7 @@
 							</select>
 						</div>
 						<div style="flex: 5;">
-							<input type="text" name="title" placeholder="제목을 입력해주세요" id="inputTitle" required>
+							<input type="text" name="title" placeholder="제목을 입력해주세요" id="inputTitle" required maxlength="30">
 						</div>
 					</div>
 					<div>
@@ -79,7 +79,7 @@
 		lang : "ko-KR", // 한글 설정
 		codeviewFilter: false,
 		codeviewIframeFilter: true,
-		placeholder : '내용을 입력해주세요', //placeholder 설정
+		placeholder : '사진의 파일명은 영어로 해주세요', //placeholder 설정
 		disableDragAndDrop : true,
 		toolbar : [ [ 'style', [ 'style' ] ],
 				[ 'font', [ 'bold', 'underline', 'clear' ] ],
@@ -87,22 +87,28 @@
 				[ 'color', [ 'color' ] ],
 				[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
 				[ 'table', [ 'table' ] ],
-				[ 'insert', [ 'picture' ] ] ],
+				[ 'insert', [ 'picture', 'link' ] ] ],
 		callbacks : { //여기 부분이 이미지를 첨부하는 부분
 			onImageUpload : function(files) {
 				for (let i = 0; i < files.length; i++) {
 					let blobUrl = URL.createObjectURL(files[i]);
 					$(this).summernote("insertImage", blobUrl, files[i].name);
 				}
+			},
+			onKeydown: function(e) {
+			    var txt = $("#textarea_contents").summernote('code');
+			    console.log(txt.length);
+			    if(txt.length > 1000) {
+						e.preventDefault();			
+				    }
+				}
 			}
-		}
 	});
+	
 	$("#formSubmit").on("click", async function(e) {
-	    const title = $("#inputTitle").val();
-	    const txt = $(".note-editable").html();
-	    if(title.length == 0 || txt.length == 0) {
-			console.log(title.length);
-			console.log(txt.length);
+	    const title = $("#inputTitle").val().trim();
+	    const isEmpty = $('#textarea_contents').summernote('isEmpty');
+	    if(title.length == 0 || isEmpty) {
 			alert("제목 또는 내용을 입력해주세요");
 			return false;
 	    }
@@ -117,21 +123,19 @@
 				fileArr.push(file);
 			}
 		}
+		console.log(fileArr.length);
 		if(fileArr.length == 0) {
-			$("#boardForm").submit();   
+			$("#boardForm").submit();
+		} else {
+			uploadImg(fileArr);
+			let contents = $("#textarea_contents").val();
+			$("#boardForm").submit();
 		}
-		console.log(fileArr);
-		uploadImg(fileArr);
-		let contents = $("#textarea_contents").val();
-		$("#boardForm").submit();
 	});
 	
 	function uploadImg(fileArr) {
-	    console.log("uploadImg");
-	    console.log(fileArr);
 		let formData = new FormData();
 		fileArr.map(function(e, i){
-		    console.log(e);
 			formData.append("files", e);
 		});
 		console.log(formData);
@@ -144,7 +148,9 @@
 			processData : false,
 			encType : "multipart/form-data"
 		}).done(function(response) {
+		    console.log(response);
 		    response = JSON.parse(response);
+		    console.log(response);
 		    response.map(function(e){
 				let targetImg = $(".note-editable img[data-filename ='"+e.oriName+"']");
 				targetImg.attr("src", e.imgSrc);

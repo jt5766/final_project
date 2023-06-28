@@ -102,9 +102,9 @@
 				[ 'color', [ 'color' ] ],
 				[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
 				[ 'table', [ 'table' ] ],
-				[ 'insert', [ 'picture' ] ] ],
+				[ 'insert', [ 'picture', 'link' ] ] ],
 		callbacks : { //여기 부분이 이미지를 첨부하는 부분
-			onImageUpload : function(files) {
+			onImageUpload : function(files) {	
 				for (let i = 0; i < files.length; i++) {
 					let blobUrl = URL.createObjectURL(files[i]);
 					$(this).summernote("insertImage", blobUrl, files[i].name);
