@@ -127,7 +127,7 @@ public class GalleryController {
         // TODO: 서버 측 파라미터 2차 검증 로직
         String realPath = session.getServletContext().getRealPath("resources");
         galleryService.insertCard(card, multipartFile, realPath);
-        return "redirect:/gallery";
+        return "redirect:/member/my-page/gallery";
     }
 
     @PostMapping("/{cardSeq}/contents")
