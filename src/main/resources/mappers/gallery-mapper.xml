@@ -3,7 +3,7 @@
 <mapper namespace="Gallery">
 	<insert id="insertCard">
 		INSERT INTO GALLERY_CARDS
-		(SEQ, CATEGORY_TYPE, ENRE_TYPE1, GENRE_TYPE2, AI, TITLE, WRITER, CATCHPHRASE, SYNOPSIS, THUMBNAIL_URL, YN )
+		(SEQ, CATEGORY_TYPE, GENRE_TYPE1, GENRE_TYPE2, AI, TITLE, WRITER, CATCHPHRASE, SYNOPSIS, THUMBNAIL_URL, YN )
 		VALUES
 		(GALLERY_CARDS_SEQ.NEXTVAL, #{category_type, jdbcType=NUMERIC}, #{genre_type1, jdbcType=NUMERIC}, #{genre_type2, jdbcType=NUMERIC}, #{ai, jdbcType=VARCHAR}, #{title, jdbcType=VARCHAR}, #{writer, jdbcType=NUMERIC}, #{catchphrase, jdbcType=VARCHAR}, #{synopsis, jdbcType=VARCHAR}, #{thumbnail_url, jdbcType=VARCHAR}, #{yn, jdbcType=VARCHAR})
 	</insert>
