@@ -16,7 +16,7 @@
 		<c:param name="btnNum" value="${pagecode}" />
 	</c:import>
 	<!-- CONTENTS -->
-	<div class="container-xl bg-secondary position-relative p-0">
+	<div class="container-xl bg-sendary position-relative p-0">
 		<div class="row justify-content-md-center">
 			<div class="col-md-12">
 				<table class="table table-light table-bordered border-secondary table-striped m-0">
