@@ -12,61 +12,61 @@
 
 
 
-<style>
+    <style>
 
-    h3 {
-        font-size: 20px;
-        font-weight: 200;
-        color: rgb(80, 80, 160);
-    }
+        h3 {
+            font-size: 20px;
+            font-weight: 200;
+            color: rgb(80, 80, 160);
+        }
 
-    input {
-        width: 250px;
-        border: 0px;
-        border-bottom: 1px solid #ddd;
-        transition-duration: .4s;
-        outline: none;
-    }
+        input {
+            width: 250px;
+            border: 0px;
+            border-bottom: 1px solid #ddd;
+            transition-duration: .4s;
+            outline: none;
+        }
 
-    input:focus {
-        border-bottom: 1px solid rgb(136, 188, 230);
+        input:focus {
+            border-bottom: 1px solid rgb(136, 188, 230);
 
-    }
+        }
 
-    input::placeholder {
-        font-size: 15px;
-    }
+        input::placeholder {
+            font-size: 15px;
+        }
 
-    #btnBox {
-        display: flex;
-        gap: 20px;
-        margin-top: 30px;
-    }
+        #btnBox {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
 
-    #cBtn, #sBtn {
+        #cBtn, #sBtn {
 
-        padding: 5px 10px;
-    }
+            padding: 5px 10px;
+        }
 
-    #loginBox {
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 0 5px #c1bdbd;
-        padding: 20px 10px;
-        margin: auto;
-        margin-top: 100px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 400px;
-        height: 500px;
-        gap: 10px;
+        #loginBox {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 5px #c1bdbd;
+            padding: 20px 10px;
+            margin: auto;
+            margin-top: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 400px;
+            height: 500px;
+            gap: 10px;
 
-    }
+        }
 
 
-</style>
+    </style>
 
 
 <body>
@@ -78,28 +78,14 @@
 </c:import>
 <!-- CONTENTS -->
 <div class="container-xl  position-relative p-0">
-<form action="/member/createMember" method="post">
-<<<<<<< Updated upstream
-=======
-이메일<br>
-    <input type="hidden" name="email_type" value="${emailType}">
-    <input type="hidden" name="email" value="${email}">
-    <input type="hidden" name="member_type" value="${memberType}">
-    <input type="text"  value="${email}@${setEmailType}" readonly> <br>
-비밀번호 <br>
-<input type="password" name="password" placeholder="내용을 입력해주세요"><br>
-비밀번호 확인<br>
-<input type="password" placeholder="내용을 입력해주세요"><br>
-닉네임<br>
-<input type="text" name="nickname" placeholder="내용을 입력해주세요"><br>
->>>>>>> Stashed changes
+    <form action="/member/createMember" method="post">
 
         <div id="loginBox">
             <div>
                 <h3>Email</h3>
-                    <input type="hidden" name="email_type" value="${emailType}">
-                    <input type="hidden" name="email" value="${email}">
-                    <input type="hidden" name="member_type" value="${memberType}">
+                <input type="hidden" name="email_type" value="${emailType}">
+                <input type="hidden" name="email" value="${email}">
+                <input type="hidden" name="member_type" value="${memberType}">
                 <input type="text" placeholder="Email" value="${email}@${setEmailType}" readonly>
             </div>
             <div>
@@ -120,20 +106,20 @@
             </div>
         </div>
 
-</form>
+    </form>
 </div>
-    <c:import url="${path}/resources/js/FOOTER.jsp"/>
+<c:import url="${path}/resources/js/FOOTER.jsp"/>
 
-    <script>
-        function cancel(){
-            if(!confirm("정말 가입을 취소하시겠습니까?")){
-                return;
-            }else {
-                location.replace("/member/loginForm");
-            }
+<script>
+    function cancel(){
+        if(!confirm("정말 가입을 취소하시겠습니까?")){
+            return;
+        }else {
+            location.replace("/member/loginForm");
         }
+    }
 
-    </script>
+</script>
 </body>
 
 
