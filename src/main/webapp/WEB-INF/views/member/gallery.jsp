@@ -29,10 +29,10 @@
       <div>
       <c:forEach items="${cards[category.code]}" var="card">
         <c:if test="${card.yn eq 'N'}">
-          <p class="content-link secrete" onclick="location.href='/gallery/card/${card.seq}'">${card.title}  -  비밀글 입니다.</p>
+          <p class="content-link secrete" onclick="location.href='/gallery/${card.seq}'">${card.title}  -  비밀글 입니다.</p>
         </c:if>
         <c:if test="${card.yn ne 'N'}">
-          <p class="content-link" onclick="location.href='/gallery/card/${card.seq}'">${card.title}</p>
+          <p class="content-link" onclick="location.href='/gallery/${card.seq}'">${card.title}</p>
         </c:if>
       </c:forEach>
       </div>
