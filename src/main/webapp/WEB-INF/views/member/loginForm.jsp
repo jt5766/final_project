@@ -11,121 +11,123 @@
     <c:import url="${path}/resources/js/scripts.jsp"/>
     <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
-<body>
 <style>
 
-    * {
-        /*border: 1px solid black;*/
-    }
+* {
+/*border: 1px solid black;*/
+}
 
-    #wrap {
-        display: flex;
-        justify-content: center;
-        border: 1px solid black;
-        flex-direction: column;
-        align-items: center;
-        width: 100vw;
-    }
+#wrap {
+display: flex;
+justify-content: center;
+border: 1px solid black;
+flex-direction: column;
+align-items: center;
+width: 100vw;
+}
 
-    #header, #footer {
-        width: 100%;
+#header, #footer {
+width: 100%;
 
-    }
-
-
-    #body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 25px;
-        width: 30vw;
-        height: 60vh;
-        margin: auto;
-    }
+}
 
 
-    #idCheck_box {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        font-size: 12px;
-        margin-bottom: 5px;
-    }
+#body {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 25px;
+width: 30vw;
+height: 60vh;
+margin: auto;
+margin-top: 50px;
+}
 
-    #login_box {
-        width: 100%;
-    }
 
-    #login_box2 {
-        width: 100%;
-    }
+#idCheck_box {
+display: flex;
+justify-content: space-between;
+width: 100%;
+font-size: 18px;
+margin-bottom: 5px;
+}
 
-    #input_email_box {
+#login_box {
+width: 100%;
 
-        height: 30px;
-    }
+}
 
-    #input_email {
-        width: 100%;
-        height: 100%;
-    }
+#login_box2 {
+width: 100%;
+}
 
-    #password_box {
-        width: 100%;
-        font-size: 12px;
+#input_email_box {
 
-    }
+height: 40px;
+}
 
-    #password_font {
-        margin-bottom: 5px;
-    }
+#input_email {
+width: 100%;
+height: 100%;
+}
 
-    #input_password {
-        width: 100%;
-        height: 30px;
-    }
+#password_box {
+width: 100%;
+font-size: 18px;
 
-    input {
+}
 
-        font-size: 13px;
-        border: 0px;
-        border-bottom: 1px solid #ddd;
-        transition-duration: .4s;
-        outline: none;
-    }
+#password_font {
+margin-bottom: 5px;
+}
 
-    input:focus {
-        border-bottom: 1px solid #ca9372;
-    }
+#input_password {
+width: 100%;
+height: 40px;
+}
 
-    #find_password {
-        width: 100%;
-    }
+input {
 
-    #btns {
-        display: flex;
-        flex-direction: column;
-        width: 80%;
+font-size: 15px;
+border: 0px;
+border-bottom: 1px solid #ddd;
+transition-duration: .4s;
+outline: none;
+}
 
-        gap: 10px;
-    }
+input:focus {
+border-bottom: 1px solid #ca9372;
+}
 
-    #btns > button {
-        height: 30px;
-    }
+#find_password {
+width: 100%;
+}
 
-    a {
-        text-decoration-line: none;
-        color: rgb(93, 93, 93);
-    }
+#btns {
+display: flex;
+flex-direction: column;
+width: 80%;
 
-    #checkId {
-        accent-color: #ca9372;
-    }
+gap: 10px;
+}
+
+#btns > button {
+height: 40px;
+}
+
+a {
+text-decoration-line: none;
+color: rgb(93, 93, 93);
+}
+
+#checkId {
+accent-color: #ca9372;
+}
 
 
 </style>
+<body>
 <!-- GNB & LNB -->
 <c:import url="${path}/resources/js/GNB.jsp">
     <c:param name="pageName" value="home" />
@@ -163,43 +165,8 @@
 <c:import url="${path}/resources/js/FOOTER.jsp" />
 <!-- script - Contents -->
 
-<%--<div id="wrap">--%>
-<%--    <div id="header"><c:import url="${path}/resources/js/GNB.jsp"/></div>--%>
-<%--    <div id="body">--%>
-<%--        <div id="login_box">--%>
-<%--            <div id="idCheck_box">--%>
-<%--                <div id="id_font">아이디</div>--%>
-<%--                <div><input type="checkbox" id="checkId"> 아이디 저장</div>--%>
-<%--            </div>--%>
-<%--            <div id="input_email_box">--%>
-<%--                <input type="text" id="input_email" name="email" placeholder="email">--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div id="login_box2">--%>
-<%--            <div id="password_box">--%>
-<%--                <div id="password_font">비밀번호</div>--%>
-<%--                <input type="password" id="input_password" name="password" placeholder="password">--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <div id="find_password">--%>
-<%--            <a href="/member/findPassword">비밀번호 찾기</a>--%>
-<%--        </div>--%>
-<%--        <div id="btns">--%>
-<%--            <button type="button" id="login_btn">로그인</button>--%>
-<%--            <button type="button" id="signup_btn">회원가입</button>--%>
-<%--        </div>--%>
-
-<%--    </div>--%>
-<%--    <div id="footer"><c:import url="${path}/resources/js/FOOTER.jsp"/></div>--%>
-
-<%--</div>--%>
-
-
 </body>
-
 <script>
-
-
     $(document).ready(function () {
         if("${result}" > 0){
             alert("회원가입을  축하드립니다");
@@ -311,10 +278,7 @@
             return unescape(cookieValue);
         }
 
-
     });
-
-
 </script>
 
 </html>

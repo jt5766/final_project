@@ -174,7 +174,7 @@
     /*취소 버튼*/
     $("#cancleBtn").click(function () {
 
-        location.href = "/member/mypage"
+        location.href = "/member/my-page/gallery"
 
     })
 

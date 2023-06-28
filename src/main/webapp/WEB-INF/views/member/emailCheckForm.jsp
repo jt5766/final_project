@@ -7,9 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signup</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+
     <c:import url="${path}/resources/js/scripts.jsp"/>
     <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
@@ -17,11 +15,14 @@
 
 <style>
 
+
+
     .form_radio_btn {
         width: 47%;
-        height: 45px;
+        height: 150px;
         border: 1px solid #EAE7E7;
         border-radius: 10px;
+        margin-top: 150px;
     }
 
     .form_radio_btn input[type=radio] {
@@ -33,7 +34,7 @@
         border-radius: 10px;
         margin: 0 auto;
         text-align: center;
-        line-height: 45px;
+        line-height: 150px;
     }
 
     /* Checked */
@@ -51,20 +52,20 @@
     .form_radio_btn input[type=radio] + label {
         background: #F9FAFC;
         color: #666;
+        font-size: 30px;
     }
 
     .form_toggle {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 300px;
+        width: 500px;
         gap: 10px;
     }
 
 
-    #wrap > div {
-        /*border: 1px solid black;*/
-    }
+
+
 
 
     #email-Btn {
@@ -78,6 +79,15 @@
         width: 100%;
     }
 
+    #email_box{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        margin-top: 75px;
+    }
+
+
     #body {
         display: flex;
         flex-direction: column;
@@ -85,6 +95,8 @@
         align-items: center;
         gap: 10px;
         height: 60vh;
+
+
     }
 
     #body h3 {
@@ -99,7 +111,13 @@
         background-color: #5d5d5d;
         border-radius: 3px;
         color: white;
+        height: 40px;
+    }
 
+    #sel{
+        width:185px;
+        height:30px;
+        outline: none;
     }
 
 </style>
@@ -128,17 +146,19 @@
                 </div>
             </div>
 
-            <div>
+            <div id="email_box">
+                <div>
                 <h3>이메일</h3>
                 <div>
                     <input type="text" id="email" name="email" placeholder="Email"> <span>@</span>
-                    <select id="sel" name="email_type">
+                    <select id="sel" name="email_type"  >
+
                         <c:forEach var="i" items="${list}">
                             <option value="${i.code}">${i.name}</option>
                         </c:forEach>
                     </select>
                 </div>
-
+                </div>
                 <div id="email-Btn">
                     <button id="signup-btn" type="button">이메일 인증</button>
                 </div>
@@ -164,8 +184,7 @@
     //         return;
     //     }})
 
-    $("#signup-btn").on("click", function (e) {
-        e.preventDefault();
+    $("#signup-btn").on("click", function () {
         var email = $("#email").val();
         var email_type = $("#sel").val();
         console.log(email);
