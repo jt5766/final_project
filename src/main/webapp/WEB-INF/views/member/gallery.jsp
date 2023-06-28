@@ -24,7 +24,7 @@
     <c:forEach items="${gallery}" var="category">
       <section class="d-flex justify-content-center align-items-center accordion-head">
         <h4 class="category-head m-0">${category.name}</h4>
-        <button type="button" class="common-button btn-position-right insert-button" id="${category.code}">신규 등록</button>
+        <button type="button" class="common-button btn-position-right nc-button" id="${category.code}">신규 등록</button>
       </section>
       <div>
       <c:forEach items="${cards[category.code]}" var="card">
@@ -47,7 +47,7 @@
         header: "section",
         active: [0, 1]
     });
-    $('.insert-button').on('click', function(e) {
+    $('.nc-button').on('click', function(e) {
         e.preventDefault();
         const seq = e.target.id;
         location.href=`/gallery/insert/\${seq}`;

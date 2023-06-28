@@ -60,6 +60,7 @@
     border-bottom: 1px solid #797979;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .card-hover {
@@ -125,7 +126,8 @@
     display: flex;
     justify-content: left;
     justify-self: flex-start;
-    border-bottom: 1px solid #797979;
+    /*border-bottom: 1px solid #797979;*/
+    min-width: 100vw;
 }
 
 .ai {
@@ -158,7 +160,20 @@ button {
     color: white;
     border-radius: 5px;
     margin: 5px;
+    border: none;
     max-height: 35px;
+}
+
+.common-button-group {
+    font-size: 10pt;
+    display: inline-block;
+    min-width: 5rem;
+    background-color: #FFFFFF;
+    color: black;
+    border: none;
+    --bs-btn-padding-x: 10px;
+    --bs-btn-padding-y: 5px;
+    --bs-btn-active-bg: #ca9372;
 }
 
 #delete-form {
@@ -168,11 +183,13 @@ button {
     height: 100%;
 }
 
-#insert-button {
-    display: block;
+.insert-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     padding: 6px;
-    text-align: center;
+    border: none;
     border-radius: 10px;
     background-color: #ca9372;
     color: white;
@@ -189,12 +206,12 @@ button {
     margin: 3px 0;
     background-color: #ca937250;
     cursor: pointer;
-    transition-duration: 500ms;
+    transition-duration: 300ms;
     border-radius: 10px;
 }
 
 .content-link:hover {
-    background-color: #ca9372;
+    background-color: #ca937290;
     color: white;
 }
 
@@ -268,6 +285,7 @@ input[name=sordCode] {
 .view-card-body > .view-info {
     flex: 10px 0 0;
     display: flex;
+    border: none;
 }
 
 .view-info > div {
@@ -377,7 +395,29 @@ input[name=sordCode] {
 /* card insert */
 
 .input-box {
-    margin: 0;
+    margin: 0 0 10px 0;
     padding-left: 15%;
     padding-right: 15%;
+}
+
+.input-text {
+    font-size: 10pt;
+    border: none;
+    border-bottom: 1px solid #dddddd;
+    transition-duration: 400ms;
+    outline: none;
+    width: 100%;
+}
+
+.input-text:focus {
+    border-bottom: 1px solid #ca9372;
+}
+
+.preview-img {
+    max-width: 65vw;
+}
+
+.nc-button {
+    background-color: #ffffff00;
+    transition-duration: 500ms;
 }

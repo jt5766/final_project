@@ -153,9 +153,10 @@
 	<select id="selectDailyPopCards" resultType="kh.final_project.dto.GalleryCardView">
 		select *
 		from
-		( select view_gallery_cards.*, row_number() over(order by day_count desc) rn
-		from view_gallery_cards
-		where day_count is not null and category_type = #{categoryType, jdbcType=NUMERIC}
+		(
+			select view_gallery_cards.*, row_number() over(order by day_count desc, total_count desc) rn
+			from view_gallery_cards
+			where category_type = #{categoryType, jdbcType=NUMERIC}
 		)
 		where rn between 0 and 10
 	</select>
