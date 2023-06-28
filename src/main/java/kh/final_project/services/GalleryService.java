@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class GalleryService {
@@ -92,7 +93,12 @@ public class GalleryService {
         galleryDAO.insertContent(content);
     }
 
+    public void updateCard(GalleryCard card) {
+        galleryDAO.updateCard(card);
+    }
+
     public void updateCard(GalleryCard card, MultipartFile multipartFile, String realPath) throws IOException {
+        removeFile(card.getThumbnail_url(), realPath);
         card.setThumbnail_url(
                 new StringBuilder()
                         .append("/gallery/card/thumbnails/")
@@ -110,6 +116,7 @@ public class GalleryService {
     }
 
     public void updateContent(GalleryContent content, MultipartFile multipartFile, String realPath) throws IOException {
+        removeFile(content.getFile_url(), realPath);
         content.setFile_url(
                 new StringBuilder()
                         .append("/gallery/content/files/")
@@ -223,7 +230,8 @@ public class GalleryService {
     }
 
     public List<CategoryType> getGenreTypes() {
-        return typeDAO.selectByGenreType();
+        List<CategoryType> categoryTypes = typeDAO.selectByGenreType();
+        return categoryTypes.stream().filter(e -> e.getYn().equals("Y")).collect(Collectors.toList());
     }
 
     public List<GalleryCardView> selectMyCards(Integer code) {

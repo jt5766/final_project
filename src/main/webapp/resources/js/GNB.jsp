@@ -26,7 +26,7 @@
 				<hr class="d-lg-none">
 				<ul class="navbar-nav flex-row flex-wrap bd-navbar-nav">
 					<li class="nav-item col-12 col-lg-auto">
-						<a class="nav-link py-2 px-0 px-lg-2 fs-2" href="/gallery/" aria-current="true">갤러리</a>
+						<a class="nav-link py-2 px-0 px-lg-2 fs-2" href="/gallery/category/1001" aria-current="true">갤러리</a>
 						<ul class="navbar-nav d-flex d-lg-none flex-column flex-wrap bd-navbar-nav">
 							<li class="nav-item col-12">
 								<c:forEach items="${gallery}" var="item">

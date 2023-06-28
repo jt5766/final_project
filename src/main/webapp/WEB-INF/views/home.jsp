@@ -29,7 +29,7 @@
             </c:if>
           ">
             <div class="row gallery-content m-0">
-              <div class="col-md-6">
+              <div class="col-12">
                 <div class="gallery-card" onclick="location.href='/gallery/${card.seq}'">
                   <div class="info">
                     <div class="category">
@@ -48,10 +48,10 @@
                     </div>
                     <div class="side-info">
                       <div class="title title-link">
-                          ${card.title}
+                          <p class="ddd">${card.title}</p>
                       </div>
                       <div class="writer">
-                          ${card.member_name}
+                          <p class="ddd">${card.member_name}</p>
                       </div>
                     </div>
                   </div>

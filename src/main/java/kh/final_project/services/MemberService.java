@@ -21,89 +21,70 @@ import java.util.UUID;
 @Service
 public class MemberService {
 
-    @Autowired
-    private EmailcheckDAO edao;
+	@Autowired
+	private EmailcheckDAO edao;
 
-    @Autowired
-    private MemberDAO mdao;
+	@Autowired
+	private MemberDAO mdao;
 
-    @Autowired
-    private JavaMailSender javaMailSender;
-    @Autowired
-    private TypeDAO typeDAO;
+	@Autowired
+	private JavaMailSender javaMailSender;
+	@Autowired
+	private TypeDAO typeDAO;
 
+	public List<EmailTypeDTO> emailType() {
+		return mdao.emailType();
+	}
 
-    public List<EmailTypeDTO> emailType() {
-        return mdao.emailType();
-    }
+	public String getEmailName(MemberDTO dto) {
+		return mdao.getEmailName(dto);
+	}
 
+	public void sendJoinCertificationMail(MemberDTO dto) throws MessagingException, UnsupportedEncodingException {
 
-    public String getEmailName(MemberDTO dto) {
-        return mdao.getEmailName(dto);
-    }
+		// 이메일 인증하는 순간 멤버타입 , 이메일 타입, 이메일 따로 저장
+		UUID uuid = UUID.randomUUID();
+		dto.setRandom_key(String.valueOf(uuid));
+		edao.addemail(dto);
 
-    public void sendJoinCertificationMail(MemberDTO dto) throws MessagingException, UnsupportedEncodingException {
+		MailHandler sendMail = new MailHandler(javaMailSender);
+		sendMail.setSubject("[Kreate-Hub 이메일 인증메일 입니다.]"); // 메일제목
+		sendMail.setText("<h1>Kreate-Hub 메일인증</h1>" + "<br>Kreate-Hub 오신것을 환영합니다!" + "<br>아래 [이메일 인증 확인]을 눌러주세요." + "<br><a href='http://localhost:8080/member/register?member_type=" + dto.getMember_type() + "&email=" + dto.getEmail() + "&email_type=" + dto.getEmail_type() + "&random_key=" + dto.getRandom_key() + "'>이메일 인증 확인</a>");
+		sendMail.setFrom("rkqudwns@gmail.com", "강병준");
+		System.out.println(dto.getEmail() + "@" + dto.getSet_email_type() + " / " + dto.getMember_type());
+		sendMail.setTo(dto.getEmail() + "@" + dto.getSet_email_type());
+		sendMail.send();
 
-        //이메일 인증하는 순간 멤버타입 , 이메일 타입, 이메일 따로 저장
-        UUID uuid = UUID.randomUUID();
-        dto.setRandom_key(String.valueOf(uuid));
-        edao.addemail(dto);
+	}
 
-        MailHandler sendMail = new MailHandler(javaMailSender);
-        sendMail.setSubject("[Kreate-Hub 이메일 인증메일 입니다.]"); //메일제목
-        sendMail.setText(
-                "<h1>Kreate-Hub 메일인증</h1>" +
-                        "<br>Kreate-Hub 오신것을 환영합니다!" +
-                        "<br>아래 [이메일 인증 확인]을 눌러주세요." +
-                        "<br><a href='http://localhost:8080/member/register?member_type=" + dto.getMember_type() +
-                        "&email=" + dto.getEmail() +
-                        "&email_type=" + dto.getEmail_type() +
-                        "&random_key=" + dto.getRandom_key() +
-                        "'>이메일 인증 확인</a>");
-        sendMail.setFrom("rkqudwns@gmail.com", "강병준");
-        System.out.println(dto.getEmail() + "@" + dto.getSet_email_type() + " / " + dto.getMember_type());
-        sendMail.setTo(dto.getEmail() + "@" + dto.getSet_email_type());
-        sendMail.send();
+	public void findPassword(MemberDTO dto) throws MessagingException, UnsupportedEncodingException {
+		System.out.println("2" + dto);
+		this.emailTypeChange(dto);
 
+		String emailName = this.getEmailName(dto);
+		dto.setSet_email_type(emailName);
 
-    }
+		System.out.println("3" + dto);
+		UUID uuid = UUID.randomUUID();
+		dto.setRandom_key(String.valueOf(uuid));
 
-    public void findPassword(MemberDTO dto) throws MessagingException, UnsupportedEncodingException {
-        System.out.println("2" + dto);
-        this.emailTypeChange(dto);
+		MailHandler sendMail = new MailHandler(javaMailSender);
+		sendMail.setSubject("[Kreate-Hub 비밀번호찾기 메일 입니다.]"); // 메일제목
+		sendMail.setText("<h1>Kreate-Hub 비밀번호 찾기</h1>" +
 
-        String emailName = this.getEmailName(dto);
-        dto.setSet_email_type(emailName);
+				"<br>아래 [비밀번호 찾기를 눌러주세요]" + "<br><a href='http://localhost:8080/member/tofindPassword" + "?email=" + dto.getEmail() + "&email_type=" + dto.getEmail_type() + "&random_key=" + dto.getRandom_key() + "'>비밀번호 찾기</a>");
+		sendMail.setFrom("rkqudwns@gmail.com", "강병준");
 
+		sendMail.setTo(dto.getEmail() + "@" + dto.getSet_email_type());
+		sendMail.send();
+	}
 
-        System.out.println("3" + dto);
-        UUID uuid = UUID.randomUUID();
-        dto.setRandom_key(String.valueOf(uuid));
-
-        MailHandler sendMail = new MailHandler(javaMailSender);
-        sendMail.setSubject("[Kreate-Hub 비밀번호찾기 메일 입니다.]"); //메일제목
-        sendMail.setText(
-                "<h1>Kreate-Hub 비밀번호 찾기</h1>" +
-
-                        "<br>아래 [비밀번호 찾기를 눌러주세요]" +
-                        "<br><a href='http://localhost:8080/member/tofindPassword" +
-                        "?email=" + dto.getEmail() +
-                        "&email_type=" + dto.getEmail_type() +
-                        "&random_key=" + dto.getRandom_key() +
-                        "'>비밀번호 찾기</a>");
-        sendMail.setFrom("rkqudwns@gmail.com", "강병준");
-
-        sendMail.setTo(dto.getEmail() + "@" + dto.getSet_email_type());
-        sendMail.send();
-    }
-
-
-    public void emailTypeChange(MemberDTO dto) {
-        String email = dto.getEmail();
-        String[] mail = email.split("@");
-        dto.setEmail(mail[0]);
-        Integer email_type = mdao.getEmailCode(mail[1]);
-        dto.setEmail_type(email_type);
+	public void emailTypeChange(MemberDTO dto) {
+		String email = dto.getEmail();
+		String[] mail = email.split("@");
+		dto.setEmail(mail[0]);
+		Integer email_type = mdao.getEmailCode(mail[1]);
+		dto.setEmail_type(email_type);
 //        if(mail[1].equals("gmail.com")){
 //            dto.setEmail_type(1001);
 //        } else if (mail[1].equals("naver.com")) {
@@ -114,77 +95,76 @@ public class MemberService {
 //            dto.setEmail_type(1004);
 //        }
 
+	}
 
-    }
+	public int insertMember(MemberDTO dto, MultipartFile file, String realPath) throws Exception {
+		System.out.println("create");
+		String path = "/resources/member";
+		System.out.println(realPath);
+		File realPathFile = new File(realPath);
+		if (!realPathFile.exists())
+			realPathFile.mkdirs();
+		if (file != null) {
 
+			String oriName = file.getOriginalFilename();
+			System.out.println(oriName);
+			String[] arr = oriName.split("\\.");
+			System.out.println(arr.length);
+			String sysname = dto.getEmail() + "_" + dto.getEmail_type() + "." + arr[arr.length - 1];
+			System.out.println(sysname);
+			String fileURL = realPath + "/" + sysname;
+			System.out.println(fileURL);
+			String url = path + "/" + sysname;
+			file.transferTo(new File(fileURL));
+			dto.setFile_url(url);
+		}
 
-    public int insertMember(MemberDTO dto, MultipartFile file, String realPath) throws Exception {
-        System.out.println("create");
-        String path = "/resources/member";
-        System.out.println(realPath);
-        File realPathFile = new File(realPath);
-        if (!realPathFile.exists()) realPathFile.mkdirs();
-        if (file != null) {
+		System.out.println("createMember로 넘어온 dto :" + dto);
+		System.out.println("========================");
+		return mdao.insert(dto);
 
-            String oriName = file.getOriginalFilename();
-            System.out.println(oriName);
-            String[] arr = oriName.split("\\.");
-            System.out.println(arr.length);
-            String sysname = dto.getEmail() + "_" + dto.getEmail_type() + "." + arr[arr.length - 1];
-            System.out.println(sysname);
-            String fileURL = realPath + "/" + sysname;
-            System.out.println(fileURL);
-            String url = path + "/" + sysname;
-            file.transferTo(new File(fileURL));
-            dto.setFile_url(url);
-        }
+	}
 
-        System.out.println("createMember로 넘어온 dto :" + dto);
-        System.out.println("========================");
-       return mdao.insert(dto);
+	public void Nupdate(MemberDTO dto) {
+		mdao.Nupdate(dto);
+	}
 
-    }
+	public void updatePassword(MemberDTO dto) {
+		mdao.updatePassword(dto);
+	}
 
-    public void Nupdate(MemberDTO dto) {
-        mdao.Nupdate(dto);
-    }
+	public void login(MemberDTO dto) {
+		mdao.login(dto);
+	}
 
-    public void updatePassword(MemberDTO dto) {
-        mdao.updatePassword(dto);
-    }
+	public boolean passwordCheck(MemberDTO dto) {
+		return mdao.passwordCheck(dto);
+	}
 
-    public void login(MemberDTO dto) {
-        mdao.login(dto);
-    }
+	public MemberDTO selectDTO(int code) {
 
-    public boolean passwordCheck(MemberDTO dto) {
-        return  mdao.passwordCheck(dto);
-    }
+		return mdao.selectDTO(code);
+	}
 
-    public MemberDTO selectDTO(int code) {
+	public void update(MemberDTO dto) {
+		mdao.update(dto);
+	}
 
-        return mdao.selectDTO(code);
-    }
+	public List<List<CategoryType>> getTypes() {
+		List<CategoryType> categoryTypes = typeDAO.selectByCategoryType();
+		List<CategoryType> boardTypes = typeDAO.selectByBoardType();
+		return List.of(categoryTypes, boardTypes);
+	}
 
-    public void update(MemberDTO dto) {
-        mdao.update(dto);
-    }
+	public int memeberDelete(int code) {
+		return mdao.memberDelete(code);
+	}
 
-    public List<List<CategoryType>> getTypes() {
-        List<CategoryType> categoryTypes = typeDAO.selectByCategoryType();
-        List<CategoryType> boardTypes = typeDAO.selectByBoardType();
-        return List.of(categoryTypes, boardTypes);
-    }
-    public int memeberDelete(int code) {
-       return mdao.memberDelete(code);
-    }
+	public int nicknameDuplicateCheck(String nickname) {
+		return mdao.nicknameDuplicateCheck(nickname);
+	}
 
-    public int nicknameDuplicateCheck(String nickname) {
-        return mdao.nicknameDuplicateCheck(nickname);
-    }
-
-    public boolean duplicationEmail(MemberDTO dto) {
-        return mdao.duplicationEmail(dto);
-    }
+	public boolean duplicationEmail(MemberDTO dto) {
+		return mdao.duplicationEmail(dto);
+	}
 }
-
