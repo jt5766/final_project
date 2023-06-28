@@ -9,34 +9,28 @@
   <title>Document</title>
   <c:set var="path" value="${pageContext.request.contextPath}"/>
   <c:import url="${path}/resources/js/scripts.jsp"/>
+  <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
 <%--파일 타입 인풋 히든 만들고 인풋파일 클래스를 주고 온체인지 이벤트를 걸어서 둘중 하나가 올라오면 하나의 네임값을 삭제  --%>
 
 
-<body>
+
 
 <style>
-  #wrap {
-    display: flex;
-    width: calc(100vw - (100vw - 100%));
-    height: 98vh;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(217, 223, 228);
-  }
 
   #loginBox {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 5px #c1bdbd;
     padding: 20px 10px;
-
+    margin: auto;
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 400px;
-    height: 600px;
+    height: 500px;
     gap: 10px;
   }
 
@@ -65,6 +59,7 @@
 
   input::placeholder {
     font-size: 15px;
+
   }
 
   .filebox {
@@ -90,7 +85,6 @@
     vertical-align: middle;
     background-color: #999999;
     cursor: pointer;
-    height: 30px;
     margin-left: 10px;
     font-size: 10px;
   }
@@ -117,11 +111,21 @@
 
 </style>
 
+<body>
+<!-- GNB & LNB -->
+<c:import url="${path}/resources/js/GNB.jsp">
+  <c:param name="pageName" value="home" />
+  <c:param name="btnNum" value="1" />
+</c:import>
+<!-- CONTENTS -->
+<div class="container-xl  position-relative p-0">
 <form action="/member/createMember" method="post" enctype="multipart/form-data">
 
-  <div id="wrap">
+
 
     <div id="loginBox">
+      <h4>전문가인뎁쇼?</h4>
+
       <div>
         <h3>Email </h3>
         <input type="hidden" name="email_type" value="${emailType}">
@@ -144,7 +148,7 @@
       <div>
         <h3 id="fileTitle">*사업자 등록증명서 혹은 재직증명서 를 입력해주세요.</h3>
         <div class="filebox">
-          <input class="upload-name" value="첨부파일" placeholder="첨부파일">
+          <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
           <label for="file" >파일찾기</label>
           <input type="file" id="file" name="file" required>
         </div>
@@ -156,10 +160,13 @@
 
     </div>
 
-  </div>
+
 
 </form>
+</div>
+<c:import url="${path}/resources/js/FOOTER.jsp"/>
 <script>
+
   $("#file").on('change',function(){
     var fileName = $("#file").val();
     $(".upload-name").val(fileName);
@@ -169,7 +176,7 @@
     if(!confirm("정말 가입을 취소하시겠습니까?")){
       return;
     }else {
-      location.href="/member/loginForm?status=cancel";
+      location.replace("/member/loginForm");
     }
   }
 </script>

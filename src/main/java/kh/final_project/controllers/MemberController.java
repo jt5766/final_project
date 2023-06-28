@@ -98,10 +98,8 @@ public class MemberController {
     }
 
     @RequestMapping("loginForm")
-    public String loginForm(String status, Model model){
-        if(status != null) {
-            model.addAttribute("status", status);
-        }
+    public String loginForm(){
+
         return "/member/loginForm";
     }
 

@@ -151,8 +151,16 @@ accent-color: #ca9372;
                         <input type="password" id="input_password" name="password" placeholder="password">
                     </div>
                 </div>
+<<<<<<< Updated upstream
                 <div id="find_password">
                     <a href="/member/findPassword">비밀번호 찾기</a>
+=======
+                <div><input id="input_pw" name="password" type="password" placeholder="내용을 입력해주세요"></div>
+                <div></div>
+                <div><a href="#">비밀번호 찾기</a></div>
+                <div>
+                    <button id="login_btn">로그인</button>
+>>>>>>> Stashed changes
                 </div>
                 <div id="btns">
                     <button type="button" id="login_btn">로그인</button>
@@ -167,21 +175,34 @@ accent-color: #ca9372;
 
 </body>
 <script>
-    $(document).ready(function () {
-        if("${result}" > 0){
-            alert("회원가입을  축하드립니다");
-            history.pushState(null, null, "http://localhost:8080/member/createMember");
-            window.onpopstate = function (event) {
-                history.go(1);
-            };
-        }else if(${status == 'cancel'}) {
-            history.pushState(null, null, "http://localhost:8080/member/loginForm");
-            window.onpopstate = function (event) {
-                history.go(1);
-            }
-        }else if(${emailCheck == true}) {
-            alert("가입되어있는 이메일입니다")
+
+
+    <%--if("${result}" > 0){--%>
+    <%--    alert("회원가입을  축하드립니다");--%>
+    <%--    history.pushState(null, null, "http://localhost:8080/member/createMember");--%>
+    <%--    window.onpopstate = function (event) {--%>
+    <%--        history.go(1);--%>
+    <%--    };--%>
+    <%--}else if(${status == 'cancel'}) {--%>
+    <%--    history.pushState(null, null, "http://localhost:8080/member/loginForm");--%>
+    <%--    window.onpopstate = function (event) {--%>
+    <%--        history.go(2);--%>
+    <%--    }--%>
+
+    <%--}else if(${emailCheck == true}) {--%>
+    <%--    alert("가입되어있는 이메일입니다")--%>
+    <%--}--%>
+
+
+    if("${result}" > 0) {
+        alert("회원가입을 축하드립니다.")
+        history.pushState(null, null, "http://localhost:8080/member/createMember");
+        window.onpopstate = function (event) {
+            history.go(1);
         }
+    }
+    $(document).ready(function () {
+
 
         $("#signup_btn").click(function () {
             location.href = "/member/signup";

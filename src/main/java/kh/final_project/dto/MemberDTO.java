@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public class MemberDTO {
 
+<<<<<<< Updated upstream
 	private Integer code;
 	private Integer member_type;
 	private String email;
@@ -18,6 +19,25 @@ public class MemberDTO {
 	private Timestamp join_date;
 	private Timestamp stop_date;
 	private String yn;
+=======
+    private Integer code;
+    private Integer member_type;
+    private String email;
+    private Integer email_type;
+    private String set_email_type;
+
+    private String random_key;
+    private String password;
+    private String nickname;
+    private Integer file_type;
+    private String file_url;
+    private String company;
+    private String name;
+    private String tel;
+    private Timestamp join_date;
+    private Timestamp stop_date;
+    private String yn;
+>>>>>>> Stashed changes
 
 	public MemberDTO() {
 		super();
@@ -97,9 +117,23 @@ public class MemberDTO {
 		return password;
 	}
 
+<<<<<<< Updated upstream
 	public void setPassword(String password) {
 		this.password = password;
 	}
+=======
+    public String getRandom_key() {
+        return random_key;
+    }
+
+    public void setRandom_key(String random_key) {
+        this.random_key = random_key;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+>>>>>>> Stashed changes
 
 	public String getNickname() {
 		return nickname;
@@ -165,4 +199,79 @@ public class MemberDTO {
 				+ ", stop_date=" + stop_date + ", yn=" + yn + ", random_key ="+random_key+"]";
 	}
 
+<<<<<<< Updated upstream
+=======
+    public void setFile_url(String file_url) {
+        this.file_url = file_url;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public Timestamp getJoin_date() {
+        return join_date;
+    }
+
+    public void setJoin_date(Timestamp join_date) {
+        this.join_date = join_date;
+    }
+
+    public Timestamp getStop_date() {
+        return stop_date;
+    }
+
+    public void setStop_date(Timestamp stop_date) {
+        this.stop_date = stop_date;
+    }
+
+    public String getYn() {
+        return yn;
+    }
+
+    public void setYn(String yn) {
+        this.yn = yn;
+    }
+
+    @Override
+    public String toString() {
+        return "MemberDTO{" +
+                "\ncode=" + code +
+                "\nmember_type=" + member_type +
+                "\nemail='" + email + '\'' +
+                "\nemail_type=" + email_type +
+                "\npassword='" + password + '\'' +
+                "\nnickname='" + nickname + '\'' +
+                "\nfile_type=" + file_type +
+                "\nfile_url='" + file_url + '\'' +
+                "\ncompany='" + company + '\'' +
+                "\nname='" + name + '\'' +
+                "\ntel='" + tel + '\'' +
+                "\njoin_date=" + join_date +
+                "\nstop_date=" + stop_date +
+                "\nyn='" + yn + '\'' +
+                "\nrandom_key" + random_key+
+                '}';
+    }
+>>>>>>> Stashed changes
 }
