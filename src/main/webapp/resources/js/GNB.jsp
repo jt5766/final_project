@@ -54,7 +54,21 @@
 								<ul class="navbar-nav d-flex d-lg-none flex-column flex-wrap bd-navbar-nav">
 									<li class="nav-item col-12">
 										<c:forEach items="${mypage}" var="item">
+										<c:choose>
+										<c:when test="${item.code eq 1001}">
+											<a class="nav-link py-0 ps-4 fs-3" href="/member/my-page/gallery" aria-current="true">- ${item.name}</a>
+										</c:when>
+										<c:when test="${item.code eq 1002}">
+											<a class="nav-link py-0 ps-4 fs-3" href="/member/my-page/community" aria-current="true">- ${item.name}</a>
+										</c:when>
+										<c:when test="${item.code eq 1003}">
+											<a class="nav-link py-0 ps-4 fs-3" href="/chat/testlink" aria-current="true">- ${item.name}</a>
+										</c:when>
+										<c:when test="${item.code eq 1004}">
 											<a class="nav-link py-0 ps-4 fs-3" href="/community/toBoard?code=${item.code}&currentPage=1" aria-current="true">- ${item.name}</a>
+										</c:when>
+									</c:choose>
+											
 										</c:forEach>
 									</li>
 								</ul>
