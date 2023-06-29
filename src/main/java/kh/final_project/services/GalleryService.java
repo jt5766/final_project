@@ -238,7 +238,7 @@ public class GalleryService {
         return galleryDAO.selectMyCards(code);
     }
 
-    public Boolean dupleInviteCheck(Integer myCode, Integer menteeCode) {
-        return chatService.doublecheck(myCode, menteeCode);
+    public Boolean dupleInviteCheck(Integer mentor, Integer mentee) {
+        return chatService.doublecheck(mentor, mentee);
     }
 }
