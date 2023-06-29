@@ -20,10 +20,9 @@
     #wrap {
         display: flex;
         justify-content: center;
-        border: 1px solid black;
-        flex-direction: column;
+        width: calc(100vw - (100vw - 100%));
+        height: 98vh;
         align-items: center;
-        width: 100vw;
     }
 
     #header, #footer {
@@ -33,15 +32,17 @@
 
 
     #body {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 5px #c1bdbd;
+        padding: 20px 10px;
+        gap: 20px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 25px;
-        width: 30vw;
-        height: 60vh;
-        margin: auto;
-        margin-top: 50px;
+        width: 400px;
+        height: 500px;
     }
 
 
@@ -50,7 +51,6 @@
         justify-content: space-between;
         width: 100%;
         font-size: 18px;
-        margin-bottom: 5px;
     }
 
     #login_box {
@@ -78,9 +78,7 @@
 
     }
 
-    #password_font {
-        margin-bottom: 5px;
-    }
+
 
     #input_password {
         width: 100%;
@@ -102,27 +100,43 @@
 
     #find_password {
         width: 100%;
+        font-size: 12px;
+        color: #b0b0b0;
+        margin-left: 5px;
+    }
+    #register_link{
+        font-size: 12px;
+        color: #b0b0b0;
+        margin-right: 5px;
     }
 
     #btns {
+        margin-top: 30px;
         display: flex;
         flex-direction: column;
-        width: 80%;
+        width: 100%;
 
         gap: 10px;
     }
 
     #btns > button {
         height: 40px;
+        background-color: #5d5d5d;
+        border-radius: 3px;
+        color: white;
+    }
+
+    #atags{
+        display: flex;
+        justify-content: space-between;
     }
 
     a {
         text-decoration-line: none;
-        color: rgb(93, 93, 93);
     }
 
     #checkId {
-        accent-color: #ca9372;
+        accent-color: #5d5d5d;
     }
 
 
@@ -135,6 +149,7 @@
 </c:import>
 <!-- CONTENTS -->
 <div class="container-xl  position-relative p-0">
+    <div id="wrap">
     <div id="body">
         <div id="login_box">
             <div id="idCheck_box">
@@ -151,15 +166,21 @@
                 <input type="password" id="input_password" name="password" placeholder="password">
             </div>
         </div>
-        <div id="find_password">
-            <a href="/member/findPassword">비밀번호 찾기</a>
-        </div>
         <div id="btns">
             <button type="button" id="login_btn">로그인</button>
-            <button type="button" id="signup_btn">회원가입</button>
+            <hr>
+            <div id="atags">
+                <div>
+                <a href="/member/findPassword" id="find_password">비밀번호 찾기</a>
+                </div>
+                <div>
+                <a href="/member/signup" id="register_link">회원가입</a>
+                </div>
+            </div>
         </div>
 
     </div>
+</div>
 </div>
 <!-- FOOTER -->
 <c:import url="${path}/resources/js/FOOTER.jsp" />
