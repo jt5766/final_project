@@ -16,4 +16,4 @@
 .otherdatebox{float:left;padding-right:2px;align-self:end;margin-bottom:2px;}
 .mydatebox{float:right;padding-right:2px;align-self:end;margin-bottom:2px;}
 .alldatebox{overflow: auto;background-color:#c7b299;text-align:center;font-size:200%;}
-.frontdatebox{overflow: auto;background-color:#c7b299;text-align:center;}
+.frontdatebox{overflow: auto;background-color:#c7b299;text-align:center;font-size:200%;}
