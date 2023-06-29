@@ -6,9 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
+<c:import url="${path}/resources/js/scripts.jsp"/>
+<link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 	<style>
         *{box-sizing: border-box;}
         .chatbox{background-color: #C7B299;margin:0px;margin-bottom:15px;}
@@ -17,7 +16,6 @@
         .listbtn{width: 100%; height: 100%;background-color: #ca9372; color: white;}
         .listbtn:hover{background-color: black; color: gray;}
     </style>
-    <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 	<c:import url="${path}/resources/js/GNB.jsp">
