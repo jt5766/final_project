@@ -1,6 +1,8 @@
 package kh.final_project.dto;
 
-public class CategoryType {
+import java.io.Serializable;
+
+public class CategoryType implements Serializable {
 	private Integer code;
 	private Integer sort;
 	private String name;
