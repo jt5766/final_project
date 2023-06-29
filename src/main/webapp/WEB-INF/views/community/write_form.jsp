@@ -79,7 +79,7 @@
 		lang : "ko-KR", // 한글 설정
 		codeviewFilter: false,
 		codeviewIframeFilter: true,
-		placeholder : '사진의 파일명은 영어로 해주세요', //placeholder 설정
+		placeholder : '내용을 입력해주세요', //placeholder 설정
 		disableDragAndDrop : true,
 		toolbar : [ [ 'style', [ 'style' ] ],
 				[ 'font', [ 'bold', 'underline', 'clear' ] ],
