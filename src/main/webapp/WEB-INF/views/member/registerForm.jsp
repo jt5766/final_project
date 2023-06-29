@@ -12,69 +12,61 @@
 
 
 
-<style>
+    <style>
 
-    /*#wrap {*/
+        h3 {
+            font-size: 20px;
+            font-weight: 200;
+            color: rgb(80, 80, 160);
+        }
 
-    /*    display: flex;*/
-    /*    width: calc(100vw - (100vw - 100%));*/
-    /*    height: 98vh;*/
-    /*    justify-content: center;*/
-    /*    align-items: center;*/
-    /*    background-color: rgb(217, 223, 228);*/
-    /*}*/
+        input {
+            width: 250px;
+            border: 0px;
+            border-bottom: 1px solid #ddd;
+            transition-duration: .4s;
+            outline: none;
+        }
 
-    h3 {
-        font-size: 20px;
-        font-weight: 200;
-        color: rgb(80, 80, 160);
-    }
+        input:focus {
+            border-bottom: 1px solid rgb(136, 188, 230);
 
-    input {
-        width: 250px;
-        border: 0px;
-        border-bottom: 1px solid #ddd;
-        transition-duration: .4s;
-        outline: none;
-    }
+        }
 
-    input:focus {
-        border-bottom: 1px solid rgb(136, 188, 230);
+        input::placeholder {
+            font-size: 15px;
+        }
 
-    }
+        #btnBox {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+        }
 
-    input::placeholder {
-        font-size: 15px;
-    }
+        #cBtn, #sBtn {
 
-    #btnBox {
-        display: flex;
-        gap: 20px;
+            padding: 5px 10px;
+        }
 
-    }
+        #loginBox {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 5px #c1bdbd;
+            padding: 20px 10px;
+            margin: auto;
+            margin-top: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 400px;
+            height: 500px;
+            gap: 10px;
 
-    #cBtn, #sBtn {
-        margin-top: 10px;
-        padding: 5px 10px;
-    }
-
-    #loginBox {
-        background-color: white;
-        border-radius: 10px;
-        box-shadow: 0 0 5px #c1bdbd;
-        padding: 20px 10px;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        width: 400px;
-        height: 600px;
-
-    }
+        }
 
 
-</style>
+    </style>
 
 
 <body>
@@ -86,14 +78,14 @@
 </c:import>
 <!-- CONTENTS -->
 <div class="container-xl  position-relative p-0">
-<form action="/member/createMember" method="post">
+    <form action="/member/createMember" method="post">
 
         <div id="loginBox">
             <div>
                 <h3>Email</h3>
-                    <input type="hidden" name="email_type" value="${emailType}">
-                    <input type="hidden" name="email" value="${email}">
-                    <input type="hidden" name="member_type" value="${memberType}">
+                <input type="hidden" name="email_type" value="${emailType}">
+                <input type="hidden" name="email" value="${email}">
+                <input type="hidden" name="member_type" value="${memberType}">
                 <input type="text" placeholder="Email" value="${email}@${setEmailType}" readonly>
             </div>
             <div>
@@ -114,19 +106,20 @@
             </div>
         </div>
 
-</form>
-    <c:import url="${path}/resources/js/FOOTER.jsp"/>
+    </form>
+</div>
+<c:import url="${path}/resources/js/FOOTER.jsp"/>
 
-    <script>
-        function cancel(){
-            if(!confirm("정말 가입을 취소하시겠습니까?")){
-                return;
-            }else {
-                location.href="/member/loginForm?status=cancel";
-            }
+<script>
+    function cancel(){
+        if(!confirm("정말 가입을 취소하시겠습니까?")){
+            return;
+        }else {
+            location.replace("/member/loginForm");
         }
+    }
 
-    </script>
+</script>
 </body>
 
 

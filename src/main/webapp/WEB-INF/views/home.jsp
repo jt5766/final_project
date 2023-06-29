@@ -10,6 +10,7 @@
   <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
   <link href="${path}/resources/css/gallery.css" type="text/css" rel="stylesheet">
 </head>
+
 <body class="h-100">
 <!-- GNB & LNB -->
 <c:import url="${path}/resources/js/GNB.jsp">

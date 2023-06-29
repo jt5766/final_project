@@ -6,119 +6,136 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     <c:import url="${path}/resources/js/scripts.jsp"/>
     <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
     <title>Document</title>
     <style>
-        * {
-            border: 1px solid black;
-            box-sizing: border-box;
-        }
-
-        #container {
-            margin: auto;
-            text-align: center;
-
-        }
-
-
-        #navi {
+        /**{border: 1px solid black}*/
+        #wrap {
             display: flex;
+            justify-content: center;
+            width: calc(100vw - (100vw - 100%));
+            height: 98vh;
+            align-items: center;
         }
 
-        #navi_left {
-            flex: 0.5;
-        }
-
-        #navi_center {
-            flex: 1;
-        }
-
-        #navi_right {
-            flex: 0.5;
-        }
-
-
-        /* 컨텐츠부분 */
-        #body {
+        #box1 {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 5px #c1bdbd;
+            padding: 20px 10px;
+            gap: 20px;
             display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 400px;
+            height: 500px;
+        }
+
+        input {
+            width: 250px;
+            border: 0px;
+            border-bottom: 1px solid #ddd;
+            transition-duration: .4s;
+            outline: none;
 
         }
 
-        #body_left {
-            flex: 0.3;
+        input:focus {
+            border-bottom: 1px solid #ca9372;
+        }
+        input::placeholder {
+            font-size: 13px;
         }
 
-        #body_center {
-            flex: 1;
+        h4 {
+            font-size: 15px;
+            font-weight: 50;
+            color: #000000;
         }
 
-        #body_mid {
+        #info_box{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            display: none;
+
+        }
+
+
+
+
+        #dupl_font{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        #nId{
+            font-size: 15px;
+            color: crimson;
             display: none;
         }
 
-
-        #body_right {
-            flex: 0.3;
+        #sId{
+            font-size: 15px;
+            color: dodgerblue;
+            display: none;
         }
 
-        .validate {
-            background-color: green;
-        }
     </style>
-</head>
 <body>
-<form action="/member/update" id="updatemember">
-    <div id="container">
-        <div id="header"><c:import url="${path}/resources/js/GNB.jsp" /></div>
-        <div id="navi">
-            <div id="navi_left"></div>
-            <div id="navi_center">마이페이지<br>
-                <button type="button">갤러리</button>
-                <button type="button">커뮤니티</button>
-                <button type="button">1:1채팅</button>
-            </div>
-            <div id="navi_right"></div>
-        </div>
-        <div id="body">
-            <div id="body_left"></div>
 
-            <div id="body_center"><br>
-                <div id="body_top">
-                    비밀번호<br>
-                    <input type="password" id="pass" placeholder="내용을입력해주세요">
-                    <button  class="btn btn-outline-dark" type="button" id="passwordChkBtn">확인</button>
+<!-- GNB & LNB -->
+<c:import url="${path}/resources/js/GNB.jsp">
+    <c:param name="pageName" value="home"/>
+    <c:param name="btnNum" value="1"/>
+</c:import>
+<div class="container-xl  position-relative p-0">
+    <form action="/member/update" id="updatemember">
+        <div id="wrap">
+            <div id="box1">
+                <div id="pass_box">
+                    <h4>비밀번호 입력</h4>
+                    <input type="password" id="pass" placeholder="Password">
                     <input type="hidden" id="nick" value="${nickName}">
-
+                    <button type="button" id="passwordChkBtn">확인</button>
                 </div>
-                <br>
 
-                <div id="body_mid">
-                    이메일<br>
-                    <input type="text" placeholder="내용을입력해주세요" value="${email}@${set_email_type}" readonly> <br>
-
-                    닉네임<br>
-                    <input type="text" name="nickname" placeholder="내용을입력해주세요" value="${nickName}"><button  class="btn btn-outline-dark" id="duplicate_check" type="button">중복확인</button>
+                <div id="info_box">
+                    <div >
+                        <h4>이메일</h4>
+                        <input type="text" placeholder="Email" value="${email}@${set_email_type}" readonly>
+                    </div>
+                    <div>
+                        <div id="dupl_font">
+                            <h4>닉네임</h4>
+                            <div id="sId">사용가능한 닉네임</div>
+                            <div id="nId">중복된 닉네임</div>
+                        </div>
+                        <input type="text" name="nickname" id="nickname" placeholder="Password" value="${nickName}">
+                        <button id="duplicate_check" type="button">중복확인</button>
+                    </div>
                 </div>
-                <br>
 
-                <div id="body_bottom" align="center">
-                    <button  class="btn btn-outline-dark" id="infoUpdate" style="display: none">정보수정</button>
-                    <button class="btn btn-outline-dark" type="button" id="passwordChange" style="display: none" >비밀번호 변경</button>
-                    <button  class="btn btn-outline-dark" type="button" id="cancleBtn">취소</button>
-                    <br><br>
-                    <button  class="btn btn-outline-dark" type="button" id="memberDelete" style="display: none">탈퇴</button>
-                    <br>
+                <div>
+                    <button id="infoUpdate" style="display: none">정보수정</button>
+                    <button  type="button" id="passwordChange" style="display: none"> 비밀번호변경 </button>
+                    <button  type="button" id="cancleBtn">취소</button>
+                </div>
+
+                <div>
+                    <button  type="button" id="memberDelete" style="display:none">탈퇴 </button>
                 </div>
             </div>
-            <div id="body_right"></div>
+
 
         </div>
+    </form>
+</div>
+<c:import url="${path}/resources/js/FOOTER.jsp"/>
 
-        <div id="footer"><c:import url="${path}/resources/js/FOOTER.jsp" /></div>
-    </div>
-</form>
 <script>
 
     $("#passwordChange").click(function () {
@@ -145,8 +162,8 @@
             resp = JSON.parse(resp);
             if (resp) {
                 // $("#body_mid").css({display:"block"})
-                $("#body_mid").css("display", "inline-block")
-                $("#body_top").css({display: "none"})
+                $("#info_box").css("display", "inline-block")
+                $("#pass_box").css({display: "none"})
 
                 $("#infoUpdate").css("display", "inline-block")
                 $("#passwordChange").css("display", "inline-block")
@@ -161,12 +178,11 @@
 
 
     /*탈퇴 버튼*/
-    $("#memberDelete").click(function (){
-      const result = confirm("회원을 탈퇴 하시겠습니까?")
-      if(result){
-        location.href="/member/memberDelete?code=${code}"
-      }
-
+    $("#memberDelete").click(function () {
+        const result = confirm("회원을 탈퇴 하시겠습니까?")
+        if (result) {
+            location.href = "/member/memberDelete?code=${code}"
+        }
 
 
     })
@@ -179,32 +195,43 @@
     })
 
     const nickname = $('input[name=nickname]');
-    $('#duplicate_check').on('click', function() {
+    $('#duplicate_check').on('click', function () {
         console.log(nickname)
+        if(nickname.val()=== "${nickName}"){
+            return
+        }
         if (nickname.val().trim() !== '') {
             $.ajax({
-                url:"/member/nickname/duplicate-check",
-                data:{
-                    nickname:nickname.val().trim()
+                url: "/member/nickname/duplicate-check",
+                data: {
+                    nickname: nickname.val().trim()
                 },
-                contentType:"application/x-www-form-urlencoded; utf-8",
-                method:"post"
-            }).done(function(resp) {
+                contentType: "application/x-www-form-urlencoded; utf-8",
+                method: "post"
+            }).done(function (resp) {
                 console.log(resp);
                 if (resp > 0) {
-                    alert("중복된 닉네임입니다.");
+
+                    $("#nId").css("display","inline-block")
+
+
+
                 } else {
-                    nickname.addClass('validate');
+                    $("#sId").css("display","inline-block")
                 }
             });
         }
     });
-    nickname.on('change', function() {
-        nickname.removeClass('validate');
+    nickname.on('change', function () {
+        $("#nId").css("display","none")
+        $("#sId").css("display","none")
     })
-    $('#updatemember').on('submit', function(e) {
+
+
+    $('#updatemember').on('submit', function (e) {
         const nickname = $('input[name=nickname]');
-        if (!nickname.hasClass('validate')) {
+        const nId=  $("#nId").css("display")
+        if (nickname.val() === "" || nId === "inline-block") {
             alert("중복 검사를 실시해주세요.");
             e.preventDefault();
         }

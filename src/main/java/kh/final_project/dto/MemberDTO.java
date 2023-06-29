@@ -3,7 +3,6 @@ package kh.final_project.dto;
 import java.sql.Timestamp;
 
 public class MemberDTO {
-
 	private Integer code;
 	private Integer member_type;
 	private String email;
@@ -23,16 +22,14 @@ public class MemberDTO {
 		super();
 	}
 
-	public MemberDTO(Integer code, Integer member_type, String email, Integer email_type, String set_email_type,
-			String password, String nickname, String file_url, String name, String tel, Timestamp join_date,
-			Timestamp stop_date, String yn) {
+	public MemberDTO(Integer code, Integer member_type, String email, Integer email_type, String set_email_type, String random_key, String password, String nickname, String file_url, String name, String tel, Timestamp join_date, Timestamp stop_date, String yn) {
 		super();
 		this.code = code;
 		this.member_type = member_type;
 		this.email = email;
 		this.email_type = email_type;
 		this.set_email_type = set_email_type;
-
+		this.random_key = random_key;
 		this.password = password;
 		this.nickname = nickname;
 		this.file_url = file_url;
@@ -41,14 +38,6 @@ public class MemberDTO {
 		this.join_date = join_date;
 		this.stop_date = stop_date;
 		this.yn = yn;
-	}
-
-	public String getRandom_key() {
-		return random_key;
-	}
-
-	public void setRandom_key(String random_key) {
-		this.random_key = random_key;
 	}
 
 	public Integer getCode() {
@@ -91,7 +80,13 @@ public class MemberDTO {
 		this.set_email_type = set_email_type;
 	}
 
+	public String getRandom_key() {
+		return random_key;
+	}
 
+	public void setRandom_key(String random_key) {
+		this.random_key = random_key;
+	}
 
 	public String getPassword() {
 		return password;
@@ -159,10 +154,7 @@ public class MemberDTO {
 
 	@Override
 	public String toString() {
-		return "MemberDTO [code=" + code + ", member_type=" + member_type + ", email=" + email + ", email_type="
-				+ email_type + ", set_email_type=" + set_email_type + ", password=" + password + ", nickname="
-				+ nickname + ", file_url=" + file_url + ", name=" + name + ", tel=" + tel + ", join_date=" + join_date
-				+ ", stop_date=" + stop_date + ", yn=" + yn + ", random_key ="+random_key+"]";
+		return "MemberDTO [code=" + code + ", member_type=" + member_type + ", email=" + email + ", email_type=" + email_type + ", set_email_type=" + set_email_type + ", random_key=" + random_key + ", password=" + password + ", nickname=" + nickname + ", file_url=" + file_url + ", name=" + name + ", tel=" + tel + ", join_date=" + join_date + ", stop_date=" + stop_date + ", yn=" + yn + "]";
 	}
 
 }

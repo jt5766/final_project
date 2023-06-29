@@ -16,7 +16,7 @@
   	<c:param name="pageName" value="home"/>
   	<c:param name="btnNum" value="1"/>
 </c:import>
-exception
+400error
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
 </body>
 </html>

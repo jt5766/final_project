@@ -148,19 +148,19 @@
 
             <div id="email_box">
                 <div>
-                <h3>이메일</h3>
-                <div>
-                    <input type="text" id="email" name="email" placeholder="Email"> <span>@</span>
-                    <select id="sel" name="email_type"  >
+                    <h3>이메일</h3>
+                    <div>
+                        <input type="text" id="email" name="email" placeholder="Email" > <span>@</span>
+                        <select id="sel" name="email_type"  >
 
-                        <c:forEach var="i" items="${list}">
-                            <option value="${i.code}">${i.name}</option>
-                        </c:forEach>
-                    </select>
-                </div>
+                            <c:forEach var="i" items="${list}">
+                                <option value="${i.code}">${i.name}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
                 </div>
                 <div id="email-Btn">
-                    <button id="signup-btn" type="button">이메일 인증</button>
+                    <button id="signup-btn" type="button" >이메일 인증</button>
                 </div>
 
             </div>
@@ -176,17 +176,17 @@
 
 </body>
 <script>
-    // $("#signup_btn").click(function () {
-    //     const email = $("#email").val();
-    //
-    //     if (email == "") {
-    //         alert("이메일을 제대로 입력해주세요");
-    //         return;
-    //     }})
+
 
     $("#signup-btn").on("click", function () {
         var email = $("#email").val();
         var email_type = $("#sel").val();
+
+        if(email == ""){
+            alert("메일을 입력해주세요")
+            return;
+        }
+
         console.log(email);
         console.log(email_type);
         $.ajax({
