@@ -4,6 +4,10 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+import org.apache.commons.text.StringEscapeUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 public class BoardsDTO {
 	private Integer seq;
 	private Integer board_type;
@@ -63,7 +67,12 @@ public class BoardsDTO {
 	}
 
 	public String getTxt() {
-		return txt;
+		String proceed = StringEscapeUtils.unescapeHtml4(this.txt);
+		Whitelist customWhitelist = Whitelist.relaxed().addTags("img", "div, script").addAttributes("table", "class")
+				.addTags("font").addAttributes("font", "color");
+		String cleanedTxt = Jsoup.clean(proceed, customWhitelist);
+		System.out.println("cleanedTxt = " + cleanedTxt);
+		return cleanedTxt;
 	}
 
 	public void setTxt(String txt) {

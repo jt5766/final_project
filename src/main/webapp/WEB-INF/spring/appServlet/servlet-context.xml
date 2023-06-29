@@ -34,10 +34,14 @@
 			<exclude-mapping path="/resources/**" />
 			<!-- member -->
 			<exclude-mapping path="/member/login/" />
-			<exclude-mapping path="/member/signup" />
 			<exclude-mapping path="/member/login" />
+			<exclude-mapping path="/member/signup/" />
+			<exclude-mapping path="/member/signup" />
 			<exclude-mapping path="/member/check/" />
-			<exclude-mapping path="/member/mailDupCheck/" />
+			<exclude-mapping path="/member/check" />
+			<!-- a태그 href나 그런것들 보면 요청 URL 맨끝에 /가 있고 없고 하는 차이가 있는데 -->
+			<!-- exclude-mapping에는 /가 있을때랑 없을때가 따로 먹히는 것 같음 -->
+			<exclude-mapping path="/member/mailDupCheck" />
 			<exclude-mapping path="/member/register/" />
 			<exclude-mapping path="/member/createMember/" />
 			<exclude-mapping path="/member/loginForm/" />
@@ -51,8 +55,10 @@
 			<exclude-mapping path="/community/toBoardView**" />
 			<exclude-mapping path="/community/search" />
 			<!-- gallery -->
-			<exclude-mapping path="/gallery/category/**"/>
-			<exclude-mapping path="/gallery/search/**"/>
+			<exclude-mapping path="/gallery/category/*" />
+			<exclude-mapping path="/gallery/search/**" />
+			<exclude-mapping path="/gallery/*" />
+			<exclude-mapping path="/gallery/*/contents/*" />
 			<beans:bean class="kh.final_project.interceptor.LoginValidator" />
 		</interceptor>
 	</interceptors>
