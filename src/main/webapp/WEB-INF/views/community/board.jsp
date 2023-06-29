@@ -33,6 +33,12 @@
 	align-items: center;
 }
 
+th {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	padding: 10px;
+}
+
 select[name=searchCode] {
 	flex: 0 0 0;
 }
@@ -97,7 +103,7 @@ th>* {
 	<!-- CONTENTS -->
 	<div class="container-xl position-relative p-0">
 		<form action="/community/search" method="post" class="row" id="search-box">
-			<div class="col-12 col-md-1">
+			<div class="col-6 col-md-1">
 				<input type="hidden" name="typeCode" value="${categoryType.code}">
 				<select name="searchCode">
 					<c:forEach var="i" items="${search}">
@@ -108,7 +114,7 @@ th>* {
 			<div class="col-6 col-md-8">
 				<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요">
 			</div>
-			<div class="col-6 col-md-3">
+			<div class="col-12 col-md-3">
 				<c:forEach var="i" items="${sort}" varStatus="status">
 					<input type="radio" name="sortCode" value="${i.code}" <c:if test ="${status.index == 0}">checked</c:if>>
 								${i.name}
