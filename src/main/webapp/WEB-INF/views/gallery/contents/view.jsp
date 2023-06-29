@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}" scope="session"/>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Card Content</title>
@@ -20,12 +21,12 @@
 </c:import>
 <div class="container-xl content-body">
   <div class="row content-title">
-    <div class="col-10 d-flex justify-content-start align-items-center">
+    <div class="col-10 d-flex justify-content-start align-items-center p-0">
       <div>
         ${content.title}
       </div>
     </div>
-    <div class="col-2 d-flex justify-content-end align-items-center">
+    <div class="col-2 d-flex justify-content-end align-items-center p-0">
       <c:if test="${sessionScope.code == content.writer}">
         <div class="content-disclosure">
           <c:if test="${sessionScope.code == content.writer}">
@@ -34,7 +35,7 @@
                      <c:if test="${content.yn == 'Y'}">checked value="Y"</c:if>
                      <c:if test="${content.yn == 'N'}">value="N"</c:if>
               >
-              <label class="form-check-label" for="chk-disclosure">공개 여부</label>
+              <label class="form-check-label" for="chk-disclosure">공개</label>
             </div>
           </c:if>
         </div>
@@ -65,7 +66,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="content-file">
-            <img class="img-file" src="/resources${content.file_url}" alt="${content.file_url}">
+            <img class="img-file" src="/resources${content.file_url}" alt="/resources/default_img.jpg">
           </div>
         </div>
       </div>

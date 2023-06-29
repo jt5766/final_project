@@ -31,22 +31,22 @@
             <div class="row gallery-content m-0">
               <div class="col-12">
                 <div class="gallery-card" onclick="location.href='/gallery/${card.seq}'">
-                  <div class="info">
-                    <div class="category">
-                        ${card.category_name}
-                    </div>
-                    <c:if test="${card.genre_type1 != null}">
-                      <div class="genre-name">${card.genre_name1}</div>
-                    </c:if>
-                    <c:if test="${card.genre_type2 != null}">
-                      <div class="genre-name">${card.genre_name2}</div>
-                    </c:if>
-                  </div>
                   <div class="card-body">
                     <div class="thumbnail_url">
-                      <img class="thumbnail" src="/resources${card.thumbnail_url}" alt="${card.thumbnail_url}">
+                      <img class="thumbnail" src="/resources${card.thumbnail_url}" alt="/resources/default_img.jpg">
                     </div>
                     <div class="side-info">
+                      <div class="info">
+                        <div class="category">
+                            ${card.category_name}
+                        </div>
+                        <c:if test="${card.genre_type1 != null}">
+                          <div class="genre-name">${card.genre_name1}</div>
+                        </c:if>
+                        <c:if test="${card.genre_type2 != null}">
+                          <div class="genre-name">${card.genre_name2}</div>
+                        </c:if>
+                      </div>
                       <div class="title title-link">
                         <p>${card.title}</p>
                       </div>
@@ -98,22 +98,22 @@
           </c:if>
           <div class="col-md-6">
             <div class="gallery-card" onclick="location.href='/gallery/${card.seq}'">
-              <div class="info">
-                <div class="category">
-                    ${card.category_name}
-                </div>
-                <c:if test="${card.genre_type1 != null}">
-                  <div class="genre-name">${card.genre_name1}</div>
-                </c:if>
-                <c:if test="${card.genre_type2 != null}">
-                  <div class="genre-name">${card.genre_name2}</div>
-                </c:if>
-              </div>
               <div class="card-body">
                 <div class="thumbnail_url">
-                  <img class="thumbnail" src="/resources${card.thumbnail_url}" alt="${card.thumbnail_url}">
+                  <img class="thumbnail" src="/resources${card.thumbnail_url}" alt="/resources/default_img.jpg">
                 </div>
                 <div class="side-info">
+                  <div class="info">
+                    <div class="category">
+                        ${card.category_name}
+                    </div>
+                    <c:if test="${card.genre_type1 != null}">
+                      <div class="genre-name">${card.genre_name1}</div>
+                    </c:if>
+                    <c:if test="${card.genre_type2 != null}">
+                      <div class="genre-name">${card.genre_name2}</div>
+                    </c:if>
+                  </div>
                   <div class="title title-link">
                       ${card.title}
                   </div>
@@ -157,7 +157,7 @@
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
 <!-- script - Contents -->
 <script>
-    const resizeCard = function () {
+    $(window).on('load resize', function() {
         const one_on_page_width = document.querySelector('.one-on-page').offsetWidth;
         const two_on_page_width = document.querySelector('.two-on-page').offsetWidth;
         const one_on_page_items = $('.one-on-page .gallery-card').children().get().filter((e,i) => e.className==='catchphrase');
@@ -166,24 +166,7 @@
         const calc_two_on_page_width = Number.parseInt((two_on_page_width - 4) / 2);
         one_on_page_items.forEach((e, i) => e.style.width = calc_one_on_page_width+"px");
         two_on_page_items.forEach((e, i) => e.style.width = calc_two_on_page_width+"px");
-    }
-    $(function() {
-        resizeCard();
-    })
-    window.addEventListener('resize', resizeCard);
-    const cardEnter = function (e) {
-        $(e.target.closest('.gallery-card')).addClass('card-hover');
-    };
-    const cardLeave = function (e) {
-        $(e.target.closest('.gallery-card')).removeClass('card-hover');
-    };
-
-    const carousel = $('.carousel');
-    const card = $('.gallery-card');
-
-    card.on('mouseenter', cardEnter);
-    card.on('mouseleave', cardLeave);
-
+    });
 </script>
 </body>
 </html>
