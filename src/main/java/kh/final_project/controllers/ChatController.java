@@ -34,8 +34,8 @@ public class ChatController {
 	}
 	
 	@RequestMapping(value = "application", method = RequestMethod.POST)
-	public void application(int mentor, int mentee) {
-		chatservice.application(mentor, mentee);
+	public boolean application(int mentor, int mentee) {
+		return chatservice.application(mentor, mentee);
 	}
 	
 	@RequestMapping("accept")

@@ -16,8 +16,12 @@ public class ChatService {
 	@Autowired
 	private ChatDAO dao;
 	
-	public int application(int mentor,int mentee) {
-		return dao.application(new ChatlistDTO(null,mentor,mentee,null,null,null));
+	public boolean application(int mentor,int mentee) {
+		if(dao.application(new ChatlistDTO(null,mentor,mentee,null,null,null))==1) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	public int accept(Long seq) {
