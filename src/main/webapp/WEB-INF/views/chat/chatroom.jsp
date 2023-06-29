@@ -12,26 +12,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
-	<style>
-        *{box-sizing: border-box;}
-        .body-contents{height:80px; overflow:hidden;}
-        .body-write{height:20%;}
-        #div_contents{max-height: inherit; overflow: auto;background-color:white;}
-        #div_contents::-webkit-scrollbar{display:none;}
-        .mylinebox{overflow: auto;display:flex;justify-content:flex-start;flex-direction:row-reverse;}
-        .otherlinebox{overflow: auto;display:flex;justify-content:flex-start;flex-wrap: wrap;}
-        .mytext{float:right;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:#ca9372;border: 1px solid black;margin-top:5px;margin-bottom:5px;border-radius:5px;font-size:200%;}
-        .othertext{float:left;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:#ca937250;border: 1px solid black;margin-top:5px;margin-bottom:5px;border-radius:5px;font-size:200%;}
-        #div_text{height: 100px; overflow: auto;background-color:white;border:1px solid gray;}
-        #div_text::-webkit-scrollbar{display:none;}
-        .writerbox{flex-basis:100%;font-size:150%;}
-        #button_send{width: 100%; height: 100%; background-color: #212529;color: white;}
-        #button_send:hover{background-color: #6c757d;color:white;}
-        .otherdatebox{float:left;padding-right:2px;align-self:end;margin-bottom:2px;}
-        .mydatebox{float:right;padding-right:2px;align-self:end;margin-bottom:2px;}
-        .alldatebox{overflow: auto;background-color:#c7b299;text-align:center;font-size:200%;}
-        .frontdatebox{overflow: auto;background-color:#c7b299;text-align:center;}
-    </style>
+<link href="${path}/resources/css/chatroom.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 	<script>
@@ -375,7 +356,7 @@
 			var screenHeight = $(window).outerHeight();
 			var gbnHeight = $("header").outerHeight();
 			var textHeight = $("#div_text").outerHeight();
-			
+			$("#div_contents").css("min-height", screenHeight - gbnHeight - textHeight);
 			$("#div_contents").css("max-height", screenHeight - gbnHeight - textHeight);
 		})
 	</script>
