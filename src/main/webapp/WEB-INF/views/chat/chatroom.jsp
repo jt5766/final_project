@@ -232,6 +232,7 @@
 				        				$(".lastdatawriterbox").remove();
 				        				$("#logdatawriter").remove();
 				        			}
+				        			$("#logdatawriter").removeAttr('id');
 				        			datawriterbox.attr('id','logdatawriter');
 				        		}else if(i>0){
 				        			var beforetimer = new Date(resp[i-1].write_date);
@@ -262,9 +263,7 @@
 				        				$("#logdatawriter").remove();
 				        			}
 				        			$("#logdatawriter").removeAttr('id');
-				        			if(i != (resp.length-1)){
-				        				datawriterbox.attr('id','logdatawriter');
-				        			}
+				        			datawriterbox.attr('id','logdatawriter');
 				        		}
 								datalinediv.append(datatextdiv);
 								datalinediv.append(datadatediv);
@@ -356,11 +355,6 @@
         			$("#lastdatawriter").removeAttr('id');
         			datawriterbox.attr('id','lastdatawriter');
         		}
-        		/*var timeminute = logtimer.getMinutes();
-        		if(timeminute < 10){
-        			timeminute = "0"+timeminute;
-        		}
-				datadatediv.append(logtimer.getHours()+" : "+timeminute);*/
 				datalinediv.append(datatextdiv);
 				datalinediv.append(datadatediv);
 				$("#div_contents").prepend(datalinediv);
