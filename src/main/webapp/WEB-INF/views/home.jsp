@@ -20,8 +20,8 @@
 <!-- CONTENTS -->
 <div class="container-xl position-relative p-0 d-md-none">
   <c:forEach items="${gallery}" var="categoryType">
-    <div class="carousel slide" id="card-carousel-${categoryType.code}" data-bs-ride="carousel">
-      <div class="carousel-inner">
+    <div class="carousel slide" id="card-carousel-${categoryType.code}" data-bs-ride="false" data-bs-touch="false">
+      <div class="carousel-inner one-on-page">
         <c:forEach items="${cards[categoryType.code]}" var="card" varStatus="status">
           <div class="carousel-item
             <c:if test="${status.first}">
@@ -48,10 +48,10 @@
                     </div>
                     <div class="side-info">
                       <div class="title title-link">
-                          <p class="ddd">${card.title}</p>
+                        <p>${card.title}</p>
                       </div>
                       <div class="writer">
-                          <p class="ddd">${card.member_name}</p>
+                        <p>${card.member_name}</p>
                       </div>
                     </div>
                   </div>
@@ -81,8 +81,8 @@
 
 <div class="container-xl bg-secondary position-relative p-0 d-none d-md-block">
   <c:forEach items="${gallery}" var="categoryType">
-    <div class="carousel slide" id="card-carousel-md-${categoryType.code}" data-bs-ride="carousel">
-      <div class="carousel-inner">
+    <div class="carousel slide" id="card-carousel-md-${categoryType.code}" data-bs-ride="false" data-bs-touch="false">
+      <div class="carousel-inner two-on-page">
         <c:forEach items="${cards[categoryType.code]}" var="card" varStatus="status">
           <c:if test="${status.index % 2 == 0}">
             <c:choose>
@@ -157,6 +157,20 @@
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
 <!-- script - Contents -->
 <script>
+    const resizeCard = function () {
+        const one_on_page_width = document.querySelector('.one-on-page').offsetWidth;
+        const two_on_page_width = document.querySelector('.two-on-page').offsetWidth;
+        const one_on_page_items = $('.one-on-page .gallery-card').children().get().filter((e,i) => e.className==='catchphrase');
+        const two_on_page_items = $('.two-on-page .gallery-card').children().get().filter((e,i) => e.className==='catchphrase');
+        const calc_one_on_page_width = Number.parseInt((one_on_page_width - 4));
+        const calc_two_on_page_width = Number.parseInt((two_on_page_width - 4) / 2);
+        one_on_page_items.forEach((e, i) => e.style.width = calc_one_on_page_width+"px");
+        two_on_page_items.forEach((e, i) => e.style.width = calc_two_on_page_width+"px");
+    }
+    $(function() {
+        resizeCard();
+    })
+    window.addEventListener('resize', resizeCard);
     const cardEnter = function (e) {
         $(e.target.closest('.gallery-card')).addClass('card-hover');
     };
@@ -170,12 +184,6 @@
     card.on('mouseenter', cardEnter);
     card.on('mouseleave', cardLeave);
 
-    carousel.on('slide.bs.carousel', function () {
-        $(this).addClass('carousel-event');
-    });
-    carousel.on('slid.bs.carousel', function () {
-        $(this).removeClass('carousel-event');
-    });
 </script>
 </body>
 </html>

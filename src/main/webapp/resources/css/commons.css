@@ -3,20 +3,13 @@
 body {
 	background-color: #f5f5f5;
 	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+	display: none;
 }
 
 .logo {
 	max-height: 80px;
-}
-
-/* Bootstrap Custom */
-:root {
-	--bs-white: #fff;
-	--bs-white-rgb: 255, 255, 255;
-	
-	--bs-dark: #212529;
-	--bs-dark-rgb: 33, 37, 41;
-	
-	--bs-secondary: #6c757d;
-	--bs-secondary-rgb: 108, 117, 125;
 }
