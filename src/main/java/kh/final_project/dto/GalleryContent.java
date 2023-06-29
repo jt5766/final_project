@@ -1,6 +1,10 @@
 package kh.final_project.dto;
 
 
+import org.apache.commons.text.StringEscapeUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 import java.time.LocalDateTime;
 
 public class GalleryContent {
@@ -82,7 +86,21 @@ public class GalleryContent {
     }
 
     public String getTxt() {
-        return txt;
+        String proceed = StringEscapeUtils.unescapeHtml4(txt);
+        Whitelist customWhitelist = Whitelist.relaxed()
+                .addTags("img", "div, script")
+//                .addAttributes("script", "type")
+                .addProtocols("img", "src", "http", "https");
+        String s = Jsoup.clean(proceed, customWhitelist);
+//        String s = StringEscapeUtils.unescapeHtml4(txt)
+//                        .replaceAll("<script", "&lt;script")
+//                        .replaceAll("</script>", "&lt;/script&gt;")
+//                        .replaceAll("<a", "&lt;a")
+//                        .replaceAll("</a>", "&lt;/a&gt;")
+//                        .replaceAll("<button", "&lt;button")
+//                        .replaceAll("</button>", "&lt;/button&gt;");
+        System.out.println("s = " + s);
+        return s;
     }
 
     public void setTxt(String txt) {
