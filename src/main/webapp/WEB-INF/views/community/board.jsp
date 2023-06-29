@@ -28,7 +28,7 @@
 	box-shadow: 0 0 0 0.3rem #ca9372;
 }
 
-#search-box {
+.search-box {
 	display: flex;
 	align-items: center;
 }
@@ -79,9 +79,7 @@ th>* {
 	padding: 10px;
 }
 
-.th_other,
-.td_other,
-.th_title {
+.th_other, .td_other, .th_title {
 	text-align: center;
 }
 
@@ -91,6 +89,16 @@ th>* {
 
 .title_td:hover {
 	cursor: pointer;
+}
+.common-button {
+    display: inline-block;
+    min-width: 5rem;
+    background-color: #ca9372;
+    color: white;
+    border-radius: 5px;
+    margin: 5px;
+    border: none;
+    max-height: 35px;
 }
 </style>
 </head>
@@ -102,26 +110,32 @@ th>* {
 	</c:import>
 	<!-- CONTENTS -->
 	<div class="container-xl position-relative p-0">
-		<form action="/community/search" method="post" class="row" id="search-box">
-			<div class="col-6 col-md-1">
-				<input type="hidden" name="typeCode" value="${categoryType.code}">
-				<select name="searchCode">
-					<c:forEach var="i" items="${search}">
-						<option value="${i.code}">${i.name}</option>
+		<form action="/community/search">
+			<!-- <input type="hidden" name="tableName" value=""> -->
+			<input type="hidden" name="typeCode" value="${categoryType.code}">
+			<div class="row">
+				<div class="col-12 search-box">
+					<select name="searchCode">
+						<c:forEach items="${search}" var="i">
+							<option value="${i.code}">${i.name}</option>
+						</c:forEach>
+					</select>
+					<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요">
+					<c:forEach items="${sort}" var="i" varStatus="status">
+						<input class="d-none d-md-block" type="radio" name="sortCode" value="${i.code}" id="sort1-${i.code}" <c:if test="${status.index == 0}">checked</c:if>>
+						<label class="d-none d-md-block" class="sortLabel" for="sort1-${i.code}">${i.name}</label>
 					</c:forEach>
-				</select>
-			</div>
-			<div class="col-6 col-md-8">
-				<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요">
-			</div>
-			<div class="col-12 col-md-3">
-				<c:forEach var="i" items="${sort}" varStatus="status">
-					<input type="radio" name="sortCode" value="${i.code}" <c:if test ="${status.index == 0}">checked</c:if>>
-								${i.name}
-							</c:forEach>
-				<button style="border-style: none;">
-					<i class="bi bi-search"></i>
-				</button>
+					<div class="vr mx-2 d-none d-md-block"></div>
+					<button type="submit" class="common-button d-none d-md-block"><i class="bi bi-search"></i></button>
+				</div>
+				<div class="col-12 d-md-none search-box">
+					<c:forEach items="${sort}" var="i" varStatus="status">
+						<input class="d-block d-md-none" type="radio" name="sortCode" value="${i.code}" id="sort2-${i.code}" <c:if test="${status.index == 0}">checked</c:if>>
+						<label class="d-block d-md-none" class="sortLabel" for="sort2-${i.code}">${i.name}</label>
+					</c:forEach>
+					<div class="vr mx-2 d-block d-md-none"></div>
+					<button type="submit" class="common-button d-block d-md-none ms-auto"><i class="bi bi-search"></i></button>
+				</div>
 			</div>
 		</form>
 		<div class="row">
@@ -184,6 +198,7 @@ th>* {
 		$("#toWrite").on("click", (e) => {
 		   	if("${sessionScope.code}" == "") {
 		   	    alert("로그인 후 이용 가능한 서비스입니다.");
+		   	    location.href = '/member/loginForm';
 		   	} else {
 		   	 	location.href = '/community/toWriteForm?code=${categoryType.code}'
 		   	}

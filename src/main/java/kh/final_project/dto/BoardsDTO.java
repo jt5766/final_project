@@ -67,10 +67,13 @@ public class BoardsDTO {
 	}
 
 	public String getTxt() {
+		System.out.println("plain = " + txt);
 		String proceed = StringEscapeUtils.unescapeHtml4(this.txt);
-		Whitelist customWhitelist = Whitelist.relaxed().addTags("img", "div, script").addAttributes("table", "class")
-				.addTags("font").addAttributes("font", "color");
-		String cleanedTxt = Jsoup.clean(proceed, customWhitelist);
+		System.out.println(proceed);
+		Whitelist customWhitelist = Whitelist.basicWithImages().addTags("img", "div, script")
+				.addAttributes("table", "class").addAttributes("font", "color").addTags("font")
+				.addAttributes("img", "src", "alt", "data-filename").addProtocols("img", "src", "http", "https");
+		String cleanedTxt = Jsoup.clean(proceed, Whitelist.basicWithImages());
 		System.out.println("cleanedTxt = " + cleanedTxt);
 		return cleanedTxt;
 	}
@@ -110,7 +113,7 @@ public class BoardsDTO {
 		long diff = currentDate.getTime() - date.getTime();
 		long oneDay = 24 * 60 * 60 * 1000;
 		if (diff >= oneDay) {
-			sdf.applyPattern("yyyy-MM-dd");
+			sdf.applyPattern("yyyy\nMM-dd");
 		} else {
 			sdf.applyPattern("HH:mm:ss");
 		}

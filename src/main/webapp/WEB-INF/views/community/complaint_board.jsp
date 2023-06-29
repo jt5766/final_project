@@ -8,19 +8,14 @@
 <c:import url="${path}/resources/js/scripts.jsp" />
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 <style>
-#table_list {
-	margin: auto;
-	width: 100%;
+.list_tr {
+	border-top: 0.1px solid gray;
+	border-bottom: 0.1px solid gray;
 }
 
 #currentPage {
 	background-color: #ca9372;
 	color: white;
-}
-
-.list_tr {
-	border-top: 0.1px solid gray;
-	border-bottom: 0.1px solid gray;
 }
 
 .page-link {
@@ -32,9 +27,15 @@
 	box-shadow: 0 0 0 0.3rem #ca9372;
 }
 
-#search-box {
+.search-box {
 	display: flex;
 	align-items: center;
+}
+
+th {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	padding: 10px;
 }
 
 select[name=searchCode] {
@@ -66,26 +67,38 @@ td {
 	padding: 5px;
 }
 
-.td_title {
+.title_td {
 	text-align: left;
 }
 
-.th_title, .td_title {
-	width: 70%;
-}
-
 th {
+	text-align: center;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	padding: 10px;
+}
+
+.th_other, .td_other, .th_title {
+	text-align: center;
 }
 
 .list_tr:hover {
 	background-color: #ffffff;
 }
 
-.td_title:hover {
+.title_td:hover {
 	cursor: pointer;
+}
+
+.common-button {
+    display: inline-block;
+    min-width: 5rem;
+    background-color: #ca9372;
+    color: white;
+    border-radius: 5px;
+    margin: 5px;
+    border: none;
+    max-height: 35px;
 }
 </style>
 </head>
@@ -97,47 +110,53 @@ th {
 	</c:import>
 	<!-- CONTENTS -->
 	<div class="container-xl position-relative p-0">
-		<form action="/community/search" method="post" class="row" id="search-box">
-			<div class="col-6 col-md-1">
-				<input type="hidden" name="typeCode" value="${categoryType.code}">
-				<select name="searchCode">
-					<c:forEach var="i" items="${search}">
-						<option value="${i.code}">${i.name}</option>
+		<form action="/community/search">
+			<!-- <input type="hidden" name="tableName" value=""> -->
+			<input type="hidden" name="typeCode" value="${categoryType.code}">
+			<div class="row">
+				<div class="col-12 search-box">
+					<select name="searchCode">
+						<c:forEach items="${search}" var="i">
+							<option value="${i.code}">${i.name}</option>
+						</c:forEach>
+					</select>
+					<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요">
+					<c:forEach items="${sort}" var="i" varStatus="status">
+						<input class="d-none d-md-block" type="radio" name="sortCode" value="${i.code}" id="sort1-${i.code}" <c:if test="${status.index == 0}">checked</c:if>>
+						<label class="d-none d-md-block" class="sortLabel" for="sort1-${i.code}">${i.name}</label>
 					</c:forEach>
-				</select>
-			</div>
-			<div class="col-6 col-md-8">
-				<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요">
-			</div>
-			<div class="col-12 col-md-3">
-				<c:forEach var="i" items="${sort}" varStatus="status">
-					<input type="radio" name="sortCode" value="${i.code}" <c:if test ="${status.index == 0}">checked</c:if>>
-								${i.name}
-							</c:forEach>
-				<button style="border-style: none;">
-					<i class="bi bi-search"></i>
-				</button>
+					<div class="vr mx-2 d-none d-md-block"></div>
+					<button type="submit" class="common-button d-none d-md-block"><i class="bi bi-search"></i></button>
+				</div>
+				<div class="col-12 d-md-none search-box">
+					<c:forEach items="${sort}" var="i" varStatus="status">
+						<input class="d-block d-md-none" type="radio" name="sortCode" value="${i.code}" id="sort2-${i.code}" <c:if test="${status.index == 0}">checked</c:if>>
+						<label class="d-block d-md-none" class="sortLabel" for="sort2-${i.code}">${i.name}</label>
+					</c:forEach>
+					<div class="vr mx-2 d-block d-md-none"></div>
+					<button type="submit" class="common-button d-block d-md-none ms-auto"><i class="bi bi-search"></i></button>
+				</div>
 			</div>
 		</form>
 		<div class="row">
 			<div class="col">
-				<table id="table_list">
+				<table id="table_list" style="width: 100%;">
 					<tr>
-						<th>글 번호</th>
-						<th class="th_title">제목</th>
-						<th>구분</th>
-						<th>작성자</th>
-						<th>작성일</th>
+						<th style="width: 10%;">글 번호</th>
+						<th class="th_title" style="width: 60%;">제목</th>
+						<th style="width: 10%;">구분</th>
+						<th style="width: 10%;">작성자</th>
+						<th style="width: 10%;">작성일</th>
 					</tr>
 					<c:forEach var="i" items="${boardList}">
 						<tr class="list_tr">
-							<td>${i.seq}</td>
+							<td class="td_other">${i.seq}</td>
 							<td class="td_title" onclick="location.href = '/community/toComplaintView?seq=${i.seq}&board_type=${categoryType.code}'">
 								<a href="/community/toComplaintView?seq=${i.seq}&board_type=${categoryType.code}" class="a_title"> ${i.title} </a>
 							</td>
-							<td>${i.complaint_type}</td>
-							<td>${i.writer}</td>
-							<td>${i.formed_date}</td>
+							<td class="td_other">${i.complaint_type}</td>
+							<td class="td_other">${i.writer}</td>
+							<td class="td_other">${i.formed_date}</td>
 						</tr>
 					</c:forEach>
 					<tr>
@@ -175,6 +194,7 @@ th {
 		$("#toWrite").on("click", () => {
 		  	if("${sessionScope.code}" == "") {
 		  	    alert("로그인 시 이용 가능한 서비스입니다.");
+		  	  	location.href = '/member/loginForm';
 		  	} else {
 		  	  location.href = '/community/toWriteForm?code=${categoryType.code}';
 		  	}
