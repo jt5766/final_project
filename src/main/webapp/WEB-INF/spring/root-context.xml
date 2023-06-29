@@ -14,6 +14,7 @@
 		<property name="password" value="1234"></property>
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@3.39.227.39:1521:xe"></property>
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+		<property name="maximumPoolSize" value="20"></property>
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

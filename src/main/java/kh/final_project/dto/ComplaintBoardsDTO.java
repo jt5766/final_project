@@ -132,7 +132,7 @@ public class ComplaintBoardsDTO {
 		long diff = currentDate.getTime() - date.getTime();
 		long oneDay = 24 * 60 * 60 * 1000;
 		if (diff >= oneDay) {
-			sdf.applyPattern("yyyy-MM-dd");
+			sdf.applyPattern("yyyy\nMM-dd");
 		} else {
 			sdf.applyPattern("HH:mm:ss");
 		}

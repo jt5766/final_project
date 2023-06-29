@@ -13,8 +13,9 @@
 </head>
 <style>
 
-    * {
-        /*border: 1px solid black;*/
+
+    *{
+
     }
 
     #wrap {
@@ -95,7 +96,7 @@
     }
 
     input:focus {
-        border-bottom: 1px solid #ca9372;
+        border-bottom: 1px solid #181414;
     }
 
     #find_password {
@@ -115,7 +116,6 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-
         gap: 10px;
     }
 

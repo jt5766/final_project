@@ -87,7 +87,7 @@
         align-items: center;
         width: calc(100vw - (100vw - 100%));
         height: 98vh;
-        align-items: center;
+
     }
 
     #body {
