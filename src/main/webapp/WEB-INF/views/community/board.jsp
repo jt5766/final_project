@@ -9,11 +9,6 @@
 <c:import url="${path}/resources/js/scripts.jsp" />
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 <style>
-#table_list {
-	margin: auto;
-	width: 100%;
-}
-
 .list_tr {
 	border-top: 0.1px solid gray;
 	border-bottom: 0.1px solid gray;
@@ -36,10 +31,6 @@
 #search-box {
 	display: flex;
 	align-items: center;
-}
-
-#search-box>* {
-	margin-left: 5px;
 }
 
 select[name=searchCode] {
@@ -75,14 +66,17 @@ td {
 	text-align: left;
 }
 
-.title_td, .th_title {
-	width: 70%;
-}
-
-th {
+th>* {
+	text-align: center;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	padding: 10px;
+}
+
+.th_other,
+.td_other,
+.th_title {
+	text-align: center;
 }
 
 .list_tr:hover {
@@ -102,74 +96,77 @@ th {
 	</c:import>
 	<!-- CONTENTS -->
 	<div class="container-xl position-relative p-0">
-		<div class="row">
-			<div class="col">
-				<form action="/community/search" method="post" style="padding: 20px; text-align: right;" id="search-box">
-					<input type="hidden" name="typeCode" value="${categoryType.code}">
-					<select name="searchCode">
-						<c:forEach var="i" items="${search}">
-							<option value="${i.code}">${i.name}</option>
-						</c:forEach>
-					</select>
-					<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요">
-					<c:forEach var="i" items="${sort}" varStatus="status">
-						<input type="radio" name="sortCode" value="${i.code}" <c:if test ="${status.index == 0}">checked</c:if>>
-						${i.name}
+		<form action="/community/search" method="post" class="row" id="search-box">
+			<div class="col-12 col-md-1">
+				<input type="hidden" name="typeCode" value="${categoryType.code}">
+				<select name="searchCode">
+					<c:forEach var="i" items="${search}">
+						<option value="${i.code}">${i.name}</option>
 					</c:forEach>
-					<button style="border-style: none;">
-						<i class="bi bi-search"></i>
-					</button>
-				</form>
+				</select>
 			</div>
-		</div>
+			<div class="col-6 col-md-8">
+				<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요">
+			</div>
+			<div class="col-6 col-md-3">
+				<c:forEach var="i" items="${sort}" varStatus="status">
+					<input type="radio" name="sortCode" value="${i.code}" <c:if test ="${status.index == 0}">checked</c:if>>
+								${i.name}
+							</c:forEach>
+				<button style="border-style: none;">
+					<i class="bi bi-search"></i>
+				</button>
+			</div>
+		</form>
 		<div class="row">
 			<div class="col">
-				<table id="table_list">
-					<tr id="info_tr">
-						<th class="th_other">글 번호</th>
-						<th class="th_title">제목</th>
-						<th class="th_other">조회수</th>
-						<th class="th_other">작성자</th>
-						<th class="th_other">작성일</th>
-					</tr>
-					<c:forEach var="i" items="${boardList}">
-						<tr class="list_tr">
-							<td>${i.seq}</td>
-							<td class="title_td" onclick="location.href = '/community/toBoardView?seq=${i.seq}&board_type=${categoryType.code}'">
-								<a href="/community/toBoardView?seq=${i.seq}&board_type=${categoryType.code}" class="a_title"> ${i.title} </a>
-							</td>
-							<td>${i.total_count}</td>
-							<td>${i.writer}</td>
-							<td>${i.formed_date}</td>
+				<table id="table_list" style="width: 100%;">
+					<thead>
+						<tr id="info_tr">
+							<th class="th_other" width="10%">글 번호</th>
+							<th class="th_title" width="60%">제목</th>
+							<th class="th_other" width="10%">조회수</th>
+							<th class="th_other" width="10%">작성자</th>
+							<th class="th_other" width="10%">작성일</th>
 						</tr>
-					</c:forEach>
-					<tr style="margin: 10px;">
-						<td></td>
-						<td colspan="3" style="padding: 15px;">
-							<nav>
-								<ul class="pagination justify-content-center m-0">
-									<c:forEach items="${pageNavi}" var="i" varStatus="status">
-										<c:choose>
-											<c:when test="${i == '<'}">
-												<li class="page-items"><a class="page-link" href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index+1]-1}">${i}</a></li>
-											</c:when>
-											<c:when test="${i == '>'}">
-												<li class="page-items"><a class="page-link" href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index-1]+1}">${i}</a></li>
-											</c:when>
-											<c:otherwise>
-												<li class="page-items"><a class="page-link" href="/community/toBoard?code=${categoryType.code}&currentPage=${i}" <c:if test="${cp == i}">
+					</thead>
+					<tbody>
+						<c:forEach var="i" items="${boardList}">
+							<tr class="list_tr">
+								<td class="td_other">${i.seq}</td>
+								<td class="title_td" onclick="location.href = '/community/toBoardView?seq=${i.seq}&board_type=${categoryType.code}'">
+									<a href="/community/toBoardView?seq=${i.seq}&board_type=${categoryType.code}" class="a_title"> ${i.title} </a>
+								</td>
+								<td class="td_other">${i.total_count}</td>
+								<td class="td_other">${i.writer}</td>
+								<td class="td_other">${i.formed_date}</td>
+							</tr>
+						</c:forEach>
+						<tr>
+							<td colspan="5" align="center">
+								<nav>
+									<ul class="pagination justify-content-center m-0">
+										<c:forEach items="${pageNavi}" var="i" varStatus="status">
+											<c:choose>
+												<c:when test="${i == '<'}">
+													<li class="page-items"><a class="page-link" href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index+1]-1}">${i}</a></li>
+												</c:when>
+												<c:when test="${i == '>'}">
+													<li class="page-items"><a class="page-link" href="/community/toBoard?code=${categoryType.code}&currentPage=${pageNavi[status.index-1]+1}">${i}</a></li>
+												</c:when>
+												<c:otherwise>
+													<li class="page-items"><a class="page-link" href="/community/toBoard?code=${categoryType.code}&currentPage=${i}" <c:if test="${cp == i}">
 														id="currentPage"
 													</c:if>>${i}</a></li>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-								</ul>
-							</nav>
-						</td>
-						<td>
-							<input type="button" value="글쓰기" id="toWrite">
-						</td>
-					</tr>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</ul>
+								</nav>
+								<input type="button" value="글쓰기" id="toWrite">
+							</td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>
