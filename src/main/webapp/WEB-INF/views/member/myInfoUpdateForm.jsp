@@ -110,7 +110,7 @@
                     </div>
                     <div>
                         <div id="dupl_font">
-                        <h4>닉네임</h4>
+                            <h4>닉네임</h4>
                             <div id="sId">사용가능한 닉네임</div>
                             <div id="nId">중복된 닉네임</div>
                         </div>
@@ -224,13 +224,13 @@
     });
     nickname.on('change', function () {
         $("#nId").css("display","none")
-       $("#sId").css("display","none")
+        $("#sId").css("display","none")
     })
 
 
     $('#updatemember').on('submit', function (e) {
         const nickname = $('input[name=nickname]');
-      const nId=  $("#nId").css("display")
+        const nId=  $("#nId").css("display")
         if (nickname.val() === "" || nId === "inline-block") {
             alert("중복 검사를 실시해주세요.");
             e.preventDefault();
