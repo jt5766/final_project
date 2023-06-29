@@ -356,7 +356,7 @@
 			var screenHeight = $(window).outerHeight();
 			var gbnHeight = $("header").outerHeight();
 			var textHeight = $("#div_text").outerHeight();
-			
+			$("#div_contents").css("min-height", screenHeight - gbnHeight - textHeight);
 			$("#div_contents").css("max-height", screenHeight - gbnHeight - textHeight);
 		})
 	</script>
