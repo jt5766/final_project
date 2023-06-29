@@ -72,17 +72,9 @@
             margin-top: 20px;
         }
 
-        #nId{
-            font-size: 15px;
-            color: crimson;
-            display: none;
-        }
-
-        #sId{
-            font-size: 15px;
-            color: dodgerblue;
-            display: none;
-        }
+      #ChkId{
+          font-size: 13px;
+      }
 
     </style>
 <body>
@@ -98,29 +90,28 @@
             <div id="box1">
                 <div id="pass_box">
                     <h4>비밀번호 입력</h4>
-                    <input type="password" id="pass" placeholder="Password">
+                    <input type="password" id="pass"  placeholder="Password">
                     <input type="hidden" id="nick" value="${nickName}">
                     <button type="button" id="passwordChkBtn">확인</button>
                 </div>
 
                 <div id="info_box">
-                    <div >
+                    <div>
                         <h4>이메일</h4>
                         <input type="text" placeholder="Email" value="${email}@${set_email_type}" readonly>
                     </div>
                     <div>
                         <div id="dupl_font">
                             <h4>닉네임</h4>
-                            <div id="sId">사용가능한 닉네임</div>
-                            <div id="nId">중복된 닉네임</div>
+                            <div id="ChkId"></div>
                         </div>
                         <input type="text" name="nickname" id="nickname" placeholder="Password" value="${nickName}">
-                        <button id="duplicate_check" type="button">중복확인</button>
+                        <button id="duplicate_check" type="button"  onkeydown="inputNickChk">중복확인</button>
                     </div>
                 </div>
 
                 <div>
-                    <button id="infoUpdate" style="display: none">정보수정</button>
+                    <button  id="infoUpdate" style="display: none">정보수정</button>
                     <button  type="button" id="passwordChange" style="display: none"> 비밀번호변경 </button>
                     <button  type="button" id="cancleBtn">취소</button>
                 </div>
@@ -137,7 +128,8 @@
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
 
 <script>
-
+    $("#infoUpdate").attr("disabled", "disabled");
+    var nickNameCheck;
     $("#passwordChange").click(function () {
 
         location.href = "/member/tofindPassword?email=${email}&email_type=${email_type}"
@@ -152,7 +144,6 @@
 
         $.ajax({
             url: "/member/passwordCheck",
-
             data: {
                 password: pass,
                 nickname: nick
@@ -186,7 +177,6 @@
 
 
     })
-
     /*취소 버튼*/
     $("#cancleBtn").click(function () {
 
@@ -210,29 +200,33 @@
                 method: "post"
             }).done(function (resp) {
                 console.log(resp);
+                nickNameCheck = resp;
                 if (resp > 0) {
-
-                    $("#nId").css("display","inline-block")
-
-
+                    $("#ChkId").html("사용할수없는 닉네임")
+                    $("#ChkId").css('color','crimson')
+                    $("#nickname").val("")
 
                 } else {
-                    $("#sId").css("display","inline-block")
+                    $("#ChkId").html("사용가능한 닉네임")
+                    $("#infoUpdate").attr("disabled", false);
+                    $("#ChkId").css('color','dodgerblue')
                 }
             });
         }
     });
-    nickname.on('change', function () {
-        $("#nId").css("display","none")
-        $("#sId").css("display","none")
+    nickname.on('keydown', function () {
+        $("#ChkId").html("");
+        $("#infoUpdate").attr("disabled", true);
     })
 
 
     $('#updatemember').on('submit', function (e) {
         const nickname = $('input[name=nickname]');
         const nId=  $("#nId").css("display")
-        if (nickname.val() === "" || nId === "inline-block") {
+        if (nickname.val() === "" || nickNameCheck) {
+
             alert("중복 검사를 실시해주세요.");
+            return false;
             e.preventDefault();
         }
     })

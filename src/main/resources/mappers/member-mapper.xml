@@ -50,15 +50,15 @@
 	</select>
 
 	<select id="selectDTO" resultType="kh.final_project.dto.MemberDTO">
-		select * from members where code = ${code, jdbcType=NUMERIC}
+		select * from members where code = #{code, jdbcType=NUMERIC}
 	</select>
 
 	<update id="update">
-		update members set nickname = #{nickname, jdbcType=VARCHAR} where code = ${code, jdbcType=NUMERIC}
+		update members set nickname = #{nickname, jdbcType=VARCHAR} where code = #{code, jdbcType=NUMERIC}
 	</update>
 
 	<delete id="delete">
-		delete from members where code = ${code, jdbcType=NUMERIC}
+		delete from members where code = #{code, jdbcType=NUMERIC}
 	</delete>
 
 	<!--닉네임 체크 -->

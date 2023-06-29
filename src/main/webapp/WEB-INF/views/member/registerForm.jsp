@@ -14,6 +14,7 @@
 
     <style>
 
+
         h3 {
             font-size: 20px;
             font-weight: 200;
@@ -39,22 +40,37 @@
 
         #btnBox {
             display: flex;
+            justify-content: center;
             gap: 20px;
             margin-top: 30px;
+            width: 250px;
+        }
+        #btnBox div{
+            width: 100%;
         }
 
         #cBtn, #sBtn {
-
+            width: 100%;
             padding: 5px 10px;
+            background-color: #5d5d5d;
+            border-radius: 3px;
+            color: white;
         }
 
+        #wrap{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            width: calc(100vw - (100vw - 100%));
+            height: 98vh;
+
+        }
         #loginBox {
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 0 5px #c1bdbd;
             padding: 20px 10px;
-            margin: auto;
-            margin-top: 100px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -80,6 +96,7 @@
 <div class="container-xl  position-relative p-0">
     <form action="/member/createMember" method="post">
 
+        <div id="wrap">
         <div id="loginBox">
             <div>
                 <h3>Email</h3>
@@ -101,11 +118,15 @@
                 <input type="text" name="nickname" placeholder="닉네임을 입력해주세요.">
             </div>
             <div id="btnBox">
+                <div>
                 <button id="cBtn" type="button" onclick="cancel()">취소</button>
+                </div>
+                <div>
                 <button id="sBtn">가입하기</button>
+                </div>
             </div>
         </div>
-
+        </div>
     </form>
 </div>
 <c:import url="${path}/resources/js/FOOTER.jsp"/>

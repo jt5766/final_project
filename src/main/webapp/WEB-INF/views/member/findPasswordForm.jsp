@@ -47,6 +47,10 @@
         font-weight: 200;
         color: rgb(80, 80, 160);
     }
+    h3{
+        font-size: 20px;
+        color: crimson;
+    }
 
     input {
         font-size: 13px;
@@ -55,6 +59,12 @@
         border-bottom: 1px solid #ddd;
         transition-duration: .4s;
         outline: none;
+    }
+
+    #sendMail-btn1,#sendMail-btn2{
+        background-color: #5d5d5d;
+        border-radius: 3px;
+        color: white;
     }
 </style>
 <body>
@@ -73,10 +83,14 @@
                 <div id="find-password">
                     <div>
                         <h4>등록하신 이메일을 입력해주세요</h4>
-                        <input type="text" placeholder="email">
+                        <input type="text" placeholder="email" name="email" required>
                     </div>
                     <div>
-                        <button>확인</button>
+                        <button  id="sendMail-btn1">확인</button>
+                    </div>
+                    <div>
+                        <h3> *메일을 확인해주세요 </h3>
+
                     </div>
                 </div>
             </div>
@@ -110,7 +124,7 @@
                         <input type="password" required>
                     </div>
                     <div>
-                        <button>확인</button>
+                        <button id="sendMail-btn2">확인</button>
                     </div>
                 </div>
 
@@ -132,6 +146,12 @@
 
     </c:otherwise>
 </c:choose>
+
+<script>
+
+
+
+</script>
 
 </body>
 </html>
