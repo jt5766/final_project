@@ -23,6 +23,7 @@
     <input type="hidden" name="typeCode" value="${categoryType}">
     <div class="row">
       <div class="col-md-12 search-box">
+        <!--TODO: 검색창 반응형 적용-->
         <select name="searchCode">
           <c:forEach items="${searchConditions}" var="searchCondition">
             <option value="${searchCondition.code}">${searchCondition.name}</option>

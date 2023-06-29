@@ -126,8 +126,6 @@
     display: flex;
     justify-content: left;
     justify-self: flex-start;
-    /*border-bottom: 1px solid #797979;*/
-    min-width: 100vw;
 }
 
 .ai {
@@ -359,32 +357,6 @@ input[name=sordCode] {
 
 .carousel-item-next, .carousel-item-prev, .carousel-item-next {
     display:flex!important;
-}
-
-.carousel-event{
-    animation: carousel-slide 600ms linear;
-}
-
-@keyframes carousel-slide {
-    0% {
-        opacity: 1;
-    }
-
-    25% {
-        opacity: 0.75;
-    }
-
-    50% {
-        opacity: 0;
-    }
-
-    75% {
-        opacity: 0.75;
-    }
-
-    100% {
-        opacity: 1;
-    }
 }
 
 #duple{
