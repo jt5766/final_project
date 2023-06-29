@@ -8,10 +8,6 @@
 <c:import url="${path}/resources/js/scripts.jsp" />
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 <style>
-* {
-	text-align: center;
-}
-
 #table_list {
 	margin: auto;
 	width: 100%;
@@ -170,7 +166,7 @@ th {
 							</nav>
 						</td>
 						<td>
-							<input type="button" value="등록" onclick="location.href = '/community/toWriteForm?code=${categoryType.code}'">
+							<input type="button" id="toWrite" value="글쓰기">
 						</td>
 					</tr>
 				</table>
@@ -181,6 +177,13 @@ th {
 	<c:import url="${path}/resources/js/FOOTER.jsp" />
 	<!-- script - Contents -->
 	<script>
+		$("#toWrite").on("click", () => {
+		  	if("${sessionScope.code}" == "") {
+		  	    alert("로그인 시 이용 가능한 서비스입니다.");
+		  	} else {
+		  	  location.href = '/community/toWriteForm?code=${categoryType.code}';
+		  	}
+		});
 		$(".td_title").mouseover((e)=> {
 		    $(e.target).find(".a_title").eq(0).css("text-decoration", "underline");
 		});

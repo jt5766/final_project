@@ -78,8 +78,6 @@ public class MemberDAO {
 	 * @param code
 	 */
 	public void logout(Integer code) {
-		System.out.println("db : " + db);
-		System.out.println("DAO code : " + code);
 		db.update("Member.logout", code);
 	}
 }
