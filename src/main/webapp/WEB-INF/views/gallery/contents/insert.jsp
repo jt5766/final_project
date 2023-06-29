@@ -189,7 +189,7 @@
             alert("내용을 입력해주세요.");
             return false;
         }
-        txt.val($('.note-editable').text());
+        txt.val($('.note-editable').html());
     });
 
     $(allowVal).on('change', function () {
