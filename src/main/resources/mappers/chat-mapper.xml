@@ -22,7 +22,7 @@
 	</select>
 
 	<select id="doublecheck" resultType="boolean">
-		select * from chat_list where mentor = #{mentor, jdbcType=NUMERIC} and mentee = #{mentee, jdbcType=NUMERIC}
+		select count(*) from chat_list where mentor = #{mentor, jdbcType=NUMERIC} and mentee = #{mentee, jdbcType=NUMERIC}
 	</select>
 
 </mapper>

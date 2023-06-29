@@ -161,8 +161,12 @@
                 mentee:${card.writer}
             },
             method: "post"
-        }).done(function (resp) {
+        }).done((resp) => {
             console.log(resp);
+            if (resp) {
+                $('#invite').prop('disabled', true);
+                $('#invite').attr('id', 'duple');
+            }
         });
     });
     $('#chk-disclosure').on('click', function () {
