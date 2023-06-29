@@ -46,7 +46,7 @@
 		let lastMinutes = null;
 		let lastwriter = null;
 		$(function(){
-			const socket = new WebSocket("ws://192.168.50.203/chat");
+			const socket = new WebSocket("ws://localhost/chat");
 			const stompClient = Stomp.over(socket);
 			
 			stompClient.connect({},function(){
@@ -55,6 +55,7 @@
 					const linediv = $("<div>");
 					const datediv = $("<div>");
 					const textdiv = $("<div>");
+					const writerbox = $("<div>");
 					const replbackslash = body.txt.replace(/\\\\/g,"\\");
 					const realTimeText = replbackslash.replace(/\\'/g,"\'");
 					if(body.writer == ${code}){
@@ -63,7 +64,6 @@
 						textdiv.addClass("mytext");
 						textdiv.append(realTimeText);
 					}else{
-						const writerbox = $("<div>");
 						writerbox.addClass("writerbox");
 						writerbox.append(body.writernickname);
 						linediv.append(writerbox);
@@ -85,6 +85,7 @@
 					if(plustimer.getHours() == lastHours && plustimer.getMinutes() == lastMinutes && body.writer == lastwriter){
 						$(".lastdatebox").remove();
 						$("#lastchatdate").remove();
+						writerbox.remove();
 					}
 					$("#lastchatdate").removeAttr('id');
 					var timeminute = plustimer.getMinutes();
@@ -180,6 +181,7 @@
 								seq:"${chatseq}"
 							}
 						}).done(function(resp){
+							console.log(resp);
 							if(resp.length == 0){
 								lengthsize = true;
 								var alldatediv = $("<div>");
@@ -192,13 +194,13 @@
 								const datalinediv = $("<div>");
 								const datadatediv = $("<div>");
 								const datatextdiv = $("<div>");
+								const datawriterbox = $("<div>");
 								if(resp[i].writer == ${code}){
 									datalinediv.addClass("mylinebox");
 									datadatediv.addClass("mydatebox");
 									datatextdiv.addClass("mytext");
 									datatextdiv.append(resp[i].txt);
 								}else{
-									const datawriterbox = $("<div>");
 									datawriterbox.addClass("writerbox");
 									datawriterbox.append(resp[i].writernickname);
 									datalinediv.append(datawriterbox);
@@ -226,7 +228,11 @@
 					        				timeminute = "0"+timeminute;
 					        			}
 				        				datadatediv.append(logtimer.getHours()+" : "+timeminute);
+				        			}else{
+				        				$(".lastdatawriterbox").remove();
+				        				$("#logdatawriter").remove();
 				        			}
+				        			datawriterbox.attr('id','logdatawriter');
 				        		}else if(i>0){
 				        			var beforetimer = new Date(resp[i-1].write_date);
 				        			var beforeYear = beforetimer.getFullYear();
@@ -252,6 +258,12 @@
 						        			timeminute = "0"+timeminute;
 						        		}
 				        				datadatediv.append(logtimer.getHours()+" : "+timeminute);
+				        			}else{
+				        				$("#logdatawriter").remove();
+				        			}
+				        			$("#logdatawriter").removeAttr('id');
+				        			if(i != (resp.length-1)){
+				        				datawriterbox.attr('id','logdatawriter');
 				        			}
 				        		}
 								datalinediv.append(datatextdiv);
@@ -275,13 +287,13 @@
 				const datalinediv = $("<div>");
 				const datadatediv = $("<div>");
 				const datatextdiv = $("<div>");
+				const datawriterbox = $("<div>");
 				if(chatlog[i].writer == ${code}){
 					datalinediv.addClass("mylinebox");
 					datadatediv.addClass("mydatebox");
 					datatextdiv.addClass("mytext");
 					datatextdiv.append(chatlog[i].txt);
 				}else{
-					const datawriterbox = $("<div>");
 					datawriterbox.addClass("writerbox");
 					datawriterbox.append(chatlog[i].writernickname);
 					datalinediv.append(datawriterbox);
@@ -305,6 +317,7 @@
             		}
     				datadatediv.append(logtimer.getHours()+" : "+timeminute);
     				datadatediv.addClass("lastdatebox");
+    				datawriterbox.attr('id','lastdatawriter');
     				lastHours = logtimer.getHours();
     				lastMinutes = logtimer.getMinutes();
     				lastwriter = chatlog[i].writer;
@@ -323,6 +336,7 @@
         				$("#div_contents").prepend(alldatediv);
         			}
         			if(i == (chatlog.length-1)){
+        				datawriterbox.addClass("lastdatawriterbox");
 	        			year = logYear;
 	        			month = logMonth;
 	        			date = logDate;
@@ -336,7 +350,11 @@
                 			timeminute = "0"+timeminute;
                 		}
         				datadatediv.append(logtimer.getHours()+" : "+timeminute);
+        			}else{
+        				$("#lastdatawriter").remove();
         			}
+        			$("#lastdatawriter").removeAttr('id');
+        			datawriterbox.attr('id','lastdatawriter');
         		}
         		/*var timeminute = logtimer.getMinutes();
         		if(timeminute < 10){
