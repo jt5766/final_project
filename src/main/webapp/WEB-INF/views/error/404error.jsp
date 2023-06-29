@@ -16,7 +16,13 @@
   	<c:param name="pageName" value="home"/>
   	<c:param name="btnNum" value="1"/>
 </c:import>
-404error
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			404error		
+		</div>	
+	</div>
+</div>
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
 </body>
 </html>
