@@ -13,3 +13,8 @@ body::-webkit-scrollbar {
 .logo {
 	max-height: 80px;
 }
+
+.row, .col {
+	margin: 0 !important;
+	padding: 0 !important;
+}
