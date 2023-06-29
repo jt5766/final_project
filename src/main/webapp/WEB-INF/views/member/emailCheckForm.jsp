@@ -21,7 +21,7 @@
         height: 150px;
         border: 1px solid #EAE7E7;
         border-radius: 10px;
-        margin-top: 150px;
+
     }
 
     .form_radio_btn input[type=radio] {
@@ -111,7 +111,7 @@
         flex-direction: column;
         gap: 20px;
         width: 100%;
-        margin-bottom: 100px;
+        margin-top: 50px;
 
     }
 
