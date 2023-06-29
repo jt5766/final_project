@@ -37,10 +37,6 @@
 	align-items: center;
 }
 
-#search-box>* {
-	margin-left: 5px;
-}
-
 select[name=searchCode] {
 	flex: 0 0 0;
 }
@@ -101,26 +97,28 @@ th {
 	</c:import>
 	<!-- CONTENTS -->
 	<div class="container-xl position-relative p-0">
-		<div class="row">
-			<div class="col">
-				<form action="/community/search" method="post" style="padding: 20px; text-align: right;" id="search-box">
-					<input type="hidden" name="typeCode" value="${categoryType.code}">
-					<select name="searchCode">
-						<c:forEach var="i" items="${search}">
-							<option value="${i.code}">${i.name}</option>
-						</c:forEach>
-					</select>
-					<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요">
-					<c:forEach var="i" items="${sort}" varStatus="status">
-						<input type="radio" name="sortCode" value="${i.code}" <c:if test ="${status.index == 0}">checked</c:if>>
-						${i.name}
+		<form action="/community/search" method="post" class="row" id="search-box">
+			<div class="col-6 col-md-1">
+				<input type="hidden" name="typeCode" value="${categoryType.code}">
+				<select name="searchCode">
+					<c:forEach var="i" items="${search}">
+						<option value="${i.code}">${i.name}</option>
 					</c:forEach>
-					<button style="border-style: none;">
-						<i class="bi bi-search"></i>
-					</button>
-				</form>
+				</select>
 			</div>
-		</div>
+			<div class="col-6 col-md-8">
+				<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요">
+			</div>
+			<div class="col-12 col-md-3">
+				<c:forEach var="i" items="${sort}" varStatus="status">
+					<input type="radio" name="sortCode" value="${i.code}" <c:if test ="${status.index == 0}">checked</c:if>>
+								${i.name}
+							</c:forEach>
+				<button style="border-style: none;">
+					<i class="bi bi-search"></i>
+				</button>
+			</div>
+		</form>
 		<div class="row">
 			<div class="col">
 				<table id="table_list">
@@ -143,8 +141,7 @@ th {
 						</tr>
 					</c:forEach>
 					<tr>
-						<td></td>
-						<td colspan="3">
+						<td colspan="5" align="center">
 							<nav>
 								<ul class="pagination justify-content-center">
 									<c:forEach items="${pageNavi}" var="i" varStatus="status">
@@ -164,8 +161,6 @@ th {
 									</c:forEach>
 								</ul>
 							</nav>
-						</td>
-						<td>
 							<input type="button" id="toWrite" value="글쓰기">
 						</td>
 					</tr>
