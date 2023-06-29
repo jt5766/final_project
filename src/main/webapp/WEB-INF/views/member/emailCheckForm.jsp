@@ -16,13 +16,12 @@
 <style>
 
 
-
     .form_radio_btn {
         width: 47%;
         height: 150px;
         border: 1px solid #EAE7E7;
         border-radius: 10px;
-        margin-top: 150px;
+
     }
 
     .form_radio_btn input[type=radio] {
@@ -59,7 +58,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 500px;
+        width: 390px;
+
         gap: 10px;
     }
 
@@ -79,24 +79,58 @@
         width: 100%;
     }
 
-    #email_box{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
 
-        margin-top: 75px;
+    #wrap{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        width: calc(100vw - (100vw - 100%));
+        height: 98vh;
+        align-items: center;
     }
 
-
     #body {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 5px #c1bdbd;
+        padding: 20px 10px;
+        gap: 20px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 10px;
-        height: 60vh;
+        width: 400px;
+        height: 500px;
 
 
+    }
+
+    #email_box{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+        margin-top: 50px;
+
+    }
+
+    #email_top{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    #email-font{
+        width: 100%;
+    }
+
+
+    #emails{
+        display: flex;
+        width: 100%;
     }
 
     #body h3 {
@@ -105,6 +139,7 @@
 
     input {
         outline: none;
+        width: 100%;
     }
 
     #signup-btn {
@@ -115,7 +150,7 @@
     }
 
     #sel{
-        width:185px;
+        width:100%;
         height:30px;
         outline: none;
     }
@@ -131,9 +166,10 @@
 <!-- CONTENTS -->
 <form action="/member/check" id="email_certification">
     <div class="container-xl position-relative p-0">
+        <div id="wrap">
         <div id="body">
             <div class="mb-3">
-                <div class="form_toggle row-vh d-flex flex-row justify-content-between">
+                <div class="form_toggle  d-flex flex-row justify-content-between">
                     <div class="form_radio_btn radio_male">
                         <input type="radio" name="member_type" value="1000" id="btn1" checked>
                         <label for="btn1">일반인</label>
@@ -147,9 +183,12 @@
             </div>
 
             <div id="email_box">
-                <div>
+                <div id="email_top">
+                    <div id="email-font">
                     <h3>이메일</h3>
-                    <div>
+                    </div>
+                    <div id="emails">
+
                         <input type="text" id="email" name="email" placeholder="Email" > <span>@</span>
                         <select id="sel" name="email_type"  >
 
@@ -168,6 +207,7 @@
 
 
         </div>
+    </div>
     </div>
 </form>
 <!-- FOOTER -->

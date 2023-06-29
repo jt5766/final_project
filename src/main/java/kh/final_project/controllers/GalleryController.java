@@ -64,9 +64,9 @@ public class GalleryController {
         List<GalleryContent> contents = galleryService.selectAllContents(galleryCardDTO);
         if (session.getAttribute("memberType") != null){
             if ((Integer) session.getAttribute("memberType") == 2000) {
-                Integer myCode = (Integer) session.getAttribute("code");
-                Integer menteeCode = card.getWriter();
-                Boolean isDuple = galleryService.dupleInviteCheck(myCode, menteeCode);
+                Integer mentor = galleryCardDTO.getCode();
+                Integer mentee = card.getWriter();
+                Boolean isDuple = galleryService.dupleInviteCheck(mentor, mentee);
                 model.addAttribute("isDuple", isDuple);
                 System.out.println("isDuple = " + isDuple);
             }
@@ -243,5 +243,10 @@ public class GalleryController {
     private void setNaviOfContents(Model model, GalleryCardDTO galleryCardDTO) {
         List<String> navi = galleryService.getPageNaviOfContents(galleryCardDTO);
         model.addAttribute("navi", navi);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public void catchHandle(Exception e) {
+        e.printStackTrace();
     }
 }
