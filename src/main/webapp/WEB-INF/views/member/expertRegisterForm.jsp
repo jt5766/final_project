@@ -10,6 +10,9 @@
   <c:set var="path" value="${pageContext.request.contextPath}"/>
   <c:import url="${path}/resources/js/scripts.jsp"/>
   <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha512/0.8.0/sha512.js" integrity="sha512-i4HLZ1JUoWLoDfgFlZGjzoWJYa55JAGr9XMxpH2k7OxtvF2qI02P+V2c8Z39s9SjxWGCJ04zMXrq106juXOywA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha512/0.8.0/sha512.min.js" integrity="sha512-KUrAWA1oxsWKHBaA2mlZyRuR8zzzHHYgpDfkfPrT3FhlZ4YdXbXyE89VHI6WmWradSHtuZjLyLAMP2F7IWK4JQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <%--파일 타입 인풋 히든 만들고 인풋파일 클래스를 주고 온체인지 이벤트를 걸어서 둘중 하나가 올라오면 하나의 네임값을 삭제  --%>
 
@@ -17,14 +20,23 @@
 
 
 <style>
+  /**{border: 1px solid black}*/
+
+  #wrap{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: calc(100vw - (100vw - 100%));
+    height: 98vh;
+
+  }
 
   #loginBox {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 5px #c1bdbd;
     padding: 20px 10px;
-    margin: auto;
-    margin-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -62,10 +74,11 @@
 
   }
 
+
+
   .filebox {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
   }
 
   .filebox .upload-name {
@@ -85,9 +98,10 @@
     vertical-align: middle;
     background-color: #999999;
     cursor: pointer;
-    margin-left: 10px;
     font-size: 10px;
+
   }
+
 
   .filebox input[type="file"] {
     position: absolute;
@@ -100,13 +114,25 @@
 
   #btn-box {
     display: flex;
+    justify-content: center;
     gap: 20px;
+    width: 250px;
+  }
+  #btn-box div {
+    width: 100%;
   }
 
   #cBtn, #sBtn {
     padding: 5px 10px;
     margin-top: 10px;
+    width: 100%;
+    background-color: #5d5d5d;
+    border-radius: 3px;
+    color: white;
+  }
 
+  #fileLayout{
+    width: 252px;
   }
 
 </style>
@@ -122,10 +148,9 @@
 <form action="/member/createMember" method="post" enctype="multipart/form-data">
 
 
-
+  <div id="wrap">
     <div id="loginBox">
       <h4>전문가인뎁쇼?</h4>
-
       <div>
         <h3>Email </h3>
         <input type="hidden" name="email_type" value="${emailType}">
@@ -145,8 +170,12 @@
         <h3>NickName</h3>
         <input type="text" name="nickname" placeholder="닉네임을 입력해주세요">
       </div>
-      <div>
+
+
+      <div id="fileLayout">
+        <div>
         <h3 id="fileTitle">*사업자 등록증명서 혹은 재직증명서 를 입력해주세요.</h3>
+        </div>
         <div class="filebox">
           <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
           <label for="file" >파일찾기</label>
@@ -154,18 +183,21 @@
         </div>
       </div>
       <div id="btn-box">
+        <div>
         <button type="button" id="cBtn" onclick="cancle()">취소</button>
+        </div>
+        <div>
         <button id="sBtn">가입하기</button>
+        </div>
       </div>
-
     </div>
-
-
-
+  </div>
 </form>
 </div>
+
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
 <script>
+
 
   $("#file").on('change',function(){
     var fileName = $("#file").val();
