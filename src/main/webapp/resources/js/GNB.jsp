@@ -5,8 +5,7 @@
 	<!-- GNB -->
 	<nav class="container-fluid bd-guatter border-bottom border-secondary flex-wrap flex-lg-nowrap position-relative">
 		<!-- 브랜드 - 로고 -->
-		<a class="navbar-brand p-0 mx-auto mx-lg-5 my-0" href="/">
-			<img class="logo" src="${path}/resources/img/kh_logo.png">
+		<a class="navbar-brand p-0 mx-auto mx-lg-5 my-0" href="/"> <img class="logo" src="${path}/resources/img/kh_logo.png">
 		</a>
 		<!-- 토글 버튼 -->
 		<div class="d-flex">
@@ -52,6 +51,13 @@
 						<c:if test="${sessionScope.memberType ne 9999}">
 							<c:if test="${not empty sessionScope.code}">
 								<a class="nav-link py-2 px-0 px-lg-2 fs-2" href="/member/my-page/gallery" aria-current="true">마이페이지</a>
+								<ul class="navbar-nav d-flex d-lg-none flex-column flex-wrap bd-navbar-nav">
+									<li class="nav-item col-12">
+										<c:forEach items="${mypage}" var="item">
+											<a class="nav-link py-0 ps-4 fs-3" href="/community/toBoard?code=${item.code}&currentPage=1" aria-current="true">- ${item.name}</a>
+										</c:forEach>
+									</li>
+								</ul>
 							</c:if>
 							<c:if test="${empty sessionScope.code}">
 								<a class="nav-link py-2 px-0 px-lg-2 fs-2" href="/member/loginForm/" onclick="alert('로그인이 필요한 서비스입니다.\n로그인으로 이동합니다.');" aria-current="true">마이페이지</a>
