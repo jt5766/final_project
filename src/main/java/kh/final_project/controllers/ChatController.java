@@ -1,17 +1,20 @@
 package kh.final_project.controllers;
 
-import kh.final_project.dto.ChatlistDTO;
-import kh.final_project.dto.ChatlogDTO;
-import kh.final_project.services.ChatService;
-import kh.final_project.services.ChatlogService;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
-import java.util.List;
+import kh.final_project.dto.ChatlistDTO;
+import kh.final_project.dto.ChatlogDTO;
+import kh.final_project.services.ChatService;
+import kh.final_project.services.ChatlogService;
 
 @Controller
 @RequestMapping("/chat/")
@@ -34,6 +37,7 @@ public class ChatController {
 	}
 	
 	@RequestMapping(value = "application", method = RequestMethod.POST)
+	@ResponseBody
 	public boolean application(int mentor, int mentee) {
 		return chatservice.application(mentor, mentee);
 	}
