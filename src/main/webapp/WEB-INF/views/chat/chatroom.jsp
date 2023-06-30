@@ -11,6 +11,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <link href="${path}/resources/css/chatroom.css" type="text/css" rel="stylesheet">
+<style>
+	.mytext{border: 0px solid black;box-shadow: 0 0 10px #c1bdbd;}
+	.othertext{border: 0px solid black;box-shadow: 0 0 10px #c1bdbd;}
+</style>
 </head>
 <body>
 	<script>

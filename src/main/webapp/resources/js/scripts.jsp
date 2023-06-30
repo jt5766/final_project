@@ -59,6 +59,10 @@
 			if (e.keyCode == 116 || (e.ctrlKey && e.keyCode == 82)) {
 				closing_window = false;
 			}
+			// mac[Meta(91) - Q (81) / W (87) / R(82)]
+			if (e.metaKey && (e.keyCode == 81 || e.keyCode == 87 || e.keyCode == 82) ) {
+				closing_window = false;
+			}
 		});
 	
 		// a 태그 클릭한 경우 false
