@@ -13,7 +13,8 @@
 <style>
 	*{box-sizing: border-box;}
 	.errorcontainer{background-color:white;}
-	.errorimg{text-align: center;}
+	.errorimgbox{text-align: center;}
+	.errorimg{width: 40vw;}
 	.alerttext{font-size: 60px;margin-bottom: 20px;text-align: center;}
 	.alerttextbox{text-align: center;}
 	.buttonbox{margin-top: 5px;text-align: center;}
@@ -27,8 +28,8 @@
 </c:import>
 <div class="container-xl position-relative p-0 errorcontainer">
 	<div class="row">
-		<div class="col-12 errorimg">
-			<image src="/resources/img/error.jpg"></image>
+		<div class="col-12 errorimgbox">
+			<image src="/resources/img/error.jpg" class="errorimg"></image>
 		</div>
 	</div>
 	<div class="row">
