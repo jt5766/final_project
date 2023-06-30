@@ -158,25 +158,36 @@
     const modal = $('.modalWrap');
     const closeBtn = document.querySelector('.closeBtn');
 
-    $('#input_txt').summernote({
-        height: 350, // 에디터 높이
-        minHeight: null, // 최소 높이
-        maxHeight: null, // 최대 높이
-        focus: true, // 에디터 로딩후 포커스를 맞출지 여부
-        lang: "ko-KR", // 한글 설정
-        codeviewFilter: false,
-        codeviewIframeFilter: true,
-        placeholder: '', //placeholder 설정
-        disableDragAndDrop: true,
-        toolbar: [],
-    });
+    if (${categoryType != 1002}) {
+      $('#input_txt').summernote({
+          height: 350, // 에디터 높이
+          minHeight: null, // 최소 높이
+          maxHeight: null, // 최대 높이
+          focus: true, // 에디터 로딩후 포커스를 맞출지 여부
+          lang: "ko-KR", // 한글 설정
+          codeviewFilter: false,
+          codeviewIframeFilter: true,
+          placeholder: '', //placeholder 설정
+          disableDragAndDrop: true,
+          toolbar: [],
+      });
+      $(function() {
+          $('.note-editable').html(`${content.txt}`);
+      });
+    }
 
-    $(function() {
-        $('.note-editable').html(`${content.txt}`);
-    });
 
     const title = $('#input_title');
     const txt = $('#input_txt');
+
+    title.on("keydown", function(e) {
+        console.log(e.key);
+        if (e.key !== "Backspace" && title.val().trim().length > 29) {
+            e.preventDefault();
+            alert("제목은 30글자를 넘을 수 없습니다.");
+            title.text(title.text().slice(0, 29));
+        }
+    });
 
     $('#content-form').on('submit', (e) => {
         if (title.val().trim() === '') {
@@ -198,12 +209,18 @@
                 return false;
             }
         }
-        if ($('.note-editable').text().trim() === '') {
-            e.preventDefault();
-            alert("내용을 입력해주세요.");
-            return false;
+        if (${categoryType != 1002}) {
+          if ($('.note-editable').text().trim() === '') {
+              e.preventDefault();
+              alert("내용을 입력해주세요.");
+              return false;
+          }
+          if ($('.note-editable').text().trim().length > 1000) {
+              e.preventDefault();
+              alert("내용은 1000글자를 넘을 수 없습니다.");
+          }
+          txt.val($('.note-editable').html());
         }
-        txt.val($('.note-editable').html());
     });
 
     $(allowVal).on('change', function () {

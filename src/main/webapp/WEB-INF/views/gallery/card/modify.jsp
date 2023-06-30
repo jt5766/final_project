@@ -143,6 +143,31 @@
             hiddenAllow.val('N');
         }
     });
+
+    const title = $('#input_title');
+    const catchphrase = $('#input_catchphrase');
+    const synopsis = $('#input_synopsis');
+    title.on('keydown', function (e) {
+        if (e.key !== "Backspace" && title.val().length > 29) {
+            e.preventDefault();
+            title.val(title.val().slice(0, 29));
+            alert("제목은 30자를 넘을 수 없습니다.");
+        }
+    });
+    catchphrase.on('keydown', function (e) {
+        if (catchphrase.val().length > 19) {
+            e.preventDefault();
+            catchphrase.val(catchphrase.val().slice(0, 19));
+            alert("한 줄 요약은 20자를 넘을 수 없습니다.");
+        }
+    });
+    synopsis.on('keydown', function (e) {
+        if (synopsis.val().length > 99) {
+            e.preventDefault();
+            synopsis.val(synopsis.val().slice(0, 99));
+            alert("줄거리는 100자를 넘을 수 없습니다.");
+        }
+    });
     $('#card-form').on('submit', (e) => {
         if ($('#input_title').val().trim() === '') {
             e.preventDefault();
@@ -154,18 +179,22 @@
             alert("장르를 체크해주세요.");
             return false;
         }
-        if ($('#input_catchphrase').val().trim() === '') {
+        if (catchphrase.val().trim() === '') {
             e.preventDefault();
             alert("한 줄 요약을 입력해주세요.");
             return false;
         }
-        if ($('#input_synopsis').val().trim() === '') {
+        if (synopsis.val().trim() === '') {
             e.preventDefault();
             alert("줄거리를 입력해주세요.");
             return false;
         }
+        if ($('#input_thumbnail_url').val().trim() === '') {
+            e.preventDefault();
+            alert("썸네일을 등록해주세요.");
+            return false;
+        }
     });
-
     function readURL(input) {
         if (input.files && input.files[0]) {
             const reader = new FileReader();

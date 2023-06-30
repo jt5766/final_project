@@ -100,7 +100,8 @@
               <label for="input_file_image">[이미지] 파일 선택 - 만화 / 그림 / 사진</label>
             </div>
             <div class="col-6 d-flex justify-content-end align-items-center">
-              <input class="form-control form-control-sm" type="file" name="file_image" id="input_file_image" onchange="readURL(this)"
+              <input class="form-control form-control-sm" type="file" name="file_image" id="input_file_image"
+                     onchange="readURL(this)"
                      formenctype="multipart/form-data">
               <input type="hidden" name="file_url">
             </div>
@@ -110,11 +111,13 @@
           </div>
         </c:otherwise>
       </c:choose>
-      <div class="row input-box">
-        <div class="col-12">
-          <textarea name="txt" class="input_txt" id="input_txt" cols="30" rows="10"></textarea>
+      <c:if test="${categoryType != 1002}">
+        <div class="row input-box">
+          <div class="col-12">
+            <textarea name="txt" class="input_txt" id="input_txt" cols="30" rows="10"></textarea>
+          </div>
         </div>
-      </div>
+      </c:if>
       <div class="row input-box">
         <div class="col-12">
           <div class="form-check form-switch">
@@ -149,21 +152,32 @@
     const modal = $('.modal-wrap');
     const closeBtn = document.querySelector('.close-btn');
 
-    $('#input_txt').summernote({
-        height: 350, // 에디터 높이
-        minHeight: null, // 최소 높이
-        maxHeight: null, // 최대 높이
-        focus: true, // 에디터 로딩후 포커스를 맞출지 여부
-        lang: "ko-KR", // 한글 설정
-        codeviewFilter: false,
-        codeviewIframeFilter: true,
-        placeholder: '내용을 입력해주세요', //placeholder 설정
-        disableDragAndDrop: true,
-        toolbar: [],
-    });
+    if (${categoryType != 1002}) {
+        $('#input_txt').summernote({
+            height: 350, // 에디터 높이
+            minHeight: null, // 최소 높이
+            maxHeight: null, // 최대 높이
+            focus: true, // 에디터 로딩후 포커스를 맞출지 여부
+            lang: "ko-KR", // 한글 설정
+            codeviewFilter: false,
+            codeviewIframeFilter: true,
+            placeholder: '내용을 입력해주세요', //placeholder 설정
+            disableDragAndDrop: true,
+            toolbar: [],
+        });
+    }
 
     const title = $('#input_title');
     const txt = $('#input_txt');
+
+    title.on("keydown", function (e) {
+        console.log(e.key);
+        if (e.key !== "Backspace" && title.val().trim().length > 29) {
+            e.preventDefault();
+            alert("제목은 30글자를 넘을 수 없습니다.");
+            title.text(title.text().slice(0, 29));
+        }
+    });
 
     $('#content-form').on('submit', (e) => {
         if (title.val().trim() === '') {
@@ -185,12 +199,18 @@
                 return false;
             }
         }
-        if ($('.note-editable').text().trim() === '') {
-            e.preventDefault();
-            alert("내용을 입력해주세요.");
-            return false;
+        if (${categoryType != 1002}) {
+            if ($('.note-editable').text().trim() === '') {
+                e.preventDefault();
+                alert("내용을 입력해주세요.");
+                return false;
+            }
+            if ($('.note-editable').text().trim().length > 1000) {
+                e.preventDefault();
+                alert("내용은 1000글자를 넘을 수 없습니다.");
+            }
+            txt.val($('.note-editable').html());
         }
-        txt.val($('.note-editable').html());
     });
 
     $(allowVal).on('change', function () {
