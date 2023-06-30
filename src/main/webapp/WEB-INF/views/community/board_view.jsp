@@ -217,7 +217,7 @@
 		    const bodyContent = $("<div style='flex: 12;'>");
 		    const bodyButton = $("<div style='flex: 2; text-align: center;'>");
 		    body.append(bodySpace, bodyContent, bodyButton);
-		    const textarea = $("<textarea style='text-align: left; width: 100%; resize: none;' name='txt' placeholder='대댓글을 입력해주세요'>");
+		    const textarea = $("<textarea style='text-align: left; width: 100%; resize: none;' required name='txt' placeholder='대댓글을 입력해주세요'>");
 		   	const submit = $("<input type='submit' value='대댓글 달기' style='flex: 1'>");
 		   	const parent_reply = $(this).closest($(".reply")).find($(".replySeq")).val();
 		   	const hiddenParentReply = $("<input type='hidden' name='parent_reply'>");

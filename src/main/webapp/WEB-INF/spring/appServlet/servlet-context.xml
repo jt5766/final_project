@@ -40,8 +40,6 @@
 			<exclude-mapping path="/member/signup/" />
 			<exclude-mapping path="/member/check" />
 			<exclude-mapping path="/member/check/" />
-			<!-- a태그 href나 그런것들 보면 요청 URL 맨끝에 /가 있고 없고 하는 차이가 있는데 -->
-			<!-- exclude-mapping에는 /가 있을때랑 없을때가 따로 먹히는 것 같음 -->
 			<exclude-mapping path="/member/mailDupCheck" />
 			<exclude-mapping path="/member/mailDupCheck/" />
 			<exclude-mapping path="/member/register" />
@@ -58,7 +56,7 @@
 			<exclude-mapping path="/member/passwordCheck/" />
 			<exclude-mapping path="/member/passwordChange" />
 			<exclude-mapping path="/member/passwordChange/" />
-			<exclude-mapping path="/member/updatePassword" />
+			<exclude-mapping path="/member/updatePassword**" />
 			<exclude-mapping path="/member/updatePassword/" />
 			<!-- community -->
 			<exclude-mapping path="/community/toBoard**" />
