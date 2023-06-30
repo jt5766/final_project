@@ -49,8 +49,8 @@ public class MemberService {
 
 		MailHandler sendMail = new MailHandler(javaMailSender);
 		sendMail.setSubject("[Kreate-Hub 이메일 인증메일 입니다.]"); // 메일제목
-		sendMail.setText("<h1>Kreate-Hub 메일인증</h1>" + "<br>Kreate-Hub 오신것을 환영합니다!" + "<br>아래 [이메일 인증 확인]을 눌러주세요." + "<br><a href='http://localhost:8080/member/register?member_type=" + dto.getMember_type() + "&email=" + dto.getEmail() + "&email_type=" + dto.getEmail_type() + "&random_key=" + dto.getRandom_key() + "'>이메일 인증 확인</a>");
-		sendMail.setFrom("rkqudwns@gmail.com", "강병준");
+		sendMail.setText("<h1>Kreate-Hub 메일인증</h1>" + "<br>Kreate-Hub 오신것을 환영합니다!" + "<br>아래 [이메일 인증 확인]을 눌러주세요." + "<br><a href='http://3.39.227.39/member/register?member_type=" + dto.getMember_type() + "&email=" + dto.getEmail() + "&email_type=" + dto.getEmail_type() + "&random_key=" + dto.getRandom_key() + "'>이메일 인증 확인</a>");
+		sendMail.setFrom("rkqudwns@gmail.com", "Kreate-Hub");
 		System.out.println(dto.getEmail() + "@" + dto.getSet_email_type() + " / " + dto.getMember_type());
 		sendMail.setTo(dto.getEmail() + "@" + dto.getSet_email_type());
 		sendMail.send();
@@ -76,8 +76,8 @@ public class MemberService {
 			sendMail.setSubject("[Kreate-Hub 비밀번호찾기 메일 입니다.]"); // 메일제목
 			sendMail.setText("<h1>Kreate-Hub 비밀번호 찾기</h1>" +
 
-					"<br>아래 [비밀번호 찾기를 눌러주세요]" + "<br><a href='http://localhost:8080/member/tofindPassword" + "?email=" + dto.getEmail() + "&email_type=" + dto.getEmail_type() + "&random_key=" + dto.getRandom_key() + "'>비밀번호 찾기</a>");
-			sendMail.setFrom("rkqudwns@gmail.com", "강병준");
+					"<br>아래 [비밀번호 찾기를 눌러주세요]" + "<br><a href='http://3.39.227.39/member/tofindPassword" + "?email=" + dto.getEmail() + "&email_type=" + dto.getEmail_type() + "&random_key=" + dto.getRandom_key() + "'>비밀번호 찾기</a>");
+			sendMail.setFrom("rkqudwns@gmail.com", "Kreate-Hub");
 
 			sendMail.setTo(dto.getEmail() + "@" + dto.getSet_email_type());
 			sendMail.send();
