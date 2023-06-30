@@ -65,7 +65,7 @@
       <div class="row">
         <div class="col-md-12 p-0">
           <div class="content-file">
-            <img class="img-file" src="/resources${content.file_url}" alt="/resources/default_img.jpg" onerror="this.src='/resources/default_img.jpg'">
+            <img class="img-file" src="/resources${content.file_url}" alt="/resources/img/default_img.jpg" onerror="this.src='/resources/img/default_img.jpg'">
           </div>
         </div>
       </div>
