@@ -218,6 +218,11 @@
             history.go(1);
         }
     }
+
+    <%--if("${duplEmail == 1}"){--%>
+    <%--    alert("비밀번호 찾기 메일이 발송되었습니다. 메일을 확인해주세요")--%>
+    <%--}--%>
+
     $(document).ready(function () {
 
 
@@ -245,13 +250,17 @@
             }).done(function (resp) {
                 console.log(resp)
                 if (resp == 11) {
-                    alert("등록된 정보가 없습니다.")
+                    alert("등록된 정보가 없습니다.");
+                    return false;
                 } else if (resp == 22) {
-                    alert("가입대기중인 상태입니다")
+                    alert("가입대기중인 상태입니다");
+                        return false;
                 } else if (resp == 33) {
-                    alert("이용이 정지된 고객입니다.")
+                    alert("이용이 정지된 고객입니다.");
+                    return false;
                 } else if (resp == 44) {
-                    alert("이미 접속중인 이용자입니다")
+                    alert("이미 접속중인 이용자입니다");
+                    return false;
                 } else {
                     if ($("#checkId").is(":checked")) {
                         console.log("!!!!!!!!");

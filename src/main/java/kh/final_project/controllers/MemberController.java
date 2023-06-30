@@ -175,6 +175,9 @@ public class MemberController {
 	public String updatePassword(MemberDTO dto) {
 		System.out.println("비밀번호 변경 :" + dto);
 		memberService.updatePassword(dto);
+		Integer code = (Integer)session.getAttribute("code");
+		memberService.logOut(code);
+		session.invalidate();
 		return "redirect:/member/loginForm";
 	}
 //    @RequestMapping("mypage")

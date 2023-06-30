@@ -175,4 +175,8 @@ public class MemberService {
 	public boolean duplicationEmail(MemberDTO dto) {
 		return mdao.duplicationEmail(dto);
 	}
+
+	public void logOut(Integer code) {
+		mdao.logout(code);
+	}
 }
