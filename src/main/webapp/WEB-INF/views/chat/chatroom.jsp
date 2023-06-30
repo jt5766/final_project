@@ -6,12 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<c:import url="${path}/resources/js/scripts.jsp"/>
+<link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
-<link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 <link href="${path}/resources/css/chatroom.css" type="text/css" rel="stylesheet">
 </head>
 <body>

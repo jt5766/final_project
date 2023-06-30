@@ -22,8 +22,7 @@
     <input type="hidden" name="tableName" value="VIEW_GALLEY_CARDS">
     <input type="hidden" name="typeCode" value="${categoryType}">
     <div class="row">
-      <div class="col-md-12 search-box">
-        <!--TODO: 검색창 반응형 적용-->
+      <div class="col-12 search-box">
         <select name="searchCode">
           <c:forEach items="${searchConditions}" var="searchCondition">
             <option value="${searchCondition.code}">${searchCondition.name}</option>
@@ -31,12 +30,21 @@
         </select>
         <input type="text" name="searchQuery">
         <c:forEach items="${sortConditions}" var="sortContidion" varStatus="status">
-          <input type="radio" name="sortCode" value="${sortContidion.code}" id="sort-${sortContidion.code}"
+          <input class="d-none d-md-block" type="radio" name="sortCode" value="${sortContidion.code}" id="sort1-${sortContidion.code}"
                  <c:if test="${status.index == 0}">checked</c:if>>
-          <label class="sortLabel" for="sort-${sortContidion.code}">${sortContidion.name}</label>
+          <label class="d-none d-md-block" class="sortLabel" for="sort1-${sortContidion.code}">${sortContidion.name}</label>
         </c:forEach>
-        <div class="vr mx-2"></div>
-        <button type="submit" class="common-button">검색</button>
+        <div class="vr mx-2 d-none d-md-block"></div>
+        <button type="submit" class="common-button d-none d-md-block"><i class="bi bi-search"></i></button>
+      </div>
+      <div class="col-12 d-md-none search-box">
+        <c:forEach items="${sortConditions}" var="sortContidion" varStatus="status">
+          <input class="d-block d-md-none" type="radio" name="sortCode" value="${sortContidion.code}" id="sort2-${sortContidion.code}"
+                 <c:if test="${status.index == 0}">checked</c:if>>
+          <label class="d-block d-md-none" class="sortLabel" for="sort2-${sortContidion.code}">${sortContidion.name}</label>
+        </c:forEach>
+        <div class="vr mx-2 d-block d-md-none"></div>
+        <button type="submit" class="common-button d-block d-md-none ms-auto"><i class="bi bi-search"></i></button>
       </div>
     </div>
   </form>
@@ -44,22 +52,22 @@
     <c:forEach items="${cards}" var="card">
       <div class="col-md-6">
         <div class="gallery-card" onclick="location.href='/gallery/${card.seq}'">
-          <div class="info">
-            <div class="category">
-                ${card.category_name}
-            </div>
-            <c:if test="${card.genre_type1 != null}">
-              <div class="genre-name">${card.genre_name1}</div>
-            </c:if>
-            <c:if test="${card.genre_type2 != null}">
-              <div class="genre-name">${card.genre_name2}</div>
-            </c:if>
-          </div>
           <div class="card-body">
             <div class="thumbnail_url">
-              <img class="thumbnail" src="/resources${card.thumbnail_url}" alt="${card.thumbnail_url}">
+              <img class="thumbnail" src="/resources${card.thumbnail_url}" alt="/resources/default_img.jpg">
             </div>
             <div class="side-info">
+              <div class="info">
+                <div class="category">
+                    ${card.category_name}
+                </div>
+                <c:if test="${card.genre_type1 != null}">
+                  <div class="genre-name">${card.genre_name1}</div>
+                </c:if>
+                <c:if test="${card.genre_type2 != null}">
+                  <div class="genre-name">${card.genre_name2}</div>
+                </c:if>
+              </div>
               <div class="title title-link">
                   ${card.title}
               </div>
@@ -109,20 +117,5 @@
   </div>
 </div>
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
-<script>
-    $('#to-insert').on('click', function () {
-        location.href = '/gallery/insert/' + $('#category option:selected').val();
-    });
-    $('#to-home').on('click', function () {
-        location.href = '/';
-    });
-    const card = $('.gallery-card');
-    card.on('mouseenter', function () {
-        $(this).toggleClass('card-hover');
-    });
-    card.on('mouseleave', function () {
-        $(this).toggleClass('card-hover');
-    });
-</script>
 </body>
 </html>

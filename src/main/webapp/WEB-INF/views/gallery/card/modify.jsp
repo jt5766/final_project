@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" scope="session"/>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Card :: modify</title>
@@ -109,7 +111,7 @@
         <input type="hidden" name="thumbnail_url" value="${card.thumbnail_url}">
       </div>
       <div class="col-12">
-        <img class="preview-img" src="${card.thumbnail_url}" alt="${card.thumbnail_url}" id="img">
+        <img class="preview-img" src="/resources${card.thumbnail_url}" alt="/resources${card.thumbnail_url}" id="img">
       </div>
     </div>
     <div class="row input-box">
