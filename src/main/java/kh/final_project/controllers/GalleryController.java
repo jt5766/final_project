@@ -68,7 +68,6 @@ public class GalleryController {
                 Integer mentee = card.getWriter();
                 Boolean isDuple = galleryService.dupleInviteCheck(mentor, mentee);
                 model.addAttribute("isDuple", isDuple);
-                System.out.println("isDuple = " + isDuple);
             }
         }
         setNaviOfContents(model, galleryCardDTO);
