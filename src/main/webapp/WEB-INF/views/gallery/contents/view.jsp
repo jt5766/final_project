@@ -90,7 +90,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-6 d-flex justify-content-start align-items-center">
+    <div class="col-6 d-flex justify-content-start align-items-center p-0">
       <c:if test="${sessionScope.code == content.writer}">
         <form action="/gallery/${cardSeq}/contents/${content.seq}/delete" method="post">
           <input type="hidden" name="cardSeq" value="${cardSeq}">
@@ -102,7 +102,7 @@
         </button>
       </c:if>
     </div>
-    <div class="col-6 d-flex justify-content-end align-items-center">
+    <div class="col-6 d-flex justify-content-end align-items-center p-0">
       <button class="common-button" onclick="location.href='/gallery/${cardSeq}'">돌아가기</button>
     </div>
   </div>

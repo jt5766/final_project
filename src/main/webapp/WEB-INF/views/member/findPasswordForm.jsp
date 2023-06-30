@@ -134,7 +134,7 @@
                     </div>
                     <div>
                         <h4>비밀번호를 확인해주세요</h4>
-                        <input type="password" required>
+                        <input type="password" id="ChkPw" required>
                     </div>
                     <div>
                         <button id="sendMail-btn2">확인</button>
@@ -162,6 +162,32 @@
         const shaPw = sha512(pw);
         console.log(shaPw)
         $("#shaPw").val(shaPw);
+    })
+
+    $("#sendMail-btn2").click(function () {
+        // 정규식
+        const pw = $("#pw").val();
+        const chkPw = $("#ChkPw").val();
+
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*?])[a-zA-Z\d~!@#$%^&*?]{8,16}$/;
+        const passwordResult = passwordRegex.test(pw);
+        if(!passwordResult){
+            alert("비밀번호 양식이 올바르지 않습니다.");
+            return false
+        }
+        const chkPwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*?])[a-zA-Z\d~!@#$%^&*?]{8,16}$/;
+        const chkPwResult = chkPwRegex.test(chkPw)
+        if(pw != chkPw){
+            alert("비밀번호가 일치하지 않습니다")
+            return false;
+        }
+
+
+
+        $("#frm").submit();
+
+
     })
 
 

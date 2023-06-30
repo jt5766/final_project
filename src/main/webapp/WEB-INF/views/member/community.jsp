@@ -18,7 +18,7 @@
   <c:param name="pageName" value="mypage" />
   <c:param name="btnNum" value="${sessionScope.mypageCode}" />
 </c:import>
-<div class="container-xl p-0">
+<div class="container-xl">
   <div id="accordion">
     <c:forEach items="${community}" var="category">
       <section class="d-flex justify-content-center align-items-center accordion-head">
