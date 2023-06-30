@@ -144,30 +144,16 @@
             </form>
         </div>
         <c:import url="${path}/resources/js/FOOTER.jsp"/>
-
-
-        <%--            <input type="hidden" name="email" value="${email}">--%>
-        <%--            <input type="hidden" name="email_type" value="${email_type}">--%>
-        <%--            이메일--%>
-        <%--            <input type="text" readonly value="${email}@${set_email_type}"> <br>--%>
-        <%--            새로운 비밀번호를 입력해주세요--%>
-        <%--            <input type="password" name="password"> <br>--%>
-
-        <%--            비밀번호를 확인해주세요--%>
-        <%--            <input type="password"> <br>--%>
-        <%--            <input type="submit">--%>
-
     </c:otherwise>
 </c:choose>
 
 <script>
+
     $("#sendMail-btn1").click(function (){
         const email = $("#email").val()
         if(email == "" || !email.includes("@") ){
             alert("이메일 형식을 맞춰주세요")
-
             return false;
-
         }
     })
 

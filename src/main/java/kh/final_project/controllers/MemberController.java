@@ -175,7 +175,7 @@ public class MemberController {
 	public String updatePassword(MemberDTO dto) {
 		System.out.println("비밀번호 변경 :" + dto);
 		memberService.updatePassword(dto);
-		return "redirect:/member/logOut";
+		return "redirect:/member/loginForm";
 	}
 //    @RequestMapping("mypage")
 //    public String mypage(Model model){

@@ -165,7 +165,7 @@
       </div>
       <div>
         <h3>Check</h3>
-        <input type="password" placeholder="Check-Password">
+        <input type="password" id="ChkPw" placeholder="Check-Password">
       </div>
       <div>
         <h3>NickName</h3>
@@ -188,7 +188,7 @@
         <button type="button" id="cBtn" onclick="cancle()">취소</button>
         </div>
         <div>
-        <button id="sBtn">가입하기</button>
+        <button id="sBtn" type="button">가입하기</button>
         </div>
       </div>
     </div>
@@ -198,15 +198,6 @@
 
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
 <script>
-
-
-  const pw = $("#id").val();
-  const nickname = $("#nickname").val();
-
-
-
-
-
   $("#file").on('change',function(){
     var fileName = $("#file").val();
     $(".upload-name").val(fileName);
@@ -222,12 +213,51 @@
 
 
 
+
+
   $("#frm").on('submit',function (){
+    // 암호화
     const pw = $("#pw").val()
     const shaPw = sha512(pw);
     console.log(shaPw)
     $("#shaPw").val(shaPw);
-    e.preventDefault();
+  })
+
+  $("#sBtn").click(function () {
+    // 정규식
+    const pw = $("#pw").val();
+    const nickname = $("#nickname").val();
+    const chkPw = $("#ChkPw").val();
+
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*?])[a-zA-Z\d~!@#$%^&*?]{8,16}$/;
+    const passwordResult = passwordRegex.test(pw);
+    if(!passwordResult){
+      alert("비밀번호 양식이 올바르지 않습니다.");
+      return false
+    }
+    const chkPwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*?])[a-zA-Z\d~!@#$%^&*?]{8,16}$/;
+    const chkPwResult = chkPwRegex.test(chkPw)
+    if(pw != chkPw){
+      alert("비밀번호가 일치하지 않습니다")
+      return false;
+    }
+
+
+
+    const nickNameRegex = /^[A-Za-z가-힣0-9]{1,8}$/;
+    const nickNameResult = nickNameRegex.test(nickname);
+    if(!nickNameResult){
+      alert("닉네임 양식이 올바르지 않습니다.")
+      return false;
+    }
+
+
+
+
+    $("#frm").submit();
+
+
   })
 
 
