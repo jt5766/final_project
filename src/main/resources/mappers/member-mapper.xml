@@ -18,9 +18,7 @@
 		update members set yn = 'Y' where email = #{email, jdbcType=VARCHAR} and email_type = #{email_type, jdbcType=NUMERIC}
 	</update>
 
-	<update id="Nupdate">
-		update members set yn ='N' where code = #{code, jdbcType=NUMERIC}
-	</update>
+	
 
 	<update id="updatePassword">
 		update members set password = #{password, jdbcType=VARCHAR} where email = #{email, jdbcType=VARCHAR} and email_type = #{email_type, jdbcType=NUMERIC}

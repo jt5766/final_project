@@ -263,8 +263,7 @@
                     return false;
                 } else {
                     if ($("#checkId").is(":checked")) {
-                        console.log("!!!!!!!!");
-                        console.log($("#input_email").val());
+
                         setCookie("email", $("#input_email").val(), 30); // 30일 동안 쿠키 보관
                     }
                     alert("로그인 성공");
@@ -277,7 +276,7 @@
 
         // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
         var key = getCookie("email");
-        console.log(key);
+
         $("#input_email").val(key);
 
         // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
@@ -287,7 +286,7 @@
 
         $("#checkId").on("change", function () {
             if (!$("#checkId").is(":checked")) {
-                console.log("????");
+
                 deleteCookie("email");
             }
 

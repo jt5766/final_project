@@ -144,7 +144,7 @@
     $("#frm").on('submit',function (){
         const pw = $("#pw").val()
         const shaPw = sha512(pw);
-        console.log(shaPw)
+
         $("#shaPw").val(shaPw);
     })
 
@@ -174,18 +174,9 @@
             alert("닉네임 양식이 올바르지 않습니다.")
             return false;
         }
-
-
-
-
         $("#frm").submit();
-
-
     })
-
 </script>
 </body>
-
-
 </html>
 

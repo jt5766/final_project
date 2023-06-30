@@ -52,7 +52,8 @@
         font-weight: 200;
         color: rgb(80, 80, 160);
     }
-    h3{
+
+    h3 {
         font-size: 20px;
         color: crimson;
     }
@@ -66,7 +67,7 @@
         outline: none;
     }
 
-    #sendMail-btn1,#sendMail-btn2{
+    #sendMail-btn1, #sendMail-btn2 {
         background-color: #5d5d5d;
         border-radius: 3px;
         color: white;
@@ -98,7 +99,7 @@
                         <input type="text" placeholder="Email" id="email" name="email" required>
                     </div>
                     <div>
-                        <button  id="sendMail-btn1">확인</button>
+                        <button id="sendMail-btn1">확인</button>
                     </div>
                     <div>
                         <h3> *메일을 확인해주세요 </h3>
@@ -130,7 +131,7 @@
                     <div>
                         <h4>새로운 비밀번호를 입력해주세요</h4>
                         <input type="hidden" name="password" id="shaPw" value="">
-                        <input type="password" id="pw"  required>
+                        <input type="password" id="pw" required>
                     </div>
                     <div>
                         <h4>비밀번호를 확인해주세요</h4>
@@ -149,15 +150,15 @@
 
 <script>
 
-    $("#sendMail-btn1").click(function (){
+    $("#sendMail-btn1").click(function () {
         const email = $("#email").val()
-        if(email == "" || !email.includes("@") ){
+        if (email == "" || !email.includes("@")) {
             alert("이메일 형식을 맞춰주세요")
             return false;
         }
     })
 
-    $("#frm").on('submit',function (){
+    $("#frm").on('submit', function () {
         const pw = $("#pw").val()
         const shaPw = sha512(pw);
         console.log(shaPw)
@@ -165,32 +166,29 @@
     })
 
     $("#sendMail-btn2").click(function () {
-        // 정규식
+
         const pw = $("#pw").val();
         const chkPw = $("#ChkPw").val();
 
 
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*?])[a-zA-Z\d~!@#$%^&*?]{8,16}$/;
         const passwordResult = passwordRegex.test(pw);
-        if(!passwordResult){
+        if (!passwordResult) {
             alert("비밀번호 양식이 올바르지 않습니다.");
             return false
         }
         const chkPwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*?])[a-zA-Z\d~!@#$%^&*?]{8,16}$/;
         const chkPwResult = chkPwRegex.test(chkPw)
-        if(pw != chkPw){
+        if (pw != chkPw) {
             alert("비밀번호가 일치하지 않습니다")
             return false;
         }
-
 
 
         $("#frm").submit();
 
 
     })
-
-
 
 
 </script>

@@ -45,9 +45,7 @@ public class MemberDAO {
 		return db.selectOne("Member.passwordCheck", dto);
 	}
 
-	public void Nupdate(MemberDTO dto) {
-		db.update("Member.Nupdate", dto);
-	}
+
 
 	public void updatePassword(MemberDTO dto) {
 		db.update("Member.updatePassword", dto);

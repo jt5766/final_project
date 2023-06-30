@@ -192,7 +192,7 @@
 
     const nickname = $('input[name=nickname]');
     $('#duplicate_check').on('click', function () {
-        console.log(nickname)
+
         if(nickname.val()=== "${nickName}"){
             return
         }
@@ -205,7 +205,7 @@
                 contentType: "application/x-www-form-urlencoded; utf-8",
                 method: "post"
             }).done(function (resp) {
-                console.log(resp);
+
                 nickNameCheck = resp;
                 if (resp > 0) {
                     $("#ChkId").html("사용할수없는 닉네임")

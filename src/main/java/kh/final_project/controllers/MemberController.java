@@ -22,224 +22,186 @@ import java.util.List;
 @RequestMapping("/member/")
 public class MemberController {
 
-	@Autowired
-	private EmailcheckService emailcheckService;
+    @Autowired
+    private EmailcheckService emailcheckService;
 
-	@Autowired
-	private HttpSession session;
+    @Autowired
+    private HttpSession session;
 
-	@Autowired
-	private MemberService memberService;
+    @Autowired
+    private MemberService memberService;
 
-	@RequestMapping("signup")
-	public String signup(Model model) {
+    @RequestMapping("signup")
+    public String signup(Model model) {
 
-		List<EmailTypeDTO> emailType = memberService.emailType();
-		model.addAttribute("list", emailType);
-		return "member/emailCheckForm";
-	}
+        List<EmailTypeDTO> emailType = memberService.emailType();
+        model.addAttribute("list", emailType);
+        return "member/emailCheckForm";
+    }
 
-	@RequestMapping("check") /* 최초 이메일 인증시 이메일 입력후 오는 곳 */
-	public String check(MemberDTO dto, Model model) throws Exception {
-		System.out.println("check 넘어온 member_type : " + dto.getMember_type());
-		System.out.println("check 넘어온 email_type :" + dto.getEmail_type());
-		System.out.println("check 넘어온 email :" + dto.getEmail());
-		String emailName = memberService.getEmailName(dto);
-		System.out.println(emailName);
-		dto.setSet_email_type(emailName);
-		memberService.sendJoinCertificationMail(dto); // 인증메일 보내기
-		return "/member/loginForm";
+    @RequestMapping("check")
+    public String check(MemberDTO dto, Model model) throws Exception {
 
-	}
+        String emailName = memberService.getEmailName(dto);
+        dto.setSet_email_type(emailName);
+        memberService.sendJoinCertificationMail(dto); // 인증메일 보내기
+        return "/member/loginForm";
 
-	@RequestMapping("mailDupCheck")
-	@ResponseBody
-	public String mailDupCheck(MemberDTO dto) {
-		boolean result = memberService.duplicationEmail(dto);
-		System.out.println(result);
-		return String.valueOf(result);
-	}
+    }
 
-	@RequestMapping("register")
-	public String register(Model model, MemberDTO dto) {
-		System.out.println("register로 넘어온 dto :" + dto);
-		System.out.println("==========================");
-		// 따로 저장된 멤버 타입 , 이메일 ,이메일 타입과 동일시 트루 반환후 회원가입 진행
-		boolean result = emailcheckService.checkingEmail(dto);
+    @RequestMapping("mailDupCheck")
+    @ResponseBody
+    public String mailDupCheck(MemberDTO dto) {
+        boolean result = memberService.duplicationEmail(dto);
+        return String.valueOf(result);
+    }
 
-		if (result) {
-			String emailName = memberService.getEmailName(dto);
-			dto.setSet_email_type(emailName);
-			model.addAttribute("email", dto.getEmail());
-			model.addAttribute("emailType", dto.getEmail_type());
-			model.addAttribute("setEmailType", dto.getSet_email_type());
-			model.addAttribute("memberType", dto.getMember_type());
-			if (dto.getMember_type() == 2000) {
+    @RequestMapping("register")
+    public String register(Model model, MemberDTO dto) {
 
-				return "/member/expertRegisterForm";
-			}
+        boolean result = emailcheckService.checkingEmail(dto);
+        if (result) {
+            String emailName = memberService.getEmailName(dto);
+            dto.setSet_email_type(emailName);
+            model.addAttribute("email", dto.getEmail());
+            model.addAttribute("emailType", dto.getEmail_type());
+            model.addAttribute("setEmailType", dto.getSet_email_type());
+            model.addAttribute("memberType", dto.getMember_type());
+            if (dto.getMember_type() == 2000) {
 
-			return "/member/registerForm";
-		} else {
-			return "/member/noemail";
-		}
-	}
+                return "/member/expertRegisterForm";
+            }
 
-	@PostMapping("createMember") /* 회원가입할시 오는 곳 인서트 후 로그인폼으로 */
-	public String createMember(MemberDTO dto, MultipartFile file, Model model) throws Exception {
-		String realPath = session.getServletContext().getRealPath("/resources/member");
-		int result = memberService.insertMember(dto, file, realPath);
-		System.out.println(result);
-		model.addAttribute("result", result);
-		return "/member/loginForm";
-	}
+            return "/member/registerForm";
+        } else {
+            return "redirect:/error";
+        }
+    }
 
-	@RequestMapping("loginForm")
-	public String loginForm() {
-		return "/member/loginForm";
-	}
+    @PostMapping("createMember") /* 회원가입할시 오는 곳 인서트 후 로그인폼으로 */
+    public String createMember(MemberDTO dto, MultipartFile file, Model model) throws Exception {
+        String realPath = session.getServletContext().getRealPath("/resources/member");
+        int result = memberService.insertMember(dto, file, realPath);
+        model.addAttribute("result", result);
+        return "/member/loginForm";
+    }
 
-	@ResponseBody
-	@RequestMapping("login")
-	public String login(MemberDTO dto) {
+    @RequestMapping("loginForm")
+    public String loginForm() {
+        return "/member/loginForm";
+    }
 
-		System.out.println("ajax로 넘어온 값" + dto);
-		/* 넘어온 문자열 이메일 형식 이메일 타입과 이메일 로 분리 작업 */
-		memberService.emailTypeChange(dto);
-		memberService.login(dto);
+    @ResponseBody
+    @RequestMapping("login")
+    public String login(MemberDTO dto) {
 
-		System.out.println("넘어온 코드 : " + dto.getCode());
 
-		System.out.println("로그인처리부분 넘겨온 값 :" + dto);
-		System.out.println("----------------------------");
+        memberService.emailTypeChange(dto);
+        memberService.login(dto);
 
-		if (dto.getCode() > 10000000 && dto.getCode() < 100000000) {
 
-			session.setAttribute("code", dto.getCode());
-			session.setAttribute("nickName", dto.getNickname());
-			session.setAttribute("memberType", dto.getMember_type());
-//        }
-		}
-//            . ri (CHK dto.getCode())
-		return String.valueOf(dto.getCode());
-	}
+        if (dto.getCode() > 10000000 && dto.getCode() < 100000000) {
 
-	@RequestMapping("logOut")
-	public String logOut(MemberDTO dto) {
-		System.out.println("로그아웃 dto :" + dto);
+            session.setAttribute("code", dto.getCode());
+            session.setAttribute("nickName", dto.getNickname());
+            session.setAttribute("memberType", dto.getMember_type());
+        }
 
-		SessionListener.logout(session);
-//        if(session.getAttribute("code") == null) {
-//            return "redirect:home";
-//        }
-//        dto.setCode((Integer) session.getAttribute("code"));
-//        memberService.Nupdate(dto);
-//        session.removeAttribute("code");
-//        session.removeAttribute("nickName");
-//        session.removeAttribute("memberType");
-		return "redirect:/";
-	}
+        return String.valueOf(dto.getCode());
+    }
 
-	@RequestMapping("findPassword")
-	public String findPassword() {
+    @RequestMapping("logOut")
+    public String logOut() {
 
-		return "member/findPasswordForm";
-	}
+        SessionListener.logout(session);
 
-	@RequestMapping("tofindPassword")
-	public String tofindPassword(MemberDTO dto, Model model) {
-		String result = memberService.getEmailName(dto);
+        return "redirect:/";
+    }
 
-		dto.setSet_email_type(result);
-		model.addAttribute("email", dto.getEmail());
-		model.addAttribute("email_type", dto.getEmail_type());
-		model.addAttribute("set_email_type", dto.getSet_email_type());
+    @RequestMapping("findPassword")
+    public String findPassword() {
 
-		return "member/findPasswordForm";
-	}
+        return "member/findPasswordForm";
+    }
 
-	@RequestMapping("passwordChange")
-	public String passwordChange(MemberDTO dto,Model model) throws Exception {
-		System.out.println("passwordChange" + dto);
-		boolean result = memberService.findPassword(dto);
-		if(result){
-			model.addAttribute("duplEmail",result);
-			return "/member/loginForm";
-		}else {
-			model.addAttribute("duplEmail", result);
-			return "/member/findPasswordForm";
-		}
-	}
+    @RequestMapping("tofindPassword")
+    public String tofindPassword(MemberDTO dto, Model model) {
+        String result = memberService.getEmailName(dto);
 
-	@RequestMapping("updatePassword")
-	public String updatePassword(MemberDTO dto) {
-		System.out.println("비밀번호 변경 :" + dto);
-		memberService.updatePassword(dto);
-		Integer code = (Integer)session.getAttribute("code");
-		memberService.logOut(code);
-		session.invalidate();
-		return "redirect:/member/loginForm";
-	}
-//    @RequestMapping("mypage")
-//    public String mypage(Model model){
-//        List<List<CategoryType>> types = memberService.getTypes();
-//        Gson gson = new Gson();
-//        String categoryType = gson.toJson(types.get(0));
-//        String boardType = gson.toJson(types.get(1));
-//        model.addAttribute("categoryType", categoryType);
-//        model.addAttribute("boardType", boardType);
-//        System.out.println("categoryType = " + categoryType);
-//        return "/member/myPageForm";
-//    }
+        dto.setSet_email_type(result);
+        model.addAttribute("email", dto.getEmail());
+        model.addAttribute("email_type", dto.getEmail_type());
+        model.addAttribute("set_email_type", dto.getSet_email_type());
 
-	@RequestMapping("myinfo")
-	public String myinfo(Model model) {
-		MemberDTO dto = memberService.selectDTO((int) session.getAttribute("code"));
-		String SetEmailType = memberService.getEmailName(dto);
-		model.addAttribute("email", dto.getEmail());
-		model.addAttribute("email_type", dto.getEmail_type());
-		model.addAttribute("set_email_type", SetEmailType);
-		return "/member/myInfoUpdateForm";
-	}
+        return "member/findPasswordForm";
+    }
 
-	@RequestMapping("passwordCheck")
-	@ResponseBody
+    @RequestMapping("passwordChange")
+    public String passwordChange(MemberDTO dto, Model model) throws Exception {
 
-	public String passwordCheck(MemberDTO dto) {
-		System.out.println("닉네임 + 패스워드 값");
-		System.out.println(dto.getNickname() + ":" + dto.getPassword());
-		System.out.println("======================");
+        boolean result = memberService.findPassword(dto);
+        if (result) {
+            model.addAttribute("duplEmail", result);
+            return "/member/loginForm";
+        } else {
+            model.addAttribute("duplEmail", result);
+            return "/member/findPasswordForm";
+        }
+    }
 
-		boolean result = memberService.passwordCheck(dto);
-		System.out.println(result);
+    @RequestMapping("updatePassword")
+    public String updatePassword(MemberDTO dto) {
 
-		return String.valueOf(result);
-	}
+        memberService.updatePassword(dto);
+        Integer code = (Integer) session.getAttribute("code");
+        memberService.logOut(code);
+        session.invalidate();
+        return "redirect:/member/loginForm";
+    }
 
-	@RequestMapping("update")
-	public String update(MemberDTO dto) {
-		Integer code = (Integer) session.getAttribute("code");
-		dto.setCode(code);
-		memberService.update(dto);
-		String nickname = dto.getNickname();
-		session.setAttribute("nickName", nickname);
 
-		return "redirect:/member/my-page/gallery";
-	}
+    @RequestMapping("myinfo")
+    public String myinfo(Model model) {
+        MemberDTO dto = memberService.selectDTO((int) session.getAttribute("code"));
+        String SetEmailType = memberService.getEmailName(dto);
+        model.addAttribute("email", dto.getEmail());
+        model.addAttribute("email_type", dto.getEmail_type());
+        model.addAttribute("set_email_type", SetEmailType);
+        return "/member/myInfoUpdateForm";
+    }
 
-	@RequestMapping("memberDelete")
-	public String memberDelete(int code, Model model) {
-		System.out.println(code);
-		int result = memberService.memeberDelete(code);
-		model.addAttribute(result);
-		session.invalidate();
-		return "redirect:/";
-	}
+    @RequestMapping("passwordCheck")
+    @ResponseBody
 
-	@RequestMapping(value = "nickname/duplicate-check", method = RequestMethod.POST)
-	@ResponseBody
-	public int nicknameDuplicateCheck(String nickname) {
-		int i = memberService.nicknameDuplicateCheck(nickname);
-		return i;
-	}
+    public String passwordCheck(MemberDTO dto) {
+        boolean result = memberService.passwordCheck(dto);
+        return String.valueOf(result);
+    }
+
+    @RequestMapping("update")
+    public String update(MemberDTO dto) {
+        Integer code = (Integer) session.getAttribute("code");
+        dto.setCode(code);
+        memberService.update(dto);
+        String nickname = dto.getNickname();
+        session.setAttribute("nickName", nickname);
+
+        return "redirect:/member/my-page/gallery";
+    }
+
+    @RequestMapping("memberDelete")
+    public String memberDelete(int code, Model model) {
+
+        int result = memberService.memeberDelete(code);
+        model.addAttribute(result);
+        session.invalidate();
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "nickname/duplicate-check", method = RequestMethod.POST)
+    @ResponseBody
+    public int nicknameDuplicateCheck(String nickname) {
+        int i = memberService.nicknameDuplicateCheck(nickname);
+        return i;
+    }
 }

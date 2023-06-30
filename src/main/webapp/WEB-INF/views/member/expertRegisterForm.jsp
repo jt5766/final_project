@@ -216,10 +216,8 @@
 
 
   $("#frm").on('submit',function (){
-    // 암호화
     const pw = $("#pw").val()
     const shaPw = sha512(pw);
-    console.log(shaPw)
     $("#shaPw").val(shaPw);
   })
 
@@ -228,7 +226,7 @@
     const pw = $("#pw").val();
     const nickname = $("#nickname").val();
     const chkPw = $("#ChkPw").val();
-
+    const fileName = $("#file").val();
 
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*?])[a-zA-Z\d~!@#$%^&*?]{8,16}$/;
     const passwordResult = passwordRegex.test(pw);
@@ -253,7 +251,10 @@
     }
 
 
-
+    if(fileName == ""){
+      alert("파일을 넣어주세요");
+      return false;
+    }
 
     $("#frm").submit();
 

@@ -64,10 +64,6 @@
     }
 
 
-
-
-
-
     #email-Btn {
         display: flex;
         justify-content: center;
@@ -80,7 +76,7 @@
     }
 
 
-    #wrap{
+    #wrap {
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -106,7 +102,7 @@
 
     }
 
-    #email_box{
+    #email_box {
         display: flex;
         flex-direction: column;
         gap: 20px;
@@ -115,7 +111,7 @@
 
     }
 
-    #email_top{
+    #email_top {
         display: flex;
         justify-content: center;
         flex-direction: column;
@@ -123,12 +119,12 @@
 
     }
 
-    #email-font{
+    #email-font {
         width: 100%;
     }
 
 
-    #emails{
+    #emails {
         display: flex;
         width: 100%;
     }
@@ -149,9 +145,9 @@
         height: 40px;
     }
 
-    #sel{
-        width:100%;
-        height:30px;
+    #sel {
+        width: 100%;
+        height: 30px;
         outline: none;
     }
 
@@ -167,47 +163,47 @@
 <form action="/member/check" id="email_certification">
     <div class="container-xl position-relative p-0">
         <div id="wrap">
-        <div id="body">
-            <div class="mb-3">
-                <div class="form_toggle  d-flex flex-row justify-content-between">
-                    <div class="form_radio_btn radio_male">
-                        <input type="radio" name="member_type" value="1000" id="btn1" checked>
-                        <label for="btn1">일반인</label>
-                    </div>
+            <div id="body">
+                <div class="mb-3">
+                    <div class="form_toggle  d-flex flex-row justify-content-between">
+                        <div class="form_radio_btn radio_male">
+                            <input type="radio" name="member_type" value="1000" id="btn1" checked>
+                            <label for="btn1">일반인</label>
+                        </div>
 
-                    <div class="form_radio_btn">
-                        <input type="radio" name="member_type" value="2000" id="btn2">
-                        <label for="btn2">전문가</label>
+                        <div class="form_radio_btn">
+                            <input type="radio" name="member_type" value="2000" id="btn2">
+                            <label for="btn2">전문가</label>
+                        </div>
                     </div>
                 </div>
+
+                <div id="email_box">
+                    <div id="email_top">
+                        <div id="email-font">
+                            <h3>이메일</h3>
+                        </div>
+                        <div id="emails">
+
+                            <input type="text" id="email" name="email" placeholder="Email"> <span>@</span>
+                            <select id="sel" name="email_type">
+
+                                <c:forEach var="i" items="${list}">
+                                    <option value="${i.code}">${i.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="email-Btn">
+                        <button id="signup-btn" type="button">이메일 인증</button>
+                    </div>
+
+                </div>
+                <div></div>
+
+
             </div>
-
-            <div id="email_box">
-                <div id="email_top">
-                    <div id="email-font">
-                    <h3>이메일</h3>
-                    </div>
-                    <div id="emails">
-
-                        <input type="text" id="email" name="email" placeholder="Email" > <span>@</span>
-                        <select id="sel" name="email_type"  >
-
-                            <c:forEach var="i" items="${list}">
-                                <option value="${i.code}">${i.name}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-                <div id="email-Btn">
-                    <button id="signup-btn" type="button" >이메일 인증</button>
-                </div>
-
-            </div>
-            <div></div>
-
-
         </div>
-    </div>
     </div>
 </form>
 <!-- FOOTER -->
@@ -222,13 +218,11 @@
         var email = $("#email").val();
         var email_type = $("#sel").val();
 
-        if(email == ""){
+        if (email == "") {
             alert("메일을 입력해주세요")
             return;
         }
 
-        console.log(email);
-        console.log(email_type);
         $.ajax({
             url: "/member/mailDupCheck",
             data: {
@@ -236,13 +230,11 @@
                 email_type: email_type
             },
             method: "post"
-        }).done((resp)=>{
-            console.log(resp);
+        }).done((resp) => {
             resp = JSON.parse(resp);
-            console.log(resp);
-            if(resp){
+            if (resp) {
                 alert("중복된 이메일입니다.");
-            }else{
+            } else {
                 alert("이메일이 발송되었습니다.");
                 $("#email_certification").submit();
 
