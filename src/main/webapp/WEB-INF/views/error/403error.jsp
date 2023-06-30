@@ -16,8 +16,7 @@
 	.errorimg{text-align: center;}
 	.alerttext{font-size: 60px;margin-bottom: 20px;text-align: center;}
 	.alerttextbox{text-align: center;}
-	.leftbuttonbox{margin-top: 5px;text-align: right;}
-	.rightbuttonbox{margin-top: 5px;text-align: left;}
+	.buttonbox{margin-top: 5px;text-align: center;}
 	.btn{border:1px solid black;}
 </style>
 </head>
@@ -44,11 +43,8 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-6 leftbuttonbox">
-			<button class="btn">메인으로 바로가기</button>
-		</div>
-		<div class="col-6 rightbuttonbox">
-			<button class="btn">문의 하러가기</button>
+		<div class="col-12 buttonbox">
+			<a href="/"><button class="btn">메인으로 바로가기</button></a>
 		</div>
 	</div>
 </div>
