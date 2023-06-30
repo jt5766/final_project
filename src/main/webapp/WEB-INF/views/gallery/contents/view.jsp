@@ -8,9 +8,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
-  <link rel="stylesheet" href="${path}/resources/oembed/jquery.oembed.css">
-  <script src="${path}/resources/oembed/jquery.oembed.js"></script>
-  <c:import url="${path}/resources/js/scripts.jsp"/>
+  <link rel="stylesheet" href="/resources/oembed/jquery.oembed.css">
+  <script src="/resources/oembed/jquery.oembed.js"></script>
   <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
   <link href="${path}/resources/css/gallery.css" type="text/css" rel="stylesheet">
 </head>
@@ -20,8 +19,8 @@
   <c:param name="btnNum" value="${categoryType}"/>
 </c:import>
 <div class="container-xl content-body">
-  <div class="row content-title">
-    <div class="col-10 d-flex justify-content-start align-items-center p-0">
+  <div class="row">
+    <div class="col-10 d-flex justify-content-start align-items-center content-title">
       <div>
         ${content.title}
       </div>
@@ -45,7 +44,7 @@
   <c:choose>
     <c:when test="${content.category_type == 1005}">
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 p-0">
           <div class="content-video">
             <iframe width="560" height="315" src="${content.video_url}"
                     title="video player" frameborder="0"
@@ -59,30 +58,32 @@
     <c:when test="${content.category_type == 1001}"></c:when>
     <c:when test="${content.category_type == 1006}">
       <div class="content-audio">
-        <a href="${content.file_url}" class="embed"></a>
+        <a href="${content.file_url}" class="content_audio"></a>
       </div>
     </c:when>
     <c:otherwise>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 p-0">
           <div class="content-file">
-            <img class="img-file" src="/resources${content.file_url}" alt="/resources/default_img.jpg">
+            <img class="img-file" src="/resources${content.file_url}" alt="/resources/default_img.jpg" onerror="this.src='/resources/default_img.jpg'">
           </div>
         </div>
       </div>
     </c:otherwise>
   </c:choose>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="content-txt">
-        ${content.txt}
+  <c:if test="${content.category_type != 1002}">
+    <div class="row">
+      <div class="col-md-12 p-0">
+        <div class="content-txt">
+          ${content.txt}
+        </div>
       </div>
     </div>
-  </div>
+  </c:if>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 p-0">
       <c:if test="${content.yn=='N'}">
-        <div>
+        <div class="secrete">
           비밀글입니다.
         </div>
       </c:if>
@@ -109,8 +110,8 @@
 <c:import url="${path}/resources/js/FOOTER.jsp"/>
 <script>
     $(function () {
-        if (${categoryType==1006}) {
-            $('.preview_audio').oembed();
+        if (${content.category_type==1006}) {
+            $('.content_audio').oembed();
         }
     });
     $('#chk-disclosure').on('click', function () {

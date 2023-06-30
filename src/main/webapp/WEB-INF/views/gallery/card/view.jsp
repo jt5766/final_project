@@ -141,7 +141,7 @@
   </div>
   <c:if test="${sessionScope.code == card.writer}">
     <div class="row">
-      <div class="col-md-12 my-2">
+      <div class="col-md-12 my-2 insert-content">
         <button class="insert-button" type="button"
                 onclick="location.href='/gallery/${card.seq}/contents/insert/${card.category_type}'">등록하기
         </button>

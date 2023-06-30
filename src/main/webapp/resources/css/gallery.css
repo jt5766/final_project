@@ -190,7 +190,7 @@ button {
     width: 100%;
     padding: 6px;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: #ca9372;
     color: white;
     max-height: 35px;
@@ -339,10 +339,6 @@ input[name=sordCode] {
     min-height: 20px;
 }
 
-.disclosure > div {
-    margin: 0;
-    padding: 0;
-}
 
 /* MyPage */
 
@@ -521,11 +517,17 @@ input[name=sordCode] {
     padding: 2rem 0 0 0;
 }
 
-.content-title {
+.content-title-wrap {
     border-radius: 8px;
-    font-size: xx-large;
-    background-color: white;
+}
+
+.content-title-wrap>div{
     margin: 0 0 25px 0;
+    background-color: hsla(0,0%,50.2%,.11);
+}
+
+.content-title {
+    font-size: xx-large;
     padding: 10px;
 }
 
@@ -534,6 +536,10 @@ input[name=sordCode] {
     padding: 10px;
     background-color: hsla(0,0%,50.2%,.11);
     margin-bottom: 25px;
+}
+
+.content-video, .content-audio, .content-file > * {
+    margin: auto;
 }
 
 .content-txt {
@@ -549,4 +555,13 @@ input[name=sordCode] {
 
 .img-file {
     max-width: 65vw;
+}
+
+.disclosure {
+    padding: 5px;
+}
+
+.insert-content {
+    padding-right: 5px;
+    padding-left: 5px;
 }
