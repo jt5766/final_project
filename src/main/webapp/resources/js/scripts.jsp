@@ -92,7 +92,6 @@
 	
 		// 종료시 기능 실행
 		window.addEventListener("beforeunload", function(e) {
-			console.log(closing_window);
 			if (closing_window) {
 				toDoWhenClosing();
 			}
