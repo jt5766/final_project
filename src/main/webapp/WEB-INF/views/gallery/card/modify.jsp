@@ -108,7 +108,7 @@
       <div class="col-6 d-flex justify-content-end align-items-center">
         <input class="form-control form-control-sm" type="file" name="thumbnail_image" id="input_thumbnail_url" onchange="readURL(this)"
                formenctype="multipart/form-data">
-        <input type="hidden" name="thumbnail_url" value="${card.thumbnail_url}">
+        <input type="hidden" name="thumbnail_url" id="actual_thumbnail" value="${card.thumbnail_url}">
       </div>
       <div class="col-12">
         <img class="preview-img" src="/resources${card.thumbnail_url}" alt="/resources${card.thumbnail_url}" id="img">
@@ -155,14 +155,14 @@
         }
     });
     catchphrase.on('keydown', function (e) {
-        if (catchphrase.val().length > 19) {
+        if (e.key !== "Backspace" && catchphrase.val().length > 19) {
             e.preventDefault();
             catchphrase.val(catchphrase.val().slice(0, 19));
             alert("한 줄 요약은 20자를 넘을 수 없습니다.");
         }
     });
     synopsis.on('keydown', function (e) {
-        if (synopsis.val().length > 99) {
+        if (e.key !== "Backspace" && synopsis.val().length > 99) {
             e.preventDefault();
             synopsis.val(synopsis.val().slice(0, 99));
             alert("줄거리는 100자를 넘을 수 없습니다.");
@@ -189,7 +189,7 @@
             alert("줄거리를 입력해주세요.");
             return false;
         }
-        if ($('#input_thumbnail_url').val().trim() === '') {
+        if ($('#actual_thumbnail').val().trim() === '') {
             e.preventDefault();
             alert("썸네일을 등록해주세요.");
             return false;
