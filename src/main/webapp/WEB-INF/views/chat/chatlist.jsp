@@ -14,7 +14,7 @@
         .testbox{border: 0px;height: 100px;background-color: #C7B299;}
         .btnbox{padding: 1%; padding-left: 0%;border: 0px;}
         .listbtn{width: 100%; height: 100%;background-color: #ca9372; color: white;}
-        .listbtn:hover{background-color: black; color: gray;}
+        .listbtn:hover{background-color:rgb(231,214,204); color: black;}
         hr{color:white;margin:6px;}
     </style>
 </head>
