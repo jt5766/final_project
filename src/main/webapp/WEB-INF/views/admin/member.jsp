@@ -96,13 +96,10 @@
 			input = $("#keyword").val().toUpperCase();
 			table = $("#table");
 			tr = $("#tbody_data tr");
-			console.log(filter);
 			for (i = 0 ; i < tr.length ; i++) {
 				td = $(tr[i]).find(filter);
-				console.log(td);
 				if (td) {
 					txtValue = $(td).text();
-					console.log("txtValue : " + txtValue);
 					if (txtValue.toUpperCase().indexOf(input) > -1) {
 						tr[i].style.display = "";
 					} else {
