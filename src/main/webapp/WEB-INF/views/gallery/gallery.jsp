@@ -17,12 +17,12 @@
   <c:param name="pageName" value="gallery"/>
   <c:param name="btnNum" value="${categoryType}"/>
 </c:import>
-<div class="container-xl p-0">
+<div class="container-xl">
   <form action="/gallery/search">
     <input type="hidden" name="tableName" value="VIEW_GALLEY_CARDS">
     <input type="hidden" name="typeCode" value="${categoryType}">
     <div class="row">
-      <div class="col-12 search-box">
+      <div class="col-12 search-box p-0">
         <select name="searchCode">
           <c:forEach items="${searchConditions}" var="searchCondition">
             <option value="${searchCondition.code}">${searchCondition.name}</option>
