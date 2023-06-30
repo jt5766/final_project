@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <c:import url="${path}/resources/js/scripts.jsp"/>
     <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha512/0.8.0/sha512.min.js"></script>
     <title>Document</title>
     <style>
         /**{border: 1px solid black}*/
@@ -63,6 +64,11 @@
 
         }
 
+        button{
+            background-color: #5d5d5d;
+            border-radius: 3px;
+            color: white;
+        }
 
 
 
@@ -141,11 +147,11 @@
 
         const pass = $("#pass").val();
         const nick = $("#nick").val();
-
+        const shapw = sha512(pass);
         $.ajax({
             url: "/member/passwordCheck",
             data: {
-                password: pass,
+                password: shapw,
                 nickname: nick
             },
             method: "post"

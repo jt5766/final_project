@@ -57,7 +57,7 @@ public class MemberService {
 
 	}
 
-	public void findPassword(MemberDTO dto) throws MessagingException, UnsupportedEncodingException {
+	public boolean findPassword(MemberDTO dto) throws MessagingException, UnsupportedEncodingException {
 		System.out.println("2" + dto);
 		this.emailTypeChange(dto);
 
@@ -65,18 +65,26 @@ public class MemberService {
 		dto.setSet_email_type(emailName);
 
 		System.out.println("3" + dto);
-		UUID uuid = UUID.randomUUID();
-		dto.setRandom_key(String.valueOf(uuid));
+		boolean result = this.duplicationEmail(dto);
 
-		MailHandler sendMail = new MailHandler(javaMailSender);
-		sendMail.setSubject("[Kreate-Hub 비밀번호찾기 메일 입니다.]"); // 메일제목
-		sendMail.setText("<h1>Kreate-Hub 비밀번호 찾기</h1>" +
+//		입력한 이메일이 데이터베이스에 존재할 때 이메일을 전송
+		if (result) {
+			UUID uuid = UUID.randomUUID();
+			dto.setRandom_key(String.valueOf(uuid));
 
-				"<br>아래 [비밀번호 찾기를 눌러주세요]" + "<br><a href='http://localhost:8080/member/tofindPassword" + "?email=" + dto.getEmail() + "&email_type=" + dto.getEmail_type() + "&random_key=" + dto.getRandom_key() + "'>비밀번호 찾기</a>");
-		sendMail.setFrom("rkqudwns@gmail.com", "강병준");
+			MailHandler sendMail = new MailHandler(javaMailSender);
+			sendMail.setSubject("[Kreate-Hub 비밀번호찾기 메일 입니다.]"); // 메일제목
+			sendMail.setText("<h1>Kreate-Hub 비밀번호 찾기</h1>" +
 
-		sendMail.setTo(dto.getEmail() + "@" + dto.getSet_email_type());
-		sendMail.send();
+					"<br>아래 [비밀번호 찾기를 눌러주세요]" + "<br><a href='http://localhost:8080/member/tofindPassword" + "?email=" + dto.getEmail() + "&email_type=" + dto.getEmail_type() + "&random_key=" + dto.getRandom_key() + "'>비밀번호 찾기</a>");
+			sendMail.setFrom("rkqudwns@gmail.com", "강병준");
+
+			sendMail.setTo(dto.getEmail() + "@" + dto.getSet_email_type());
+			sendMail.send();
+			return result;
+		} else {
+			return result;
+		}
 	}
 
 	public void emailTypeChange(MemberDTO dto) {

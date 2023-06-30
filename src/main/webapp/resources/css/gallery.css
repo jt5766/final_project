@@ -534,12 +534,10 @@ input[name=sordCode] {
 .content-video, .content-audio, .content-file {
     border-radius: 8px;
     padding: 10px;
-    background-color: hsla(0,0%,50.2%,.11);
+    background-color: hsla(0, 0%, 50.2%, .11);
     margin-bottom: 25px;
-}
-
-.content-video, .content-audio, .content-file > * {
-    margin: auto;
+    display: flex;
+    justify-content: center;
 }
 
 .content-txt {

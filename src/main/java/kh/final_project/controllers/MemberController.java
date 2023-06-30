@@ -101,7 +101,7 @@ public class MemberController {
 
 	@ResponseBody
 	@RequestMapping("login")
-	public String login(MemberDTO dto, HttpServletResponse res) {
+	public String login(MemberDTO dto) {
 
 		System.out.println("ajax로 넘어온 값" + dto);
 		/* 넘어온 문자열 이메일 형식 이메일 타입과 이메일 로 분리 작업 */
@@ -159,17 +159,23 @@ public class MemberController {
 	}
 
 	@RequestMapping("passwordChange")
-	public String passwordChange(MemberDTO dto) throws Exception {
-		System.out.println("1" + dto);
-		memberService.findPassword(dto);
-		return "redirect:/member/loginForm";
+	public String passwordChange(MemberDTO dto,Model model) throws Exception {
+		System.out.println("passwordChange" + dto);
+		boolean result = memberService.findPassword(dto);
+		if(result){
+			model.addAttribute("duplEmail",result);
+			return "/member/loginForm";
+		}else {
+			model.addAttribute("duplEmail", result);
+			return "/member/findPasswordForm";
+		}
 	}
 
 	@RequestMapping("updatePassword")
 	public String updatePassword(MemberDTO dto) {
 		System.out.println("비밀번호 변경 :" + dto);
 		memberService.updatePassword(dto);
-		return "redirect:/member/loginForm";
+		return "redirect:/member/logOut";
 	}
 //    @RequestMapping("mypage")
 //    public String mypage(Model model){
