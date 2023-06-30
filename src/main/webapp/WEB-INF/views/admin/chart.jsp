@@ -67,7 +67,6 @@
 			trans_data.forEach(function(item) {
 					data.push([ item.type, item.count ]);
 			});
-			console.log(trans_data);
 			// 데이터 테이블로 변환
 			var chartData = google.visualization.arrayToDataTable(data);
 			
