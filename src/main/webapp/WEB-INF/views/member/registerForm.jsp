@@ -10,7 +10,7 @@
     <c:import url="${path}/resources/js/scripts.jsp"/>
     <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha512/0.8.0/sha512.min.js"></script>
 
     <style>
 
@@ -94,7 +94,7 @@
 </c:import>
 <!-- CONTENTS -->
 <div class="container-xl  position-relative p-0">
-    <form action="/member/createMember" method="post">
+    <form action="/member/createMember" method="post" id="frm">
 
         <div id="wrap">
         <div id="loginBox">
@@ -107,7 +107,8 @@
             </div>
             <div>
                 <h3>Password</h3>
-                <input type="password" name ='password'placeholder="Password">
+                <input type="hidden" name="password" id="shaPw" value="">
+                <input type="password" id="pw" placeholder="Password">
             </div>
             <div>
                 <h3>Check</h3>
@@ -139,6 +140,13 @@
             location.replace("/member/loginForm");
         }
     }
+
+    $("#frm").on('submit',function (){
+        const pw = $("#pw").val()
+        const shaPw = sha512(pw);
+        console.log(shaPw)
+        $("#shaPw").val(shaPw);
+    })
 
 </script>
 </body>

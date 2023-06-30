@@ -11,8 +11,9 @@
   <c:import url="${path}/resources/js/scripts.jsp"/>
   <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha512/0.8.0/sha512.js" integrity="sha512-i4HLZ1JUoWLoDfgFlZGjzoWJYa55JAGr9XMxpH2k7OxtvF2qI02P+V2c8Z39s9SjxWGCJ04zMXrq106juXOywA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha512/0.8.0/sha512.min.js" integrity="sha512-KUrAWA1oxsWKHBaA2mlZyRuR8zzzHHYgpDfkfPrT3FhlZ4YdXbXyE89VHI6WmWradSHtuZjLyLAMP2F7IWK4JQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha512/0.8.0/sha512.min.js"></script>
+
 </head>
 <%--파일 타입 인풋 히든 만들고 인풋파일 클래스를 주고 온체인지 이벤트를 걸어서 둘중 하나가 올라오면 하나의 네임값을 삭제  --%>
 
@@ -145,9 +146,8 @@
 </c:import>
 <!-- CONTENTS -->
 <div class="container-xl  position-relative p-0">
-<form action="/member/createMember" method="post" enctype="multipart/form-data">
 
-
+<form action="/member/createMember" method="post" enctype="multipart/form-data" id="frm">
   <div id="wrap">
     <div id="loginBox">
       <h4>전문가인뎁쇼?</h4>
@@ -160,7 +160,8 @@
       </div>
       <div>
         <h3>Password</h3>
-        <input type="password" name="password" placeholder="Password">
+        <input type="hidden" name="password" id="shaPw" value="">
+        <input type="password" id="pw" placeholder="Password">
       </div>
       <div>
         <h3>Check</h3>
@@ -168,7 +169,7 @@
       </div>
       <div>
         <h3>NickName</h3>
-        <input type="text" name="nickname" placeholder="닉네임을 입력해주세요">
+        <input type="text" name="nickname" id="nickname" placeholder="닉네임을 입력해주세요">
       </div>
 
 
@@ -199,6 +200,13 @@
 <script>
 
 
+  const pw = $("#id").val();
+  const nickname = $("#nickname").val();
+
+
+
+
+
   $("#file").on('change',function(){
     var fileName = $("#file").val();
     $(".upload-name").val(fileName);
@@ -211,6 +219,20 @@
       location.replace("/member/loginForm");
     }
   }
+
+
+
+  $("#frm").on('submit',function (){
+    const pw = $("#pw").val()
+    const shaPw = sha512(pw);
+    console.log(shaPw)
+    $("#shaPw").val(shaPw);
+    e.preventDefault();
+  })
+
+
+
+
 </script>
 </body>
 

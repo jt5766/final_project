@@ -7,9 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     <c:import url="${path}/resources/js/scripts.jsp"/>
     <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha512/0.8.0/sha512.min.js"></script>
 </head>
 <style>
 
@@ -166,7 +166,8 @@
         <div id="login_box2">
             <div id="password_box">
                 <div id="password_font">비밀번호</div>
-                <input type="password" id="input_password" name="password" placeholder="password">
+
+                <input type="password" id="input_password"  placeholder="password">
             </div>
         </div>
         <div id="btns">
@@ -225,9 +226,11 @@
         });
 
 
+
         $("#login_btn").click(function () {
             const email = $("#input_email").val();
-            const password = $("#input_password").val();
+            const password= $("#input_password").val();
+            const pw = sha512(password);
             if (email == "" || password == "" || !email.includes("@")) {
                 alert("아이디 또는 비밀번호를 입력해주세요");
                 return;
@@ -236,10 +239,11 @@
                 url: "/member/login",
                 data: {
                     "email": email,
-                    "password": password
+                    "password":pw
                 },
                 method: "post"
             }).done(function (resp) {
+                console.log(resp)
                 if (resp == 11) {
                     alert("등록된 정보가 없습니다.")
                 } else if (resp == 22) {
