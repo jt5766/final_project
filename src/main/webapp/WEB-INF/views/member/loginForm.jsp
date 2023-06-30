@@ -140,7 +140,9 @@
 
 
     }
-
+    #checkId{
+    accent-color: #5d5d5d;
+    }
 
 
 </style>
@@ -157,7 +159,7 @@
         <div id="login_box">
             <div id="idCheck_box">
                 <div id="id_font">아이디</div>
-                <div id="checkId_Box"><input type="checkbox" id="checkId"> 아이디 저장</div>
+                <div id="checkId_Box"><label><input type="checkbox" id="checkId"> 아이디 저장</label></div>
             </div>
             <div id="input_email_box">
                 <input type="text" id="input_email" name="email" placeholder="email">
