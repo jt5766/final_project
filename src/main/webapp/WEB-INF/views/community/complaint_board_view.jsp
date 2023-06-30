@@ -87,7 +87,6 @@
 	<c:import url="${path}/resources/js/FOOTER.jsp" />
 	<!-- script - Contents -->
 	<script>
-	console.log("${sessionScope.memberType}");
 	$("#textarea_contents").summernote({
 	    toolbar : [],
 	    disableDragAndDrop : true,

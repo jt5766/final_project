@@ -82,7 +82,6 @@ public class BoardsDTO {
 				.addAttributes("th", "abbr", "axis", "colspan", "rowspan", "scope", "width")
 				.addAttributes("ul", "type");
 		String cleanedTxt = Jsoup.clean(proceed, customWhitelist);
-		System.out.println("cleanedTxt = " + cleanedTxt);
 		return cleanedTxt;
 	}
 

@@ -4,6 +4,10 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+import org.apache.commons.text.StringEscapeUtils;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+
 public class ComplaintBoardsDTO {
 	private Integer seq;
 	private Integer board_type;
@@ -78,7 +82,22 @@ public class ComplaintBoardsDTO {
 	}
 
 	public String getTxt() {
-		return txt;
+		String proceed = StringEscapeUtils.unescapeHtml4(this.txt);
+		Whitelist customWhitelist = Whitelist.none()
+				.addTags("a", "b", "blockquote", "br", "caption", "cite", "code", "col", "colgroup", "dd", "div", "dl",
+						"dt", "em", "h1", "h2", "h3", "h4", "h5", "h6", "i", "img", "li", "ol", "p", "pre", "q",
+						"small", "span", "strike", "strong", "sub", "sup", "table", "tbody", "td", "tfoot", "th",
+						"thead", "tr", "u", "ul")
+				.addAttributes("a", "href", "title").addAttributes("blockquote", "cite")
+				.addAttributes("col", "span", "width").addAttributes("colgroup", "span", "width")
+				.addAttributes("img", "align", "alt", "height", "src", "title", "width", "data-filename")
+				.addAttributes("ol", "start", "type").addAttributes("q", "cite")
+				.addAttributes("table", "summary", "width")
+				.addAttributes("td", "abbr", "axis", "colspan", "rowspan", "width")
+				.addAttributes("th", "abbr", "axis", "colspan", "rowspan", "scope", "width")
+				.addAttributes("ul", "type");
+		String cleanedTxt = Jsoup.clean(proceed, customWhitelist);
+		return cleanedTxt;
 	}
 
 	public void setTxt(String txt) {

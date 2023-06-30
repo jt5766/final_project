@@ -120,8 +120,6 @@ public class CommunityService {
 		if (endNavi > totalPage) {
 			endNavi = totalPage;
 		}
-		System.out.println("totalPage : " + totalPage);
-		System.out.println("endNavi : " + endNavi);
 		boolean needPrev = false;
 		if (currentPage > naviPerPage) {
 			needPrev = true;
@@ -147,7 +145,6 @@ public class CommunityService {
 		int postPerPage = this.postPerPage;
 		int naviPerPage = this.naviPerPage;
 		int max = communityDAO.getMax(tableName);
-		System.out.println("max : " + max);
 		int totalPage;
 		if (max % postPerPage > 0) {
 			totalPage = max / postPerPage + 1;
@@ -164,8 +161,6 @@ public class CommunityService {
 		if (endNavi > totalPage) {
 			endNavi = totalPage;
 		}
-		System.out.println("totalPage : " + totalPage);
-		System.out.println("endNavi : " + endNavi);
 		boolean needPrev = false;
 		if (currentPage > naviPerPage) {
 			needPrev = true;
@@ -215,22 +210,17 @@ public class CommunityService {
 		JsonArray jsonArray = new JsonArray();
 		for (MultipartFile file : files) {
 			if (file.isEmpty()) {
-				System.out.println("file is empty!");
 				continue;
 			}
 			String oriName = file.getOriginalFilename();
-			System.out.println(oriName);
 			String sysName = UUID.randomUUID() + "_" + oriName;
-			System.out.println(sysName);
 			String uploadPath = targetPath + "/" + sysName;
 			file.transferTo(new File(uploadPath));
-			System.out.println("complete");
 			String imgSrc = "/resources/community/" + sysName;
 			JsonObject jsonObject = new JsonObject();
 			jsonObject.addProperty("imgSrc", imgSrc);
 			jsonObject.addProperty("oriName", oriName);
 			jsonArray.add(jsonObject);
-			System.out.println(jsonArray.toString());
 		}
 		return jsonArray.toString();
 	}
@@ -256,8 +246,6 @@ public class CommunityService {
 		this.setNameByCode(categoryType);
 		int startPost = this.getStart(currentPage);
 		int endPost = this.getEnd(currentPage);
-		System.out.println(startPost);
-		System.out.println(endPost);
 		Map<String, Object> pageInfo = new HashMap<>();
 		pageInfo.put("board_name", categoryType.getName());
 		pageInfo.put("startPost", startPost);
@@ -269,8 +257,6 @@ public class CommunityService {
 		this.setNameByCode(categoryType);
 		int startPost = this.getStart(currentPage);
 		int endPost = this.getEnd(currentPage);
-		System.out.println(startPost);
-		System.out.println(endPost);
 		Map<String, Object> pageInfo = new HashMap<>();
 		pageInfo.put("board_name", categoryType.getName());
 		pageInfo.put("startPost", startPost);
@@ -308,7 +294,6 @@ public class CommunityService {
 		boardsReplyDTO.setParent_board(boardsDTO.getSeq());
 		boardsReplyDTO.setBoard_type(boardsDTO.getBoard_type());
 		this.setBoardNameByBoardType(boardsReplyDTO);
-		System.out.println(boardsReplyDTO);
 		return communityDAO.selectReply(boardsReplyDTO);
 	}
 
@@ -317,7 +302,6 @@ public class CommunityService {
 		boardsReplyDTO.setParent_board(boardsDTO.getSeq());
 		boardsReplyDTO.setBoard_type(boardsDTO.getBoard_type());
 		this.setBoardNameByBoardType(boardsReplyDTO);
-		System.out.println(boardsReplyDTO);
 		return communityDAO.selectReReply(boardsReplyDTO);
 	}
 
@@ -356,7 +340,6 @@ public class CommunityService {
 		searchCriteria.setSearchKeyword(search.getKeyword());
 		searchCriteria.setStart(this.getStart(searchCriteria.getPage()));
 		searchCriteria.setEnd(this.getEnd(searchCriteria.getPage()));
-		System.out.println("search : " + searchCriteria);
 		return communityDAO.search(searchCriteria);
 	}
 
@@ -369,7 +352,6 @@ public class CommunityService {
 		searchCriteria.setSearchKeyword(search.getKeyword());
 		searchCriteria.setStart(this.getStart(searchCriteria.getPage()));
 		searchCriteria.setEnd(this.getEnd(searchCriteria.getPage()));
-		System.out.println("search : " + searchCriteria);
 		return communityDAO.searchComplaint(searchCriteria);
 	}
 
