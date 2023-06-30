@@ -10,7 +10,7 @@
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 	<style>
         *{box-sizing: border-box;}
-        .chatbox{background-color: #C7B299;}
+        .chatbox{background-color: #C7B299;box-shadow: 0 0 10px #c1bdbd;}
         .testbox{border: 0px;height: 100px;background-color: #C7B299;}
         .btnbox{padding: 1%; padding-left: 0%;border: 0px;}
         .listbtn{width: 100%; height: 100%;background-color: #ca9372; color: white;}

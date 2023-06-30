@@ -6,8 +6,8 @@
 #div_contents::-webkit-scrollbar{display:none;}
 .mylinebox{overflow: auto;display:flex;justify-content:flex-start;flex-direction:row-reverse;}
 .otherlinebox{overflow: auto;display:flex;justify-content:flex-start;flex-wrap: wrap;}
-.mytext{float:right;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:#ca9372;border: 1px solid black;margin-top:5px;margin-bottom:5px;border-radius:5px;font-size:200%;}
-.othertext{float:left;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:#ca937250;border: 1px solid black;margin-top:5px;margin-bottom:5px;border-radius:5px;font-size:200%;}
+.mytext{float:right;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:#ca9372;margin-top:5px;margin-bottom:5px;border-radius:5px;font-size:200%;box-shadow: 0 0 10px #c1bdbd;}
+.othertext{float:left;max-width:35%;word-break:break-all;padding-left:2px;padding-right:2px;background-color:#ca937250;margin-top:5px;margin-bottom:5px;border-radius:5px;font-size:200%;box-shadow: 0 0 10px #c1bdbd;}
 #div_text{height: 100px; overflow: auto;background-color:white;border:1px solid gray;}
 #div_text::-webkit-scrollbar{display:none;}
 .writerbox{flex-basis:100%;font-size:150%;}
