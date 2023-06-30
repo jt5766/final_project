@@ -120,11 +120,16 @@
           </div>
         </c:otherwise>
       </c:choose>
-      <div class="row input-box">
-        <div class="col-12">
-          <textarea name="txt" id="input_txt" cols="30" rows="10"></textarea>
+      <c:if test="${categoryType != 1002}">
+        <div class="row input-box">
+          <div class="col-12">
+            <textarea name="txt" id="input_txt" cols="30" rows="10"></textarea>
+          </div>
+          <div class="col-12">
+            <span class="font-sm" id="txt-length"></span>
+          </div>
         </div>
-      </div>
+      </c:if>
       <div class="row input-box">
         <div class="col-6 d-flex justify-content-start align-items-center">
           <button type="submit" class="common-button">수정하기</button>
@@ -142,7 +147,7 @@
 <script>
     $(function () {
         if (${categoryType==1006}) {
-          $('.preview_audio').oembed();
+            $('.preview_audio').oembed();
         }
     });
 
@@ -157,31 +162,47 @@
     const btn = document.querySelector('.modal_link');
     const modal = $('.modalWrap');
     const closeBtn = document.querySelector('.closeBtn');
-
-    if (${categoryType != 1002}) {
-      $('#input_txt').summernote({
-          height: 350, // 에디터 높이
-          minHeight: null, // 최소 높이
-          maxHeight: null, // 최대 높이
-          focus: true, // 에디터 로딩후 포커스를 맞출지 여부
-          lang: "ko-KR", // 한글 설정
-          codeviewFilter: false,
-          codeviewIframeFilter: true,
-          placeholder: '', //placeholder 설정
-          disableDragAndDrop: true,
-          toolbar: [],
-      });
-      $(function() {
-          $('.note-editable').html(`${content.txt}`);
-      });
-    }
-
-
     const title = $('#input_title');
     const txt = $('#input_txt');
+    const txt_length = $('#txt-length');
 
-    title.on("keydown", function(e) {
-        console.log(e.key);
+    if (${categoryType != 1002}) {
+        txt.summernote({
+            height: 350, // 에디터 높이
+            minHeight: null, // 최소 높이
+            maxHeight: null, // 최대 높이
+            focus: true, // 에디터 로딩후 포커스를 맞출지 여부
+            lang: "ko-KR", // 한글 설정
+            codeviewFilter: false,
+            codeviewIframeFilter: true,
+            placeholder: '', //placeholder 설정
+            disableDragAndDrop: true,
+            toolbar: [],
+        });
+
+        $(function () {
+            $('.note-editable').html(`${content.txt}`);
+        });
+
+        $(function () {
+            calcTxtLength();
+        });
+
+        const calcTxtLength = () => {
+            txt_length.text($('.note-editable').text().length);
+        };
+
+        $('.note-editable').on("keyup", () => {
+            calcTxtLength();
+            if ($('.note-editable').text().length > 1000) {
+                txt_length.addClass('fc-red');
+            } else {
+                txt_length.removeClass('fc-red');
+            }
+        });
+    }
+
+    title.on("keydown", function (e) {
         if (e.key !== "Backspace" && title.val().trim().length > 29) {
             e.preventDefault();
             alert("제목은 30글자를 넘을 수 없습니다.");
@@ -195,7 +216,7 @@
             alert("제목을 입력해주세요.");
             return false;
         }
-        if (${categoryType != 1001 || categoryType != 1005}) {
+        if (${categoryType != 1001 && categoryType != 1005}) {
             if ($('input[name="file_url"]').val() === '') {
                 e.preventDefault();
                 alert("파일을 등록해주세요.");
@@ -210,16 +231,16 @@
             }
         }
         if (${categoryType != 1002}) {
-          if ($('.note-editable').text().trim() === '') {
-              e.preventDefault();
-              alert("내용을 입력해주세요.");
-              return false;
-          }
-          if ($('.note-editable').text().trim().length > 1000) {
-              e.preventDefault();
-              alert("내용은 1000글자를 넘을 수 없습니다.");
-          }
-          txt.val($('.note-editable').html());
+            if ($('.note-editable').text().trim() === '') {
+                e.preventDefault();
+                alert("내용을 입력해주세요.");
+                return false;
+            }
+            if ($('.note-editable').text().trim().length > 1000) {
+                e.preventDefault();
+                alert("내용은 1000글자를 넘을 수 없습니다.");
+            }
+            txt.val($('.note-editable').html());
         }
     });
 

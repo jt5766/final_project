@@ -86,6 +86,9 @@ public class GalleryContent {
     }
 
     public String getTxt() {
+        if (txt == null) {
+            return txt;
+        }
         String proceed = StringEscapeUtils.unescapeHtml4(txt);
         Whitelist customWhitelist = Whitelist.relaxed()
                 .addTags("img", "div, script")

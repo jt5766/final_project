@@ -18,7 +18,7 @@
   <c:param name="btnNum" value="1"/>
 </c:import>
 <!-- CONTENTS -->
-<div class="container-xl position-relative p-0 d-md-none">
+<div class="container-xl position-relative d-md-none">
   <c:forEach items="${gallery}" var="categoryType">
     <div class="carousel slide" id="card-carousel-${categoryType.code}" data-bs-ride="false" data-bs-touch="false">
       <div class="carousel-inner one-on-page">
@@ -79,7 +79,7 @@
 </div>
 
 
-<div class="container-xl bg-secondary position-relative p-0 d-none d-md-block">
+<div class="container-xl position-relative d-none d-md-block">
   <c:forEach items="${gallery}" var="categoryType">
     <div class="carousel slide" id="card-carousel-md-${categoryType.code}" data-bs-ride="false" data-bs-touch="false">
       <div class="carousel-inner two-on-page">

@@ -116,6 +116,9 @@
           <div class="col-12">
             <textarea name="txt" class="input_txt" id="input_txt" cols="30" rows="10"></textarea>
           </div>
+          <div class="col-12">
+            <span class="font-sm" id="txt-length"></span>
+          </div>
         </div>
       </c:if>
       <div class="row input-box">
@@ -124,7 +127,7 @@
             <input type="hidden" name="yn" id="hidden_allow" value="Y">
             <input class="form-check-input" type="checkbox" role="switch" id="input_allow_show" value="Y"
                    checked>
-            <label class="form-check-label" for="input_allow_show">공개 여부</label>
+            <label class="form-check-label" for="input_allow_show">공개</label>
           </div>
         </div>
       </div>
@@ -151,9 +154,12 @@
     const btn = document.querySelector('.modal_link');
     const modal = $('.modal-wrap');
     const closeBtn = document.querySelector('.close-btn');
+    const title = $('#input_title');
+    const txt = $('#input_txt');
+    const txt_length = $('#txt-length');
 
     if (${categoryType != 1002}) {
-        $('#input_txt').summernote({
+        txt.summernote({
             height: 350, // 에디터 높이
             minHeight: null, // 최소 높이
             maxHeight: null, // 최대 높이
@@ -165,13 +171,26 @@
             disableDragAndDrop: true,
             toolbar: [],
         });
+
+        $(function() {
+            calcTxtLength();
+        });
+
+        const calcTxtLength = () => {
+            txt_length.text($('.note-editable').text().length);
+        };
+
+        $('.note-editable').on("keyup", () => {
+            calcTxtLength();
+            if ($('.note-editable').text().length > 1000) {
+                txt_length.addClass('fc-red');
+            } else {
+                txt_length.removeClass('fc-red');
+            }
+        });
     }
 
-    const title = $('#input_title');
-    const txt = $('#input_txt');
-
     title.on("keydown", function (e) {
-        console.log(e.key);
         if (e.key !== "Backspace" && title.val().trim().length > 29) {
             e.preventDefault();
             alert("제목은 30글자를 넘을 수 없습니다.");
@@ -185,7 +204,7 @@
             alert("제목을 입력해주세요.");
             return false;
         }
-        if (${categoryType != 1001 || categoryType != 1005}) {
+        if (${categoryType != 1001 && categoryType != 1005}) {
             if ($('input[name="file_url"]').val() === '') {
                 e.preventDefault();
                 alert("파일을 등록해주세요.");
@@ -208,6 +227,7 @@
             if ($('.note-editable').text().trim().length > 1000) {
                 e.preventDefault();
                 alert("내용은 1000글자를 넘을 수 없습니다.");
+                return false;
             }
             txt.val($('.note-editable').html());
         }
@@ -230,17 +250,14 @@
 
         btn.onclick = function () {
             pop_modal();
-            // modal.fadeIn();
         };
         closeBtn.onclick = function () {
             pop_modal();
-            // modal.fadeOut();
         }
 
         window.onclick = function (event) {
             if (event.target == modal.get(0)) {
                 pop_modal();
-                // modal.fadeOut();
             }
         }
         $('.confirm_video_link').on('click', function () {
