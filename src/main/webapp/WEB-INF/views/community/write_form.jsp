@@ -96,7 +96,6 @@
 			},
 			onKeydown: function(e) {
 			    var txt = $("#textarea_contents").summernote('code');
-			    console.log(txt.length);
 			    if(txt.length > 1000) {
 						e.preventDefault();			
 				    }
@@ -122,7 +121,6 @@
 				fileArr.push(file);
 			}
 		}
-		console.log(fileArr.length);
 		if(fileArr.length == 0) {
 			$("#boardForm").submit();
 		} else {
@@ -137,7 +135,6 @@
 		fileArr.map(function(e, i){
 			formData.append("files", e);
 		});
-		console.log(formData);
 		$.ajax({
 			data : formData,
 			type : "POST",
@@ -147,9 +144,7 @@
 			processData : false,
 			encType : "multipart/form-data"
 		}).done(function(response) {
-		    console.log(response);
 		    response = JSON.parse(response);
-		    console.log(response);
 		    response.map(function(e){
 				let targetImg = $(".note-editable img[data-filename ='"+e.oriName+"']");
 				targetImg.attr("src", e.imgSrc);

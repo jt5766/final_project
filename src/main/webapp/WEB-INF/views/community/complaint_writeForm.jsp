@@ -127,21 +127,16 @@
 		if(fileArr.length == 0) {
 			$("#boardForm").submit();   
 		}
-		console.log(fileArr);
 		uploadImg(fileArr);
 		let contents = $("#textarea_contents").val();
 		$("#boardForm").submit();
 	});
 	
 	function uploadImg(fileArr) {
-	    console.log("uploadImg");
-	    console.log(fileArr);
 		let formData = new FormData();
 		fileArr.map(function(e, i){
-		    console.log(e);
 			formData.append("files", e);
 		});
-		console.log(formData);
 		$.ajax({
 			data : formData,
 			type : "POST",

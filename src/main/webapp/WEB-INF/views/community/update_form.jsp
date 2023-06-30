@@ -95,8 +95,6 @@
 	    const title = $("#inputTitle").val();
 	    const txt = $(".note-editable").html();
 	    if(title.length == 0 || txt.length == 0) {
-			console.log(title.length);
-			console.log(txt.length);
 			alert("제목 또는 내용을 입력해주세요");
 			return false;
 	    }
@@ -111,20 +109,14 @@
 				fileArr.push(file);
 			}
 		}
-		console.log(fileArr);
-		uploadImg(fileArr);
 		let contents = $("#textarea_contents").val();
 		$("#boardForm").submit();
 	});
 	function uploadImg(fileArr) {
-	    console.log("uploadImg");
-	    console.log(fileArr);
 		let formData = new FormData();
 		fileArr.map(function(e, i){
-		    console.log(e);
 			formData.append("files", e);
 		});
-		console.log(formData);
 		$.ajax({
 			data : formData,
 			type : "POST",
