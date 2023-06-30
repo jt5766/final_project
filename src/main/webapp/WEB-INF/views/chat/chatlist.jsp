@@ -10,11 +10,12 @@
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
 	<style>
         *{box-sizing: border-box;}
-        .chatbox{background-color: #C7B299;margin:0px;margin-bottom:15px;}
+        .chatbox{background-color: #C7B299;}
         .testbox{border: 0px;height: 100px;background-color: #C7B299;}
         .btnbox{padding: 1%; padding-left: 0%;border: 0px;}
         .listbtn{width: 100%; height: 100%;background-color: #ca9372; color: white;}
         .listbtn:hover{background-color: black; color: gray;}
+        hr{color:white;margin:6px;}
     </style>
 </head>
 <body>
@@ -23,6 +24,7 @@
 		<c:param name="btnNum" value="1003" />
 	</c:import>
 	<div class="container-xl position-relative p-0">
+		<hr>
     	<c:forEach var="chatroom" items="${chatlist}">
     		<c:choose>
     			<c:when test="${chatroom.yn == 'N'}">
@@ -58,6 +60,7 @@
 					</div>
     			</c:otherwise>
     		</c:choose>
+    		<hr>
 		</c:forEach>
 	</div>
 	<c:import url="${path}/resources/js/FOOTER.jsp" />
