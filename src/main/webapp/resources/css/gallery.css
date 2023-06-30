@@ -8,9 +8,10 @@
     border-radius: 8px;
     background-size: 120%;
     background-color: #FFFFFF;
-    box-shadow: 0 0 0 1px #5d5d5d;
+    /*box-shadow: 0 0 5px #5d5d5d;*/
     transition-duration: 500ms;
     margin: 3px 2px;
+    box-shadow: 0 0 5px #c1bdbd;
 }
 
 .gallery-card:hover {
@@ -162,6 +163,7 @@ button {
     margin: 5px;
     border: none;
     max-height: 35px;
+    box-shadow: 0 0 5px #c1bdbd;
 }
 
 .common-button-group {
@@ -194,6 +196,7 @@ button {
     background-color: #ca9372;
     color: white;
     max-height: 35px;
+    box-shadow: 0 0 5px #c1bdbd;
 }
 
 .disclosure > div {
@@ -208,6 +211,7 @@ button {
     cursor: pointer;
     transition-duration: 300ms;
     border-radius: 10px;
+    box-shadow: 0 0 5px #c1bdbd;
 }
 
 .content-link:hover {
@@ -352,6 +356,7 @@ input[name=sordCode] {
     padding: 5px;
     margin-top: 15px;
     margin-bottom: 15px;
+    box-shadow: 0 0 5px #c1bdbd;
 }
 
 .category-head {
@@ -376,9 +381,9 @@ input[name=sordCode] {
 /* card insert */
 
 .input-box {
-    margin: 0 0 10px 0;
-    padding-left: 15%;
-    padding-right: 15%;
+    margin: 0 0 10px 0 !important;
+    padding-left: 15% !important;
+    padding-right: 15% !important;
 }
 
 .input-text {
@@ -454,6 +459,7 @@ input[name=sordCode] {
     padding: 30px 30px;
     border: 1px solid #777;
     background-color: #fff;
+    box-shadow: 0 0 5px #c1bdbd;
 }
 
 .modal_input_box {
@@ -470,6 +476,7 @@ input[name=sordCode] {
     outline: none;
     border: none;
     background-color: #80808020;
+    box-shadow: 0 0 5px #c1bdbd;
 }
 
 .confirm_video_link {
@@ -515,10 +522,12 @@ input[name=sordCode] {
 
 .content-body {
     padding: 2rem 0 0 0;
+    box-shadow: 0 0 5px #c1bdbd;
 }
 
 .content-title-wrap {
     border-radius: 8px;
+    box-shadow: 0 0 5px #c1bdbd;
 }
 
 .content-title-wrap>div{
@@ -538,6 +547,7 @@ input[name=sordCode] {
     margin-bottom: 25px;
     display: flex;
     justify-content: center;
+    box-shadow: 0 0 5px #c1bdbd;
 }
 
 .content-txt {
@@ -545,6 +555,7 @@ input[name=sordCode] {
     padding: 10px;
     background-color: hsla(0,0%,50.2%,.11);
     min-height: 125px;
+    box-shadow: 0 0 5px #c1bdbd;
 }
 
 .content-disclosure {
@@ -562,4 +573,13 @@ input[name=sordCode] {
 .insert-content {
     padding-right: 5px;
     padding-left: 5px;
+}
+
+.container-xl {
+    padding: 10px;
+    background-color: #36454f15;
+}
+
+.fc-red {
+    color: firebrick;
 }
