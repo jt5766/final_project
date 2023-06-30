@@ -18,17 +18,20 @@
 }
 
 .thumbnail {
-    width: 150px;
-    height: 225px;
+    width: 146px;
+    height: 221px;
     border: none;
-    flex: 150px 0 0;
+    border-top-left-radius: 8px;
+    flex: 146px 0 0;
 }
 
 .side-info {
+    padding: 2px;
     flex: 1 0 0;
     display: flex;
     flex-flow: column nowrap;
     border-bottom: 1px solid #797979;
+    word-break: break-word;
 }
 
 .card-body {
@@ -39,8 +42,6 @@
 .info > div {
     min-width: 2rem;
     padding: 1px 5px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
     margin: 0 3px 0 0;
     text-align: center;
 }
@@ -117,6 +118,7 @@
 }
 
 .thumbnail_url {
+    padding: 2px;
     display: flex;
     flex: 150px 0 0;
     border-bottom: 1px solid #797979;
@@ -258,13 +260,14 @@ input[name=sordCode] {
 .view-thumbnail_url {
     display: flex;
     flex: 150px 0 0;
+    padding: 2px;
 }
 
 .view-thumbnail {
-    width: 150px;
-    height: 225px;
+    width: 146px;
+    height: 221px;
     border: none;
-    flex: 150px 0 0;
+    flex: 146px 0 0;
 }
 
 .view-card-body {
@@ -289,8 +292,6 @@ input[name=sordCode] {
 .view-info > div {
     min-width: 2rem;
     padding: 1px 5px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
     margin: 3px 3px 0 0;
     text-align: center;
 }
@@ -320,6 +321,18 @@ input[name=sordCode] {
 }
 
 .view-side-menu > div {
+    flex: 1;
+    display: flex;
+    justify-content: end;
+    min-height: 20px;
+}
+
+.view-side-menu-collapse {
+    display: flex;
+    flex-direction: row;
+}
+
+.view-side-menu-collapse > div {
     flex: 1;
     display: flex;
     justify-content: end;

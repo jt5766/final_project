@@ -56,6 +56,10 @@
 			<exclude-mapping path="/member/tofindPassword/" />
 			<exclude-mapping path="/member/passwordCheck" />
 			<exclude-mapping path="/member/passwordCheck/" />
+			<exclude-mapping path="/member/passwordChange" />
+			<exclude-mapping path="/member/passwordChange/" />
+			<exclude-mapping path="/member/updatePassword" />
+			<exclude-mapping path="/member/updatePassword/" />
 			<!-- community -->
 			<exclude-mapping path="/community/toBoard**" />
 			<exclude-mapping path="/community/toBoardView**" />

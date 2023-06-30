@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}" scope="session"/>
+<!DOCTYPE html>
 <html>
 <head>
   <title>Title</title>
@@ -13,14 +14,14 @@
 </head>
 <body>
 <c:import url="${path}/resources/js/GNB.jsp">
-  <c:param name="pageName" value="gallery" />
-  <c:param name="btnNum" value="${card.category_type}" />
+  <c:param name="pageName" value="gallery"/>
+  <c:param name="btnNum" value="${card.category_type}"/>
 </c:import>
 <div class="container-xl">
   <div class="row">
-    <div class="col-md-12 view-card-info">
+    <div class="col-md-12 view-card-info p-0">
       <div class="view-thumbnail_url">
-        <img class="view-thumbnail" src="/resources${card.thumbnail_url}" alt="${card.thumbnail_url}">
+        <img class="view-thumbnail" src="/resources${card.thumbnail_url}" alt="/resources/default_img.jpg">
       </div>
       <div class="view-card-body">
         <div class="view-info">
@@ -50,31 +51,32 @@
           줄거리 : ${card.synopsis}
         </div>
       </div>
-      <div class="view-side-menu">
-        <div class="chat-button">
-          <c:if test="${sessionScope.memberType == '2000'}">
+
+      <div class="view-side-menu d-none d-md-flex">
+        <c:if test="${sessionScope.memberType == '2000' and sessionScope.code != card.writer}">
+          <div class="chat-button d-none d-md-flex">
             <c:choose>
               <c:when test="${isDuple}">
-                <button class="common-button" type="button" id="duple" disabled>채팅 초대하기</button>
+                <button class="common-button" type="button" id="duple" disabled>채팅초대</button>
               </c:when>
               <c:otherwise>
-                <button class="common-button" type="button" id="invite">채팅 초대하기</button>
+                <button class="common-button" type="button" id="invite">채팅초대</button>
               </c:otherwise>
             </c:choose>
-          </c:if>
-        </div>
-        <div class="disclosure">
+          </div>
+        </c:if>
+        <div class="disclosure d-none d-md-flex">
           <c:if test="${sessionScope.code == card.writer}">
             <div class="form-check form-switch">
               <input class="form-check-input" type="checkbox" role="switch" id="chk-disclosure"
                      <c:if test="${card.yn == 'Y'}">checked value="Y"</c:if>
                      <c:if test="${card.yn == 'N'}">value="N"</c:if>
               >
-              <label class="form-check-label" for="chk-disclosure">공개 여부</label>
+              <label class="form-check-label" for="chk-disclosure">공개</label>
             </div>
           </c:if>
         </div>
-        <div class="buttons">
+        <div class="buttons d-none d-md-flex">
           <c:if test="${sessionScope.code == card.writer}">
             <form id="delete-form" action="/gallery/${card.seq}/delete" method="post">
               <input type="hidden" name="cardSeq" value="${card.seq}">
@@ -85,8 +87,54 @@
             </button>
           </c:if>
         </div>
-        <div class="return-button">
-          <button class="common-button" type="button" onclick="location.href='/gallery/category/${card.category_type}'">돌아가기</button>
+        <div class="return-button d-none d-md-flex">
+          <button class="common-button" type="button" onclick="location.href='/gallery/category/${card.category_type}'">
+            돌아가기
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 d-md-none">
+      <div class="view-side-menu-collapse d-md-none d-flex">
+        <div class="chat-button d-md-none d-flex">
+          <c:if test="${sessionScope.memberType == '2000' and sessionScope.code != card.writer}">
+            <c:choose>
+              <c:when test="${isDuple}">
+                <button class="common-button" type="button" id="duple" disabled>채팅초대</button>
+              </c:when>
+              <c:otherwise>
+                <button class="common-button" type="button" id="invite">채팅초대</button>
+              </c:otherwise>
+            </c:choose>
+          </c:if>
+        </div>
+        <div class="disclosure d-md-none d-flex">
+          <c:if test="${sessionScope.code == card.writer}">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="chk-disclosure2"
+                     <c:if test="${card.yn == 'Y'}">checked value="Y"</c:if>
+                     <c:if test="${card.yn == 'N'}">value="N"</c:if>
+              >
+              <label class="form-check-label" for="chk-disclosure2">공개</label>
+            </div>
+          </c:if>
+        </div>
+        <div class="buttons d-md-none d-flex">
+          <c:if test="${sessionScope.code == card.writer}">
+            <form id="delete-form" action="/gallery/${card.seq}/delete" method="post">
+              <input type="hidden" name="cardSeq" value="${card.seq}">
+              <button class="common-button" type="submit">삭제</button>
+            </form>
+            <button class="common-button" onclick="location.href='/gallery/${card.seq}/modify/${card.category_type}'">
+              수정
+            </button>
+          </c:if>
+        </div>
+        <div class="return-button d-md-none d-flex">
+          <button class="common-button" type="button" onclick="location.href='/gallery/category/${card.category_type}'">
+            돌아가기
+          </button>
         </div>
       </div>
     </div>
