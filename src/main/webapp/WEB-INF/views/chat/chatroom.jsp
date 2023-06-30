@@ -14,7 +14,6 @@
 </head>
 <body>
 	<script>
-		let regexSize = /^.{0,500}$/s;
 		let year = null;
 		let month = null;
 		let date = null;
@@ -27,6 +26,7 @@
 		let lastHours = null;
 		let lastMinutes = null;
 		let lastwriter = null;
+		const maxlength = 500;
 		$(function(){
 			const socket = new WebSocket("ws://localhost/chat");
 			const stompClient = Stomp.over(socket);
@@ -102,8 +102,7 @@
 					if($("#div_text").text().trim() == ""){
 						return false;
 					}else{
-						const regexText = $("#div_text").html();
-						if(!regexSize.test(regexText)){
+						if($("#div_text").text().length>maxlength){
 							alert("500자 이하로 작성해주세요.");
 							return false;
 						}
@@ -123,8 +122,7 @@
 				if($("#div_text").text().trim() == ""){
 					return false;
 				}else{
-					const regexText = $("#div_text").html();
-					if(!regexSize.test(regexText)){
+					if($("#div_text").text().length>maxlength){
 						alert("500자 이하로 작성해주세요.");
 						return false;
 					}
