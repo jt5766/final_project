@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -171,16 +172,18 @@ public class GalleryController {
     }
 
     @PostMapping("/{cardSeq}/delete")
-    public String deleteCard(@PathVariable Long cardSeq) {
+    public String deleteCard(@PathVariable Long cardSeq, Long categoryType, RedirectAttributes attributes) {
         String realPath = session.getServletContext().getRealPath("resources");
         galleryService.deleteCard(cardSeq, realPath);
-        return "redirect:/gallery";
+        attributes.addAttribute("categoryType", categoryType);
+        return "redirect:/gallery/category/{categoryType}";
     }
 
     @PostMapping("/{cardSeq}/contents/{contentSeq}/delete")
-    public String deleteContents(@PathVariable Long cardSeq, @PathVariable Long contentSeq) {
+    public String deleteContents(@PathVariable Long cardSeq, @PathVariable Long contentSeq, RedirectAttributes attributes) {
         String realPath = session.getServletContext().getRealPath("resources");
         galleryService.deleteContent(cardSeq, contentSeq, realPath);
+        attributes.addAttribute("cardSeq", cardSeq);
         return "redirect:/gallery/{cardSeq}";
     }
 

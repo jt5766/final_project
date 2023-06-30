@@ -89,7 +89,6 @@
 	<script>
 	console.log("${sessionScope.memberType}");
 	$("#textarea_contents").summernote({
-	    height : 400,
 	    toolbar : [],
 	    disableDragAndDrop : true,
 	    shortcuts : false,

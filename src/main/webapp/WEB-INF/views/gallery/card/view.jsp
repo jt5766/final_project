@@ -80,6 +80,7 @@
           <c:if test="${sessionScope.code == card.writer}">
             <form id="delete-form" action="/gallery/${card.seq}/delete" method="post">
               <input type="hidden" name="cardSeq" value="${card.seq}">
+              <input type="hidden" name="categoryType" value="${card.category_type}">
               <button class="common-button" type="submit">삭제</button>
             </form>
             <button class="common-button" onclick="location.href='/gallery/${card.seq}/modify/${card.category_type}'">
@@ -157,7 +158,7 @@
   </div>
   <c:forEach items="${contents}" var="content">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12 p-0">
         <div onclick="location.href='/gallery/${card.seq}/contents/${content.seq}'" class="content-link
         <c:if test="${content.yn eq 'N'}">
           secrete

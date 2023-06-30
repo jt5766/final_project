@@ -67,13 +67,21 @@ public class BoardsDTO {
 	}
 
 	public String getTxt() {
-		System.out.println("plain = " + txt);
 		String proceed = StringEscapeUtils.unescapeHtml4(this.txt);
-		System.out.println(proceed);
-		Whitelist customWhitelist = Whitelist.basicWithImages().addTags("img", "div, script")
-				.addAttributes("table", "class").addAttributes("font", "color").addTags("font")
-				.addAttributes("img", "src", "alt", "data-filename").addProtocols("img", "src", "http", "https");
-		String cleanedTxt = Jsoup.clean(proceed, Whitelist.basicWithImages());
+		Whitelist customWhitelist = Whitelist.none()
+				.addTags("a", "b", "blockquote", "br", "caption", "cite", "code", "col", "colgroup", "dd", "div", "dl",
+						"dt", "em", "h1", "h2", "h3", "h4", "h5", "h6", "i", "img", "li", "ol", "p", "pre", "q",
+						"small", "span", "strike", "strong", "sub", "sup", "table", "tbody", "td", "tfoot", "th",
+						"thead", "tr", "u", "ul")
+				.addAttributes("a", "href", "title").addAttributes("blockquote", "cite")
+				.addAttributes("col", "span", "width").addAttributes("colgroup", "span", "width")
+				.addAttributes("img", "align", "alt", "height", "src", "title", "width", "data-filename")
+				.addAttributes("ol", "start", "type").addAttributes("q", "cite")
+				.addAttributes("table", "summary", "width")
+				.addAttributes("td", "abbr", "axis", "colspan", "rowspan", "width")
+				.addAttributes("th", "abbr", "axis", "colspan", "rowspan", "scope", "width")
+				.addAttributes("ul", "type");
+		String cleanedTxt = Jsoup.clean(proceed, customWhitelist);
 		System.out.println("cleanedTxt = " + cleanedTxt);
 		return cleanedTxt;
 	}

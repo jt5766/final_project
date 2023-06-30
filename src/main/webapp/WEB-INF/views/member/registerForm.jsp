@@ -112,11 +112,11 @@
             </div>
             <div>
                 <h3>Check</h3>
-                <input type="password" placeholder="Check-Passwrod">
+                <input type="password" id="ChkPw" placeholder="Check-Passwrod">
             </div>
             <div>
                 <h3>NickName</h3>
-                <input type="text" name="nickname" placeholder="닉네임을 입력해주세요.">
+                <input type="text" name="nickname" id="nickname" placeholder="닉네임을 입력해주세요.">
             </div>
             <div id="btnBox">
                 <div>
@@ -146,6 +146,41 @@
         const shaPw = sha512(pw);
         console.log(shaPw)
         $("#shaPw").val(shaPw);
+    })
+
+    $("#sBtn").click(function () {
+        // 정규식
+        const pw = $("#pw").val();
+        const nickname = $("#nickname").val();
+        const chkPw = $("#ChkPw").val();
+
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*?])[a-zA-Z\d~!@#$%^&*?]{8,16}$/;
+        const passwordResult = passwordRegex.test(pw);
+        if(!passwordResult){
+            alert("비밀번호 양식이 올바르지 않습니다.");
+            return false
+        }
+
+        const chkPwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[~!@#$%^&*?])[a-zA-Z\d~!@#$%^&*?]{8,16}$/;
+        const chkPwResult = chkPwRegex.test(chkPw)
+        if(pw != chkPw){
+            alert("비밀번호가 일치하지 않습니다")
+            return false;
+
+        } const nickNameRegex = /^[A-Za-z가-힣0-9]{1,8}$/;
+        const nickNameResult = nickNameRegex.test(nickname);
+        if(!nickNameResult){
+            alert("닉네임 양식이 올바르지 않습니다.")
+            return false;
+        }
+
+
+
+
+        $("#frm").submit();
+
+
     })
 
 </script>

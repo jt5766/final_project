@@ -178,7 +178,6 @@
 		    $(".reReplyBtn").hide();
 		}
 		$("#textarea_contents").summernote({
-		    height : 400,
 		    toolbar : [],
 		    disableDragAndDrop : true,
 		    shortcuts : false,
