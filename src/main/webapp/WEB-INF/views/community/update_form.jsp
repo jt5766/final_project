@@ -67,11 +67,11 @@
 	<!-- script - Contents -->
 	<script>
 	$("#textarea_contents").summernote({
-	    height : 500, // 에디터 높이
-		minHeight : null, // 최소 높이
+		minHeight : 400, // 최소 높이
 		maxHeight : null, // 최대 높이
 		focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 		lang : "ko-KR", // 한글 설정
+		codeviewFilter: false,
 		codeviewIframeFilter: true,
 		placeholder : '내용을 입력해주세요', //placeholder 설정
 		disableDragAndDrop : true,
@@ -88,21 +88,21 @@
 					let blobUrl = URL.createObjectURL(files[i]);
 					$(this).summernote("insertImage", blobUrl, files[i].name);
 				}
-			}
-		},
-		onKeydown: function(e) {
-		    var txt = $("#textarea_contents").summernote('code');
-		    if(txt.length > 1000) {
-					e.preventDefault();			
-			    }
-			}
-		},
-		popover: {
-		    image: [
-		      ['remove', ['removeMedia']]
+			},
+			onKeydown: function(e) {
+			    var txt = $("#textarea_contents").summernote('code');
+			    if(txt.length > 1000) {
+						e.preventDefault();			
+				    }
+				}
+			},
+			popover: {
+			    image: [
+			      ['remove', ['removeMedia']]
 			]
 		}
 	});
+	
 	$("#formSubmit").on("click", async function(e) {
 	    const title = $("#inputTitle").val();
 	    const txt = $(".note-editable").html();
