@@ -197,18 +197,19 @@
 
 
 
-    if("${result}" > 0) {
-        alert("회원가입을 축하드립니다.")
-        history.pushState(null, null, "http://localhost:8080/member/loginForm?result=1");
-        window.onpopstate = function (event) {
-            history.go(1);
-        }
-    }
+
 
 
 
     $(document).ready(function () {
 
+        if("${result}" > 0) {
+            alert("회원가입을 축하드립니다.")
+            history.pushState(null, null, "http://localhost:8080/member/loginForm?result=1");
+            window.onpopstate = function (event) {
+                history.go(1);
+            }
+        }
 
         $("#signup_btn").click(function () {
             location.href = "/member/signup";

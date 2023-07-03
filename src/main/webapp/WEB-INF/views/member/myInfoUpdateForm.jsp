@@ -87,8 +87,8 @@
 
 <!-- GNB & LNB -->
 <c:import url="${path}/resources/js/GNB.jsp">
-    <c:param name="pageName" value="home"/>
-    <c:param name="btnNum" value="1"/>
+    <c:param name="pageName" value="mypage" />
+    <c:param name="btnNum" value="1004" />
 </c:import>
 <div class="container-xl  position-relative p-0">
     <form action="/member/update" id="updatemember">

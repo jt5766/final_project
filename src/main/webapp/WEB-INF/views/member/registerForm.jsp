@@ -80,6 +80,16 @@
             gap: 10px;
 
         }
+        #pRegex {
+            color: rgb(80, 80, 160);
+            font-size: 4px;
+
+        }
+
+        #nRegex {
+            color: rgb(80, 80, 160);
+            font-size: 4px;
+        }
 
 
     </style>
@@ -109,6 +119,7 @@
                 <h3>Password</h3>
                 <input type="hidden" name="password" id="shaPw" value="">
                 <input type="password" id="pw" placeholder="Password">
+                <div id="pRegex">영어,대,소,(!,@,#,$,%,^,&,*,?),1~16</div>
             </div>
             <div>
                 <h3>Check</h3>
@@ -117,6 +128,7 @@
             <div>
                 <h3>NickName</h3>
                 <input type="text" name="nickname" id="nickname" placeholder="닉네임을 입력해주세요.">
+                <div id="nRegex">영어,한글,1~8</div>
             </div>
             <div id="btnBox">
                 <div>
