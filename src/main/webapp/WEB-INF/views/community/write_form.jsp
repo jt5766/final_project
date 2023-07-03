@@ -100,7 +100,12 @@
 						e.preventDefault();			
 				    }
 				}
-			}
+			},
+			popover: {
+			    image: [
+			      ['remove', ['removeMedia']]
+			]
+		}
 	});
 	
 	$("#formSubmit").on("click", async function(e) {

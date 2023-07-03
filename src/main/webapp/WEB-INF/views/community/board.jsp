@@ -90,15 +90,16 @@ th>* {
 .title_td:hover {
 	cursor: pointer;
 }
+
 .common-button {
-    display: inline-block;
-    min-width: 5rem;
-    background-color: #ca9372;
-    color: white;
-    border-radius: 5px;
-    margin: 5px;
-    border: none;
-    max-height: 35px;
+	display: inline-block;
+	min-width: 5rem;
+	background-color: #ca9372;
+	color: white;
+	border-radius: 5px;
+	margin: 5px;
+	border: none;
+	max-height: 35px;
 }
 </style>
 </head>
@@ -126,7 +127,9 @@ th>* {
 						<label class="d-none d-md-block" class="sortLabel" for="sort1-${i.code}">${i.name}</label>
 					</c:forEach>
 					<div class="vr mx-2 d-none d-md-block"></div>
-					<button type="submit" class="common-button d-none d-md-block"><i class="bi bi-search"></i></button>
+					<button type="submit" class="common-button d-none d-md-block">
+						<i class="bi bi-search"></i>
+					</button>
 				</div>
 				<div class="col-12 d-md-none search-box">
 					<c:forEach items="${sort}" var="i" varStatus="status">
@@ -134,7 +137,9 @@ th>* {
 						<label class="d-block d-md-none" class="sortLabel" for="sort2-${i.code}">${i.name}</label>
 					</c:forEach>
 					<div class="vr mx-2 d-block d-md-none"></div>
-					<button type="submit" class="common-button d-block d-md-none ms-auto"><i class="bi bi-search"></i></button>
+					<button type="submit" class="common-button d-block d-md-none ms-auto">
+						<i class="bi bi-search"></i>
+					</button>
 				</div>
 			</div>
 		</form>
@@ -195,6 +200,13 @@ th>* {
 	<c:import url="${path}/resources/js/FOOTER.jsp" />
 	<!-- script - Contents -->
 	<script>
+		if("${categoryType.code}" == 1001) {
+		   	$("#toWrite").hide();
+		   	if("${sessionScope.memberType}" == 9999){
+		   	 	$("#toWrite").toggle();   
+		   	}
+		}
+		
 		$("#toWrite").on("click", (e) => {
 		   	if("${sessionScope.code}" == "") {
 		   	    alert("로그인 후 이용 가능한 서비스입니다.");

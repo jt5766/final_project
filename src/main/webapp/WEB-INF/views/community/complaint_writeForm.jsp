@@ -109,6 +109,18 @@
 					$(this).summernote("insertImage", blobUrl, files[i].name);
 				}
 			}
+		},
+		onKeydown: function(e) {
+		    var txt = $("#textarea_contents").summernote('code');
+		    if(txt.length > 1000) {
+					e.preventDefault();			
+			    }
+			}
+		},
+		popover: {
+		    image: [
+		      ['remove', ['removeMedia']]
+			]
 		}
 	});
 	$("#formSubmit").on("click", async function(e) {
