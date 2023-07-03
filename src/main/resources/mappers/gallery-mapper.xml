@@ -85,7 +85,7 @@
 	</select>
 
 	<select id="selectMyCards" resultType="kh.final_project.dto.GalleryCardView">
-		select * from view_gallery_cards where writer = ${code, jdbcType=NUMERIC}
+		select * from view_gallery_cards where writer = ${code, jdbcType=NUMERIC} order by write_date desc
 	</select>
 
 	<update id="updateViewCount">
