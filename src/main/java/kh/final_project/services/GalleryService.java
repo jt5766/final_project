@@ -137,7 +137,9 @@ public class GalleryService {
 
     public void deleteContent(Long cardSeq, Long contentSeq, String realPath) {
         GalleryContent content = galleryDAO.selectOneContent(cardSeq, contentSeq);
-        removeFile(content.getFile_url(), realPath);
+        if (content.getFile_url() != null) {
+            removeFile(content.getFile_url(), realPath);
+        }
         galleryDAO.deleteContent(cardSeq, contentSeq);
     }
 
