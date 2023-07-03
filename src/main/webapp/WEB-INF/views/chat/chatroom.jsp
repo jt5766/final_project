@@ -201,7 +201,7 @@
 				        				if(year != logYear || month != logMonth || date != logDate){
 				        					var alldatediv = $("<div>");
 				        					alldatediv.addClass("alldatebox");
-					        				alldatediv.append(year+"/"+(month+1)+"/"+date);
+					        				alldatediv.append(year+"-"+(month+1)+"-"+date);
 					        				$("#div_contents").prepend(alldatediv);
 				        				}
 				        			}
