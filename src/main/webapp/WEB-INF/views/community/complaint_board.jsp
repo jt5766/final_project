@@ -160,7 +160,8 @@ th {
 						</tr>
 					</c:forEach>
 					<tr>
-						<td colspan="5" align="center">
+						<td></td>
+						<td colspan="3" align="center">
 							<nav>
 								<ul class="pagination justify-content-center">
 									<c:forEach items="${pageNavi}" var="i" varStatus="status">
@@ -180,6 +181,8 @@ th {
 									</c:forEach>
 								</ul>
 							</nav>
+						</td>
+						<td>
 							<input type="button" id="toWrite" value="글쓰기">
 						</td>
 					</tr>

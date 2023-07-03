@@ -77,7 +77,7 @@
 	<select id="selectComplaintView" resultType="kh.final_project.dto.ComplaintBoardsDTO">
 		SELECT
 		b.seq, b.board_type, t.name AS complaint_type, b.title, m.nickname AS writer,
-		b.txt, b.write_date, b.process, b.process_date, b.total_count
+		b.txt, b.write_date, b.process, b.process_date
 		FROM
 		${board_name}_boards b
 		JOIN

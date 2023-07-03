@@ -88,7 +88,7 @@
 	<!-- script - Contents -->
 	<script>
 	$("#textarea_contents").summernote({
-		minHeight : null, // 최소 높이
+		minHeight : 400, // 최소 높이
 		maxHeight : null, // 최대 높이
 		focus : true, // 에디터 로딩후 포커스를 맞출지 여부
 		lang : "ko-KR", // 한글 설정
@@ -114,7 +114,6 @@
 		    var txt = $("#textarea_contents").summernote('code');
 		    if(txt.length > 1000) {
 					e.preventDefault();			
-			    }
 			}
 		},
 		popover: {

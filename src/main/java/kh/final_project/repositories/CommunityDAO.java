@@ -40,7 +40,6 @@ public class CommunityDAO {
 	}
 
 	public ComplaintBoardsDTO selectComplaintView(ComplaintBoardsDTO complaintBoardsDTO) {
-		sst.update("Community.viewUp", complaintBoardsDTO);
 		return sst.selectOne("Community.selectComplaintView", complaintBoardsDTO);
 	}
 

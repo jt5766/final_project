@@ -18,28 +18,7 @@ public class ComplaintBoardsDTO {
 	private Timestamp write_date;
 	private String process;
 	private Timestamp process_date;
-	private Integer total_count;
 	private String board_name;
-
-	public ComplaintBoardsDTO() {
-	}
-
-	public ComplaintBoardsDTO(Integer seq, Integer board_type, String complaint_type, String title, String writer,
-			String txt, Timestamp write_date, String process, Timestamp process_date, Integer total_count,
-			String board_name) {
-		super();
-		this.seq = seq;
-		this.board_type = board_type;
-		this.complaint_type = complaint_type;
-		this.title = title;
-		this.writer = writer;
-		this.txt = txt;
-		this.write_date = write_date;
-		this.process = process;
-		this.process_date = process_date;
-		this.total_count = total_count;
-		this.board_name = board_name;
-	}
 
 	public Integer getSeq() {
 		return seq;
@@ -81,29 +60,6 @@ public class ComplaintBoardsDTO {
 		this.writer = writer;
 	}
 
-	public String getTxt() {
-		String proceed = StringEscapeUtils.unescapeHtml4(this.txt);
-		Whitelist customWhitelist = Whitelist.none()
-				.addTags("a", "b", "blockquote", "br", "caption", "cite", "code", "col", "colgroup", "dd", "div", "dl",
-						"dt", "em", "h1", "h2", "h3", "h4", "h5", "h6", "i", "img", "li", "ol", "p", "pre", "q",
-						"small", "span", "strike", "strong", "sub", "sup", "table", "tbody", "td", "tfoot", "th",
-						"thead", "tr", "u", "ul")
-				.addAttributes("a", "href", "title").addAttributes("blockquote", "cite")
-				.addAttributes("col", "span", "width").addAttributes("colgroup", "span", "width")
-				.addAttributes("img", "align", "alt", "height", "src", "title", "width", "data-filename")
-				.addAttributes("ol", "start", "type").addAttributes("q", "cite")
-				.addAttributes("table", "summary", "width")
-				.addAttributes("td", "abbr", "axis", "colspan", "rowspan", "width")
-				.addAttributes("th", "abbr", "axis", "colspan", "rowspan", "scope", "width")
-				.addAttributes("ul", "type");
-		String cleanedTxt = Jsoup.clean(proceed, customWhitelist);
-		return cleanedTxt;
-	}
-
-	public void setTxt(String txt) {
-		this.txt = txt;
-	}
-
 	public Timestamp getWrite_date() {
 		return write_date;
 	}
@@ -128,20 +84,53 @@ public class ComplaintBoardsDTO {
 		this.process_date = process_date;
 	}
 
-	public Integer getTotal_count() {
-		return total_count;
-	}
-
-	public void setTotal_count(Integer total_count) {
-		this.total_count = total_count;
-	}
-
 	public String getBoard_name() {
 		return board_name;
 	}
 
 	public void setBoard_name(String board_name) {
 		this.board_name = board_name;
+	}
+
+	public void setTxt(String txt) {
+		this.txt = txt;
+	}
+
+	public ComplaintBoardsDTO() {
+	}
+
+	public ComplaintBoardsDTO(Integer seq, Integer board_type, String complaint_type, String title, String writer,
+			String txt, Timestamp write_date, String process, Timestamp process_date, String board_name) {
+		super();
+		this.seq = seq;
+		this.board_type = board_type;
+		this.complaint_type = complaint_type;
+		this.title = title;
+		this.writer = writer;
+		this.txt = txt;
+		this.write_date = write_date;
+		this.process = process;
+		this.process_date = process_date;
+		this.board_name = board_name;
+	}
+
+	public String getTxt() {
+		String proceed = StringEscapeUtils.unescapeHtml4(this.txt);
+		Whitelist customWhitelist = Whitelist.none()
+				.addTags("a", "b", "blockquote", "br", "caption", "cite", "code", "col", "colgroup", "dd", "div", "dl",
+						"dt", "em", "h1", "h2", "h3", "h4", "h5", "h6", "i", "img", "li", "ol", "p", "pre", "q",
+						"small", "span", "strike", "strong", "sub", "sup", "table", "tbody", "td", "tfoot", "th",
+						"thead", "tr", "u", "ul")
+				.addAttributes("a", "href", "title").addAttributes("blockquote", "cite")
+				.addAttributes("col", "span", "width").addAttributes("colgroup", "span", "width")
+				.addAttributes("img", "align", "alt", "height", "src", "title", "width", "data-filename")
+				.addAttributes("ol", "start", "type").addAttributes("q", "cite")
+				.addAttributes("table", "summary", "width")
+				.addAttributes("td", "abbr", "axis", "colspan", "rowspan", "width")
+				.addAttributes("th", "abbr", "axis", "colspan", "rowspan", "scope", "width")
+				.addAttributes("ul", "type");
+		String cleanedTxt = Jsoup.clean(proceed, customWhitelist);
+		return cleanedTxt;
 	}
 
 	public String getFormed_date() {
@@ -167,7 +156,7 @@ public class ComplaintBoardsDTO {
 	public String toString() {
 		return "ComplaintBoardsDTO [seq=" + seq + ", board_type=" + board_type + ", complaint_type=" + complaint_type
 				+ ", title=" + title + ", writer=" + writer + ", txt=" + txt + ", write_date=" + write_date
-				+ ", process=" + process + ", process_date=" + process_date + ", total_count=" + total_count + "]";
+				+ ", process=" + process + ", process_date=" + process_date + "]";
 	}
 
 }

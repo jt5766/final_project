@@ -101,6 +101,10 @@ th>* {
 	border: none;
 	max-height: 35px;
 }
+
+.search-box>* {
+	margin-left: 5px;
+}
 </style>
 </head>
 <body>
@@ -121,7 +125,7 @@ th>* {
 							<option value="${i.code}">${i.name}</option>
 						</c:forEach>
 					</select>
-					<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요">
+					<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요" id="searchTxt">
 					<c:forEach items="${sort}" var="i" varStatus="status">
 						<input class="d-none d-md-block" type="radio" name="sortCode" value="${i.code}" id="sort1-${i.code}" <c:if test="${status.index == 0}">checked</c:if>>
 						<label class="d-none d-md-block" class="sortLabel" for="sort1-${i.code}">${i.name}</label>
@@ -168,7 +172,8 @@ th>* {
 							</tr>
 						</c:forEach>
 						<tr>
-							<td colspan="5" align="center">
+							<td></td>
+							<td colspan="3" align="center">
 								<nav>
 									<ul class="pagination justify-content-center m-0">
 										<c:forEach items="${pageNavi}" var="i" varStatus="status">
@@ -188,6 +193,8 @@ th>* {
 										</c:forEach>
 									</ul>
 								</nav>
+							</td>
+							<td>
 								<input type="button" value="글쓰기" id="toWrite">
 							</td>
 						</tr>
