@@ -102,7 +102,7 @@
 					txtValue = $(td).text();
 					if (txtValue.toUpperCase().indexOf(input) > -1) {
 						tr[i].style.display = "";
-					} else {c
+					} else {
 						tr[i].style.display = "none";
 					}
 				}
