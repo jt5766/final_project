@@ -33,6 +33,11 @@ public class MemberDAO {
 
 	public void login(MemberDTO dto) {
 		db.selectOne("Member.PROC_CHK_MEMBER", dto);
+
+
+	}
+
+	public void loginYupdate(MemberDTO dto){
 		db.update("Member.Yupdate", dto);
 	}
 

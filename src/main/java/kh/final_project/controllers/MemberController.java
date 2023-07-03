@@ -101,7 +101,8 @@ public class MemberController {
 
 
         if (dto.getCode() > 10000000 && dto.getCode() < 100000000) {
-
+            
+            memberService.loginYupdate(dto);
             session.setAttribute("code", dto.getCode());
             session.setAttribute("nickName", dto.getNickname());
             session.setAttribute("memberType", dto.getMember_type());

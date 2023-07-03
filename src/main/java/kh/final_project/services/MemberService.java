@@ -137,6 +137,10 @@ public class MemberService {
 		mdao.login(dto);
 	}
 
+	public void loginYupdate(MemberDTO dto){
+		mdao.loginYupdate(dto);
+	}
+
 	public boolean passwordCheck(MemberDTO dto) {
 		return mdao.passwordCheck(dto);
 	}

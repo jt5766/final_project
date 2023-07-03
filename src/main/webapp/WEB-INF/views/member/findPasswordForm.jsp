@@ -153,8 +153,10 @@
     $("#sendMail-btn1").click(function () {
         const email = $("#email").val()
         if (email == "" || !email.includes("@")) {
-            alert("이메일 형식을 맞춰주세요")
+            alert("이메일 형식을 맞춰주세요");
             return false;
+        }else if(${duplEmail != false }){
+            alert("메일이 발송되었습니다.");
         }
     })
 
