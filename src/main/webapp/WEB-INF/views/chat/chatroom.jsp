@@ -32,7 +32,7 @@
 		let lastwriter = null;
 		const maxlength = 500;
 		$(function(){
-			const socket = new WebSocket("ws://3.39.227.39/chat");
+			const socket = new WebSocket("ws://localhost/chat");
 			const stompClient = Stomp.over(socket);
 			
 			stompClient.connect({},function(){
@@ -167,10 +167,12 @@
 						}).done(function(resp){
 							if(resp.length == 0){
 								lengthsize = true;
-								var alldatediv = $("<div>");
-	        					alldatediv.addClass("alldatebox");
-		        				alldatediv.append(year+"-"+(month+1)+"-"+date);
-		        				$("#div_contents").prepend(alldatediv);
+								if(year != null && month != null && date != null){
+									var alldatediv = $("<div>");
+	        						alldatediv.addClass("alldatebox");
+		        					alldatediv.append(year+"-"+(month+1)+"-"+date);
+		        					$("#div_contents").prepend(alldatediv);
+								}
 		        				$(".frontdatebox").remove();
 							}
 							for(var i = 0;i < resp.length;i++){
@@ -314,10 +316,12 @@
 	        		var beforeMonth = beforetimer.getMonth();
 	        		var beforeDate = beforetimer.getDate();
         			if(beforeYear != logYear || beforeMonth != logMonth || beforeDate != logDate){
-        				var alldatediv = $("<div>");
-        				alldatediv.addClass("alldatebox");
-        				alldatediv.append(beforeYear+"-"+(beforeMonth+1)+"-"+beforeDate);
-        				$("#div_contents").prepend(alldatediv);
+        				if(beforeYear != null && beforeMonth != null && beforeDate != null){
+        					var alldatediv = $("<div>");
+        					alldatediv.addClass("alldatebox");
+        					alldatediv.append(beforeYear+"-"+(beforeMonth+1)+"-"+beforeDate);
+        					$("#div_contents").prepend(alldatediv);
+        				}
         			}
         			if(i == (chatlog.length-1)){
         				datawriterbox.addClass("lastdatawriterbox");
@@ -345,10 +349,12 @@
 				$("#div_contents").prepend(datalinediv);
 				if(i == (chatlog.length-1)){
     				if(${maxdata}<=30){
-    					var alldatediv = $("<div>");
-        				alldatediv.addClass("frontdatebox");
-        				alldatediv.append(logYear+"-"+(beforeMonth+1)+"-"+beforeDate);
-        				$("#div_contents").prepend(alldatediv);
+    					if(beforeYear != null && beforeMonth != null && beforeDate != null){
+    						var alldatediv = $("<div>");
+        					alldatediv.addClass("frontdatebox");
+        					alldatediv.append(beforeYear+"-"+(beforeMonth+1)+"-"+beforeDate);
+        					$("#div_contents").prepend(alldatediv);
+    					}
     				}
 				}
 			}
