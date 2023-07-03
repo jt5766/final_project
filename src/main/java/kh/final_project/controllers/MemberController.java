@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -82,8 +80,14 @@ public class MemberController {
     public String createMember(MemberDTO dto, MultipartFile file, Model model) throws Exception {
         String realPath = session.getServletContext().getRealPath("/resources/member");
         int result = memberService.insertMember(dto, file, realPath);
-        model.addAttribute("result", result);
-        return "forward:/member/loginForm";
+        model.addAttribute("result",result);
+        if(result > 0){
+            return "forward:/member/loginForm";
+        } else {
+            return "error";
+        }
+
+
     }
 
     @RequestMapping("loginForm")
