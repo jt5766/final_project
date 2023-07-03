@@ -53,7 +53,7 @@
                     <h5>유튜브 or 네이버 영상 링크를 복사하여 붙여주세요.</h5>
                     <div class="modal_input_box">
                       <input type="text" class="third_party_link" placeholder="paste url here">
-                      <button type="button" class="confirm_link">업로드</button>
+                      <button type="button" class="confirm_link" id="video_link">업로드</button>
                     </div>
                     <div class="guide">
                       <details>
@@ -97,7 +97,7 @@
                     <h5>사운드클라우드 링크를 복사하여 붙여주세요.</h5>
                     <div class="modal_input_box">
                       <input type="text" class="third_party_link" placeholder="paste url here">
-                      <button type="button" class="confirm_link">업로드</button>
+                      <button type="button" class="confirm_link" id="audio_link">업로드</button>
                     </div>
                     <div class="guide">
                       <details>
@@ -285,7 +285,7 @@
                 pop_modal();
             }
         }
-        $('.confirm_video_link').on('click', function () {
+        $('#video_link').on('click', function () {
             const urlVal = $('.third_party_link').val().trim();
             if (youtube_regex.test(urlVal)) {
                 $('#input_video_url').val(urlVal.replace(cut_youtubeURL, replace_youtubeURL));
@@ -301,7 +301,7 @@
                 alert("올바른 주소가 아닙니다.");
             }
         });
-        $('.confirm_audio_link').on('click', function () {
+        $('#audio_link').on('click', function () {
             const urlVal = $('.third_party_link').val().trim();
             if (soundcloud_regex.test(urlVal)) {
                 $('#input_audio_url').val(urlVal);
