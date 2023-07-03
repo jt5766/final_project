@@ -50,10 +50,25 @@
                 <div class="my-modal-content">
                   <div class="modal-body">
                     <span class="close-btn">&times;</span>
-                    <h5>영상 링크를 복사하여 붙여주세요.</h5>
+                    <h5>유튜브 or 네이버 영상 링크를 복사하여 붙여주세요.</h5>
                     <div class="modal_input_box">
                       <input type="text" class="third_party_link" placeholder="paste url here">
-                      <button type="button" class="confirm_video_link">업로드</button>
+                      <button type="button" class="confirm_link">업로드</button>
+                    </div>
+                    <div class="guide">
+                      <details>
+                        <summary>
+                          유튜브 링크 업로드 방법
+                        </summary>
+                        <img src="/resources/img/y_url_guide1.jpg">
+                        <img src="/resources/img/y_url_guide2.jpg">
+                      </details>
+                      <details>
+                        <summary>
+                          네이버 링크 업로드 방법
+                        </summary>
+                        <img src="/resources/img/n_url_guide.jpg">
+                      </details>
                     </div>
                   </div>
                 </div>
@@ -82,7 +97,17 @@
                     <h5>사운드클라우드 링크를 복사하여 붙여주세요.</h5>
                     <div class="modal_input_box">
                       <input type="text" class="third_party_link" placeholder="paste url here">
-                      <button type="button" class="confirm_audio_link">업로드</button>
+                      <button type="button" class="confirm_link">업로드</button>
+                    </div>
+                    <div class="guide">
+                      <details>
+                        <summary>
+                          사운드클라우드 링크 업로드 방법
+                        </summary>
+                        <img src="/resources/img/s_url_guide1.jpg">
+                        <img src="/resources/img/s_url_guide2.jpg">
+                        <i>shorten link 는 지원하지 않습니다.</i>
+                      </details>
                     </div>
                   </div>
                 </div>
@@ -172,7 +197,7 @@
             toolbar: [],
         });
 
-        $(function() {
+        $(function () {
             calcTxtLength();
         });
 
@@ -303,6 +328,7 @@
             $('input[name="file_url"]').val("");
         }
     }
+
 </script>
 </body>
 </html>

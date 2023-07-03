@@ -456,7 +456,7 @@ input[name=sordCode] {
 
 .modal-body {
     width: 600px;
-    height: 450px;
+    min-height: 450px;
     padding: 30px 30px;
     border: 1px solid #777;
     background-color: #fff;
@@ -480,7 +480,7 @@ input[name=sordCode] {
     box-shadow: 0 0 5px #c1bdbd;
 }
 
-.confirm_video_link {
+.confirm_link {
     padding: 5px 10px;
     cursor: pointer;
     border: none;
@@ -583,4 +583,9 @@ input[name=sordCode] {
 
 .fc-red {
     color: firebrick;
+}
+
+details > i {
+    color: #797979;
+    font-size: 14px;
 }
