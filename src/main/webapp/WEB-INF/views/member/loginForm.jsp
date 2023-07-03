@@ -196,22 +196,6 @@
 <script>
 
 
-    <%--if("${result}" > 0){--%>
-    <%--    alert("회원가입을  축하드립니다");--%>
-    <%--    history.pushState(null, null, "http://localhost:8080/member/createMember");--%>
-    <%--    window.onpopstate = function (event) {--%>
-    <%--        history.go(1);--%>
-    <%--    };--%>
-    <%--}else if(${status == 'cancel'}) {--%>
-    <%--    history.pushState(null, null, "http://localhost:8080/member/loginForm");--%>
-    <%--    window.onpopstate = function (event) {--%>
-    <%--        history.go(2);--%>
-    <%--    }--%>
-
-    <%--}else if(${emailCheck == true}) {--%>
-    <%--    alert("가입되어있는 이메일입니다")--%>
-    <%--}--%>
-
 
     if("${result}" > 0) {
         alert("회원가입을 축하드립니다.")
@@ -221,9 +205,7 @@
         }
     }
 
-    <%--if("${duplEmail == 1}"){--%>
-    <%--    alert("비밀번호 찾기 메일이 발송되었습니다. 메일을 확인해주세요")--%>
-    <%--}--%>
+
 
     $(document).ready(function () {
 
