@@ -163,7 +163,7 @@
 		select *
 		from
 		(
-			select view_gallery_cards.*, row_number() over(order by day_count desc, total_count desc) rn
+			select view_gallery_cards.*, row_number() over(order by day_count desc nulls last, total_count desc nulls last) rn
 			from view_gallery_cards
 			where category_type = #{categoryType, jdbcType=NUMERIC}
 		)
