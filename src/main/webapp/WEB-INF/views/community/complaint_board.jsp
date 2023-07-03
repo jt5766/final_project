@@ -91,14 +91,18 @@ th {
 }
 
 .common-button {
-    display: inline-block;
-    min-width: 5rem;
-    background-color: #ca9372;
-    color: white;
-    border-radius: 5px;
-    margin: 5px;
-    border: none;
-    max-height: 35px;
+	display: inline-block;
+	min-width: 5rem;
+	background-color: #ca9372;
+	color: white;
+	border-radius: 5px;
+	margin: 5px;
+	border: none;
+	max-height: 35px;
+}
+
+.search-box>* {
+	margin-left: 5px;
 }
 </style>
 </head>
@@ -122,19 +126,35 @@ th {
 					</select>
 					<input type="text" name="searchQuery" required placeholder="검색어를 입력하세요">
 					<c:forEach items="${sort}" var="i" varStatus="status">
-						<input class="d-none d-md-block" type="radio" name="sortCode" value="${i.code}" id="sort1-${i.code}" <c:if test="${status.index == 0}">checked</c:if>>
-						<label class="d-none d-md-block" class="sortLabel" for="sort1-${i.code}">${i.name}</label>
+						<c:choose>
+							<c:when test="${i.code == 1003}">
+							</c:when>
+							<c:otherwise>
+								<input class="d-none d-md-block" type="radio" name="sortCode" value="${i.code}" id="sort1-${i.code}" <c:if test="${status.index == 0}">checked</c:if>>
+								<label class="d-none d-md-block" class="sortLabel" for="sort1-${i.code}">${i.name}</label>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 					<div class="vr mx-2 d-none d-md-block"></div>
-					<button type="submit" class="common-button d-none d-md-block"><i class="bi bi-search"></i></button>
+					<button type="submit" class="common-button d-none d-md-block">
+						<i class="bi bi-search"></i>
+					</button>
 				</div>
 				<div class="col-12 d-md-none search-box">
 					<c:forEach items="${sort}" var="i" varStatus="status">
-						<input class="d-block d-md-none" type="radio" name="sortCode" value="${i.code}" id="sort2-${i.code}" <c:if test="${status.index == 0}">checked</c:if>>
-						<label class="d-block d-md-none" class="sortLabel" for="sort2-${i.code}">${i.name}</label>
+						<c:choose>
+							<c:when test="${i.code == 1003}">
+							</c:when>
+							<c:otherwise>
+								<input class="d-none d-md-block" type="radio" name="sortCode" value="${i.code}" id="sort1-${i.code}" <c:if test="${status.index == 0}">checked</c:if>>
+								<label class="d-none d-md-block" class="sortLabel" for="sort1-${i.code}">${i.name}</label>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 					<div class="vr mx-2 d-block d-md-none"></div>
-					<button type="submit" class="common-button d-block d-md-none ms-auto"><i class="bi bi-search"></i></button>
+					<button type="submit" class="common-button d-block d-md-none ms-auto">
+						<i class="bi bi-search"></i>
+					</button>
 				</div>
 			</div>
 		</form>
