@@ -21,7 +21,7 @@
   <div class="row">
     <div class="col-md-12 view-card-info p-0">
       <div class="view-thumbnail_url">
-        <img class="view-thumbnail" src="/resources${card.thumbnail_url}" alt="/resources/img/default_img.jpg">
+        <img class="view-thumbnail" src="/resources${card.thumbnail_url}" alt="/resources/img/default_img.jpg" onerror="this.src='/resources/img/default_img.jpg'">
       </div>
       <div class="view-card-body">
         <div class="view-info">
