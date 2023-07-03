@@ -83,7 +83,7 @@ public class MemberController {
         String realPath = session.getServletContext().getRealPath("/resources/member");
         int result = memberService.insertMember(dto, file, realPath);
         model.addAttribute("result", result);
-        return "/member/loginForm";
+        return "forward:/member/loginForm";
     }
 
     @RequestMapping("loginForm")
@@ -101,7 +101,7 @@ public class MemberController {
 
 
         if (dto.getCode() > 10000000 && dto.getCode() < 100000000) {
-            
+
             memberService.loginYupdate(dto);
             session.setAttribute("code", dto.getCode());
             session.setAttribute("nickName", dto.getNickname());

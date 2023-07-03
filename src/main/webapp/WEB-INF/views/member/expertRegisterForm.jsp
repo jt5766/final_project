@@ -150,7 +150,7 @@
 <form action="/member/createMember" method="post" enctype="multipart/form-data" id="frm">
   <div id="wrap">
     <div id="loginBox">
-      <h4>전문가 회원가입</h4>
+      <h4>전문가</h4>
       <div>
         <h3>Email </h3>
         <input type="hidden" name="email_type" value="${emailType}">

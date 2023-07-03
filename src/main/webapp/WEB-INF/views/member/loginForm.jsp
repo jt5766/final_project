@@ -199,7 +199,7 @@
 
     if("${result}" > 0) {
         alert("회원가입을 축하드립니다.")
-        history.pushState(null, null, "http://localhost:8080/member/createMember");
+        history.pushState(null, null, "http://localhost:8080/member/loginForm?result=1");
         window.onpopstate = function (event) {
             history.go(1);
         }
