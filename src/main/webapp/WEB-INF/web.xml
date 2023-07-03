@@ -66,6 +66,14 @@
 
     </error-page>
 
+	<error-page>
+
+    	<error-code>405</error-code>
+
+    	<location>/WEB-INF/views/error/400error.jsp</location>
+
+    </error-page>
+
     <error-page>
 
     	<error-code>404</error-code>
