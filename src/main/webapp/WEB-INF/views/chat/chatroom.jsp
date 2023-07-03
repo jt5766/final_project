@@ -223,10 +223,12 @@
 					        		var beforeMonth = beforetimer.getMonth();
 					        		var beforeDate = beforetimer.getDate();
 				        			if(beforeYear != logYear || beforeMonth != logMonth || beforeDate != logDate){
-				        				var alldatediv = $("<div>");
-				        				alldatediv.addClass("alldatebox");
-				        				alldatediv.append(beforeYear+"-"+(beforeMonth+1)+"-"+beforeDate);
-				        				$("#div_contents").prepend(alldatediv);
+				        				if(beforeYear != null &&  beforeMonth != null && beforeDate != null){
+				        					var alldatediv = $("<div>");
+				        					alldatediv.addClass("alldatebox");
+				        					alldatediv.append(beforeYear+"-"+(beforeMonth+1)+"-"+beforeDate);
+				        					$("#div_contents").prepend(alldatediv);
+				        				}
 				        			}
 				        			if(i == (resp.length-1)){
 					        			year = logYear;
