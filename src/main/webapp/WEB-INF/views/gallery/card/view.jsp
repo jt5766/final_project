@@ -159,13 +159,18 @@
   <c:forEach items="${contents}" var="content">
     <div class="row">
       <div class="col-md-12 p-0">
-        <div onclick="location.href='/gallery/${card.seq}/contents/${content.seq}'" class="content-link
-        <c:if test="${content.yn eq 'N'}">
-          secrete
-        </c:if>
-        ">
-            ${content.title}
-        </div>
+        <c:choose>
+          <c:when test="${content.yn eq 'N'}">
+            <div onclick="location.href='/gallery/${card.seq}/contents/${content.seq}'" class="content-link secrete">
+                ${content.title} - 비밀글입니다.
+            </div>
+          </c:when>
+          <c:otherwise>
+            <div onclick="location.href='/gallery/${card.seq}/contents/${content.seq}'" class="content-link">
+                ${content.title}
+            </div>
+          </c:otherwise>
+        </c:choose>
           <%--                <a href="/gallery/${card.seq}/contents/${content.seq}">${content.title}</a>--%>
       </div>
     </div>
