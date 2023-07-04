@@ -129,7 +129,7 @@
 		</c:forEach>
 		<c:forEach var="i" items="${reReply}">
 			<script>
-				var reReplyForm = $("<form action='/community/updateReply'>");
+				var reReplyForm = $("<form action='/community/updateReply' class='reReply p_${i.parent_reply}'>");
 				var reReply = $("<div class='reReply'>");
 				var hiddenSeq = $("<input type='hidden' name='seq' value='${i.seq}'>");
 				var hiddenType = $("<input type='hidden' name='board_type' value='${info.board_type}'>");
@@ -163,7 +163,12 @@
 				reReply.append(hiddenSeq, hiddenType, hiddenParent);
 				reReply.append(header, body);
 				reReplyForm.append(reReply);
-				target.closest($(".reply")).parent().after(reReplyForm);
+				if($(".p_${i.parent_reply}")){
+				    var reReply = $(".p_${i.parent_reply}");
+				    $(reReply).eq(-1).get(0).after(reReplyForm);
+				}else{
+					target.closest($(".reply")).parent().after(reReplyForm);
+				}
 		    </script>
 		</c:forEach>
 	</div>
