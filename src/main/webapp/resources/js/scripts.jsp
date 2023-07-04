@@ -81,12 +81,6 @@
 			closing_window = false;
 		});
 
-		// 뒤로가기 한 경우 false
-		window.onpopstate = function(event) {
-			closing_window = false;
-			window.history.forward();
-		};
-
 		// 종료시 진행할 함수 - 동기 통신으로 종료 실행
 		var toDoWhenClosing = function() {
 			navigator.sendBeacon("/member/logOut/", "");
