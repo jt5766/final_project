@@ -238,6 +238,21 @@
             method: "put"
         });
     });
+    $('#chk-disclosure2').on('click', function () {
+        const chkDom = $('#chk-disclosure2');
+        if (chkDom.val() === 'Y') {
+            chkDom.val('N');
+        } else if (chkDom.val() === 'N') {
+            chkDom.val('Y');
+        }
+        $.ajax({
+            url: "/gallery/disclosure/${card.seq}",
+            data: chkDom.val(),
+            contentType: "application/x-www-form-urlencoded",
+            accepts: {plainText: "application/json"},
+            method: "put"
+        });
+    });
 </script>
 </body>
 </html>
