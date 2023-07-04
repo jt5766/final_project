@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>오시는길</title>
+<title>Kreate-Hub : 오시는길</title>
 <!-- 공통 script & css -->
 <c:import url="${path}/resources/js/scripts.jsp" />
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">

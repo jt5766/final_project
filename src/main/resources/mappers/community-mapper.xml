@@ -219,22 +219,22 @@
 	</select>
 
 	<select id="getMyNotice" resultType="kh.final_project.dto.BoardsDTO">
-		SELECT * FROM notice_boards WHERE writer = #{value, jdbcType=NUMERIC}
+		SELECT * FROM notice_boards WHERE writer = #{value, jdbcType=NUMERIC} order by write_date desc
 	</select>
 
 	<select id="getMyFree" resultType="kh.final_project.dto.BoardsDTO">
-		SELECT * FROM free_boards WHERE writer = #{value, jdbcType=NUMERIC}
+		SELECT * FROM free_boards WHERE writer = #{value, jdbcType=NUMERIC} order by write_date desc
 	</select>
 
 	<select id="getMyTip" resultType="kh.final_project.dto.BoardsDTO">
-		SELECT * FROM tip_boards WHERE writer = #{value, jdbcType=NUMERIC}
+		SELECT * FROM tip_boards WHERE writer = #{value, jdbcType=NUMERIC} order by write_date desc
 	</select>
 
 	<select id="getMyQuestion" resultType="kh.final_project.dto.BoardsDTO">
-		SELECT * FROM question_boards WHERE writer = #{value, jdbcType=NUMERIC}
+		SELECT * FROM question_boards WHERE writer = #{value, jdbcType=NUMERIC} order by write_date desc
 	</select>
 
 	<select id="getMyComplaint" resultType="kh.final_project.dto.BoardsDTO">
-		SELECT * FROM complaint_boards WHERE writer = #{value, jdbcType=NUMERIC}
+		SELECT * FROM complaint_boards WHERE writer = #{value, jdbcType=NUMERIC} order by write_date desc
 	</select>
 </mapper>

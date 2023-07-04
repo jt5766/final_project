@@ -9,7 +9,7 @@
     <c:import url="${path}/resources/js/scripts.jsp"/>
     <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha512/0.8.0/sha512.min.js"></script>
-    <title>Document</title>
+    <title>Kreate-Hub : My page</title>
     <style>
         /**{border: 1px solid black}*/
         #wrap {

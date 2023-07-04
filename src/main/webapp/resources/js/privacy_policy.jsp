@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Kreate-Hub 개인정보처리방침</title>
+<title>Kreate-Hub : 개인정보처리방침</title>
 </head>
 <body>
 	<article>

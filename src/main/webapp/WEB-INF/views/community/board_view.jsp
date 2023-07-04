@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>커뮤니티</title>
+<title>Kreate-Hub : ${info.title}</title>
 <!-- 공통 script & css -->
 <c:import url="${path}/resources/js/scripts.jsp" />
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
@@ -19,6 +19,14 @@
 
 .replySubmit, .replyControll {
 	text-align: center;
+}
+
+textarea {
+	border: none;
+}
+
+textarea:focus {
+  outline: none;
 }
 </style>
 </head>
@@ -129,7 +137,7 @@
 		</c:forEach>
 		<c:forEach var="i" items="${reReply}">
 			<script>
-				var reReplyForm = $("<form action='/community/updateReply'>");
+				var reReplyForm = $("<form action='/community/updateReply' class='reReply p_${i.parent_reply}'>");
 				var reReply = $("<div class='reReply'>");
 				var hiddenSeq = $("<input type='hidden' name='seq' value='${i.seq}'>");
 				var hiddenType = $("<input type='hidden' name='board_type' value='${info.board_type}'>");
@@ -143,7 +151,7 @@
 				var headerSpace = space.clone().html("<i class='bi bi-arrow-90deg-up'></i>");
 				header.append(headerSpace, writer, write_date);
 				var txt = $("<textarea name='txt' style='text-align: left; width: 100%; resize: none;' readonly>");
-				txt.text("${i.txt}");
+				txt.html("${i.txt}");
 				var txtDiv = $("<div style='flex: 12;'>");
 				txtDiv.append(txt);
 				var body = $("<div style='display: flex; align-items: center;'>");
@@ -163,7 +171,12 @@
 				reReply.append(hiddenSeq, hiddenType, hiddenParent);
 				reReply.append(header, body);
 				reReplyForm.append(reReply);
-				target.closest($(".reply")).parent().after(reReplyForm);
+				if($(".p_${i.parent_reply}").length == 0){
+					target.closest($(".reply")).parent().after(reReplyForm);
+				}else{
+				    var reReplyArray = $(".p_${i.parent_reply}");
+					$(reReplyArray[reReplyArray.length - 1]).after(reReplyForm);				    
+				}
 		    </script>
 		</c:forEach>
 	</div>

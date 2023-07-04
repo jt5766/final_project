@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Kreate-Hub : Log in</title>
     <c:import url="${path}/resources/js/scripts.jsp"/>
     <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha512/0.8.0/sha512.min.js"></script>
@@ -216,6 +216,50 @@
         });
 
 
+        $("#input_password").on("keydown",function (e){
+            if(e.key == "Enter"){
+                const email = $("#input_email").val();
+                const password= $("#input_password").val();
+                const pw = sha512(password);
+                if (email == "" || password == "" || !email.includes("@")) {
+                    alert("아이디 또는 비밀번호를 입력해주세요");
+                    return;
+                }
+                $.ajax({
+                    url: "/member/login",
+                    data: {
+                        "email": email,
+                        "password":pw
+                    },
+                    method: "post"
+                }).done(function (resp) {
+
+                    if (resp == 11) {
+                        alert("등록된 정보가 없습니다.");
+                        return false;
+                    } else if (resp == 22) {
+                        alert("가입대기중인 상태입니다");
+                        return false;
+                    } else if (resp == 33) {
+                        alert("이용이 정지된 고객입니다.");
+                        return false;
+                    } else if (resp == 44) {
+                        alert("이미 접속중인 이용자입니다");
+                        return false;
+                    } else {
+                        if ($("#checkId").is(":checked")) {
+
+                            setCookie("email", $("#input_email").val(), 30); // 30일 동안 쿠키 보관
+                        }
+                        alert("로그인 성공");
+                        location.href = "/";
+                    }
+
+
+                });
+            }
+        })
+
 
         $("#login_btn").click(function () {
             const email = $("#input_email").val();
@@ -233,13 +277,13 @@
                 },
                 method: "post"
             }).done(function (resp) {
-                console.log(resp)
+
                 if (resp == 11) {
                     alert("등록된 정보가 없습니다.");
                     return false;
                 } else if (resp == 22) {
                     alert("가입대기중인 상태입니다");
-                        return false;
+                    return false;
                 } else if (resp == 33) {
                     alert("이용이 정지된 고객입니다.");
                     return false;
@@ -258,6 +302,11 @@
 
             });
         });
+
+
+
+
+
 
         // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
         var key = getCookie("email");
@@ -306,7 +355,6 @@
                 var end = cookieData.indexOf(';', start);
                 if (end == -1) // 쿠키 값의 마지막 위치 인덱스 번호 설정
                     end = cookieData.length;
-                console.log("end위치  : " + end);
                 cookieValue = cookieData.substring(start, end);
             }
             return unescape(cookieValue);

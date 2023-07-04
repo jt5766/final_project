@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>500 Error</title>
   <c:import url="${path}/resources/js/scripts.jsp"/>
   <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
   <link href="${path}/resources/css/gallery.css" type="text/css" rel="stylesheet">

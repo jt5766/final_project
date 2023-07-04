@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>커뮤니티 글 수정</title>
+<title>Kreate-Hub : Community</title>
 <!-- 공통 script & css -->
 <c:import url="${path}/resources/js/scripts.jsp" />
 <link href="${path}/resources/css/commons.css" type="text/css" rel="stylesheet">
