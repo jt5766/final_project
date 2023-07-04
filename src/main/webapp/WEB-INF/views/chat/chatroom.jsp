@@ -73,6 +73,7 @@
 						$("#lastchatdate").remove();
 						writerbox.remove();
 					}
+					$(".lastdatebox").removeClass('lastdatebox');
 					$("#lastchatdate").removeAttr('id');
 					var timeminute = plustimer.getMinutes();
 	        		if(timeminute < 10){
