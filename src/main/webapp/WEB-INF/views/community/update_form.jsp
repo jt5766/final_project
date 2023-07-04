@@ -104,9 +104,9 @@
 	});
 	
 	$("#formSubmit").on("click", async function(e) {
-	    const title = $("#inputTitle").val();
-	    const txt = $(".note-editable").html();
-	    if(title.length == 0 || txt.length == 0) {
+	    const title = $("#inputTitle").val().trim();
+	    const isEmpty = $('#textarea_contents').summernote('isEmpty');
+	    if(title.length == 0 || isEmpty) {
 			alert("제목 또는 내용을 입력해주세요");
 			return false;
 	    }
@@ -114,16 +114,22 @@
 		let fileArr = [];
 		for(let i = 0; i < imgList.length; i++) {
 			let imgSrc = imgList[i].src;
-			let imgName = imgList.eq(i).attr("data-filename");
+			let imgName = imgList.eq(i).attr("data-filename");	
 			if(imgSrc.startsWith("blob:")) {
 				let blob = await fetch(imgSrc).then(r => r.blob());
 				let file = new File([blob], imgName);
 				fileArr.push(file);
 			}
 		}
-		let contents = $("#textarea_contents").val();
-		$("#boardForm").submit();
+		if(fileArr.length == 0) {
+			$("#boardForm").submit();
+		} else {
+			uploadImg(fileArr);
+			let contents = $("#textarea_contents").val();
+			$("#boardForm").submit();
+		}
 	});
+	
 	function uploadImg(fileArr) {
 		let formData = new FormData();
 		fileArr.map(function(e, i){

@@ -551,6 +551,10 @@ input[name=sordCode] {
     box-shadow: 0 0 5px #c1bdbd;
 }
 
+.content-audio > div {
+    min-width: 500px;
+}
+
 .content-txt {
     border-radius: 8px;
     padding: 10px;
@@ -588,4 +592,23 @@ input[name=sordCode] {
 details > i {
     color: #797979;
     font-size: 14px;
+}
+
+.category-name {
+    margin: 5px 0 5px 0;
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(to right, #ca937280 0%, #E6E7E7 50%);
+    font-size: 20px;
+    border-image-slice: 1;
+}
+
+.carousel-custom-button {
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    background-color: #00000050;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
