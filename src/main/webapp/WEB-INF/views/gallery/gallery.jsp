@@ -67,6 +67,9 @@
                 <c:if test="${card.genre_type2 != null}">
                   <div class="genre-name">${card.genre_name2}</div>
                 </c:if>
+                <c:if test="${card.ai == 'Y'}">
+                  <div class="ai">AI</div>
+                </c:if>
               </div>
               <div class="title title-link">
                   ${card.title}

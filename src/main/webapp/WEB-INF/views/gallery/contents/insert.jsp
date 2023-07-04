@@ -290,12 +290,12 @@
             if (youtube_regex.test(urlVal)) {
                 $('#input_video_url').val(urlVal.replace(cut_youtubeURL, replace_youtubeURL));
                 $('.preview_video').attr('src', urlVal.replace(cut_youtubeURL, replace_youtubeURL));
-                $('#preview').removeClass('hidden');
+                $('.preview').removeClass('hidden');
                 pop_modal();
             } else if (naver_regex.test(urlVal)) {
                 $('#input_video_url').val(urlVal.replace(cut_naverURL, replace_naverURL));
                 $('.preview_video').attr('src', urlVal.replace(cut_naverURL, replace_naverURL));
-                $('#preview').removeClass('hidden');
+                $('.preview').removeClass('hidden');
                 pop_modal();
             } else {
                 alert("올바른 주소가 아닙니다.");
