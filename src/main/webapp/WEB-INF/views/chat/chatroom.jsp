@@ -32,7 +32,7 @@
 		let lastwriter = null;
 		const maxlength = 500;
 		$(function(){
-			const socket = new WebSocket("ws://localhost/chat");
+			const socket = new WebSocket("ws://3.39.227.39/chat");
 			const stompClient = Stomp.over(socket);
 			
 			stompClient.connect({},function(){
