@@ -33,7 +33,7 @@
                 <div class="gallery-card" onclick="location.href='/gallery/${card.seq}'">
                   <div class="card-body">
                     <div class="thumbnail_url">
-                      <img class="thumbnail" src="/resources${card.thumbnail_url}" alt="/resources/img/default_img.jpg">
+                      <img class="thumbnail" src="/resources${card.thumbnail_url}" alt="/resources/img/default_img.jpg" onerror="this.src='/resources/img/default_img.jpg'">
                     </div>
                     <div class="side-info">
                       <div class="info">
@@ -100,7 +100,7 @@
             <div class="gallery-card" onclick="location.href='/gallery/${card.seq}'">
               <div class="card-body">
                 <div class="thumbnail_url">
-                  <img class="thumbnail" src="/resources${card.thumbnail_url}" alt="/resources/img/default_img.jpg">
+                  <img class="thumbnail" src="/resources${card.thumbnail_url}" alt="/resources/img/default_img.jpg" onerror="this.src='/resources/img/default_img.jpg'">
                 </div>
                 <div class="side-info">
                   <div class="info">

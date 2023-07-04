@@ -28,7 +28,7 @@
             <option value="${searchCondition.code}">${searchCondition.name}</option>
           </c:forEach>
         </select>
-        <input type="text" name="searchQuery">
+        <input type="text" name="searchQuery" placeholder="검색어를 입력하세요">
         <c:forEach items="${sortConditions}" var="sortContidion" varStatus="status">
           <input class="d-none d-md-block" type="radio" name="sortCode" value="${sortContidion.code}" id="sort1-${sortContidion.code}"
                  <c:if test="${status.index == 0}">checked</c:if>>
