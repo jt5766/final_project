@@ -20,6 +20,14 @@
 .replySubmit, .replyControll {
 	text-align: center;
 }
+
+textarea {
+	border: none;
+}
+
+textarea:focus {
+  outline: none;
+}
 </style>
 </head>
 
@@ -143,7 +151,7 @@
 				var headerSpace = space.clone().html("<i class='bi bi-arrow-90deg-up'></i>");
 				header.append(headerSpace, writer, write_date);
 				var txt = $("<textarea name='txt' style='text-align: left; width: 100%; resize: none;' readonly>");
-				txt.text("${i.txt}");
+				txt.html("${i.txt}");
 				var txtDiv = $("<div style='flex: 12;'>");
 				txtDiv.append(txt);
 				var body = $("<div style='display: flex; align-items: center;'>");
