@@ -216,6 +216,50 @@
         });
 
 
+        $("#input_password").on("keydown",function (e){
+            if(e.key == "Enter"){
+                const email = $("#input_email").val();
+                const password= $("#input_password").val();
+                const pw = sha512(password);
+                if (email == "" || password == "" || !email.includes("@")) {
+                    alert("아이디 또는 비밀번호를 입력해주세요");
+                    return;
+                }
+                $.ajax({
+                    url: "/member/login",
+                    data: {
+                        "email": email,
+                        "password":pw
+                    },
+                    method: "post"
+                }).done(function (resp) {
+                    console.log(resp)
+                    if (resp == 11) {
+                        alert("등록된 정보가 없습니다.");
+                        return false;
+                    } else if (resp == 22) {
+                        alert("가입대기중인 상태입니다");
+                        return false;
+                    } else if (resp == 33) {
+                        alert("이용이 정지된 고객입니다.");
+                        return false;
+                    } else if (resp == 44) {
+                        alert("이미 접속중인 이용자입니다");
+                        return false;
+                    } else {
+                        if ($("#checkId").is(":checked")) {
+
+                            setCookie("email", $("#input_email").val(), 30); // 30일 동안 쿠키 보관
+                        }
+                        alert("로그인 성공");
+                        location.href = "/";
+                    }
+
+
+                });
+            }
+        })
+
 
         $("#login_btn").click(function () {
             const email = $("#input_email").val();
@@ -239,7 +283,7 @@
                     return false;
                 } else if (resp == 22) {
                     alert("가입대기중인 상태입니다");
-                        return false;
+                    return false;
                 } else if (resp == 33) {
                     alert("이용이 정지된 고객입니다.");
                     return false;
@@ -258,6 +302,11 @@
 
             });
         });
+
+
+
+
+
 
         // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
         var key = getCookie("email");
