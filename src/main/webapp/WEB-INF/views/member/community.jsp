@@ -21,12 +21,20 @@
 	<div class="container-xl">
 		<div id="accordion">
 			<c:forEach items="${community}" var="category">
-				<section class="d-flex justify-content-center align-items-center accordion-head">
-					<h4 class="category-head m-0">${category.name}</h4>
-				</section>
+				<c:choose>
+					<c:when test="${category.code == 1001}">
+					</c:when>
+					<c:otherwise>
+						<section class="d-flex justify-content-center align-items-center accordion-head">
+							<h4 class="category-head m-0">${category.name}</h4>
+						</section>
+					</c:otherwise>
+				</c:choose>
 				<div>
 					<c:forEach items="${communities[category.code]}" var="community_">
 						<c:choose>
+							<c:when test="${community_.board_type == 1001}">
+							</c:when>
 							<c:when test="${community_.board_type == 1005}">
 								<p class="content-link" onclick="location.href='/community/toComplaintView?seq=${community_.seq}&board_type=${community_.board_type}'">${community_.title}</p>
 							</c:when>
