@@ -163,11 +163,11 @@
 				reReply.append(hiddenSeq, hiddenType, hiddenParent);
 				reReply.append(header, body);
 				reReplyForm.append(reReply);
-				if($(".p_${i.parent_reply}")){
-				    var reReply = $(".p_${i.parent_reply}");
-				    $(reReply).eq(-1).get(0).after(reReplyForm);
-				}else{
+				if($(".p_${i.parent_reply}").length == 0){
 					target.closest($(".reply")).parent().after(reReplyForm);
+				}else{
+				    var reReplyArray = $(".p_${i.parent_reply}");
+					$(reReplyArray[reReplyArray.length - 1]).after(reReplyForm);				    
 				}
 		    </script>
 		</c:forEach>
