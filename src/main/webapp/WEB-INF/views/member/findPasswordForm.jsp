@@ -163,7 +163,6 @@
     $("#frm").on('submit', function () {
         const pw = $("#pw").val()
         const shaPw = sha512(pw);
-        console.log(shaPw)
         $("#shaPw").val(shaPw);
     })
 

@@ -233,7 +233,7 @@
                     },
                     method: "post"
                 }).done(function (resp) {
-                    console.log(resp)
+
                     if (resp == 11) {
                         alert("등록된 정보가 없습니다.");
                         return false;
@@ -277,7 +277,7 @@
                 },
                 method: "post"
             }).done(function (resp) {
-                console.log(resp)
+
                 if (resp == 11) {
                     alert("등록된 정보가 없습니다.");
                     return false;
@@ -355,7 +355,6 @@
                 var end = cookieData.indexOf(';', start);
                 if (end == -1) // 쿠키 값의 마지막 위치 인덱스 번호 설정
                     end = cookieData.length;
-                console.log("end위치  : " + end);
                 cookieValue = cookieData.substring(start, end);
             }
             return unescape(cookieValue);
