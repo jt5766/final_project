@@ -32,7 +32,7 @@
 		let lastwriter = null;
 		const maxlength = 500;
 		$(function(){
-			const socket = new WebSocket("ws://3.39.227.39/chat");
+			const socket = new WebSocket("ws://localhost/chat");
 			const stompClient = Stomp.over(socket);
 			
 			stompClient.connect({},function(){
@@ -42,8 +42,8 @@
 					const datediv = $("<div>");
 					const textdiv = $("<div>");
 					const writerbox = $("<div>");
-					const replbackslash = body.txt.replace(/\\\\/g,"\\");
-					const realTimeText = replbackslash.replace(/\\'/g,"\'");
+					const realbackslash = body.txt.replace(/\\\\/g,"\\");
+					const realTimeText = realbackslash.replace(/\\'/g,"\'");
 					if(body.writer == ${code}){
 						linediv.addClass("mylinebox");
 						datediv.addClass("mydatebox");
@@ -180,11 +180,13 @@
 								const datadatediv = $("<div>");
 								const datatextdiv = $("<div>");
 								const datawriterbox = $("<div>");
+								const respbackslash = resp[i].txt.replace(/\\\\/g,"\\");
+								const respTimeText = respbackslash.replace(/\\'/g,"\'");
 								if(resp[i].writer == ${code}){
 									datalinediv.addClass("mylinebox");
 									datadatediv.addClass("mydatebox");
 									datatextdiv.addClass("mytext");
-									datatextdiv.append(resp[i].txt);
+									datatextdiv.append(respTimeText);
 								}else{
 									datawriterbox.addClass("writerbox");
 									datawriterbox.append(resp[i].writernickname);
@@ -192,7 +194,7 @@
 									datalinediv.addClass("otherlinebox");
 									datadatediv.addClass("otherdatebox");
 									datatextdiv.addClass("othertext");
-									datatextdiv.append(resp[i].txt);
+									datatextdiv.append(respTimeText);
 								}
 								var logtimer = new Date(resp[i].write_date);
 								var logYear = logtimer.getFullYear();
