@@ -20,6 +20,7 @@
 <!-- CONTENTS -->
 <div class="container-xl position-relative d-md-none">
   <c:forEach items="${gallery}" var="categoryType">
+    <p class="category-name">${categoryType.name}</p>
     <div class="carousel slide" id="card-carousel-${categoryType.code}" data-bs-ride="false" data-bs-touch="false">
       <div class="carousel-inner one-on-page">
         <c:forEach items="${cards[categoryType.code]}" var="card" varStatus="status">
@@ -46,6 +47,9 @@
                         <c:if test="${card.genre_type2 != null}">
                           <div class="genre-name">${card.genre_name2}</div>
                         </c:if>
+                        <c:if test="${card.ai == 'Y'}">
+                          <div class="ai">AI</div>
+                        </c:if>
                       </div>
                       <div class="title title-link">
                         <p>${card.title}</p>
@@ -65,13 +69,13 @@
         </c:forEach>
         <button class="carousel-control-prev" type="button" data-bs-target="#card-carousel-${categoryType.code}"
                 data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
+          <span class="carousel-control-prev-icon visually-hidden" aria-hidden="true"></span>
+          <span class="carousel-custom-button"><i class="bi bi-caret-left-fill"></i></span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#card-carousel-${categoryType.code}"
                 data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
+          <span class="carousel-control-next-icon visually-hidden" aria-hidden="true"></span>
+          <span class="carousel-custom-button"><i class="bi bi-caret-right-fill"></i></span>
         </button>
       </div>
     </div>
@@ -81,6 +85,7 @@
 
 <div class="container-xl position-relative d-none d-md-block">
   <c:forEach items="${gallery}" var="categoryType">
+    <p class="category-name">${categoryType.name}</p>
     <div class="carousel slide" id="card-carousel-md-${categoryType.code}" data-bs-ride="false" data-bs-touch="false">
       <div class="carousel-inner two-on-page">
         <c:forEach items="${cards[categoryType.code]}" var="card" varStatus="status">
@@ -113,6 +118,9 @@
                     <c:if test="${card.genre_type2 != null}">
                       <div class="genre-name">${card.genre_name2}</div>
                     </c:if>
+                    <c:if test="${card.ai == 'Y'}">
+                      <div class="ai">AI</div>
+                    </c:if>
                   </div>
                   <div class="title title-link">
                       ${card.title}
@@ -141,13 +149,13 @@
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#card-carousel-md-${categoryType.code}"
               data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <span class="carousel-control-prev-icon visually-hidden" aria-hidden="true"></span>
+        <span class="carousel-custom-button"><i class="bi bi-caret-left-fill"></i></span>
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#card-carousel-md-${categoryType.code}"
               data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+        <span class="carousel-control-next-icon visually-hidden" aria-hidden="true"></span>
+        <span class="carousel-custom-button"><i class="bi bi-caret-right-fill"></i></span>
       </button>
     </div>
   </c:forEach>

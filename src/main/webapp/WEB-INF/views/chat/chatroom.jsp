@@ -349,12 +349,10 @@
 				$("#div_contents").prepend(datalinediv);
 				if(i == (chatlog.length-1)){
     				if(${maxdata}<=30){
-    					if(beforeYear != null && beforeMonth != null && beforeDate != null){
-    						var alldatediv = $("<div>");
-        					alldatediv.addClass("frontdatebox");
-        					alldatediv.append(beforeYear+"-"+(beforeMonth+1)+"-"+beforeDate);
-        					$("#div_contents").prepend(alldatediv);
-    					}
+    					var alldatediv = $("<div>");
+        				alldatediv.addClass("frontdatebox");
+        				alldatediv.append(logYear+"-"+(logMonth+1)+"-"+logDate);
+        				$("#div_contents").prepend(alldatediv);
     				}
 				}
 			}
